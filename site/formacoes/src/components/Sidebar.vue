@@ -1,7 +1,7 @@
 <template>
   <aside :class="`${is_expanded && 'is-expanded'}`">
     <div class="logo">
-        <img src="../assets/cubo.png" alt="Vue">
+        <img src="../assets/vue.svg" alt="Vue">
     </div>
     <div class="menu-toggle-wrap">
         <button class="menu-toggle" @click="ToggleMenu">
@@ -71,7 +71,6 @@ aside {
 	.menu-toggle-wrap {
 		display: flex;
 		justify-content: flex-end;
-		margin-bottom: 1rem;
 		position: relative;
 		top: 0;
 		transition: 0.2s ease-in-out;
