@@ -3,11 +3,13 @@
     <div class="logo">
         <img src="../assets/vue.svg" alt="Vue">
     </div>
+
     <div class="menu-toggle-wrap">
         <button class="menu-toggle" @click="ToggleMenu">
             <span class="material-icons">clear_all</span>
         </button>
     </div>
+
     <h3>Menu</h3>
     <div class="menu">
         <router-link class="button" to="/">
@@ -27,14 +29,15 @@
             <span class="text">Contact Us</span>
         </router-link>
     </div>
+
     <div class="flex"></div>
 		
-		<div class="menu">
-			<router-link to="/settings" class="button">
-				<span class="material-icons">settings</span>
-				<span class="text">Settings</span>
-			</router-link>
-		</div>
+	<div class="menu">
+		<router-link to="/settings" class="button">
+			<span class="material-icons">settings</span>
+			<span class="text">Settings</span>
+		</router-link>
+	</div>
   </aside>
 </template>
 
@@ -59,23 +62,30 @@ aside {
 	min-height: 100vh;
 	padding: 1rem;
 	transition: 0.2s ease-in-out;
+	margin: 0;
+
 	.flex {
 		flex: 1 1 0%;
 	}
+
 	.logo {
 		margin-bottom: 1rem;
 		img {
 			width: 2rem;
 		}
 	}
+
 	.menu-toggle-wrap {
 		display: flex;
 		justify-content: flex-end;
 		position: relative;
 		top: 0;
 		transition: 0.2s ease-in-out;
+
 		.menu-toggle {
+			padding: 0;
 			transition: 0.2s ease-in-out;
+
 			.material-icons {
 				font-size: 2rem;
 				color: var(--light);
@@ -90,39 +100,49 @@ aside {
 			}
 		}
 	}
+
 	h3, .button .text {
 		opacity: 0;
 		transition: opacity 0.3s ease-in-out;
 	}
+
 	h3 {
 		color: var(--grey);
 		font-size: 0.875rem;
 		margin-bottom: 0.5rem;
+		margin-top: 0;
 		text-transform: uppercase;
 	}
+
 	.menu {
 		margin: 0 -1rem;
+
 		.button {
 			display: flex;
 			align-items: center;
 			text-decoration: none;
 			transition: 0.2s ease-in-out;
 			padding: 0.5rem 1rem;
+			height: 48px;
+
 			.material-icons {
 				font-size: 2rem;
 				color: var(--light);
 				transition: 0.2s ease-in-out;
 			}
+
 			.text {
 				color: var(--light);
 				transition: 0.1s ease-in-out;
 			}
+
 			&:hover {
 				background-color: var(--dark-alt);
 				.material-icons, .text {
 					color: var(--primary);
 				}
 			}
+
 			&.router-link-exact-active {
 				background-color: var(--dark-alt);
 				border-right: 5px solid var(--primary);
@@ -132,16 +152,20 @@ aside {
 			}
 		}
 	}
+
 	.footer {
 		opacity: 0;
 		transition: opacity 0.3s ease-in-out;
+
 		p {
 			font-size: 0.875rem;
 			color: var(--grey);
 		}
 	}
+
 	&.is-expanded {
 		width: var(--sidebar-width);
+
 		.menu-toggle-wrap {
 			top: -3rem;
 			
@@ -149,21 +173,26 @@ aside {
 				transform: rotate(-180deg);
 			}
 		}
+
 		h3, .button .text {
 			opacity: 1;
 		}
+
 		.button {
 			.material-icons {
 				margin-right: 1rem;
 			}
+
             .text {
                 transition: 0.5s ease-in-out;
             }
 		}
+
 		.footer {
 			opacity: 0;
 		}
 	}
+	
 	@media (max-width: 1024px) {
 		position: absolute;
 		z-index: 99;

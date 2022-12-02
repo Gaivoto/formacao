@@ -20,15 +20,17 @@ import Topbar from './components/Topbar.vue'
 	--light: #f1f5f9;
 	--sidebar-width: 300px;
 }
+
 * {
-	margin: 0;
-	padding: 0;
 	box-sizing: border-box;
 	font-family: 'Fira sans', sans-serif;
 }
+
 body {
 	background: var(--light);
+	margin: 0;
 }
+
 button {
 	cursor: pointer;
 	appearance: none;
@@ -36,8 +38,10 @@ button {
 	outline: none;
 	background: none;
 }
+
 .app {
 	display: flex;
+
 	main {
 		flex: 1 1 0;
 		padding: 2rem;
