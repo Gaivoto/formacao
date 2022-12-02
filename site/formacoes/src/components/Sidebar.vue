@@ -52,6 +52,7 @@ const ToggleMenu = () => {
 </script>
 
 <style lang="scss" scoped>
+
 aside {
 	display: flex;
 	flex-direction: column;
@@ -192,7 +193,7 @@ aside {
 			opacity: 0;
 		}
 	}
-	
+
 	@media (max-width: 1024px) {
 		position: absolute;
 		z-index: 99;
