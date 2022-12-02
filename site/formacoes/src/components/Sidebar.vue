@@ -20,7 +20,7 @@
             <span class="material-icons">home</span>
             <span class="text">Home</span>
         </router-link>
-        <router-link class="button" to="/team">
+        <router-link class="button" to="/users/1">
             <span class="material-icons">group</span>
             <span class="text">Team</span>
         </router-link>
