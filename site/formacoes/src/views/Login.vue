@@ -44,7 +44,7 @@
               Lorem ipsum, dolor sit amet consectetur adipisicing elit. Debitis,
               ex ratione. Aliquid!
             </p>
-            <button ref="signupbtn" class="btn transparent" id="sign-up-btn">
+            <button v-on:click="signupbtn" ref="signupbtn" class="btn transparent" id="sign-up-btn">
               Sign up
             </button>
           </div>
@@ -57,7 +57,7 @@
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum
               laboriosam ad deleniti.
             </p>
-            <button ref="signinbtn" class="btn transparent" id="sign-in-btn">
+            <button v-on:click="signinbtn" ref="signinbtn" class="btn transparent" id="sign-in-btn">
               Sign in
             </button>
           </div>
@@ -70,15 +70,15 @@
 <script>
 
 export default {
-  mounted() {
-    this.$refs.signupbtn.addEventListener("click", () => {
-    this.$refs.mycontainer.classList.add("sign-up-mode");
-});
-
-this.$refs.signinbtn.addEventListener("click", () => {
-    this.$refs.mycontainer.classList.remove("sign-up-mode");
-});
-  }
+    name: "Login",
+    methods: {
+        signupbtn() {
+        this.$refs.mycontainer.classList.add("sign-up-mode");
+        },
+        signinbtn() {
+        this.$refs.mycontainer.classList.remove("sign-up-mode");  
+        }
+    }
 }
 
 </script>
@@ -253,13 +253,13 @@ form.sign-in-form {
 .container:before {
   content: "";
   position: absolute;
-  height: 2000px;
-  width: 2000px;
+  height: 3000px;
+  width: 3000px;
   top: -10%;
   right: 48%;
   transform: translateY(-50%);
   background-image: linear-gradient(-45deg, #00ADB5 0%, #393E46 100%);
-  transition: 1.8s ease-in-out;
+  transition: 1s ease-in-out;
   border-radius: 50%;
   z-index: 6;
 }
