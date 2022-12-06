@@ -7,7 +7,7 @@
 </template>
 
 <script setup>
-//import Sidebar from './components/Sidebar.vue'
+import Sidebar from './components/Sidebar.vue'
 import Topbar from './components/Topbar.vue'
 </script>
 
