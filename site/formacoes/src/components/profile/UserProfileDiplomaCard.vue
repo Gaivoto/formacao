@@ -9,7 +9,7 @@
 export default {
     name: 'UserProfileDiplomaCard',
     props: {
-        props: {
+        diploma: {
             diploma: Object,
             required: true
         }

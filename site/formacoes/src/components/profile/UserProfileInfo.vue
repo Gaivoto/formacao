@@ -2,13 +2,13 @@
     <div class="user-profile-info">
         <div>
             <img id="profile-image" :src="this.imageUrl">
-            <div id="profile-info-area">
+            <div ref="profileInfoArea">
                 <p>{{ this.user.username }}</p>
                 <p>{{ this.user.name }}</p>
                 <p>{{ this.user.country }}</p>
                 <p>{{ this.user.description }}</p>
             </div>
-            <div id="profile-editing-area" class="d-none">
+            <div ref="profileEditingArea" class="d-none">
                 <div>
                     <div>
                         <p>Username</p>
@@ -276,8 +276,8 @@
                 </div>
             </div>
         </div>
-        <button id="edit-profile-button" v-on:click="editProfile">EDITAR</button>
-        <button id="save-profile-button" class="d-none" v-on:click="saveProfile">GUARDAR</button>
+        <button ref="editProfileButton" v-on:click="editProfile">EDITAR</button>
+        <button ref="saveProfileButton" class="d-none" v-on:click="saveProfile">GUARDAR</button>
     </div>
 </template>
 
@@ -300,18 +300,18 @@ export default {
     },
     methods: {
         editProfile() {
-            document.getElementById("edit-profile-button").classList.add("d-none");
-            document.getElementById("save-profile-button").classList.remove("d-none");
+            this.$refs.editProfileButton.classList.add("d-none");
+            this.$refs.saveProfileButton.classList.remove("d-none");
 
-            document.getElementById("profile-info-area").classList.add("d-none");
-            document.getElementById("profile-editing-area").classList.remove("d-none");
+            this.$refs.profileInfoArea.classList.add("d-none");
+            this.$refs.profileEditingArea.classList.remove("d-none");
         },
         saveProfile() {
-            document.getElementById("edit-profile-button").classList.remove("d-none");
-            document.getElementById("save-profile-button").classList.add("d-none");
+            this.$refs.editProfileButton.classList.remove("d-none");
+            this.$refs.saveProfileButton.classList.add("d-none");
 
-            document.getElementById("profile-info-area").classList.remove("d-none");
-            document.getElementById("profile-editing-area").classList.add("d-none");
+            this.$refs.profileInfoArea.classList.remove("d-none");
+            this.$refs.profileEditingArea.classList.add("d-none");
 
             this.$emit('alterar-dados', user); 
         }
