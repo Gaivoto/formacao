@@ -12,7 +12,7 @@
 
     <h3>Menu</h3>
     <div class="menu">
-        <router-link class="button" to="/">
+        <router-link class="button" to="/courses">
             <span class="material-icons">library_books</span>
             <span class="text">Cursos</span>
         </router-link>
@@ -64,6 +64,7 @@ aside {
 	padding: 1rem;
 	transition: 0.2s ease-in-out;
 	margin: 0;
+	min-width: 64px;
 
 	.flex {
 		flex: 1 1 0%;
@@ -166,6 +167,7 @@ aside {
 
 	&.is-expanded {
 		width: var(--sidebar-width);
+		min-width: 300px;
 
 		.menu-toggle-wrap {
 			top: -3rem;

@@ -1,15 +1,15 @@
 <template>
-    <div>
+    <div class="profile-wrapper">
         <UserProfileInfo v-bind:user="this.user" v-on:alterar-dados="alterarDadosUser"/>
         <div>
             <p>Os meus cursos</p>
-            <div class="profile-list">
+            <div class="profile-list row">
                 <UserProfileCourseCard v-for="course in this.courses" :key="course.id" v-bind:course="course"/>
             </div>
         </div>
         <div>
             <p>Os meus diplomas</p>
-            <div class="profile-list">
+            <div class="profile-list row">
                 <UserProfileDiplomaCard v-for="diploma in this.diplomas" :key="diploma.id" v-bind:diploma="diploma"/>
             </div>
         </div>
@@ -101,7 +101,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    .profile-list {
-        display: flex;
+    .profile-wrapper {
+        width: 90%;
     }
 </style>

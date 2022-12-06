@@ -1,5 +1,5 @@
 <template>
-    <div class="user-profile-course-card">
+    <div class="user-profile-course-card col-md-2">
         <img :src="this.imageUrl">
         <p>{{ this.course.name }}</p>
         <div>
@@ -14,7 +14,7 @@ export default {
     name: 'UserProfileCourseCard',
     props: {
         course: {
-            course: Object,
+            type: Object,
             required: true
         }
     },
@@ -25,8 +25,6 @@ export default {
     },
     created(){
         this.imageUrl = new URL(`../../assets/${this.course.image}.jpg`, import.meta.url).href;
-    },
-    methods: {
     }
 }
 </script>
