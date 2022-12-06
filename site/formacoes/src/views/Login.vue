@@ -4,33 +4,33 @@
         <div class="signin-signup">
               <!--Login Form-->
           <form action="#" class="sign-in-form">
-            <h2 class="title">Sign in</h2>
+            <h2 class="title">Iniciar Sessão</h2>
             <div class="input-field">
               <i class="fas fa-user"></i>
-              <input type="text" placeholder="Username" />
+              <input type="text" placeholder="Nome de Utilizador" />
             </div>
             <div class="input-field">
               <i class="fas fa-lock"></i>
-              <input type="password" placeholder="Password" />
+              <input type="password" placeholder="Palavra-Passe" />
             </div>
-            <input type="submit" value="Login" class="btn solid" />
+            <input type="submit" value="Entrar" class="btn solid" />
           </form>
               <!--Registo Form-->
           <form action="#" class="sign-up-form">
-            <h2 class="title">Sign up</h2>
+            <h2 class="title">Criar Conta</h2>
             <div class="input-field">
               <i class="fas fa-user"></i>
-              <input type="text" placeholder="Username" />
+              <input type="text" placeholder="Nome de Utilizador" />
             </div>
             <div class="input-field">
               <i class="fas fa-envelope"></i>
-              <input type="email" placeholder="Email" />
+              <input type="email" placeholder="E-mail" />
             </div>
             <div class="input-field">
               <i class="fas fa-lock"></i>
-              <input type="password" placeholder="Password" />
+              <input type="password" placeholder="Palavra-Passe" />
             </div>
-            <input type="submit" class="btn" value="Sign up" />
+            <input type="submit" class="btn" value="Registar" />
                
           </form>
         </div>
@@ -39,26 +39,24 @@
       <div class="panels-container">
         <div class="panel left-panel">
           <div class="content">
-            <h3>New here ?</h3>
+            <h3>Novo aqui ?</h3>
             <p>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Debitis,
-              ex ratione. Aliquid!
+              Crie já uma conta e venha conhecer os nossos cursos.
             </p>
             <button v-on:click="signupbtn" ref="signupbtn" class="btn transparent" id="sign-up-btn">
-              Sign up
+              Criar Conta
             </button>
           </div>
           <img src="../assets/1.svg" class="image" alt="" />
         </div>
         <div class="panel right-panel">
           <div class="content">
-            <h3>One of us ?</h3>
+            <h3>Já tem conta ?</h3>
             <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum
-              laboriosam ad deleniti.
+              Faça inicio de sessão com a sua conta existente e venha aprender.
             </p>
             <button v-on:click="signinbtn" ref="signinbtn" class="btn transparent" id="sign-in-btn">
-              Sign in
+              Iniciar Sessão
             </button>
           </div>
           <img src="../assets/2.svg" class="image" alt="" />
@@ -97,6 +95,9 @@ input {
   font-family: "Poppins", sans-serif !important;
 }
 
+.content {
+  margin: 50px 50px 0 0;
+}
 .container {
   position: relative;
   width: 100%;
@@ -298,11 +299,11 @@ form.sign-in-form {
 .panel h3 {
   font-weight: 600;
   line-height: 1;
-  font-size: 1.5rem;
+  font-size: 2.2rem;
 }
 
 .panel p {
-  font-size: 0.95rem;
+  font-size: 1.3rem;
   padding: 0.7rem 0;
 }
 
