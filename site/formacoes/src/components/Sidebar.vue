@@ -16,7 +16,7 @@
             <span class="material-icons">library_books</span>
             <span class="text">Cursos</span>
         </router-link>
-        <router-link class="button" to="/about">
+        <router-link class="button" to="/users/1/content">
             <span class="material-icons">home</span>
             <span class="text">Home</span>
         </router-link>

@@ -86,13 +86,14 @@ export default {
     .pagination {
         display: flex;
         align-items: center;
-        justify-content: space-between;
         gap: 8px;
     }
 
     .pagination img {
         width: 20px;
         height: 20px;
+
+        cursor: pointer;
     }
 
     .pagination > div {
@@ -106,6 +107,8 @@ export default {
         padding: 4px 0px;
         width: 32px;
         text-align: center;
+
+        cursor: pointer;
     }
 
     .selected-page {

@@ -6,7 +6,7 @@ import CourseDetails from '../views/CourseDetails.vue'
 import CourseListAdm from '../views/CourseListAdm.vue'
 import Courses from '../views/Courses.vue'
 import Creator from '../views/Creator.vue'
-import CreatorStudio from '../views/CreatorStudio.vue'
+import Content from '../views/Content.vue'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 import Profile from '../views/Profile.vue'
@@ -44,8 +44,8 @@ const router = createRouter({
             component: Creator
         },
         {
-            path: '/studio',
-            component: CreatorStudio
+            path: '/users/:id/content',
+            component: Content
         },
         {
             path: '/login',
