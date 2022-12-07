@@ -1,5 +1,5 @@
 <template>
-    <div ref="mycontainer" class="container">
+    <div ref="mycontainer" class="login-container">
       <div class="forms-container">
         <div class="signin-signup">
               <!--Login Form-->
@@ -98,7 +98,7 @@ input {
 .content {
   margin: 50px 50px 0 0;
 }
-.container {
+.login-container {
   position: relative;
   width: 100%;
   background-color: #fff;
@@ -251,7 +251,7 @@ form.sign-in-form {
   grid-template-columns: repeat(2, 1fr);
 }
 
-.container:before {
+.login-container:before {
   content: "";
   position: absolute;
   height: 3000px;
@@ -324,45 +324,45 @@ form.sign-in-form {
 
 /* ANIMATION */
 
-.container.sign-up-mode:before {
+.login-container.sign-up-mode:before {
   transform: translate(100%, -50%);
   right: 52%;
 }
 
-.container.sign-up-mode .left-panel .image,
-.container.sign-up-mode .left-panel .content {
+.login-container.sign-up-mode .left-panel .image,
+.login-container.sign-up-mode .left-panel .content {
   transform: translateX(-800px);
 }
 
-.container.sign-up-mode .signin-signup {
+.login-container.sign-up-mode .signin-signup {
   left: 25%;
 }
 
-.container.sign-up-mode form.sign-up-form {
+.login-container.sign-up-mode form.sign-up-form {
   opacity: 1;
   z-index: 2;
 }
 
-.container.sign-up-mode form.sign-in-form {
+.login-container.sign-up-mode form.sign-in-form {
   opacity: 0;
   z-index: 1;
 }
 
-.container.sign-up-mode .right-panel .image,
-.container.sign-up-mode .right-panel .content {
+.login-container.sign-up-mode .right-panel .image,
+.login-container.sign-up-mode .right-panel .content {
   transform: translateX(0%);
 }
 
-.container.sign-up-mode .left-panel {
+.login-container.sign-up-mode .left-panel {
   pointer-events: none;
 }
 
-.container.sign-up-mode .right-panel {
+.login-container.sign-up-mode .right-panel {
   pointer-events: all;
 }
 
 @media (max-width: 870px) {
-  .container {
+  .login-container {
     min-height: 800px;
     height: 100vh;
   }
@@ -374,7 +374,7 @@ form.sign-in-form {
   }
 
   .signin-signup,
-  .container.sign-up-mode .signin-signup {
+  .login-container.sign-up-mode .signin-signup {
     left: 50%;
   }
 
@@ -426,7 +426,7 @@ form.sign-in-form {
     font-size: 0.7rem;
   }
 
-  .container:before {
+  .login-container:before {
     width: 1500px;
     height: 1500px;
     transform: translateX(-50%);
@@ -437,19 +437,19 @@ form.sign-in-form {
     transition: 2s ease-in-out;
   }
 
-  .container.sign-up-mode:before {
+  .login-container.sign-up-mode:before {
     transform: translate(-50%, 100%);
     bottom: 32%;
     right: initial;
   }
 
-  .container.sign-up-mode .left-panel .image,
-  .container.sign-up-mode .left-panel .content {
+  .login-container.sign-up-mode .left-panel .image,
+  .login-container.sign-up-mode .left-panel .content {
     transform: translateY(-300px);
   }
 
-  .container.sign-up-mode .right-panel .image,
-  .container.sign-up-mode .right-panel .content {
+  .login-container.sign-up-mode .right-panel .image,
+  .login-container.sign-up-mode .right-panel .content {
     transform: translateY(0px);
   }
 
@@ -458,7 +458,7 @@ form.sign-in-form {
     transform: translateY(300px);
   }
 
-  .container.sign-up-mode .signin-signup {
+  .login-container.sign-up-mode .signin-signup {
     top: 5%;
     transform: translate(-50%, 0);
   }
@@ -475,16 +475,16 @@ form.sign-in-form {
   .panel .content {
     padding: 0.5rem 1rem;
   }
-  .container {
+  .login-container {
     padding: 1.5rem;
   }
 
-  .container:before {
+  .login-container:before {
     bottom: 72%;
     left: 50%;
   }
 
-  .container.sign-up-mode:before {
+  .login-container.sign-up-mode:before {
     bottom: 28%;
     left: 50%;
   }
