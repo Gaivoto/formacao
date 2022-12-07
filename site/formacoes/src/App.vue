@@ -13,9 +13,11 @@ import Topbar from './components/Topbar.vue'
 
 <style lang="scss">
 :root {
-	--primary: #4ade80;
+	//--primary: #4ade80;
+	--primary: #00ADB5;
 	--grey: #64748b;
-	--dark: #1e293b;
+	//--dark: #1e293b;
+	--dark: #222831;
 	--dark-alt: #334155;
 	--light: #f1f5f9;
 	--sidebar-width: 300px;
