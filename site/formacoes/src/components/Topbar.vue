@@ -11,7 +11,7 @@
                 <span class="text">Cursos</span>
             </router-link>
 
-            <input class="searchBox" type="text" placeholder="Pesquisar cursos..."/>
+            <input type="text" placeholder="Pesquisar cursos..."/>
             <router-link class="topBarButton" to="/">
                 <span class="text">Login</span>
             </router-link>
@@ -29,9 +29,7 @@ export default {
 .topBar {
     width: 100%;
     height: fit-content;
-    padding-top: 22px;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding: 20px 80px 10px 80px;
     display: flex;
     justify-content: space-between;
 }
@@ -39,7 +37,7 @@ export default {
     font-size: 35px;
 }
 .rightSide {
-    width: 400px;
+    gap: 20px;
     display: flex;
     justify-content: space-between;
     font-size: 30px;
