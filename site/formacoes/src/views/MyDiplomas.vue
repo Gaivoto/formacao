@@ -1,8 +1,8 @@
 <template>
 </template>
 
-<script scoped>
+<script>
 </script>
 
-<style lang="scss">
+<style scoped>
 </style>

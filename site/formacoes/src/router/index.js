@@ -40,12 +40,16 @@ const router = createRouter({
             component: Courses
         },
         {
-            path: '/creators/:id',
-            component: Creator
-        },
-        {
             path: '/users/:id/content',
             component: Content
+        },
+        {
+            path: '/users/:id/workshop',
+            component: Workshop
+        },
+        {
+            path: '/users/:id/analytics',
+            component: Analytics
         },
         {
             path: '/login',

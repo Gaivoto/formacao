@@ -53,19 +53,19 @@
                 <ContentTableRow v-for="course in this.displayCourses" :key="course.id" v-bind:course="course" class="table-row-component"/>
             </tbody>
         </table>
-        <ContentPagination v-bind:totalCourses="this.courses.length" v-bind:currentPage="this.currentPage" v-bind:coursesPerPage="this.coursesPerPage" v-on:changePage="changePage"/>
+        <Pagination2 v-bind:totalCourses="this.courses.length" v-bind:currentPage="this.currentPage" v-bind:coursesPerPage="this.coursesPerPage" v-on:changePage="changePage"/>
     </div>
 </template>
 
 <script>
 import ContentTableRow from '../components/content/ContentTableRow.vue'
-import ContentPagination from '../components/content/ContentPagination.vue'
+import Pagination2 from '../components/Pagination2.vue'
 
 export default {
     name: 'Content',
     components: {
         ContentTableRow,
-        ContentPagination
+        Pagination2
     },
     data(){
         return {
