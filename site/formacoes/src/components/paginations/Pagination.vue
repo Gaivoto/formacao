@@ -1,13 +1,13 @@
 <template>
     <div class="pagination-wrapper">
         <div class="pagination">
-            <img src="../assets/left_chevron.png" v-on:click="decreasePage"/>
+            <img src="../../assets/left_chevron.png" v-on:click="decreasePage"/>
             <div>
                 <p :ref="'p' + n" v-for="n of pageRange" :key="n" v-on:click="changePage(n)" :class="{'selected-page': isSelected(n)}">
                     {{ n }}
                 </p>
             </div>
-            <img src="../assets/right_chevron.png" v-on:click="increasePage"/>    
+            <img src="../../assets/right_chevron.png" v-on:click="increasePage"/>    
         </div>
     </div>
 </template>

@@ -11,7 +11,7 @@
 <script>
 import CoursesListFilter from '../components/courses/CoursesListFilter.vue'
 import CoursesListCourseCard from '../components/courses/CoursesListCourseCard.vue'
-import Pagination from '../components/Pagination.vue'
+import Pagination from '../components/paginations/Pagination.vue'
 
 export default {
     name: 'Courses',

@@ -1,5 +1,6 @@
 <template>
   <div class="app">
+	<Sidebar></Sidebar>
     <!--adicionar topbar?-->
     <router-view/>
 	<!--adicionar o sidebar em cima do topbar-->
@@ -8,7 +9,6 @@
 
 <script setup>
 import Sidebar from './components/Sidebar.vue'
-import Topbar from './components/Topbar.vue'
 </script>
 
 <style lang="scss">

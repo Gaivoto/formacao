@@ -1,7 +1,7 @@
 
 <template>
 <div class="landing-page-wrapper">
-    <Topbar/>
+    <TopbarLandingPage/>
     <div class="info-blocks-wrapper">
         <LandingPageInfoBlock class="landing-blocks" v-bind:imgPosition="side2" v-bind:picturePath="image1" v-bind:text="text1"/>
         <LandingPageInfoBlock class="landing-blocks" v-bind:imgPosition="side1" v-bind:picturePath="image2" v-bind:text="text2"/>
@@ -10,8 +10,8 @@
 </template>
 
 <script>
-import LandingPageInfoBlock from '../components/LandingPageInfoBlock.vue';
-import Topbar from '../components/Topbar.vue'
+import LandingPageInfoBlock from '../components/landingPage/LandingPageInfoBlock.vue';
+import TopbarLandingPage from '../components/landingPage/TopbarLandingPage.vue'
 
 export default {
     data: () => { 
@@ -27,7 +27,7 @@ export default {
     
     components: {
         LandingPageInfoBlock,
-        Topbar
+        TopbarLandingPage
     },
 
 }

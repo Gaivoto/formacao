@@ -59,7 +59,7 @@
 
 <script>
 import ContentTableRow from '../components/content/ContentTableRow.vue'
-import Pagination2 from '../components/Pagination2.vue'
+import Pagination2 from '../components/paginations/Pagination2.vue'
 
 export default {
     name: 'Content',

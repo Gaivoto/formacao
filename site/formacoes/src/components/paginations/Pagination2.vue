@@ -10,7 +10,7 @@
 
 <script>
 export default {
-    name: 'ContentPagination',
+    name: 'Pagination2',
     props: {
         currentPage: {
             type: Number,
