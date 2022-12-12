@@ -1,8 +1,8 @@
 <template>
   <div class="app">
-    <Sidebar/>
-    <Topbar/>
+    <!--adicionar topbar?-->
     <router-view/>
+	<!--adicionar o sidebar em cima do topbar-->
   </div>
 </template>
 
