@@ -1,12 +1,12 @@
 <template>
-    <div class="user-profile-course-card col-md-2">
+    <router-link :to="{ name: 'courseDetails', params: { id: this.course.id } }" class="user-profile-course-card col-md-2">
         <img :src="this.imageUrl">
         <p>{{ this.course.name }}</p>
         <div>
             <progress id="progress" :value="this.course.progress" max="100"></progress>
             <p>{{ this.course.progress }} %</p>
         </div>
-    </div>
+    </router-link>
 </template>
 
 <script>

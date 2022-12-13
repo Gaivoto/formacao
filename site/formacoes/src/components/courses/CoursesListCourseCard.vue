@@ -1,12 +1,12 @@
 <template>
-    <div class="course-card-container col-lg-4 col-md-6">
+    <router-link :to="{ name: 'courseDetails', params: { id: this.course.id } }" class="course-card-container col-lg-4 col-md-6">
         <div class="course-card">
             <img :src="this.imageUrl">
             <p>{{ this.course.name }}</p>
             <p>{{ this.course.description }}</p>
             <p>{{ this.course.price }} €</p>  
         </div>
-    </div>
+    </router-link>
 </template>
 
 <script>

@@ -1,18 +1,18 @@
 <template>
     <div class="profile-wrapper">
         <UserProfileInfo v-bind:user="this.user" v-on:alterar-dados="alterarDadosUser"/>
-        <router-link to="{ name: 'mycourses', params: { id: 1 } }">
-            <p>Os meus cursos</p>
+        <div>
+            <router-link :to="{ name: 'mycourses', params: { id: 1 } }">Os meus cursos</router-link>
             <div class="profile-list row">
                 <UserProfileCourseCard v-for="course in this.courses" :key="course.id" v-bind:course="course"/>
             </div>
-        </router-link>
-        <router-link to="{ name: 'mydiplomas', params: { id: 1 } }">
-            <p>Os meus diplomas</p>
+        </div>
+        <div>
+            <router-link :to="{ name: 'mydiplomas', params: { id: 1 } }">Os meus diplomas</router-link>
             <div class="profile-list row">
                 <UserProfileDiplomaCard v-for="diploma in this.diplomas" :key="diploma.id" v-bind:diploma="diploma"/>
             </div>
-        </router-link>
+        </div>
     </div>
 </template>
 

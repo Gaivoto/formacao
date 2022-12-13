@@ -3,12 +3,12 @@
         <div class="user-card-left">
             <img :src="this.imageUrl">
             <div>
-                <p>{{ this.user.name }}</p>
-                <p>{{ this.user.username }}</p>
+                <p>Nome: {{ this.user.name }}</p>
+                <p>Username: {{ this.user.username }}</p>
             </div>
             <div>
-                <p>{{ this.user.type }}</p>
-                <p>{{ this.user.state }}</p>
+                <p>Tipo: {{ this.user.type }}</p>
+                <p>Estado: {{ this.user.state }}</p>
             </div>    
         </div>
         <button v-on:click="changeState">{{ this.buttonText }}</button>

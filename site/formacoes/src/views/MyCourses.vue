@@ -149,7 +149,7 @@ export default {
                 category: "cat1",
                 date: "05-02-2022",
                 progress: 0
-            },
+            }
         ]
     },
     computed: {

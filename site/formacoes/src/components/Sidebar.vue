@@ -16,15 +16,15 @@
             <span class="material-icons">library_books</span>
             <span class="text">Cursos</span>
         </router-link>
-        <router-link class="button" to="{ name: 'content', params: { id: 1 } }">
+        <router-link class="button" :to="{ name: 'content', params: { id: 1 } }">
             <span class="material-icons">home</span>
             <span class="text">Home</span>
         </router-link>
-        <router-link class="button" to="{ name: 'profile', params: { id: 1 } }">
+        <router-link class="button" :to="{ name: 'profile', params: { id: 1 } }">
             <span class="material-icons">group</span>
             <span class="text">Team</span>
         </router-link>
-        <router-link class="button" to="/contact">
+        <router-link class="button" to="/courselist">
             <span class="material-icons">email</span>
             <span class="text">Contact Us</span>
         </router-link>
