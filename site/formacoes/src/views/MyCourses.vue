@@ -1,6 +1,6 @@
 <template>
     <div class="courses-wrapper">
-        <MyCoursesFilter v-on:filter="filter"/>
+        <MyCoursesFilter v-on:filter="filter" v-bind:courses="this.courses"/>
         <div class="row">
             <MyCoursesCourseCard v-for="course in this.coursesDisplay" :key="course.id" v-bind:course="course"/>
         </div>
@@ -46,7 +46,7 @@ export default {
                 description: "desc 2 amongus",
                 image: "bingus",
                 price: 12,
-                category: "cat1",
+                category: "cat13",
                 date: "05-11-2022",
                 progress: 71
             },
@@ -66,7 +66,7 @@ export default {
                 description: "desc 4 amongus",
                 image: "bingus",
                 price: 80,
-                category: "cat1",
+                category: "cat12",
                 date: "05-09-2022",
                 progress: 100
             },
@@ -96,7 +96,7 @@ export default {
                 description: "desc 7 amongus",
                 image: "bingus",
                 price: 20,
-                category: "cat1",
+                category: "cat10",
                 date: "05-06-2022",
                 progress: 30
             },
@@ -116,7 +116,7 @@ export default {
                 description: "desc 9 amongus",
                 image: "bingus",
                 price: 35,
-                category: "cat1",
+                category: "cat11",
                 date: "05-04-2022",
                 progress: 71
             },

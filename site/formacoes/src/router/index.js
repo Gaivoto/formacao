@@ -30,7 +30,8 @@ const router = createRouter({
         },
         {
             path: '/courses/:id',
-            component: CourseDetails
+            component: CourseDetails,
+            name: "courseDetails"
         },
         {
             path: '/courselist',
@@ -42,15 +43,18 @@ const router = createRouter({
         },
         {
             path: '/users/:id/content',
-            component: Content
+            component: Content,
+            name: "content"
         },
         {
             path: '/users/:id/workshop',
-            component: Workshop
+            component: Workshop,
+            name: "workshop"
         },
         {
             path: '/users/:id/analytics',
-            component: Analytics
+            component: Analytics,
+            name: "analytics"
         },
         {
             path: '/login',
@@ -62,23 +66,27 @@ const router = createRouter({
         },
         {
             path: '/users/:id',
-            component: Profile
+            component: Profile,
+            name: "profile"
         },
         {
             path: '/users/:id/courses',
-            component: MyCourses
+            component: MyCourses,
+            name: "mycourses"
         },
         {
             path: '/users/:id/diplomas',
-            component: MyDiplomas
+            component: MyDiplomas,
+            name: "mydiplomas"
         },
         {
             path: '/settings',
             component: Settings
         },
         {
-            path: '/courses/:id/videos/:id',
-            component: VideoPlayer
+            path: '/courses/:idC/videos/:idV',
+            component: VideoPlayer,
+            name: "videoPlayer"
         },
         {
             path: '/users',

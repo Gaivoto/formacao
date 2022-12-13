@@ -6,9 +6,7 @@
         <div>
             <p>Categoria:</p>
             <select v-on:change="filter" name="category" ref="category">
-                <option value="cat1">Categoria 1</option>
-                <option value="cat2">Categoria 2</option>
-                <option value="cat3">Categoria 3</option>
+                <option v-for="category in this.categories" :key="category.id" :value="category.name">{{ category.name }}</option>
             </select>
             <p>Ordenar por:</p>
             <select v-on:change="filter" name="orderby" ref="order">
@@ -26,6 +24,34 @@
 <script>
 export default {
     name: 'CoursesListFilter',
+    props: {
+        courses: {
+            type: Array,
+            required: true
+        }
+    },
+    data() {
+        return {
+            categories: []
+        }
+    },
+    created() {
+        console.log(this.courses)
+
+        this.courses.forEach(c => {
+            let exists = false;
+
+            this.categories.forEach(cat => {
+                if (c.category == cat.name) {
+                    exists = true;
+                }
+            });
+
+            if (!exists) {
+                this.categories.push({id: this.categories.length, name: c.category});
+            }
+        });
+    },
     mounted(){
         let filter = {
             name: null,
