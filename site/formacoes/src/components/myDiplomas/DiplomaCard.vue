@@ -6,6 +6,7 @@
         <div class="text-wrapper">
             <p>{{ diploma.name }}</p>
             <p>{{ diploma.desc }} </p>
+            <p>{{ diploma.date }} </p>
         </div>
     </div>
 </template>
