@@ -164,7 +164,7 @@ export default {
             
             if(filter.name) {
                 this.courses.forEach(c => {
-                    if(c.name.includes(filter.name) && c.category == filter.category) {
+                    if(c.name.toLowerCase().includes(filter.name.toLowerCase()) && c.category == filter.category) {
                         this.coursesFiltered.push(c);
                     }
                 });

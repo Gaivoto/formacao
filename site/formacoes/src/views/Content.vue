@@ -53,7 +53,7 @@
                 <ContentTableRow v-for="course in this.displayCourses" :key="course.id" v-bind:course="course" class="table-row-component"/>
             </tbody>
         </table>
-        <Pagination2 v-bind:totalCourses="this.courses.length" v-bind:currentPage="this.currentPage" v-bind:coursesPerPage="this.coursesPerPage" v-on:changePage="changePage"/>
+        <Pagination2 v-bind:totalItems="this.courses.length" v-bind:currentPage="this.currentPage" v-bind:itemsPerPage="this.itemsPerPage" v-on:changePage="changePage"/>
     </div>
 </template>
 
@@ -70,7 +70,7 @@ export default {
     data(){
         return {
             currentPage: 1,
-            coursesPerPage: 5,
+            itemsPerPage: 5,
             courses: [],
             displayCourses: []
         }
@@ -127,9 +127,9 @@ export default {
                 date: "03/12/2022",
                 duration: "10:31"
             }
-        ]
+        ];
 
-        this.displayCourses = this.courses.slice(0, this.coursesPerPage);
+        this.displayCourses = this.courses.slice(0, this.itemsPerPage);
     },
     methods: {
         orderTable(order) {
@@ -162,12 +162,12 @@ export default {
                     break;
             }
 
-            this.displayCourses = this.courses.slice((this.currentPage - 1) * this.coursesPerPage, this.currentPage * this.coursesPerPage);
+            this.displayCourses = this.courses.slice((this.currentPage - 1) * this.itemsPerPage, this.currentPage * this.itemsPerPage);
         },
         changePage(page) {
             this.currentPage = page;
 
-            this.displayCourses = this.courses.slice((this.currentPage - 1) * this.coursesPerPage, this.currentPage * this.coursesPerPage);
+            this.displayCourses = this.courses.slice((this.currentPage - 1) * this.itemsPerPage, this.currentPage * this.itemsPerPage);
         }
     }
 }

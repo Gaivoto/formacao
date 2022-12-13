@@ -28,6 +28,10 @@
             <span class="material-icons">email</span>
             <span class="text">Contact Us</span>
         </router-link>
+        <router-link class="button" to="/users">
+            <span class="material-icons">email</span>
+            <span class="text">ADM Users</span>
+        </router-link>
     </div>
 
     <div class="flex"></div>

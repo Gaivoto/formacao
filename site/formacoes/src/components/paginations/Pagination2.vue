@@ -2,7 +2,7 @@
     <div class="pagination-wrapper">
         <div class="pagination">
             <img v-on:click="decreasePage" src="../../assets/left_chevron.png">
-            <p>{{ this.firstCourse }} - {{ this.lastCourse }} de {{ this.totalCourses }}</p>
+            <p>{{ this.firstItem }} - {{ this.lastItem }} de {{ this.totalItems }}</p>
             <img v-on:click="increasePage" src="../../assets/right_chevron.png">    
         </div>
     </div>
@@ -16,22 +16,23 @@ export default {
             type: Number,
             required: true
         },
-        totalCourses: {
+        totalItems: {
             type: Number,
             required: true
         },
-        coursesPerPage: {
+        itemsPerPage: {
             type: Number,
             required: true
         }
     },
     computed: {
-        firstCourse() {
-            return (this.currentPage - 1) * this.coursesPerPage + 1;
+        firstItem() {
+            if(this.totalItems == 0) return 0;
+            else return (this.currentPage - 1) * this.itemsPerPage + 1;
         },
-        lastCourse() {
-            if(this.currentPage * this.coursesPerPage > this.totalCourses) return this.totalCourses;
-            else return this.currentPage * this.coursesPerPage;
+        lastItem() {
+            if(this.currentPage * this.itemsPerPage > this.totalItems) return this.totalItems;
+            else return this.currentPage * this.itemsPerPage;
         }
     },
     methods: {
@@ -41,7 +42,7 @@ export default {
             }
         },
         increasePage() {
-            if(this.currentPage * this.coursesPerPage < this.totalCourses) {
+            if(this.currentPage * this.itemsPerPage < this.totalItems) {
                 this.$emit("changePage", this.currentPage + 1);
             }
         }

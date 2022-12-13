@@ -31,7 +31,6 @@ export default {
     },
     computed: {
         pageRange() {
-            console.log(this.page);
             let range = [];
 
             if(this.page < 3) { 
