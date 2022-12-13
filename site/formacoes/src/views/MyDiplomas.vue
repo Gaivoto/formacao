@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="diplomas-wrapper">
         <div>
             <!--Topbar-->
         </div>
@@ -129,22 +129,22 @@ export default {
         filter(filter) {
             this.diplomasDisplay = [];
             this.diplomasFiltered = [];
-            
-            if(filter.name) {
+
+            if (filter.name) {
                 this.diplomas.forEach(d => {
-                    if(d.name.includes(filter.name) && d.category == filter.category) {
+                    if (d.name.includes(filter.name) && d.category == filter.category) {
                         this.diplomasFiltered.push(d);
                     }
                 });
             } else {
                 this.diplomas.forEach(d => {
-                    if(d.category == filter.category) {
+                    if (d.category == filter.category) {
                         this.diplomasFiltered.push(d);
                     }
                 });
             }
 
-            switch(filter.order) {
+            switch (filter.order) {
                 case "date-new":
                     this.diplomasFiltered.sort((a, b) => (new Date(a.date.substring(6) + "-" + a.date.substring(3, 5) + "-" + a.date.substring(0, 2)) < new Date(b.date.substring(6) + "-" + b.date.substring(3, 5) + "-" + b.date.substring(0, 2))) ? 1 : ((new Date(b.date.substring(6) + "-" + b.date.substring(3, 5) + "-" + b.date.substring(0, 2)) < new Date(a.date.substring(6) + "-" + a.date.substring(3, 5) + "-" + a.date.substring(0, 2))) ? -1 : 0));
                     break;
@@ -155,21 +155,21 @@ export default {
                     break;
             }
 
-            for(var i = (this.page - 1) * 6; i < this.page * 6; i++) {   
-                if(this.diplomasFiltered[i]){
+            for (var i = (this.page - 1) * 6; i < this.page * 6; i++) {
+                if (this.diplomasFiltered[i]) {
                     this.diplomasDisplay.push(this.diplomasFiltered[i]);
-                } 
+                }
             }
         },
         changePage(page) {
             this.page = page;
-            
+
             this.diplomasDisplay = [];
 
-            for(var i = (this.page - 1) * 6; i < this.page * 6; i++) {   
-                if(this.diplomasFiltered[i]){
+            for (var i = (this.page - 1) * 6; i < this.page * 6; i++) {
+                if (this.diplomasFiltered[i]) {
                     this.diplomasDisplay.push(this.diplomasFiltered[i]);
-                } 
+                }
             }
         }
     }
@@ -179,7 +179,11 @@ export default {
 </script>
 
 <style scoped>
-.row {
-    margin: 0px;
-}
+    .row {
+        margin: 0px;
+    }
+
+    .diplomas-wrapper {
+        width: 100%;
+    }
 </style>
