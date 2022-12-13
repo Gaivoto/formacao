@@ -3,12 +3,13 @@
 	<Sidebar></Sidebar>
     <!--adicionar topbar?-->
     <router-view/>
+	
 	<!--adicionar o sidebar em cima do topbar-->
   </div>
 </template>
 
 <script setup>
-import Sidebar from './components/Sidebar.vue'
+import Sidebar from './components/Sidebar.vue'	
 </script>
 
 <style lang="scss">
