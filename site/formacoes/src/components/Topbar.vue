@@ -1,6 +1,9 @@
 <template>
-  <div class="wrapper justify-content-between">
-    <h3>Nome da pagina</h3>
+  <div class="wrapper">
+    <div class="page-name">
+      <h3>{{ this.pagename }}</h3>
+    </div>
+
     <div class="user-wrapper">
       <img id="profile-image" :src="this.imageUrl" />
       <h3>{{ this.user.username }}</h3>
@@ -14,7 +17,7 @@ import { ref } from "vue";
 export default {
   name: "Topbar",
   props: {
-    name,
+    pagename,
     user: {
       type: Object,
       required: true,
@@ -49,8 +52,11 @@ export default {
   
   <style lang="scss" scoped>
 .wrapper {
-  background-color: lightgrey;
+  width: 100%;
   display: flex;
+  justify-content: space-between;
+  text-align: center;
+  background-color: grey;
   padding-top: 1%;
   padding-bottom: 1%;
   padding-right: 5%;
@@ -58,13 +64,17 @@ export default {
   margin-bottom: 2%;
 }
 
+.page-name {
+  width: 50%;
+}
 .user-wrapper {
+  width: 50%;
   display: flex;
 }
 
 #profile-image {
-  height: 70%;
-  width: 70%;
+  height: 20%;
+  width: 20%;
   border-radius: 50%;
   object-fit: cover;
 }
