@@ -42,9 +42,8 @@ export default {
     this.user.country = "Portugal";
     this.user.description = "Boa descrição bruvkek";
     this.user.image = "bingus";
-
     this.imageUrl = new URL(
-      `../../assets/${this.user.image}.jpg`,
+      `../../../assets/${this.user.image}.jpg`,
       import.meta.url
     ).href;
   },
@@ -74,8 +73,8 @@ export default {
 }
 
 #profile-image {
-  height: 20%;
-  width: 20%;
+  height: 100px;
+  width: 100px;
   border-radius: 50%;
   object-fit: cover;
 }
