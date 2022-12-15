@@ -1,9 +1,7 @@
 <template>
     <div class="vid" :class="{'vidOpen': open}">
         <div class="left-side">
-            <div class="picture">
-                <img :src="this.imageUrl"/>
-            </div>
+            <img :src="this.imageUrl"/>
             <div class="text">
                 <p>{{ video.name }}</p>
                 <p>{{ video.duration }}</p>
@@ -26,15 +24,14 @@ export default {
         }
     },
     props: {
-    video: {
-        type: Object,
-        required: true
+        video: {
+            type: Object,
+            required: true
+        }
+    },
+    created() {
+        this.imageUrl = new URL(`../../assets/${this.video.image}.jpg`, import.meta.url).href;
     }
-  },
-  created() {
-    this.imageUrl = new URL(`../../assets/${this.video.image}.jpg`, import.meta.url).href;
-  }
-    
 }
 </script>
 
@@ -44,30 +41,24 @@ export default {
         display: flex;
         justify-content: space-between;
         background-color: rgb(15, 108, 151);
-        height: 33%;
-        width: 100%;
+        height: 140px;
     }
     .vidOpen {
         padding: 10px;
         display: flex;
         justify-content: space-between;
         background-color: rgb(228, 5, 5);
-        height: 53%;
-        width: 100%;
+        height: 200px;
     }
     .left-side {
         display: flex;
         justify-content: start;
         height: 100%;
     }
-    .picture {
-        height: 65%;
-        width: 65%;
-    }
-    img {
-        width: 100%;
-        height: 100%;
-        max-width: 100%;
-        max-height: 100%;
+
+    .img {
+        height: 120px;
+        width: 120px;
+        object-fit: cover;
     }
 </style>

@@ -221,10 +221,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    .courses-wrapper {
-        width: 100%;
-    }
-
     .row {
         margin: 0px;
     }

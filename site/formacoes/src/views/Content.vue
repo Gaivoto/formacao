@@ -319,7 +319,6 @@ export default {
 
 <style lang="scss" scoped>
 .table-wrapper {
-  width: 100%;
   padding: 32px 5%;
 }
 

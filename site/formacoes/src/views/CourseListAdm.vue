@@ -456,7 +456,4 @@ export default {
 </script>
 
 <style scoped>
-    .courses-list-wrapper {
-        width: 100%;
-    }
 </style>

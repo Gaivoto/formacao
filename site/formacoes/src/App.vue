@@ -1,17 +1,35 @@
 <template>
   <div class="app">
-	<Sidebar/>
-	<div class="active-page">
-		<Topbar/>
-		<router-view/>	
+	<Sidebar class="sidebar" v-on:toggleSidebar="toggleSidebar"/>
+	<div class="full-page">
+		<Topbar class="topbar" :class="{ sidebarTopbar: sidebarOpen }"/>
+		<router-view  class="active-page" :class="{ sidebarMainPage: sidebarOpen }"/>	
 	</div>
 	<!--adicionar o sidebar em cima do topbar-->
   </div>
 </template>
 
-<script setup>
+<script>
 import Topbar from './components/Topbar.vue'
-import Sidebar from './components/Sidebar.vue'	
+import Sidebar from './components/Sidebar.vue'
+
+export default {
+	components: {
+		Topbar,
+		Sidebar
+	},
+	data() {
+		return {
+			sidebarOpen: false
+		}
+	},
+	methods: {
+		toggleSidebar() {
+			this.sidebarOpen = !this.sidebarOpen;
+			this.$emit("toggleSidebar");
+		}
+	}
+}
 </script>
 
 <style lang="scss">
@@ -31,8 +49,36 @@ import Sidebar from './components/Sidebar.vue'
 	font-family: 'Fira sans', sans-serif;
 }
 
-.active-page {
+.sidebar {
+	position: fixed;
+	z-index: 2;
+}
+
+.topbar {
+	position: fixed;
+	padding-left: 136px !important;
+	z-index: 1;
+	transition: 0.3s ease-in-out;
+}
+
+.full-page {
 	width: 100%;
+}
+
+.active-page {
+	padding-left: 64px;
+	margin-top: 82px;
+	transition: 0.3s ease-in-out;
+}
+
+.sidebarTopbar {
+	padding-left: 372px !important;
+	transition: 0.3s ease-in-out;
+}
+
+.sidebarMainPage {
+	padding-left: 300px;
+	transition: 0.3s ease-in-out;
 }
 
 body {

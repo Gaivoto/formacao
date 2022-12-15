@@ -128,7 +128,4 @@ export default {
 </script>
 
 <style scoped>
-    .user-list-wrapper {
-        width: 100%;
-    }
 </style>

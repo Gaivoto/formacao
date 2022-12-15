@@ -178,11 +178,7 @@ export default {
 </script>
 
 <style scoped>
-.row {
-    margin: 0px;
-}
-
-.diplomas-wrapper {
-    width: 100%;
-}
+    .row {
+        margin: 0px;
+    }
 </style>

@@ -34,9 +34,6 @@ export default {
 </script>
 
 <style scoped>
-.landing-page-wrapper {
-    width: 100%;
-}
 .info-blocks-wrapper {
     padding: 0 10%;
     width: 100%;

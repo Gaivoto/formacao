@@ -1,11 +1,11 @@
 <template>
-  <aside :class="`${is_expanded && 'is-expanded'}`">
+  <aside :class="{ isExpanded: is_expanded }">
     <div class="logo">
         <img src="../assets/vue.svg" alt="Vue">
     </div>
 
     <div class="menu-toggle-wrap">
-        <button class="menu-toggle" @click="ToggleMenu">
+        <button class="menu-toggle" v-on:click="toggleMenu">
             <span class="material-icons">clear_all</span>
         </button>
     </div>
@@ -45,13 +45,19 @@
   </aside>
 </template>
 
-<script setup>
-import { ref }  from 'vue'
-
-const is_expanded = ref(false)
-
-const ToggleMenu = () => {
-    is_expanded.value = !is_expanded.value
+<script>
+export default {
+	data() {
+		return {
+			is_expanded: false
+		}
+	},
+	methods: {
+		toggleMenu() {
+			this.is_expanded = !this.is_expanded;
+			this.$emit("toggleSidebar");
+		}
+	}
 }
 </script>
 
@@ -65,7 +71,7 @@ aside {
 	overflow: hidden;
 	min-height: 100vh;
 	padding: 1rem;
-	transition: 0.2s ease-in-out;
+	transition: 0.3s ease-in-out;
 	margin: 0;
 	min-width: 64px;
 
@@ -85,16 +91,16 @@ aside {
 		justify-content: flex-end;
 		position: relative;
 		top: 0;
-		transition: 0.2s ease-in-out;
+		transition: 0.3s ease-in-out;
 
 		.menu-toggle {
 			padding: 0;
-			transition: 0.2s ease-in-out;
+			transition: 0.3s ease-in-out;
 
 			.material-icons {
 				font-size: 2rem;
 				color: var(--light);
-				transition: 0.2s ease-out;
+				transition: 0.3s ease-out;
 			}
 			
 			&:hover {
@@ -126,14 +132,14 @@ aside {
 			display: flex;
 			align-items: center;
 			text-decoration: none;
-			transition: 0.2s ease-in-out;
+			transition: 0.3s ease-in-out;
 			padding: 0.5rem 1rem;
 			height: 48px;
 
 			.material-icons {
 				font-size: 2rem;
 				color: var(--light);
-				transition: 0.2s ease-in-out;
+				transition: 0.3s ease-in-out;
 			}
 
 			.text {
@@ -168,7 +174,7 @@ aside {
 		}
 	}
 
-	&.is-expanded {
+	&.isExpanded {
 		width: var(--sidebar-width);
 		min-width: 300px;
 
