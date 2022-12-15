@@ -2,7 +2,7 @@
     <div class="courses-list-wrapper">
         <CourseListAdmFilter v-on:filter="filter"/>
         <div>
-            <CourseListAdmCourseCard v-for="course in this.coursesDisplay" :key="course.id" v-bind:course="course" v-on:changeState="changeState"/>
+            <CourseListAdmCourseCard v-for="course in this.coursesDisplay" :key="course.id" v-bind:course="course" v-on:changeStateCourse="changeStateCourse" v-on:changeStateVideo="changeStateVideo"/>
         </div>
         <Pagination2 v-bind:totalItems="this.coursesFiltered.length" v-bind:currentPage="this.currentPage" v-bind:itemsPerPage="this.itemsPerPage" v-on:changePage="changePage"/>
     </div>
@@ -44,7 +44,21 @@ export default {
                     id: 1,
                     name: "Bingus"
                 },
-                state: "Ativo"
+                state: "Ativo",
+                videos: [
+                    {
+                        id: 1,
+                        name: "v1",
+                        state: "Ativo",
+                        image: "bingus"
+                    },
+                    {
+                        id: 2,
+                        name: "v2",
+                        state: "Ativo",
+                        image: "bingus"
+                    },
+                ]
             },
             {
                 id: 2,
@@ -59,7 +73,21 @@ export default {
                     id: 1,
                     name: "Bingus"
                 },
-                state: "Ativo"
+                state: "Ativo",
+                videos: [
+                    {
+                        id: 3,
+                        name: "v1",
+                        state: "Pendente",
+                        image: "bingus"
+                    },
+                    {
+                        id: 4,
+                        name: "v2",
+                        state: "Ativo",
+                        image: "bingus"
+                    },
+                ]
             },
             {
                 id: 3,
@@ -74,7 +102,21 @@ export default {
                     id: 2,
                     name: "Amogus"
                 },
-                state: "Inativo"
+                state: "Inativo",
+                videos: [
+                    {
+                        id: 5,
+                        name: "v1",
+                        state: "Ativo",
+                        image: "bingus"
+                    },
+                    {
+                        id: 6,
+                        name: "v2",
+                        state: "Ativo",
+                        image: "bingus"
+                    },
+                ]
             },
             {
                 id: 4,
@@ -89,7 +131,21 @@ export default {
                     id: 2,
                     name: "Amogus"
                 },
-                state: "Pendente"
+                state: "Pendente",
+                videos: [
+                    {
+                        id: 7,
+                        name: "v1",
+                        state: "Ativo",
+                        image: "bingus"
+                    },
+                    {
+                        id: 8,
+                        name: "v2",
+                        state: "Ativo",
+                        image: "bingus"
+                    },
+                ]
             },
             {
                 id: 5,
@@ -104,7 +160,21 @@ export default {
                     id: 1,
                     name: "Bingus"
                 },
-                state: "Ativo"
+                state: "Ativo",
+                videos: [
+                    {
+                        id: 9,
+                        name: "v1",
+                        state: "Ativo",
+                        image: "bingus"
+                    },
+                    {
+                        id: 10,
+                        name: "v2",
+                        state: "Ativo",
+                        image: "bingus"
+                    },
+                ]
             },
             {
                 id: 6,
@@ -119,7 +189,21 @@ export default {
                     id: 1,
                     name: "Bingus"
                 },
-                state: "Ativo"
+                state: "Ativo",
+                videos: [
+                    {
+                        id: 11,
+                        name: "v1",
+                        state: "Ativo",
+                        image: "bingus"
+                    },
+                    {
+                        id: 12,
+                        name: "v2",
+                        state: "Ativo",
+                        image: "bingus"
+                    },
+                ]
             },
             {
                 id: 7,
@@ -134,7 +218,21 @@ export default {
                     id: 1,
                     name: "Bingus"
                 },
-                state: "Ativo"
+                state: "Ativo",
+                videos: [
+                    {
+                        id: 13,
+                        name: "v1",
+                        state: "Ativo",
+                        image: "bingus"
+                    },
+                    {
+                        id: 14,
+                        name: "v2",
+                        state: "Ativo",
+                        image: "bingus"
+                    },
+                ]
             },
             {
                 id: 8,
@@ -149,7 +247,21 @@ export default {
                     id: 2,
                     name: "Amogus"
                 },
-                state: "Inativo"
+                state: "Inativo",
+                videos: [
+                    {
+                        id: 15,
+                        name: "v1",
+                        state: "Ativo",
+                        image: "bingus"
+                    },
+                    {
+                        id: 16,
+                        name: "v2",
+                        state: "Ativo",
+                        image: "bingus"
+                    },
+                ]
             },
             {
                 id: 9,
@@ -164,7 +276,21 @@ export default {
                     id: 1,
                     name: "Bingus"
                 },
-                state: "Ativo"
+                state: "Ativo",
+                videos: [
+                    {
+                        id: 17,
+                        name: "v1",
+                        state: "Ativo",
+                        image: "bingus"
+                    },
+                    {
+                        id: 18,
+                        name: "v2",
+                        state: "Ativo",
+                        image: "bingus"
+                    },
+                ]
             },
             {
                 id: 10,
@@ -179,7 +305,21 @@ export default {
                     id: 2,
                     name: "Amogus"
                 },
-                state: "Pendente"
+                state: "Pendente",
+                videos: [
+                    {
+                        id: 19,
+                        name: "v1",
+                        state: "Ativo",
+                        image: "bingus"
+                    },
+                    {
+                        id: 20,
+                        name: "v2",
+                        state: "Ativo",
+                        image: "bingus"
+                    },
+                ]
             },
             {
                 id: 11,
@@ -194,7 +334,21 @@ export default {
                     id: 2,
                     name: "Amogus"
                 },
-                state: "Inativo"
+                state: "Inativo",
+                videos: [
+                    {
+                        id: 21,
+                        name: "v1",
+                        state: "Ativo",
+                        image: "bingus"
+                    },
+                    {
+                        id: 22,
+                        name: "v2",
+                        state: "Ativo",
+                        image: "bingus"
+                    },
+                ]
             },
             {
                 id: 12,
@@ -209,7 +363,21 @@ export default {
                     id: 1,
                     name: "Bingus"
                 },
-                state: "Rejeitado"
+                state: "Rejeitado",
+                videos: [
+                    {
+                        id: 23,
+                        name: "v1",
+                        state: "Inativo",
+                        image: "bingus"
+                    },
+                    {
+                        id: 24,
+                        name: "v2",
+                        state: "Ativo",
+                        image: "bingus"
+                    },
+                ]
             }
         ];
 
@@ -257,11 +425,26 @@ export default {
 
             this.coursesDisplay = this.coursesFiltered.slice((this.currentPage - 1) * this.itemsPerPage, this.currentPage * this.itemsPerPage);
         },
-        changeState(info) {
+        changeStateCourse(info) {
             this.courses.forEach(course => {
-                if(course.id == info.id) course.state = info.state;
+                if(course.id == info.id) {
+                    course.state = info.state;
+                    course.videos.forEach(video => {
+                        video.state = info.state;
+                    });
+                }
             });
             //change course state on db
+
+            this.notifyCreator();
+        },
+        changeStateVideo(info) {
+            this.courses.forEach(course => {
+                course.videos.forEach(video => {
+                    if(video.id == info.id) video.state = info.state;
+                });
+            });
+            //change video state on db
 
             this.notifyCreator();
         },
