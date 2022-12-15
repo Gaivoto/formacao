@@ -12,7 +12,6 @@
         </div>
         <Pagination v-on:change-page="changePage" v-bind:page="this.page" v-bind:numberOfPages="numberOfPages" />
     </div>
-
 </template>
 
 
@@ -179,11 +178,11 @@ export default {
 </script>
 
 <style scoped>
-    .row {
-        margin: 0px;
-    }
+.row {
+    margin: 0px;
+}
 
-    .diplomas-wrapper {
-        width: 100%;
-    }
+.diplomas-wrapper {
+    width: 100%;
+}
 </style>
