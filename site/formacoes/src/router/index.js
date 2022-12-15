@@ -39,7 +39,8 @@ const router = createRouter({
         },
         {
             path: '/courses',
-            component: Courses
+            component: Courses,
+            name: "Courses"
         },
         {
             path: '/users/:id/content',

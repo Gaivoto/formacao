@@ -1,6 +1,6 @@
 <template>
   <div class="courses-wrapper">
-    <Topbar v-bind:course="this.pagename" />
+    <Topbar />
     <CoursesListFilter v-on:filter="filter" />
     <div class="row">
       <CoursesListCourseCard
@@ -37,7 +37,6 @@ export default {
       coursesFiltered: [],
       coursesDisplay: [],
       page: 1,
-      pagename: this.name,
     };
   },
   created() {

@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
     <div class="page-name">
-      <h3>{{ this.pagename }}</h3>
+      <h3>{{ this.$route.name }}</h3>
     </div>
 
     <div class="user-wrapper">
@@ -13,11 +13,12 @@
   
   <script>
 import { ref } from "vue";
+import { useRoute } from "vue-router";
+import { computed } from "vue";
 
 export default {
   name: "Topbar",
   props: {
-    pagename,
     user: {
       type: Object,
       required: true,
