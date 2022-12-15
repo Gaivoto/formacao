@@ -1,12 +1,12 @@
 
 <template>
-<div class="landing-page-wrapper">
-    <TopbarLandingPage/>
-    <div class="info-blocks-wrapper">
-        <LandingPageInfoBlock class="landing-blocks" v-bind:imgPosition="side2" v-bind:picturePath="image1" v-bind:text="text1"/>
-        <LandingPageInfoBlock class="landing-blocks" v-bind:imgPosition="side1" v-bind:picturePath="image2" v-bind:text="text2"/>
+    <div class="landing-page-wrapper">
+        <TopbarLandingPage/>
+        <div class="info-blocks-wrapper">
+            <LandingPageInfoBlock class="landing-blocks" v-bind:imgPosition="side2" v-bind:picturePath="image1" v-bind:text="text1"/>
+            <LandingPageInfoBlock class="landing-blocks" v-bind:imgPosition="side1" v-bind:picturePath="image2" v-bind:text="text2"/>
+        </div>
     </div>
-</div>
 </template>
 
 <script>
@@ -34,9 +34,11 @@ export default {
 </script>
 
 <style scoped>
-.info-blocks-wrapper {
-    padding: 0 10%;
-    width: 100%;
-}
-
+    .landing-page-wrapper {
+        margin-top: 0px;
+    }
+    .info-blocks-wrapper {
+        padding: 0 10%;
+        width: 100%;
+    }
 </style>

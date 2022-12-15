@@ -1,8 +1,8 @@
 <template>
   <div class="app">
-	<Sidebar class="sidebar" v-on:toggleSidebar="toggleSidebar"/>
+	<Sidebar class="sidebar" v-on:toggleSidebar="toggleSidebar" :class="{ 'd-none': displaySidebarTopbar }"/>
 	<div class="full-page">
-		<Topbar class="topbar" :class="{ sidebarTopbar: sidebarOpen }"/>
+		<Topbar class="topbar" :class="{ sidebarTopbar: sidebarOpen, 'd-none': displaySidebarTopbar }"/>
 		<router-view  class="active-page" :class="{ sidebarMainPage: sidebarOpen }"/>	
 	</div>
 	<!--adicionar o sidebar em cima do topbar-->
@@ -21,6 +21,12 @@ export default {
 	data() {
 		return {
 			sidebarOpen: false
+		}
+	},
+	computed: {
+		displaySidebarTopbar() {
+			if(!this.$route.name || this.$route.name == "Login") return true;
+			return false;
 		}
 	},
 	methods: {
@@ -66,7 +72,7 @@ export default {
 }
 
 .active-page {
-	padding-left: 64px;
+	margin-left: 64px;
 	margin-top: 82px;
 	transition: 0.3s ease-in-out;
 }
@@ -77,21 +83,13 @@ export default {
 }
 
 .sidebarMainPage {
-	padding-left: 300px;
+	margin-left: 300px;
 	transition: 0.3s ease-in-out;
 }
 
 body {
 	background: var(--light);
 	margin: 0;
-}
-
-button {
-	cursor: pointer;
-	appearance: none;
-	border: none;
-	outline: none;
-	background: none;
 }
 
 .app {

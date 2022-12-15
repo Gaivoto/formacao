@@ -6,12 +6,12 @@
             </router-link>
         </div>
         <div class="rightSide">
-            <router-link class="topBarButton" to="/">
+            <router-link class="topBarButton" to="/courses">
                 <span class="text">Cursos</span>
             </router-link>
 
             <input type="text" placeholder="Pesquisar cursos..."/>
-            <router-link class="topBarButton" to="/">
+            <router-link class="topBarButton" to="/login">
                 <span class="text">Login</span>
             </router-link>
         </div>

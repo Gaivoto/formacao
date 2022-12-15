@@ -112,6 +112,14 @@ aside {
 		}
 	}
 
+	button {
+		cursor: pointer;
+		appearance: none;
+		border: none;
+		outline: none;
+		background: none;
+	}
+
 	h3, .button .text {
 		opacity: 0;
 		transition: opacity 0.3s ease-in-out;
