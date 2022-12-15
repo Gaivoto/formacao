@@ -56,7 +56,6 @@ const ToggleMenu = () => {
 </script>
 
 <style lang="scss" scoped>
-
 aside {
 	display: flex;
 	flex-direction: column;

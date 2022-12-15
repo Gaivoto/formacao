@@ -85,7 +85,7 @@ const router = createRouter({
             component: Settings
         },
         {
-            path: '/courses/:idC/videos/:idV',
+            path: '/courses/:id/videos',
             component: VideoPlayer,
             name: "videoPlayer"
         },
