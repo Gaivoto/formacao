@@ -1,5 +1,5 @@
 <template>
-    <router-link :to="{ name: 'courseDetails', params: { id: this.course.id } }" class="user-profile-course-card col-md-2">
+    <router-link :to="{ name: 'Curso', params: { id: this.course.id } }" class="user-profile-course-card col-md-2">
         <img :src="this.imageUrl">
         <p>{{ this.course.name }}</p>
         <div>

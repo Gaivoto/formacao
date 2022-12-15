@@ -26,72 +26,78 @@ const router = createRouter({
         },
         {
             path: '/home',
-            component: Home
+            component: Home,
+            name: "Home"
         },
         {
             path: '/courses/:id',
             component: CourseDetails,
-            name: "courseDetails"
+            name: "Curso"
         },
         {
             path: '/courselist',
-            component: CourseListAdm
+            component: CourseListAdm,
+            name: "Lista de Cursos"
         },
         {
             path: '/courses',
             component: Courses,
-            name: "Courses"
+            name: "Cursos"
         },
         {
             path: '/users/:id/content',
             component: Content,
-            name: "content"
+            name: "Conteúdo"
         },
         {
             path: '/users/:id/workshop',
             component: Workshop,
-            name: "workshop"
+            name: "Workshop"
         },
         {
             path: '/users/:id/analytics',
             component: Analytics,
-            name: "analytics"
+            name: "Estatísticas"
         },
         {
             path: '/login',
-            component: Login
+            component: Login,
+            name: "Login"
         },
         {
             path: '/register',
-            component: Register
+            component: Register,
+            name: "Registo"
         },
         {
             path: '/users/:id',
             component: Profile,
-            name: "profile"
+            name: "Perfil do Utilizador"
         },
         {
             path: '/users/:id/courses',
             component: MyCourses,
-            name: "mycourses"
+            name: "Meus Cursos"
         },
         {
             path: '/users/:id/diplomas',
             component: MyDiplomas,
-            name: "mydiplomas"
+            name: "Meus Diplomas"
         },
         {
             path: '/settings',
-            component: Settings
+            component: Settings,
+            name: "Preferências"
         },
         {
             path: '/courses/:id/videos',
             component: VideoPlayer,
-            name: "videoPlayer"
+            name: "Vídeo"
         },
         {
             path: '/users',
-            component: UserListAdm
+            component: UserListAdm,
+            name: "Lista de Utilizadores"
         }
     ]
 })

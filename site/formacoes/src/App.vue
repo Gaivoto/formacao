@@ -1,14 +1,16 @@
 <template>
   <div class="app">
-	<Sidebar></Sidebar>
-    <!--adicionar topbar?-->
-    <router-view/>
-	
+	<Sidebar/>
+	<div class="active-page">
+		<Topbar/>
+		<router-view/>	
+	</div>
 	<!--adicionar o sidebar em cima do topbar-->
   </div>
 </template>
 
 <script setup>
+import Topbar from './components/Topbar.vue'
 import Sidebar from './components/Sidebar.vue'	
 </script>
 
@@ -27,6 +29,10 @@ import Sidebar from './components/Sidebar.vue'
 * {
 	box-sizing: border-box;
 	font-family: 'Fira sans', sans-serif;
+}
+
+.active-page {
+	width: 100%;
 }
 
 body {

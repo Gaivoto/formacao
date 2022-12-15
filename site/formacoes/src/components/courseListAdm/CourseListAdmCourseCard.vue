@@ -4,7 +4,7 @@
             <div class="course-card-left">
                 <img :src="this.imageUrl">
                 <div>
-                    <router-link :to="{ name: 'courseDetails', params: { id: this.course.id } }"><p>Nome: {{ this.course.name }}</p></router-link>
+                    <router-link :to="{ name: 'Curso', params: { id: this.course.id } }"><p>Nome: {{ this.course.name }}</p></router-link>
                     <p>Criador: {{ this.course.creator.name }}</p>
                 </div>
                 <div>

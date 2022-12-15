@@ -3,7 +3,6 @@
         <CourseDetHeader v-bind:course="this.course" />
         <div class="vid-container">
             <VidInfo v-for="vid in this.videos" :key="vid.id" v-bind:video="vid"/>
-            
         </div>
     </div>
 </template>

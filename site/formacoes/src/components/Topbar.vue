@@ -1,81 +1,174 @@
 <template>
-  <div class="wrapper">
-    <div class="page-name">
-      <h3>{{ this.$route.name }}</h3>
-    </div>
+    <div class="wrapper">
+        <p class="page-name">{{ this.$route.name }}</p>
 
-    <div class="user-wrapper">
-      <img id="profile-image" :src="this.imageUrl" />
-      <h3>{{ this.user.username }}</h3>
+        <div class="topbar-right">
+            <div class="notif-container" v-on:click="toggleNotifs">
+                <span class="material-icons notif-icon">notifications<div :class="{ notif: showNotif }"></div></span>
+            </div>
+            <router-link class="user-wrapper" :to="{ name: 'Perfil do Utilizador', params: { id: 1 } }">
+                <img id="profile-image" :src="this.imageUrl" />
+                <p>{{ this.user.username }}</p>
+            </router-link>
+        </div>
+
+        <div ref="notifList" class="notif-list d-none">
+            <NotificationListItem v-for="notif in this.notifications" :key="notif.id" v-bind:notification="notif"/>
+        </div>
     </div>
-  </div>
 </template>
-  
-  <script>
-import { ref } from "vue";
-import { useRoute } from "vue-router";
-import { computed } from "vue";
+
+<script>
+import NotificationListItem from './NotificationListItem.vue'
 
 export default {
-  name: "Topbar",
-  props: {
-    user: {
-      type: Object,
-      required: true,
+    name: "Topbar",
+    components: {
+        NotificationListItem
     },
-  },
-  data() {
-    return {
-      user: {
-        username: "",
-        name: "",
-        country: "",
-        description: "",
-        image: "",
-      },
-      imageUrl: "",
-    };
-  },
-  created() {
-    this.user.username = "Amogus Sus";
-    this.user.name = "Bruh ?";
-    this.user.country = "Portugal";
-    this.user.description = "Boa descrição bruvkek";
-    this.user.image = "bingus";
-    this.imageUrl = new URL(
-      `../../../assets/${this.user.image}.jpg`,
-      import.meta.url
-    ).href;
-  },
-};
+    props: {
+        user: {
+            type: Object,
+            required: true,
+        },
+    },
+    data() {
+        return {
+            user: {},
+            imageUrl: "",
+            notifications: []
+        }
+    },
+    created() {
+        this.user.username = "Amogus Sus";
+        this.user.name = "Bruh ?";
+        this.user.country = "Portugal";
+        this.user.description = "Boa descrição bruvkek";
+        this.user.image = "bingus";
+
+        this.notifications = [
+            {
+                id: 1,
+                image: "bingus",
+                message: "notificação 1",
+                read: true
+            },
+            {
+                id: 2,
+                image: "bingus",
+                message: "notificação 2",
+                read: false
+            },
+            {
+                id: 3,
+                image: "bingus",
+                message: "notificação 3",
+                read: false
+            },
+            {
+                id: 4,
+                image: "bingus",
+                message: "asdf asdfiojo is qwie dqwd dias iuhdf iqwe ask",
+                read: true
+            }
+        ];
+        
+        this.imageUrl = new URL(`../assets/${this.user.image}.jpg`, import.meta.url).href;
+    },
+    computed: {
+        showNotif() {
+			let unread = false;
+
+			this.notifications.forEach(notif => {
+				if(!notif.read) unread = true;
+			});
+
+			return unread;
+		}
+    },
+    methods: {
+        toggleNotifs() {
+            this.$refs.notifList.classList.toggle("d-none");
+
+            this.notifications.forEach(n => n.read = true);
+        }
+    }
+}
 </script>
-  
-  <style lang="scss" scoped>
-.wrapper {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  text-align: center;
-  background-color: grey;
-  padding-top: 1%;
-  padding-bottom: 1%;
-  padding-right: 5%;
-  padding-left: 5%;
-  margin-bottom: 2%;
-}
 
-.page-name {
-  width: 50%;
-}
-.user-wrapper {
-  width: 50%;
-  display: flex;
-}
+<style lang="scss" scoped>
+    .notif-container {
+        height: 32px;
 
-#profile-image {
-  height: 100px;
-  width: 100px;
-  border-radius: 50%;
-  object-fit: cover;
-}
+        cursor: pointer;
+    }
+
+    .notif-icon {
+        position: relative;
+        font-size: 2rem;
+    }
+
+    .notif {
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background-color: red;
+
+        border: 2px solid grey;
+
+        position: absolute;
+        bottom: 0px;
+        right: 0px;
+    }
+
+    .notif-list {
+        position: absolute;
+        top: 84px;
+        right: 8px;
+
+        max-height: 400px;
+        width: 300px;
+
+        background-color: lightblue;
+
+        padding: 8px;
+
+        overflow-y: scroll;
+        overflow-x: hidden;
+    }
+
+    .wrapper {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: grey;
+
+        padding: 8px 72px;
+
+        margin-bottom: 16px;
+    }
+
+    .wrapper p {
+        margin: 0px;
+    }
+
+    .wrapper .topbar-right {
+        display: flex;
+        align-items: center;
+        gap: 36px;
+    }
+
+    .user-wrapper {
+        display: flex;
+        gap: 36px;
+        align-items: center;
+    }
+
+    #profile-image {
+        height: 50px;
+        width: 50px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
 </style>

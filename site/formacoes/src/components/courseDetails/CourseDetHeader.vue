@@ -1,9 +1,7 @@
 <template>
     <div class="header-wrapper">
         <div class="left-side">
-            <div class="picture">
-                <img :src="this.imageUrl"/>
-            </div>
+            <img :src="this.imageUrl"/>
             <div class="text">
                 <p>{{ course.name }}</p>
                 <p>{{ course.creatorName }}</p>
@@ -40,7 +38,7 @@ export default {
 
 <style scoped>
 .header-wrapper {
-    padding: 2%;
+    padding: 16px;
     width: 100%;
     height: fit-content;
     display: flex;
@@ -50,13 +48,10 @@ export default {
     display: flex;
     justify-content: start;
 }
-.picture {
-    height: 50%;
-    width: 50%;
-}
+
 img {
-    height: 100%;
-    width: 100%;
+    height: 200px;
+    width: 200px;
 }
 .text {
     padding-left: 10px;

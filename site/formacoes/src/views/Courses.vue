@@ -1,6 +1,5 @@
 <template>
   <div class="courses-wrapper">
-    <Topbar />
     <CoursesListFilter v-on:filter="filter" />
     <div class="row">
       <CoursesListCourseCard
