@@ -92,6 +92,16 @@ body {
 	margin: 0;
 }
 
+@media (max-width: 1024px) {
+	.sidebarTopbar {
+		padding-left: 72px !important;
+	}
+
+	.sidebarMainPage {
+		margin-left: 0px;
+	}	
+}
+
 .app {
 	display: flex;
 
