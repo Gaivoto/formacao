@@ -5,6 +5,7 @@
 		<Topbar class="topbar" :class="{ sidebarTopbar: sidebarOpen, 'd-none': displaySidebarTopbar }"/>
 		<router-view  class="active-page" :class="{ sidebarMainPage: sidebarOpen }"/>	
 	</div>
+	<!--adicionar o sidebar em cima do topbar-->
   </div>
 </template>
 
