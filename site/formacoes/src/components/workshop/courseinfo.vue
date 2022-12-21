@@ -1,5 +1,5 @@
 <template>
-  <div class="d-none">
+  <div>
         <div>
             <div>
                 <p>Titulo</p>
@@ -14,19 +14,12 @@
                 <input type="text" name="name" id="name">
             </div>
         </div>
-        <div>
-            <uploadfile/>
-        </div>
     </div>
 </template>
 
 <script>
-import uploadfile from './uploadfile.vue'
 export default {
-    name: 'courseinfo',
-    components: {
-        uploadfile
-    }
+    name: 'courseinfo'
 }
 </script>
 
