@@ -27,6 +27,7 @@ export default {
 	},
 	computed: {
 		displaySidebarTopbar() {
+			//
 			if(!this.$route.name || this.$route.name == "Login") return true;
 			return false;
 		}
@@ -36,7 +37,7 @@ export default {
 			this.sidebarOpen = !this.sidebarOpen;
 			this.$emit("toggleSidebar");
 		}
-	}
+	} 
 }
 </script>
 
