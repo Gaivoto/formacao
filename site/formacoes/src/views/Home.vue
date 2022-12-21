@@ -48,11 +48,16 @@ export default {
             {
                 id: 1,
                 name: "Course 1",
-                description: "desc 1 amongus",
+                description: "desc 1 amongus desc 1 amongus desc 1 amongus desc 1 amongusdesc 1 amongusdesc 1 amongus",
                 image: "bingus",
                 price: 20,
                 category: "cat1",
                 date: "05-12-2022",
+                duration: "23h 12min",
+                creator: {
+                    image: "bingus",
+                    name: "Ze Bitola"
+                }
             },
             {
                 id: 2,
@@ -62,6 +67,11 @@ export default {
                 price: 12,
                 category: "cat1",
                 date: "05-11-2022",
+                duration: "23h 12min",
+                creator: {
+                    image: "bingus",
+                    name: "Ze Bitola"
+                }
             },
             {
                 id: 3,
@@ -71,6 +81,11 @@ export default {
                 price: 50,
                 category: "cat1",
                 date: "05-10-2022",
+                duration: "23h 12min",
+                creator: {
+                    image: "bingus",
+                    name: "Ze Bitola"
+                }
             },
             {
                 id: 4,
@@ -80,6 +95,11 @@ export default {
                 price: 80,
                 category: "cat1",
                 date: "05-09-2022",
+                duration: "23h 12min",
+                creator: {
+                    image: "bingus",
+                    name: "Ze Bitola"
+                }
             }
         ];
 
@@ -92,6 +112,11 @@ export default {
                 price: 25,
                 category: "cat1",
                 date: "05-07-2022",
+                duration: "23h 12min",
+                creator: {
+                    image: "bingus",
+                    name: "Ze Bitola"
+                }
             },
             {
                 id: 7,
@@ -101,6 +126,11 @@ export default {
                 price: 20,
                 category: "cat1",
                 date: "05-06-2022",
+                duration: "23h 12min",
+                creator: {
+                    image: "bingus",
+                    name: "Ze Bitola"
+                }
             },
             {
                 id: 8,
@@ -110,6 +140,11 @@ export default {
                 price: 10,
                 category: "cat1",
                 date: "05-05-2022",
+                duration: "23h 12min",
+                creator: {
+                    image: "bingus",
+                    name: "Ze Bitola"
+                }
             },
             {
                 id: 9,
@@ -119,6 +154,11 @@ export default {
                 price: 35,
                 category: "cat1",
                 date: "05-04-2022",
+                duration: "23h 12min",
+                creator: {
+                    image: "bingus",
+                    name: "Ze Bitola"
+                }
             }
         ];
 
@@ -131,6 +171,11 @@ export default {
                 price: 50,
                 category: "cat1",
                 date: "05-10-2022",
+                duration: "23h 12min",
+                creator: {
+                    image: "bingus",
+                    name: "Ze Bitola"
+                }
             },
             {
                 id: 4,
@@ -140,6 +185,11 @@ export default {
                 price: 80,
                 category: "cat1",
                 date: "05-09-2022",
+                duration: "23h 12min",
+                creator: {
+                    image: "bingus",
+                    name: "Ze Bitola"
+                }
             },
             {
                 id: 6,
@@ -149,6 +199,11 @@ export default {
                 price: 25,
                 category: "cat1",
                 date: "05-07-2022",
+                duration: "23h 12min",
+                creator: {
+                    image: "bingus",
+                    name: "Ze Bitola"
+                }
             },
             {
                 id: 7,
@@ -158,6 +213,11 @@ export default {
                 price: 20,
                 category: "cat1",
                 date: "05-06-2022",
+                duration: "23h 12min",
+                creator: {
+                    image: "bingus",
+                    name: "Ze Bitola"
+                }
             }
         ];
 
@@ -170,6 +230,11 @@ export default {
                 price: 35,
                 category: "cat1",
                 date: "05-04-2022",
+                duration: "23h 12min",
+                creator: {
+                    image: "bingus",
+                    name: "Ze Bitola"
+                }
             },
             {
                 id: 10,
@@ -179,6 +244,11 @@ export default {
                 price: 15,
                 category: "cat1",
                 date: "05-03-2022",
+                duration: "23h 12min",
+                creator: {
+                    image: "bingus",
+                    name: "Ze Bitola"
+                }
             },
             {
                 id: 11,
@@ -188,6 +258,11 @@ export default {
                 price: 2,
                 category: "cat1",
                 date: "05-01-2022",
+                duration: "23h 12min",
+                creator: {
+                    image: "bingus",
+                    name: "Ze Bitola"
+                }
             },
             {
                 id: 12,
@@ -197,6 +272,11 @@ export default {
                 price: 120,
                 category: "cat1",
                 date: "05-02-2022",
+                duration: "23h 12min",
+                creator: {
+                    image: "bingus",
+                    name: "Ze Bitola"
+                }
             }
         ];
     }
@@ -205,14 +285,19 @@ export default {
 
 <style scoped>
     .home-wrapper {
-        padding: 24px 5% 0px 5%;
+        padding: 24px 16px 0px 16px;
     }
 
     .home-row-wrapper {
-        margin-bottom: 48px;
+        padding: 16px 24px;
     }
 
     .home-row-wrapper p {
-        margin: 0px;
+        margin-bottom: 16px;
+        color: var(--light);
+        font-size: 24px;
+        width: fit-content;
+        border-radius: 8px;
+        font-weight: 550;
     }
 </style>

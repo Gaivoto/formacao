@@ -35,7 +35,7 @@ export default {
                 id: 1,
                 image: 'tomasGostosa',
                 name: 'texto1',
-                description: 'description2',
+                desc: 'description2 description2 description2 description2 description2 description2 description2 v description2 description2 description2 description2 description2description2 description2 description2 description2 description2 description2',
                 category: 'cat1',
                 date: "15-09-2022"
             },

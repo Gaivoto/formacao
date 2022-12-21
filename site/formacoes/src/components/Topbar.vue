@@ -1,15 +1,21 @@
 <template>
     <div class="wrapper">
-        <p class="page-name">{{ this.$route.name }}</p>
+        <div class="topbar-text">
+            <p class="page-name">{{ this.$route.name }}</p>
+        </div>
 
         <div class="topbar-right">
-            <div class="notif-container" v-on:click="toggleNotifs">
-                <span class="material-icons notif-icon">notifications<div :class="{ notif: showNotif }"></div></span>
-            </div>
             <router-link class="user-wrapper" :to="{ name: 'Perfil do Utilizador', params: { id: 1 } }">
-                <img id="profile-image" :src="this.imageUrl" />
-                <p>{{ this.user.username }}</p>
+                <div class="topbar-text">
+                    <p>{{ this.user.username }}</p>
+                </div>
+                <div class="image-wrapper">
+                    <img id="profile-image" :src="this.imageUrl" />    
+                </div>
             </router-link>
+            <div class="notif-container" v-on:click="toggleNotifs">
+                <span class="material-icons notif-icon" :class="{ unread: showNotif }">notifications<div :class="{ notif: showNotif }"></div></span>
+            </div>
         </div>
 
         <div ref="notifList" class="notif-list d-none">
@@ -96,25 +102,44 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
+    .page-name {
+        color: var(--light);
+        font-size: 24px;
+        font-weight: 500;
+    }
+
     .notif-container {
-        height: 32px;
+        height: 30px;
 
         cursor: pointer;
     }
 
     .notif-icon {
         position: relative;
-        font-size: 2rem;
+        font-size: 28px;
+        color: var(--light);
+    }
+
+    .unread {
+        animation: tilt-shaking 0.3s infinite;
+    }
+
+    @keyframes tilt-shaking {
+        0% { transform: rotate(0deg); }
+        25% { transform: rotate(10deg); }
+        50% { transform: rotate(0eg); }
+        75% { transform: rotate(-10deg); }
+        100% { transform: rotate(0deg); }
     }
 
     .notif {
-        width: 14px;
-        height: 14px;
+        width: 12px;
+        height: 12px;
         border-radius: 50%;
         background-color: red;
 
-        border: 2px solid grey;
+        border: 2px solid var(--dark);
 
         position: absolute;
         bottom: 0px;
@@ -142,15 +167,24 @@ export default {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        background-color: grey;
+	    background-color: var(--dark);
 
-        padding: 8px 72px;
-
-        margin-bottom: 16px;
+        padding: 8px 24px;
+        
+        width: 100%;
+        border-radius: 8px;
+        box-shadow: 2px 2px 2px var(--primary-alt);
     }
 
     .wrapper p {
-        margin: 0px;
+        color: var(--light);
+        margin-bottom: 0px;
+        font-family: "Poppins";
+    }
+
+    .wrapper .topbar-text {
+        padding: 2px 0px;
+        border-radius: 8px;
     }
 
     .wrapper .topbar-right {
@@ -161,13 +195,23 @@ export default {
 
     .user-wrapper {
         display: flex;
-        gap: 36px;
+        gap: 24px;
         align-items: center;
     }
 
-    #profile-image {
+    .image-wrapper {
+        border-radius: 50%;
+        border: 2px solid var(--primary);
+
         height: 50px;
         width: 50px;
+
+        padding: 2px;
+    }
+
+    #profile-image {
+        height: 42px;
+        width: 42px;
         border-radius: 50%;
         object-fit: cover;
     }

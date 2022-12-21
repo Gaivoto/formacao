@@ -2,7 +2,9 @@
   <div class="app">
 	<Sidebar class="sidebar" v-on:toggleSidebar="toggleSidebar" :class="{ 'd-none': displaySidebarTopbar }"/>
 	<div class="full-page">
-		<Topbar class="topbar" :class="{ sidebarTopbar: sidebarOpen, 'd-none': displaySidebarTopbar }"/>
+		<div class="topbar-wrapper" :class="{ sidebarTopbar: sidebarOpen, 'd-none': displaySidebarTopbar }">
+			<Topbar/>
+		</div>
 		<router-view  class="active-page" :class="{ sidebarMainPage: sidebarOpen }"/>	
 	</div>
 	<!--adicionar o sidebar em cima do topbar-->
@@ -42,11 +44,14 @@ export default {
 :root {
 	//--primary: #4ade80;
 	--primary: #00ADB5;
+	--primary-alt: rgb(69, 115, 117);
 	--grey: #64748b;
 	//--dark: #1e293b;
-	--dark: #222831;
+	--dark: #15273F;
+	--back-dark: #0D1A2D;
 	--dark-alt: #334155;
 	--light: #f1f5f9;
+	--light-alt: #8BACD9;
 	--sidebar-width: 300px;
 }
 
@@ -60,11 +65,13 @@ export default {
 	z-index: 2;
 }
 
-.topbar {
+.topbar-wrapper {
 	position: fixed;
-	padding-left: 136px !important;
+	padding: 16px 40px 16px 104px;
 	z-index: 1;
 	transition: 0.3s ease-in-out;
+	width: 100%;
+	background-color: var(--back-dark);
 }
 
 .full-page {
@@ -78,7 +85,7 @@ export default {
 }
 
 .sidebarTopbar {
-	padding-left: 372px !important;
+	padding-left: 340px !important;
 	transition: 0.3s ease-in-out;
 }
 
@@ -104,6 +111,7 @@ body {
 
 .app {
 	display: flex;
+	background-color: var(--back-dark);
 
 	main {
 		flex: 1 1 0;
@@ -112,5 +120,9 @@ body {
 			padding-left: 6rem;
 		}
 	}
+}
+
+a {
+	text-decoration: none !important;
 }
 </style>

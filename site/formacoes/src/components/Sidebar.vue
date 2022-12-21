@@ -1,8 +1,8 @@
 <template>
   <aside :class="{ isExpanded: is_expanded }">
-    <div class="logo">
+    <router-link class="logo" to="/home">
         <img src="../assets/vue.svg" alt="Vue">
-    </div>
+	</router-link>
 
     <div class="menu-toggle-wrap">
         <button class="menu-toggle" v-on:click="toggleMenu">
@@ -30,7 +30,7 @@
         </router-link>
         <router-link class="button" to="/users">
             <span class="material-icons">email</span>
-            <span class="text">ADM Users</span>
+            <span class="text">Lista de Utilizadores</span>
         </router-link>
     </div>
 
@@ -70,7 +70,7 @@ aside {
 	width: calc(2rem + 32px);
 	overflow: hidden;
 	min-height: 100vh;
-	padding: 1rem;
+	padding: 32px 1rem 1rem 1rem;
 	transition: 0.3s ease-in-out;
 	margin: 0;
 	min-width: 64px;
@@ -80,7 +80,7 @@ aside {
 	}
 
 	.logo {
-		margin-bottom: 1rem;
+		margin-bottom: 24px;
 		img {
 			width: 2rem;
 		}
@@ -96,6 +96,7 @@ aside {
 		.menu-toggle {
 			padding: 0;
 			transition: 0.3s ease-in-out;
+			height: 28px;
 
 			.material-icons {
 				font-size: 2rem;
