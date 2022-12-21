@@ -24,8 +24,8 @@ export default {
   
   <style>
 .videoplayer {
-  background-color: aqua;
-  width: 70%;
+  background-color: black;
+
   max-height: 500px;
 }
 

@@ -1,6 +1,9 @@
 <template>
   <div class="videopage-wrapper">
-    <VideoPlayerVideo v-bind:videoname="this.videoname" />
+    <div class="videodesc">
+      <VideoPlayerVideo v-bind:videoname="this.video.name" />
+      <span>{{ this.video.description }}</span>
+    </div>
     <div class="list-container">
       <VideoList
         v-for="vid in this.videos"
@@ -21,13 +24,21 @@ export default {
   data() {
     return {
       videoname: "Video1",
+      video: {
+        id: "",
+        image: "",
+        name: "",
+        description: "",
+        duration: "",
+      },
     };
   },
   methods: {
-    getVideoName(videoname) {
-      this.videoname = videoname;
+    getVideoName(video) {
+      this.video = video;
     },
   },
+  computed: {},
   components: {
     VideoList,
     VideoPlayerVideo,
@@ -45,96 +56,76 @@ export default {
       (this.videos = [
         {
           id: 1,
-          image: "tomasGostosa",
+          image: "bingus",
           name: "Video1",
           description:
-            "description1 description1 description1 description1 description1 description1 description1 description1 description1 ",
+            "video mostrando uma cria de hamburguer selvagem alimentando se pela primeira vez sozinha",
           duration: "15 min",
         },
         {
           id: 2,
           image: "tomasGostosa",
           name: "Video2",
-          description: "description2",
+          description:
+            "video mostrando um rapaz meio humano meio notificação tendo uma conversa com a sua mae",
           duration: "16 min",
         },
         {
           id: 3,
-          image: "tomasGostosa",
+          image: "bingus",
           name: "Video3",
-          description: "description3",
+          description:
+            "lindo video mostrando pessoa a fazer criança rir com as suas habilidades magicas",
           duration: "17 min",
         },
-        /*{
+        {
           id: 4,
-          image: "tomasGostosa",
-          name: "video4",
-          description: "description4",
-          duration: "18 min",
+          image: "bingus",
+          name: "Video1",
+          description:
+            "video mostrando uma cria de hamburguer selvagem alimentando se pela primeira vez sozinha",
+          duration: "15 min",
         },
         {
           id: 5,
           image: "tomasGostosa",
-          name: "video5",
-          description: "description5",
-          duration: "2 hours ",
+          name: "Video2",
+          description:
+            "video mostrando um rapaz meio humano meio notificação tendo uma conversa com a sua mae",
+          duration: "16 min",
         },
         {
           id: 6,
-          image: "tomasGostosa",
-          name: "video6",
-          description: "description5",
-          duration: "2 hours ",
+          image: "bingus",
+          name: "Video3",
+          description:
+            "lindo video mostrando pessoa a fazer criança rir com as suas habilidades magicas",
+          duration: "17 min",
         },
         {
           id: 7,
-          image: "tomasGostosa",
-          name: "video7",
-          description: "description5",
-          duration: "2 hours ",
+          image: "bingus",
+          name: "Video1",
+          description:
+            "video mostrando uma cria de hamburguer selvagem alimentando se pela primeira vez sozinha",
+          duration: "15 min",
         },
         {
           id: 8,
           image: "tomasGostosa",
-          name: "video8",
-          description: "description5",
-          duration: "2 hours ",
+          name: "Video2",
+          description:
+            "video mostrando um rapaz meio humano meio notificação tendo uma conversa com a sua mae",
+          duration: "16 min",
         },
         {
           id: 9,
-          image: "tomasGostosa",
-          name: "video8",
-          description: "description5",
-          duration: "2 hours ",
+          image: "bingus",
+          name: "Video3",
+          description:
+            "lindo video mostrando pessoa a fazer criança rir com as suas habilidades magicas",
+          duration: "17 min",
         },
-        {
-          id: 10,
-          image: "tomasGostosa",
-          name: "video8",
-          description: "description5",
-          duration: "2 hours ",
-        },
-        {
-          id: 11,
-          image: "tomasGostosa",
-          name: "video8",
-          description: "description5",
-          duration: "2 hours ",
-        },
-        {
-          id: 12,
-          image: "tomasGostosa",
-          name: "video8",
-          description: "description5",
-          duration: "2 hours ",
-        },
-        {
-          id: 13,
-          image: "tomasGostosa",
-          name: "video8",
-          description: "description5",
-          duration: "2 hours ",
-        },*/
       ]);
   },
 };
@@ -143,7 +134,11 @@ export default {
 <style scoped>
 .videopage-wrapper {
   display: flex;
-  background-color: red;
+}
+
+.videodesc {
+  width: 70%;
+  display: block;
 }
 .list-container {
   background-color: rgb(9, 255, 0);
