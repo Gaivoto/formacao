@@ -57,25 +57,43 @@ export default {
                 id: 1,
                 image: "bingus",
                 message: "notificação 1",
-                read: true
+                read: true,
+                date: "12/12/2022 13:45"
             },
             {
                 id: 2,
                 image: "bingus",
                 message: "notificação 2",
-                read: false
+                read: false,
+                date: "12/12/2022 13:45"
             },
             {
                 id: 3,
                 image: "bingus",
                 message: "notificação 3",
-                read: false
+                read: false,
+                date: "12/12/2022 13:45"
             },
             {
                 id: 4,
                 image: "bingus",
-                message: "asdf asdfiojo is qwie dqwd dias iuhdf iqwe ask",
-                read: true
+                message: "asdf asdfiojo is sdfiojo is qwie dqwd diassdfiojo is qwie dqwd diasqwie dqwd dias iuhdf iqwe ask",
+                read: true,
+                date: "12/12/2022 13:45"
+            },
+            {
+                id: 5,
+                image: "bingus",
+                message: "notificação 3",
+                read: false,
+                date: "12/12/2022 13:45"
+            },
+            {
+                id: 6,
+                image: "bingus",
+                message: "asdf asdfiojo is sdfiojo is qwie dqwd diassdfiojo is qwie dqwd diasqwie dqwd dias iuhdf iqwe ask",
+                read: true,
+                date: "12/12/2022 13:45"
             }
         ];
         
@@ -101,7 +119,7 @@ export default {
     }
 }
 </script>
-
+ 
 <style scoped>
     .page-name {
         color: var(--light);
@@ -148,18 +166,33 @@ export default {
 
     .notif-list {
         position: absolute;
-        top: 84px;
-        right: 8px;
+        top: 100px;
+        right: 40px;
 
         max-height: 400px;
-        width: 300px;
+        width: 400px;
+        border-radius: 8px;
+        box-shadow: -2px 2px 2px var(--primary-alt);
 
-        background-color: lightblue;
-
-        padding: 8px;
+        background-color: var(--back-dark);
 
         overflow-y: scroll;
         overflow-x: hidden;
+    }
+    
+
+    .notif-list::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+        background: var(--back);
+        border-radius: 0px 8px 8px 0px;
+    }
+
+    .notif-list::-webkit-scrollbar-thumb {
+        background: #0F2027;
+        background: -webkit-linear-gradient(to bottom, var(--dark), var(--primary-alt), var(--dark));
+        background: linear-gradient(to bottom, var(--dark), var(--primary-alt), var(--dark));
+        border-radius: 0px 8px 8px 0px;
     }
 
     .wrapper {
@@ -174,6 +207,8 @@ export default {
         width: 100%;
         border-radius: 8px;
         box-shadow: 2px 2px 2px var(--primary-alt);
+
+        background: var(--back-dark);
     }
 
     .wrapper p {

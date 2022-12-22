@@ -28,6 +28,7 @@ export default {
             coursesFiltered: [],
             coursesDisplay: [],
             page: 1,
+            coursesPerPage: 2
         }
     },
     created() {
@@ -40,6 +41,11 @@ export default {
                 price: 20,
                 category: "cat1",
                 date: "05-12-2022",
+                duration: "23h 12min",
+                creator: {
+                    image: "bingus",
+                    name: "Ze Bitola"
+                }
             },
             {
                 id: 2,
@@ -49,6 +55,11 @@ export default {
                 price: 12,
                 category: "cat1",
                 date: "05-11-2022",
+                duration: "23h 12min",
+                creator: {
+                    image: "bingus",
+                    name: "Ze Bitola"
+                }
             },
             {
                 id: 3,
@@ -58,6 +69,11 @@ export default {
                 price: 50,
                 category: "cat1",
                 date: "05-10-2022",
+                duration: "23h 12min",
+                creator: {
+                    image: "bingus",
+                    name: "Ze Bitola"
+                }
             },
             {
                 id: 4,
@@ -67,6 +83,11 @@ export default {
                 price: 80,
                 category: "cat1",
                 date: "05-09-2022",
+                duration: "23h 12min",
+                creator: {
+                    image: "bingus",
+                    name: "Ze Bitola"
+                }
             },
             {
                 id: 5,
@@ -76,6 +97,11 @@ export default {
                 price: 5,
                 category: "cat1",
                 date: "05-08-2022",
+                duration: "23h 12min",
+                creator: {
+                    image: "bingus",
+                    name: "Ze Bitola"
+                }
             },
             {
                 id: 6,
@@ -85,6 +111,11 @@ export default {
                 price: 25,
                 category: "cat1",
                 date: "05-07-2022",
+                duration: "23h 12min",
+                creator: {
+                    image: "bingus",
+                    name: "Ze Bitola"
+                }
             },
             {
                 id: 7,
@@ -94,6 +125,11 @@ export default {
                 price: 20,
                 category: "cat1",
                 date: "05-06-2022",
+                duration: "23h 12min",
+                creator: {
+                    image: "bingus",
+                    name: "Ze Bitola"
+                }
             },
             {
                 id: 8,
@@ -103,6 +139,11 @@ export default {
                 price: 10,
                 category: "cat1",
                 date: "05-05-2022",
+                duration: "23h 12min",
+                creator: {
+                    image: "bingus",
+                    name: "Ze Bitola"
+                }
             },
             {
                 id: 9,
@@ -112,6 +153,11 @@ export default {
                 price: 35,
                 category: "cat1",
                 date: "05-04-2022",
+                duration: "23h 12min",
+                creator: {
+                    image: "bingus",
+                    name: "Ze Bitola"
+                }
             },
             {
                 id: 10,
@@ -121,6 +167,11 @@ export default {
                 price: 15,
                 category: "cat1",
                 date: "05-03-2022",
+                duration: "23h 12min",
+                creator: {
+                    image: "bingus",
+                    name: "Ze Bitola"
+                }
             },
             {
                 id: 11,
@@ -130,6 +181,11 @@ export default {
                 price: 2,
                 category: "cat1",
                 date: "05-01-2022",
+                duration: "23h 12min",
+                creator: {
+                    image: "bingus",
+                    name: "Ze Bitola"
+                }
             },
             {
                 id: 12,
@@ -139,12 +195,17 @@ export default {
                 price: 120,
                 category: "cat1",
                 date: "05-02-2022",
+                duration: "23h 12min",
+                creator: {
+                    image: "bingus",
+                    name: "Ze Bitola"
+                }
             }
         ];
     },
     computed: {
         numberOfPages() {
-            return Math.ceil(this.coursesFiltered.length / 6);
+            return Math.ceil(this.coursesFiltered.length / this.coursesPerPage);
         }
     },
     methods: {
@@ -191,7 +252,7 @@ export default {
                     break;
             }
 
-            for (var i = (this.page - 1) * 6; i < this.page * 6; i++) {
+            for (var i = (this.page - 1) * this.coursesPerPage; i < this.page * this.coursesPerPage; i++) {
                 if (this.coursesFiltered[i]) {
                     this.coursesDisplay.push(this.coursesFiltered[i]);
                 }
@@ -202,7 +263,7 @@ export default {
 
             this.coursesDisplay = [];
 
-            for (var i = (this.page - 1) * 6; i < this.page * 6; i++) {
+            for (var i = (this.page - 1) * this.coursesPerPage; i < this.page * this.coursesPerPage; i++) {
                 if (this.coursesFiltered[i]) {
                     this.coursesDisplay.push(this.coursesFiltered[i]);
                 }
@@ -212,8 +273,14 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
+    .courses-wrapper {
+        padding: 24px 16px 0px 16px;
+    }
+
     .row {
         margin: 0px;
+        padding: 0px 8px;
+        min-height: 75vh;
     }
 </style>

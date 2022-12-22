@@ -1,5 +1,5 @@
 <template>
-  <aside :class="{ isExpanded: is_expanded }">
+  <aside :class="{ isExpanded: is_expanded }" >
     <router-link class="logo" to="/home">
         <img src="../assets/vue.svg" alt="Vue">
 	</router-link>
@@ -74,6 +74,11 @@ aside {
 	transition: 0.3s ease-in-out;
 	margin: 0;
 	min-width: 64px;
+	box-shadow: 2px 0px 2px var(--primary-alt);
+	
+	background: #0F2027;
+	background: -webkit-linear-gradient(to bottom, var(--back-dark), var(--dark-alt), var(--back-dark));
+	background: linear-gradient(to bottom, var(--back-dark), var(--dark-alt), var(--back-dark));
 
 	.flex {
 		flex: 1 1 0%;

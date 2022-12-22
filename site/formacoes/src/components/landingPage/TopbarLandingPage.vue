@@ -1,20 +1,19 @@
 <template>
     <div class="topBar"> 
         <div class="logo">
-            <router-link class="topBarButton" to="/">
-                <span class="text">Formação Johnson</span>
-            </router-link>
+            <img src="../../assets/vue.svg">
+            <span class="text">Formação Johnson</span>
         </div>
         <div class="rightSide">
+            <span class="text">Acerca de nós</span>
             <router-link class="topBarButton" to="/courses">
                 <span class="text">Cursos</span>
             </router-link>
-
-            <input type="text" placeholder="Pesquisar cursos..."/>
-            <router-link class="topBarButton" to="/login">
-                <span class="text">Login</span>
-            </router-link>
         </div>
+
+        <router-link class="topBarButton" to="/login">
+            <span class="text">Login</span>
+        </router-link>
     </div>
 </template>
 

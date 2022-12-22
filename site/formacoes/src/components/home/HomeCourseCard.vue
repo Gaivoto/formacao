@@ -1,7 +1,7 @@
 <template>
-    <div class="course-card-container col-6 col-xl-3">
+    <div class="course-card-container col-6 col-xl-3" :class="{ shake: this.hoverImg }">
         <div class="course-card">
-            <router-link :to="{ name: 'Curso', params: { id: this.course.id } }">
+            <router-link :to="{ name: 'Curso', params: { id: this.course.id } }" v-on:mouseenter="toggleHoverImg" v-on:mouseleave="toggleHoverImg">
                 <img :src="this.imageUrl">
             </router-link>
             <div class="card-info">
@@ -37,7 +37,8 @@ export default {
     data(){
         return {
             imageUrl: "",
-            creatorImageUrl: ""
+            creatorImageUrl: "",
+            hoverImg: false
         }
     },
     created(){
@@ -45,17 +46,27 @@ export default {
         this.creatorImageUrl = new URL(`../../assets/${this.course.creator.image}.jpg`, import.meta.url).href;
     },
     methods: {
+        toggleHoverImg() {
+            this.hoverImg = !this.hoverImg;
+        }
     }
 }
 </script>
 
 <style scoped>
     .course-card {
+        z-index: 1;
         padding: 24px 16px;
         background-color: var(--dark);
         border-radius: 12px;
         margin-bottom: 24px;
         box-shadow: 0 25px 50px 0 rgb(0 0 0 / 10%);
+        background: rgb(35,79,109);
+        background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+    }
+
+    .shake {
+        animation: tilt-shaking 0.5s infinite;
     }
 
     .course-card > a > img {
@@ -64,10 +75,6 @@ export default {
         height: 260px;
         width: 100%;
         object-fit: cover;
-    }
-
-    .course-card > a > img:hover {
-        animation: tilt-shaking 0.7s infinite;
     }
 
     .card-info {
@@ -163,9 +170,13 @@ export default {
 
     @keyframes tilt-shaking {
         0% { transform: rotate(0deg); }
-        25% { transform: rotate(1deg); }
-        50% { transform: rotate(0eg); }
-        75% { transform: rotate(-1deg); }
+        12% { transform: rotate(0.25deg); }
+        25% { transform: rotate(0.5deg); }
+        37% { transform: rotate(0.25deg); }
+        50% { transform: rotate(0deg); }
+        62% { transform: rotate(-0.25deg); }
+        75% { transform: rotate(-0.5deg); }
+        87% { transform: rotate(-0.25deg); }
         100% { transform: rotate(0deg); }
     }
 </style>

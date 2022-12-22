@@ -1,5 +1,8 @@
 <template>
-  <div class="app">
+  <div class="app">	<!--
+	<div id="stars"></div>
+	<div id="stars2"></div>
+	<div id="stars3"></div>-->
 	<Sidebar class="sidebar" v-on:toggleSidebar="toggleSidebar" :class="{ 'd-none': displaySidebarTopbar }"/>
 	<div class="full-page">
 		<div class="topbar-wrapper" :class="{ sidebarTopbar: sidebarOpen, 'd-none': displaySidebarTopbar }">
@@ -41,88 +44,105 @@ export default {
 </script>
 
 <style lang="scss">
-:root {
-	//--primary: #4ade80;
-	--primary: #00ADB5;
-	--primary-alt: rgb(69, 115, 117);
-	--grey: #64748b;
-	//--dark: #1e293b;
-	--dark: #15273F;
-	--back-dark: #0D1A2D;
-	--dark-alt: #334155;
-	--light: #f1f5f9;
-	--light-alt: #8BACD9;
-	--sidebar-width: 300px;
-}
+	:root {
+		//--primary: #4ade80;
+		--primary: #00ADB5;
+		--primary-alt: rgb(69, 115, 117);
+		--grey: #64748b;
+		//--dark: #1e293b;
+		--dark: #15273F;
+		--back-dark: #0D1A2D;
+		--dark-alt: #334155;
+		--light: #f1f5f9;
+		--light-alt: #8BACD9;
+		--sidebar-width: 300px;
+	}
 
-* {
-	box-sizing: border-box;
-	font-family: 'Fira sans', sans-serif;
-}
+	body::-webkit-scrollbar {
+        width: 10px;
+        background: #243B55;
+    }
 
-.sidebar {
-	position: fixed;
-	z-index: 2;
-}
+    body::-webkit-scrollbar-thumb {
+        background: #0F2027;
+        background: -webkit-radial-gradient(ellipse at right, #1b2735 0%, #090a0f 100%);
+		background: radial-gradient(ellipse at right, #1b2735 0%, #090a0f 100%);
+		border-radius: 8px;
+    }
 
-.topbar-wrapper {
-	position: fixed;
-	padding: 16px 40px 16px 104px;
-	z-index: 1;
-	transition: 0.3s ease-in-out;
-	width: 100%;
-	background-color: var(--back-dark);
-}
+	* {
+		box-sizing: border-box;
+		font-family: 'Fira sans', sans-serif;
+	}
 
-.full-page {
-	width: 100%;
-}
+	.sidebar {
+		position: fixed;
+		z-index: 2;
+	}
 
-.active-page {
-	margin-left: 64px;
-	margin-top: 82px;
-	transition: 0.3s ease-in-out;
-}
+	.topbar-wrapper {
+		position: fixed;
+		padding: 16px 40px 0px 104px;
+		z-index: 1;
+		transition: 0.3s ease-in-out;
+		width: 100%;
+		background: var(--back-dark);
+		background: #141E30;
+		background: -webkit-linear-gradient(to right, #243B55, #141E30, #243B55);
+		background: linear-gradient(to right, #243B55, #141E30, #243B55);
+	}
 
-.sidebarTopbar {
-	padding-left: 340px !important;
-	transition: 0.3s ease-in-out;
-}
+	.full-page {
+		width: 100%;
+	}
 
-.sidebarMainPage {
-	margin-left: 300px;
-	transition: 0.3s ease-in-out;
-}
+	.active-page {
+		margin-left: 64px;
+		margin-top: 82px;
+		transition: 0.3s ease-in-out;
+	}
 
-body {
-	background: var(--light);
-	margin: 0;
-}
-
-@media (max-width: 1024px) {
 	.sidebarTopbar {
-		padding-left: 72px !important;
+		padding-left: 340px !important;
+		transition: 0.3s ease-in-out;
 	}
 
 	.sidebarMainPage {
-		margin-left: 0px;
-	}	
-}
+		margin-left: 300px;
+		transition: 0.3s ease-in-out;
+	}
 
-.app {
-	display: flex;
-	background-color: var(--back-dark);
+	body {
+		background: var(--light);
+		margin: 0;
+	}
 
-	main {
-		flex: 1 1 0;
-		padding: 2rem;
-		@media (max-width: 1024px) {
-			padding-left: 6rem;
+	@media (max-width: 1024px) {
+		.sidebarTopbar {
+			padding-left: 72px !important;
+		}
+
+		.sidebarMainPage {
+			margin-left: 0px;
+		}	
+	}
+
+	.app {
+		display: flex;
+		background: #141E30;
+		background: -webkit-linear-gradient(to right, #243B55, #141E30, #243B55);
+		background: linear-gradient(to right, #243B55, #141E30, #243B55);
+		min-height: 100vh;
+
+		main {
+			flex: 1 1 0;
+			padding: 2rem;
+			@media (max-width: 1024px) {
+				padding-left: 6rem;
+			}
 		}
 	}
-}
-
-a {
-	text-decoration: none !important;
-}
+	a {
+		text-decoration: none !important;
+	}
 </style>
