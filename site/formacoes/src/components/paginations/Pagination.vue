@@ -128,7 +128,7 @@ export default {
     }
 
     .material-icons {
-        color: white;
+        color: var(--primary);
         cursor: pointer;
     }
 </style>

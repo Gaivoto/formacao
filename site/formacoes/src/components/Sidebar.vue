@@ -65,8 +65,6 @@ export default {
 aside {
 	display: flex;
 	flex-direction: column;
-	background-color: var(--dark);
-	color: var(--light);
 	width: calc(2rem + 32px);
 	overflow: hidden;
 	min-height: 100vh;
@@ -74,11 +72,9 @@ aside {
 	transition: 0.3s ease-in-out;
 	margin: 0;
 	min-width: 64px;
-	box-shadow: 2px 0px 2px var(--primary-alt);
+    box-shadow: rgba(20, 14, 49, 0.6) 0px 2px 10px 4px;
 	
-	background: #0F2027;
-	background: -webkit-linear-gradient(to bottom, var(--back-dark), var(--dark-alt), var(--back-dark));
-	background: linear-gradient(to bottom, var(--back-dark), var(--dark-alt), var(--back-dark));
+	background: var(--mobalytics-susge);
 
 	.flex {
 		flex: 1 1 0%;
@@ -162,14 +158,14 @@ aside {
 			}
 
 			&:hover {
-				background-color: var(--dark-alt);
+				background-color: var(--mobalytics-back);
 				.material-icons, .text {
 					color: var(--primary);
 				}
 			}
 
 			&.router-link-exact-active {
-				background-color: var(--dark-alt);
+				background-color: var(--mobalytics-back);
 				border-right: 5px solid var(--primary);
 				.material-icons, .text {
 					color: var(--primary);

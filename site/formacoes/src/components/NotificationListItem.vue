@@ -40,7 +40,7 @@ export default {
     }
 
     .notifBack {
-       background-color: var(--dark); 
+       background-color: var(--mobalytics-card); 
     }
 
     .notification-wrapper > div {

@@ -294,7 +294,7 @@ export default {
 
     .home-row-wrapper p {
         margin-bottom: 16px;
-        color: var(--light);
+        color: var(--primary);
         font-size: 24px;
         width: fit-content;
         border-radius: 8px;

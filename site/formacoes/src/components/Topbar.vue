@@ -4,6 +4,19 @@
             <p class="page-name">{{ this.$route.name }}</p>
         </div>
 
+        <div class="searchbar-container">
+            <div class="searchbar">
+                <input type="text" placeholder="Pesquisar...">
+                <span class="material-icons search-icon">search</span>
+            </div> 
+            <div class="searchbar-results">
+                <div class="no-results">
+                    <span class="material-icons search-icon">warning</span>
+                    <p>Não existem resultados para a pesquisa.</p>    
+                </div>
+            </div>  
+        </div>
+
         <div class="topbar-right">
             <router-link class="user-wrapper" :to="{ name: 'Perfil do Utilizador', params: { id: 1 } }">
                 <div class="topbar-text">
@@ -122,9 +135,67 @@ export default {
  
 <style scoped>
     .page-name {
-        color: var(--light);
+        color: var(--primary) !important;
         font-size: 24px;
         font-weight: 500;
+    }
+
+    .searchbar-container {
+        position: relative;
+    }
+
+    .searchbar {
+        background-color: var(--mobalytics-card);
+        padding: 6px 16px 6px 20px;
+        align-items: center;
+        display: flex;
+        gap: 12px;
+        border-radius: 20px;
+        font-family: "Poppins";
+        box-shadow: rgba(20, 14, 49, 0.6) 0px 2px 10px 4px;
+    }
+
+    .searchbar input {
+        background: none;
+        border: none;
+        color: white !important;
+        font-family: "Poppins";
+        min-width: 300px;
+    }
+
+    .searchbar input::placeholder {
+        color: white;
+    }
+
+    .searchbar input:focus {
+        outline: none;
+    }
+
+    .search-icon {
+        font-size: 28px;
+        color: white;
+    }
+
+    .searchbar-results {
+        position: absolute;
+        left: 0px;
+        top: 56px;
+        width: 100%;
+        padding: 16px;
+        border-radius: 8px;
+
+        background-color: var(--mobalytics-back);
+    }
+
+    .searchbar-results .no-results {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+    }
+
+    .searchbar-results .no-results p {
+        margin: 0px;
     }
 
     .notif-container {
@@ -172,9 +243,9 @@ export default {
         max-height: 400px;
         width: 400px;
         border-radius: 8px;
-        box-shadow: -2px 2px 2px var(--primary-alt);
 
-        background-color: var(--back-dark);
+        background-color: var(--mobalytics-back);
+        box-shadow: rgba(20, 14, 49, 0.6) 0px 2px 10px 4px;
 
         overflow-y: scroll;
         overflow-x: hidden;
@@ -184,15 +255,13 @@ export default {
     .notif-list::-webkit-scrollbar {
         width: 8px;
         height: 8px;
-        background: var(--back);
+        background: var(--mobalytics-back);
         border-radius: 0px 8px 8px 0px;
     }
 
     .notif-list::-webkit-scrollbar-thumb {
-        background: #0F2027;
-        background: -webkit-linear-gradient(to bottom, var(--dark), var(--primary-alt), var(--dark));
-        background: linear-gradient(to bottom, var(--dark), var(--primary-alt), var(--dark));
-        border-radius: 0px 8px 8px 0px;
+        background: var(--mobalytics-card);
+        border-radius: 8px;
     }
 
     .wrapper {
@@ -200,15 +269,13 @@ export default {
         display: flex;
         justify-content: space-between;
         align-items: center;
-	    background-color: var(--dark);
+	    background-color: var(--mobalytics-susge);
 
         padding: 8px 24px;
         
         width: 100%;
         border-radius: 8px;
-        box-shadow: 2px 2px 2px var(--primary-alt);
-
-        background: var(--back-dark);
+        box-shadow: rgba(20, 14, 49, 0.6) 0px 2px 10px 4px;
     }
 
     .wrapper p {
@@ -236,12 +303,10 @@ export default {
 
     .image-wrapper {
         border-radius: 50%;
-        border: 2px solid var(--primary);
+        border: var(--mobalytics-back) 4px solid;
 
         height: 50px;
         width: 50px;
-
-        padding: 2px;
     }
 
     #profile-image {

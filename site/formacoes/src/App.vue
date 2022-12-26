@@ -46,7 +46,7 @@ export default {
 <style lang="scss">
 	:root {
 		//--primary: #4ade80;
-		--primary: #00ADB5;
+		--primary: #f78834;
 		--primary-alt: rgb(69, 115, 117);
 		--grey: #64748b;
 		//--dark: #1e293b;
@@ -56,17 +56,19 @@ export default {
 		--light: #f1f5f9;
 		--light-alt: #8BACD9;
 		--sidebar-width: 300px;
+		//cock
+		--mobalytics-back: #34345f;
+		--mobalytics-card: #202045;
+		--mobalytics-susge: #181836;
 	}
 
 	body::-webkit-scrollbar {
         width: 10px;
-        background: #243B55;
+        background: var(--mobalytics-back);
     }
 
     body::-webkit-scrollbar-thumb {
-        background: #0F2027;
-        background: -webkit-radial-gradient(ellipse at right, #1b2735 0%, #090a0f 100%);
-		background: radial-gradient(ellipse at right, #1b2735 0%, #090a0f 100%);
+        background: var(--mobalytics-susge);
 		border-radius: 8px;
     }
 
@@ -86,10 +88,7 @@ export default {
 		z-index: 1;
 		transition: 0.3s ease-in-out;
 		width: 100%;
-		background: var(--back-dark);
-		background: #141E30;
-		background: -webkit-linear-gradient(to right, #243B55, #141E30, #243B55);
-		background: linear-gradient(to right, #243B55, #141E30, #243B55);
+		background: var(--mobalytics-back);
 	}
 
 	.full-page {
@@ -129,9 +128,7 @@ export default {
 
 	.app {
 		display: flex;
-		background: #141E30;
-		background: -webkit-linear-gradient(to right, #243B55, #141E30, #243B55);
-		background: linear-gradient(to right, #243B55, #141E30, #243B55);
+		background: var(--mobalytics-back);
 		min-height: 100vh;
 
 		main {
