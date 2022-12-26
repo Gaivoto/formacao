@@ -1,16 +1,12 @@
 <template>
-  <div class="app">	<!--
-	<div id="stars"></div>
-	<div id="stars2"></div>
-	<div id="stars3"></div>-->
+  <div class="app" v-on:click="closeModals">
 	<Sidebar class="sidebar" v-on:toggleSidebar="toggleSidebar" :class="{ 'd-none': displaySidebarTopbar }"/>
 	<div class="full-page">
 		<div class="topbar-wrapper" :class="{ sidebarTopbar: sidebarOpen, 'd-none': displaySidebarTopbar }">
-			<Topbar/>
+			<Topbar v-bind:notifsOpen="notifsOpen" v-bind:searchOpen="searchOpen" v-on:toggleNotifs="toggleNotifs" v-on:toggleSearch="toggleSearch" v-on:openSearch="openSearch"/>
 		</div>
 		<router-view  class="active-page" :class="{ sidebarMainPage: sidebarOpen }"/>	
 	</div>
-	<!--adicionar o sidebar em cima do topbar-->
   </div>
 </template>
 
@@ -25,7 +21,9 @@ export default {
 	},
 	data() {
 		return {
-			sidebarOpen: false
+			sidebarOpen: false,
+			searchOpen: false,
+			notifsOpen: false
 		}
 	},
 	computed: {
@@ -38,6 +36,20 @@ export default {
 		toggleSidebar() {
 			this.sidebarOpen = !this.sidebarOpen;
 			this.$emit("toggleSidebar");
+		},
+		toggleNotifs() {
+			this.notifsOpen = !this.notifsOpen;
+		},
+		toggleSearch() {
+			this.searchOpen = !this.searchOpen;
+		},
+		openSearch() {
+			this.searchOpen = true;
+			this.notifsOpen = false;
+		},
+		closeModals() {
+			this.notifsOpen = false;
+			this.searchOpen = false;
 		}
 	} 
 }

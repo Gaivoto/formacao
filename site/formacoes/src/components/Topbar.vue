@@ -4,16 +4,17 @@
             <p class="page-name">{{ this.$route.name }}</p>
         </div>
 
-        <div class="searchbar-container">
+        <div class="searchbar-container" v-on:click.stop>
             <div class="searchbar">
-                <input type="text" placeholder="Pesquisar...">
+                <input type="text" ref="topSearchbar" v-on:input="filterSearchbar" v-on:keydown.enter="goToSearchItem" placeholder="Pesquisar...">
                 <span class="material-icons search-icon">search</span>
             </div> 
-            <div class="searchbar-results">
-                <div class="no-results">
+            <div ref="topSearchbarResults" class="searchbar-results" :class="{ 'd-none': !searchOpen }">
+                <div class="no-results" :class="{ 'd-none': !noResults }">
                     <span class="material-icons search-icon">warning</span>
                     <p>Não existem resultados para a pesquisa.</p>    
                 </div>
+                <SearchbarResult v-for="item in this.searchResults" :key="item.id + item.type" v-bind:item="item" v-on:click="toggleSearch"/>
             </div>  
         </div>
 
@@ -26,12 +27,12 @@
                     <img id="profile-image" :src="this.imageUrl" />    
                 </div>
             </router-link>
-            <div class="notif-container" v-on:click="toggleNotifs">
+            <div class="notif-container" v-on:click="toggleNotifs" v-on:click.stop>
                 <span class="material-icons notif-icon" :class="{ unread: showNotif }">notifications<div :class="{ notif: showNotif }"></div></span>
             </div>
         </div>
 
-        <div ref="notifList" class="notif-list d-none">
+        <div ref="notifList" class="notif-list" :class="{ 'd-none': !notifsOpen }">
             <NotificationListItem v-for="notif in this.notifications" :key="notif.id" v-bind:notification="notif"/>
         </div>
     </div>
@@ -39,30 +40,39 @@
 
 <script>
 import NotificationListItem from './NotificationListItem.vue'
+import SearchbarResult from './SearchbarResult.vue'
 
 export default {
     name: "Topbar",
     components: {
-        NotificationListItem
+        NotificationListItem,
+        SearchbarResult
     },
     props: {
-        user: {
-            type: Object,
-            required: true,
+        notifsOpen: {
+            type: Boolean,
+            required: true
         },
+        searchOpen: {
+            type: Boolean,
+            required: true
+        }
     },
     data() {
         return {
+            isMounted: false,
             user: {},
             imageUrl: "",
-            notifications: []
+            notifications: [],
+            searchResults: [],
+            usersCourses: []
         }
     },
+    mounted() {
+        this.isMounted = true;
+    }, 
     created() {
         this.user.username = "Amogus Sus";
-        this.user.name = "Bruh ?";
-        this.user.country = "Portugal";
-        this.user.description = "Boa descrição bruvkek";
         this.user.image = "bingus";
 
         this.notifications = [
@@ -109,6 +119,56 @@ export default {
                 date: "12/12/2022 13:45"
             }
         ];
+
+        this.usersCourses = [
+            {
+                id: 1,
+                type: 'Curso',
+                name: "Course Course Course v v Course Course 1",
+                image: "bingus",
+                category: "Agricultura"
+            },
+            {
+                id: 2,
+                type: 'Curso',
+                name: "Course 2",
+                image: "bingus",
+                category: "Agricultura"
+            },
+            {
+                id: 3,
+                type: 'Curso',
+                name: "Course 3",
+                image: "bingus",
+                category: "Beleza"
+            },
+            {
+                id: 4,
+                type: 'Curso',
+                name: "Course 4",
+                image: "bingus",
+                category: "Beleza"
+            },
+            {
+                id: 5,
+                type: 'Curso',
+                name: "Course 5",
+                image: "bingus",
+                category: "Sopa"
+            },
+            {
+                id: 1,
+                type: 'Criador',
+                name: "Creator 1",
+                image: "bingus"
+            },
+            {
+                id: 2,
+                type: 'Criador',
+                name: "Creator 2",
+                image: "bingus"
+            }
+        ];
         
         this.imageUrl = new URL(`../assets/${this.user.image}.jpg`, import.meta.url).href;
     },
@@ -121,13 +181,51 @@ export default {
 			});
 
 			return unread;
-		}
+		},
+        noResults() {
+            if(this.isMounted){
+                let filter = this.$refs.topSearchbar.value;
+
+                if(this.searchResults.length == 0 && filter != "") return true;
+                return false;    
+            }
+        }
     },
     methods: {
         toggleNotifs() {
-            this.$refs.notifList.classList.toggle("d-none");
+            this.$emit("toggleNotifs");
 
             this.notifications.forEach(n => n.read = true);
+        },
+        toggleSearch() {
+            console.log("?")
+            this.$emit("toggleSearch");
+        },
+        filterSearchbar(){
+            this.$emit("openSearch");
+            let filter = this.$refs.topSearchbar.value.toLowerCase();
+
+            this.searchResults = [];
+
+            if(filter != ""){
+                this.usersCourses.forEach(i => {
+                    if(i.name.toLowerCase().includes(filter) || i.type.toLowerCase().includes(filter) || (i.category != null && i.category.toLowerCase().startsWith(filter))) this.searchResults.push(i);
+                });    
+            }
+        },
+        goToSearchItem() {
+            let filter = this.$refs.topSearchbar.value.toLowerCase();
+
+            this.usersCourses.forEach(i => {
+                if(i.name.toLowerCase() == filter){
+                    if(i.type == "Curso") {
+                        this.$router.push({ name: 'Curso', params: { id: i.id } });
+                    } else {
+                        this.$router.push({ name: 'Perfil do Utilizador', params: { id: i.id } });
+                    }
+                };
+                this.$emit("toggleSearch");
+            });
         }
     }
 }
@@ -181,10 +279,24 @@ export default {
         left: 0px;
         top: 56px;
         width: 100%;
-        padding: 16px;
+        max-height: 500px;
         border-radius: 8px;
 
+        overflow-y: scroll;
+
         background-color: var(--mobalytics-back);
+        box-shadow: rgba(20, 14, 49, 0.6) 0px 2px 10px 4px;
+    }
+
+    .searchbar-results::-webkit-scrollbar {
+        width: 10px;
+        background: var(--mobalytics-back);
+        border-radius: 8px;
+    }
+
+    .searchbar-results::-webkit-scrollbar-thumb {
+        background: var(--mobalytics-card);
+        border-radius: 8px;
     }
 
     .searchbar-results .no-results {
@@ -192,6 +304,7 @@ export default {
         align-items: center;
         justify-content: space-between;
         gap: 16px;
+        padding: 16px;
     }
 
     .searchbar-results .no-results p {
@@ -253,10 +366,9 @@ export default {
     
 
     .notif-list::-webkit-scrollbar {
-        width: 8px;
-        height: 8px;
+        width: 10px;
         background: var(--mobalytics-back);
-        border-radius: 0px 8px 8px 0px;
+        border-radius: 8px;
     }
 
     .notif-list::-webkit-scrollbar-thumb {
