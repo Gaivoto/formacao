@@ -216,7 +216,6 @@ export default {
     },
     methods: {
         filter(filter) {
-            console.log(filter.name)
             this.coursesDisplay = [];
             this.coursesFiltered = [...this.courses];
 

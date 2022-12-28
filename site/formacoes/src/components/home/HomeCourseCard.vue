@@ -121,17 +121,17 @@ export default {
     }
 
     .card-info-div > div > span {
-        color: var(--light-alt);
+        color: var(--light);
         font-size: 20px;
     }
 
     .card-info-div > div > p {
-        color: var(--light-alt);
+        color: var(--light);
         margin-bottom: 0px;
     }
 
     .card-info-div p:first-child {
-        color: var(--light-alt);
+        color: var(--light);
     }
 
     .card-info .card-creator-div {
