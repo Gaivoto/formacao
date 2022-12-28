@@ -1,7 +1,7 @@
 <template>
     <div class="wrapper">
         <div class="topbar-text">
-            <p class="page-name">{{ this.$route.name }}</p>
+            <p class="page-name">Formações Johnson - {{ this.$route.name }}</p>
         </div>
 
         <div class="searchbar-container" v-on:click.stop>
@@ -256,13 +256,13 @@ export default {
     .searchbar input {
         background: none;
         border: none;
-        color: white !important;
+        color: var(--light) !important;
         font-family: "Poppins";
-        min-width: 300px;
+        min-width: 400px;
     }
 
     .searchbar input::placeholder {
-        color: white;
+        color: var(--light);
     }
 
     .searchbar input:focus {
@@ -271,7 +271,7 @@ export default {
 
     .search-icon {
         font-size: 28px;
-        color: white;
+        color: var(--light);
     }
 
     .searchbar-results {
@@ -302,8 +302,7 @@ export default {
     .searchbar-results .no-results {
         display: flex;
         align-items: center;
-        justify-content: space-between;
-        gap: 16px;
+        justify-content: space-evenly;
         padding: 16px;
     }
 

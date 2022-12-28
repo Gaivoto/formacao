@@ -88,6 +88,7 @@ export default {
     .pagination-wrapper {
         display: flex;
         justify-content: space-around;
+        padding-bottom: 12px;
     }
 
     .pagination {

@@ -6,11 +6,11 @@
           <form action="#" class="sign-in-form">
             <h2 class="title">Iniciar Sessão</h2>
             <div class="input-field">
-              <i class="fas fa-user"></i>
+              <span class="material-icons">person</span>
               <input type="text" placeholder="Nome de Utilizador" />
             </div>
             <div class="input-field">
-              <i class="fas fa-lock"></i>
+              <span class="material-icons">lock</span>
               <input type="password" placeholder="Palavra-Passe" />
             </div>
             <input type="submit" value="Entrar" class="btn solid" />
@@ -19,15 +19,15 @@
           <form action="#" class="sign-up-form">
             <h2 class="title">Criar Conta</h2>
             <div class="input-field">
-              <i class="fas fa-user"></i>
+              <span class="material-icons">person</span>
               <input type="text" placeholder="Nome de Utilizador" />
             </div>
             <div class="input-field">
-              <i class="fas fa-envelope"></i>
+              <span class="material-icons">mail</span>
               <input type="email" placeholder="E-mail" />
             </div>
             <div class="input-field">
-              <i class="fas fa-lock"></i>
+              <span class="material-icons">lock</span>
               <input type="password" placeholder="Palavra-Passe" />
             </div>
             <input type="submit" class="btn" value="Registar" />
@@ -43,11 +43,11 @@
             <p>
               Crie já uma conta e venha conhecer os nossos cursos.
             </p>
-            <button v-on:click="signupbtn" ref="signupbtn" class="btn transparent" id="sign-up-btn">
+            <button v-on:click="signupbtn" ref="signupbtn" class="btn transparent bruv" id="sign-up-btn">
               Criar Conta
             </button>
           </div>
-          <img src="../assets/1.svg" class="image" alt="" />
+          <img src="../assets/loginimg2.svg" class="image boneco" alt="" />
         </div>
         <div class="panel right-panel">
           <div class="content">
@@ -55,11 +55,11 @@
             <p>
               Faça inicio de sessão com a sua conta existente e venha aprender.
             </p>
-            <button v-on:click="signinbtn" ref="signinbtn" class="btn transparent" id="sign-in-btn">
+            <button v-on:click="signinbtn" ref="signinbtn" class="btn transparent bruv" id="sign-in-btn">
               Iniciar Sessão
             </button>
           </div>
-          <img src="../assets/2.svg" class="image" alt="" />
+          <img src="../assets/2.svg" class="image boneco" alt="" />
         </div>
       </div>
     </div>
@@ -68,15 +68,15 @@
 <script>
 
 export default {
-    name: "Login",
-    methods: {
-        signupbtn() {
-        this.$refs.mycontainer.classList.add("sign-up-mode");
-        },
-        signinbtn() {
-        this.$refs.mycontainer.classList.remove("sign-up-mode");  
-        }
+  name: "Login",
+  methods: {
+    signupbtn() {
+    this.$refs.mycontainer.classList.add("sign-up-mode");
+    },
+    signinbtn() {
+    this.$refs.mycontainer.classList.remove("sign-up-mode");  
     }
+  }
 }
 
 </script>
@@ -101,7 +101,7 @@ input {
 .login-container {
   position: relative;
   width: 100%;
-  background-color: #fff;
+  background-color: var(--light);
   min-height: 100vh;
   overflow: hidden;
 }
@@ -149,7 +149,7 @@ form.sign-in-form {
 
 .title {
   font-size: 2.2rem;
-  color: #222831;
+  color: var(--mobalytics-susge);
   margin-bottom: 10px;
 }
 
@@ -164,6 +164,8 @@ form.sign-in-form {
   grid-template-columns: 15% 85%;
   padding: 0 0.4rem;
   position: relative;
+  text-align: center;
+  align-items: center;
 }
 
 
@@ -185,12 +187,17 @@ form.sign-in-form {
   color: #393E46;
 }
 .input-field:hover{
-  box-shadow: 0 0 0 2px #00ADB5;
+  box-shadow: 0 0 0 2px var(--mobalytics-susge);
 }
 
 .input-field input::placeholder {
   color: #aaa;
   font-weight: 500;
+}
+
+.input-field .material-icons {
+  color: var(--mobalytics-card);
+  font-size: 26px;
 }
 
 .social-text {
@@ -225,12 +232,12 @@ form.sign-in-form {
 
 .btn {
   width: 150px;
-  background-color: #00ADB5;
+  background-color: var(--mobalytics-back);
   border: none;
   outline: none;
   height: 49px;
   border-radius: 49px;
-  color: #fff;
+  color: var(--light);
   text-transform: uppercase;
   font-weight: 600;
   margin: 10px 0;
@@ -239,8 +246,22 @@ form.sign-in-form {
 }
 
 .btn:hover {
-  background-color: #4d84e2;
+  color: var(--mobalytics-susge);
+  background-color: var(--light);
+  border: 1px solid var(--mobalytics-susge);
 }
+
+.bruv {
+  color: var(--light) !important; 
+  transition: 0.5s;
+}
+
+.bruv:hover {
+  transform: scale(1.05);
+  transition: 0.5s;
+  color: var(--light) !important; 
+}
+
 .panels-container {
   position: absolute;
   height: 100%;
@@ -259,7 +280,7 @@ form.sign-in-form {
   top: -10%;
   right: 48%;
   transform: translateY(-50%);
-  background-image: linear-gradient(-45deg, #00ADB5 0%, #393E46 100%);
+  background: var(--mobalytics-card);
   transition: 1s ease-in-out;
   border-radius: 50%;
   z-index: 6;
@@ -269,6 +290,11 @@ form.sign-in-form {
   width: 70%;
   transition: transform 1.1s ease-in-out;
   transition-delay: 0.4s;
+}
+
+.boneco {
+  transform: scale(-1, 1);
+  margin-right: -20%;
 }
 
 .panel {
@@ -291,7 +317,7 @@ form.sign-in-form {
 }
 
 .panel .content {
-  color: #fff;
+  color: var(--light);
   transition: transform 0.9s ease-in-out;
   transition-delay: 0.6s;
 }
@@ -310,7 +336,7 @@ form.sign-in-form {
 .btn.transparent {
   margin: 0;
   background: none;
-  border: 2px solid #fff;
+  border: 2px solid var(--light);
   width: 130px;
   height: 41px;
   font-weight: 600;
