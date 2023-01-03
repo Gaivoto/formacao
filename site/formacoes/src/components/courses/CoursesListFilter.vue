@@ -10,6 +10,7 @@
                 <div class="custom-select">
                     <div class="selected" :class="{ open: catOpen }" v-on:click="catOpen=!catOpen">{{ this.category }}</div>
                     <div class="items" :class="{ selectHide: !catOpen }">
+                        <div v-on:click="selectCat('Todas')">Todas</div>
                         <div v-on:click="selectCat('cat1')">cat1</div>
                         <div v-on:click="selectCat('cat2')">cat2</div>
                         <div v-on:click="selectCat('cat3')">cat3</div>

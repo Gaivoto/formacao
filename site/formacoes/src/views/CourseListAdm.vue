@@ -1,8 +1,12 @@
 <template>
     <div class="courses-list-wrapper">
         <CourseListAdmFilter v-on:filter="filter"/>
-        <div>
+        <div class="results">
             <CourseListAdmCourseCard v-for="course in this.coursesDisplay" :key="course.id" v-bind:course="course" v-on:changeStateCourse="changeStateCourse" v-on:changeStateVideo="changeStateVideo"/>
+            <div class="no-results" :class="{ 'd-none': !noResults }">
+                <span class="material-icons search-icon">warning</span>
+                <p>Não existem resultados para a pesquisa.</p>    
+            </div>
         </div>
         <Pagination2 v-bind:totalItems="this.coursesFiltered.length" v-bind:currentPage="this.currentPage" v-bind:itemsPerPage="this.itemsPerPage" v-on:changePage="changePage"/>
     </div>
@@ -383,34 +387,40 @@ export default {
 
         this.coursesDisplay = this.courses.slice(0, this.itemsPerPage);
     },
+    computed: {
+        noResults() {
+            if(this.coursesFiltered.length == 0) return true;
+            return false;  
+        }
+    },
     methods: {
         filter(filter) {
             this.coursesDisplay = [];
             this.coursesFiltered = [...this.courses];
 
             if(filter.name) {
-                this.coursesFiltered = this.coursesFiltered.filter(course => course.name.toLowerCase().includes(filter.name.toLowerCase()) || course.creator.name.toLowerCase().includes(filter.name.toLowerCase()));
+                this.coursesFiltered = this.coursesFiltered.filter(course => course.name.toLowerCase().includes(filter.name) || course.creator.name.toLowerCase().includes(filter.name));
             }
 
-            if(filter.category != 'all') {
+            if(filter.category != 'Todas') {
                 this.coursesFiltered = this.coursesFiltered.filter(course => course.category == filter.category);
             }
 
-            if(filter.state != 'all') {
+            if(filter.state != 'Todos') {
                 this.coursesFiltered = this.coursesFiltered.filter(course => course.state == filter.state);
             }
 
             switch(filter.order) {
-                case "price-desc":
+                case "Preço decrescente":
                     this.coursesFiltered.sort((a, b) => a.price < b.price ? 1 : (b.price < a.price ? -1 : 0));
                     break;
-                case "price-asc":
+                case "Preço crescente":
                     this.coursesFiltered.sort((a, b) => (a.price > b.price ? 1 : (b.price > a.price) ? -1 : 0));
                     break;
-                case "subs-desc":
+                case "Inscs. decrescente":
                     this.coursesFiltered.sort((a, b) => a.subscriptions < b.subscriptions ? 1 : (b.subscriptions < a.subscriptions ? -1 : 0));
                     break;
-                case "subs-asc":
+                case "Inscs. crescente":
                     this.coursesFiltered.sort((a, b) => a.subscriptions > b.subscriptions ? 1 : (b.subscriptions > a.subscriptions ? -1 : 0));
                     break;
                 default:
@@ -456,4 +466,27 @@ export default {
 </script>
 
 <style scoped>
+    .courses-list-wrapper {
+        padding: 24px 24px 0px 24px;
+    }
+
+    .results { 
+        min-height: 70vh;
+    }
+
+    .no-results {
+        padding-top: 100px;
+        width: 100%;
+        text-align: center;
+    }
+
+    .no-results .material-icons {
+        font-size: 200px;
+        color: var(--light);
+    }
+
+    .no-results p {
+        color: var(--light);
+        font-size: 40px;
+    }
 </style>
