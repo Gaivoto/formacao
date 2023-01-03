@@ -96,7 +96,7 @@ export default {
 
 	.topbar-wrapper {
 		position: fixed;
-		padding: 16px 40px 0px 104px;
+		padding: 16px 40px 8px 104px;
 		z-index: 1;
 		transition: 0.3s ease-in-out;
 		width: 100%;

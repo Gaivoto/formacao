@@ -113,14 +113,6 @@ export default {
         margin-bottom: 0px;
     }
 
-    .formacao-text {
-
-    }
-
-    .data {
-
-    }
-
     .user {
         width: 80%;
         margin: auto;
@@ -144,9 +136,5 @@ export default {
         font-size: 24px;
         margin-bottom: 0px;
         border-bottom: 2px solid var(--mobalytics-susge);
-    }
-
-    .formador-text {
-
     }
 </style>

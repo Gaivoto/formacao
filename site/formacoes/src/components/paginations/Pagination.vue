@@ -84,7 +84,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
     .pagination-wrapper {
         display: flex;
         justify-content: space-around;

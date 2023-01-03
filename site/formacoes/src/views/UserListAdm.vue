@@ -139,7 +139,7 @@ export default {
 
 <style scoped>
     .user-list-wrapper {
-        padding: 24px 24px 0px 24px;
+        padding: 24px 32px 0px 32px;
     }
 
     .results {

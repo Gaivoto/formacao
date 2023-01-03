@@ -8,7 +8,7 @@
                 <p>Não existem resultados para a pesquisa.</p>    
             </div>
         </div>
-        <Pagination2 v-bind:totalItems="this.coursesFiltered.length" v-bind:currentPage="this.currentPage" v-bind:itemsPerPage="this.itemsPerPage" v-on:changePage="changePage"/>
+        <Pagination2 v-bind:totalItems="this.coursesFiltered.length" v-bind:itemsPerPage="this.itemsPerPage" v-on:changePage="changePage"/>
     </div>
 </template>
 
@@ -37,7 +37,7 @@ export default {
         this.courses = [
             {
                 id: 1,
-                name: "Course 1",
+                name: "Course 1 Course 1 Course 1 Course 1 Course 1 Course 1 Course 1",
                 description: "desc 1 amongus",
                 image: "bingus",
                 price: 20,
@@ -54,13 +54,15 @@ export default {
                         id: 1,
                         name: "v1",
                         state: "Ativo",
-                        image: "bingus"
+                        image: "bingus",
+                        date: "12-12-2022"
                     },
                     {
                         id: 2,
                         name: "v2",
                         state: "Ativo",
-                        image: "bingus"
+                        image: "bingus",
+                        date: "12-12-2022"
                     },
                 ]
             },
@@ -89,7 +91,8 @@ export default {
                         id: 4,
                         name: "v2",
                         state: "Ativo",
-                        image: "bingus"
+                        image: "bingus",
+                        date: "12-12-2022"
                     },
                 ]
             },
@@ -112,13 +115,15 @@ export default {
                         id: 5,
                         name: "v1",
                         state: "Ativo",
-                        image: "bingus"
+                        image: "bingus",
+                        date: "12-12-2022"
                     },
                     {
                         id: 6,
                         name: "v2",
                         state: "Ativo",
-                        image: "bingus"
+                        image: "bingus",
+                        date: "12-12-2022"
                     },
                 ]
             },
@@ -141,13 +146,15 @@ export default {
                         id: 7,
                         name: "v1",
                         state: "Ativo",
-                        image: "bingus"
+                        image: "bingus",
+                        date: "12-12-2022"
                     },
                     {
                         id: 8,
                         name: "v2",
                         state: "Ativo",
-                        image: "bingus"
+                        image: "bingus",
+                        date: "12-12-2022"
                     },
                 ]
             },
@@ -170,13 +177,15 @@ export default {
                         id: 9,
                         name: "v1",
                         state: "Ativo",
-                        image: "bingus"
+                        image: "bingus",
+                        date: "12-12-2022"
                     },
                     {
                         id: 10,
                         name: "v2",
                         state: "Ativo",
-                        image: "bingus"
+                        image: "bingus",
+                        date: "12-12-2022"
                     },
                 ]
             },
@@ -199,13 +208,15 @@ export default {
                         id: 11,
                         name: "v1",
                         state: "Ativo",
-                        image: "bingus"
+                        image: "bingus",
+                        date: "12-12-2022"
                     },
                     {
                         id: 12,
                         name: "v2",
                         state: "Ativo",
-                        image: "bingus"
+                        image: "bingus",
+                        date: "12-12-2022"
                     },
                 ]
             },
@@ -228,13 +239,15 @@ export default {
                         id: 13,
                         name: "v1",
                         state: "Ativo",
-                        image: "bingus"
+                        image: "bingus",
+                        date: "12-12-2022"
                     },
                     {
                         id: 14,
                         name: "v2",
                         state: "Ativo",
-                        image: "bingus"
+                        image: "bingus",
+                        date: "12-12-2022"
                     },
                 ]
             },
@@ -257,13 +270,15 @@ export default {
                         id: 15,
                         name: "v1",
                         state: "Ativo",
-                        image: "bingus"
+                        image: "bingus",
+                        date: "12-12-2022"
                     },
                     {
                         id: 16,
                         name: "v2",
                         state: "Ativo",
-                        image: "bingus"
+                        image: "bingus",
+                        date: "12-12-2022"
                     },
                 ]
             },
@@ -286,13 +301,15 @@ export default {
                         id: 17,
                         name: "v1",
                         state: "Ativo",
-                        image: "bingus"
+                        image: "bingus",
+                        date: "12-12-2022"
                     },
                     {
                         id: 18,
                         name: "v2",
                         state: "Ativo",
-                        image: "bingus"
+                        image: "bingus",
+                        date: "12-12-2022"
                     },
                 ]
             },
@@ -315,13 +332,15 @@ export default {
                         id: 19,
                         name: "v1",
                         state: "Ativo",
-                        image: "bingus"
+                        image: "bingus",
+                        date: "12-12-2022"
                     },
                     {
                         id: 20,
                         name: "v2",
                         state: "Ativo",
-                        image: "bingus"
+                        image: "bingus",
+                        date: "12-12-2022"
                     },
                 ]
             },
@@ -344,13 +363,15 @@ export default {
                         id: 21,
                         name: "v1",
                         state: "Ativo",
-                        image: "bingus"
+                        image: "bingus",
+                        date: "12-12-2022"
                     },
                     {
                         id: 22,
                         name: "v2",
                         state: "Ativo",
-                        image: "bingus"
+                        image: "bingus",
+                        date: "12-12-2022"
                     },
                 ]
             },
@@ -360,7 +381,7 @@ export default {
                 description: "desc 12 amongus",
                 image: "bingus",
                 price: 120,
-                category: "cat1",
+                category: "cajsjd asdf asdf adf",
                 date: "05-02-2022",
                 subscriptions: 0,
                 creator: {
@@ -379,7 +400,8 @@ export default {
                         id: 24,
                         name: "v2",
                         state: "Ativo",
-                        image: "bingus"
+                        image: "bingus",
+                        date: "12-12-2022"
                     },
                 ]
             }
@@ -398,16 +420,28 @@ export default {
             this.coursesDisplay = [];
             this.coursesFiltered = [...this.courses];
 
+            if(filter.state != 'Todos') {
+                if(filter.state == "Pendente") {
+                    this.coursesFiltered = [];
+                    this.courses.forEach(course => {
+                        if(course.state == "Pendente") this.coursesFiltered.push(course);
+                        else {
+                            course.videos.forEach(vid => {
+                                if(vid.state == "Pendente") this.coursesFiltered.push(course);
+                            });    
+                        }
+                    });
+                } else {
+                    this.coursesFiltered = this.courses.filter(course => course.state == filter.state);
+                }
+            }
+
             if(filter.name) {
                 this.coursesFiltered = this.coursesFiltered.filter(course => course.name.toLowerCase().includes(filter.name) || course.creator.name.toLowerCase().includes(filter.name));
             }
 
             if(filter.category != 'Todas') {
                 this.coursesFiltered = this.coursesFiltered.filter(course => course.category == filter.category);
-            }
-
-            if(filter.state != 'Todos') {
-                this.coursesFiltered = this.coursesFiltered.filter(course => course.state == filter.state);
             }
 
             switch(filter.order) {
@@ -467,10 +501,12 @@ export default {
 
 <style scoped>
     .courses-list-wrapper {
-        padding: 24px 24px 0px 24px;
+        padding: 24px 32px 0px 32px;
     }
 
     .results { 
+        margin: 0px;
+        padding: 0px 8px;
         min-height: 70vh;
     }
 

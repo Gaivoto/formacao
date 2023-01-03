@@ -33,6 +33,8 @@
                 <div class="custom-select">
                     <div class="selected" :class="{ open: orderOpen }" v-on:click="orderOpen=!orderOpen">{{ this.order }}</div>
                     <div class="items" :class="{ selectHide: !orderOpen }">
+                        <div v-on:click="selectOrder('Mais recente')">Mais recente</div>
+                        <div v-on:click="selectOrder('Mais antigo')">Mais antigo</div>
                         <div v-on:click="selectOrder('Inscs. decrescente')">Inscs. decrescente</div>
                         <div v-on:click="selectOrder('Inscs. crescente')">Inscs. crescente</div>
                         <div v-on:click="selectOrder('Preço decrescente')">Preço decrescente</div>

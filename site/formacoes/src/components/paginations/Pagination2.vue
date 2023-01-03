@@ -1,9 +1,11 @@
 <template>
     <div class="pagination-wrapper">
         <div class="pagination">
-            <img v-on:click="decreasePage" src="../../assets/left_chevron.png">
+            <span class="material-icons" v-on:click="firstPage">first_page</span>
+            <span class="material-icons" v-on:click="decreasePage">chevron_left</span>
             <p>{{ this.firstItem }} - {{ this.lastItem }} de {{ this.totalItems }}</p>
-            <img v-on:click="increasePage" src="../../assets/right_chevron.png">    
+            <span class="material-icons" v-on:click="increasePage">chevron_right</span> 
+            <span class="material-icons" v-on:click="lastPage">last_page</span> 
         </div>
     </div>
 </template>
@@ -12,10 +14,6 @@
 export default {
     name: 'Pagination2',
     props: {
-        currentPage: {
-            type: Number,
-            required: true
-        },
         totalItems: {
             type: Number,
             required: true
@@ -25,40 +23,57 @@ export default {
             required: true
         }
     },
+    data(){
+        return {
+            page: -1
+        }
+    },
+    mounted() {
+        this.page = 1
+    },
     computed: {
         firstItem() {
             if(this.totalItems == 0) return 0;
-            else return (this.currentPage - 1) * this.itemsPerPage + 1;
+            else return (this.page - 1) * this.itemsPerPage + 1;
         },
         lastItem() {
-            if(this.currentPage * this.itemsPerPage > this.totalItems) return this.totalItems;
-            else return this.currentPage * this.itemsPerPage;
+            if(this.page * this.itemsPerPage > this.totalItems) return this.totalItems;
+            else return this.page * this.itemsPerPage;
         }
     },
     methods: {
         decreasePage() {
-            if(this.currentPage > 1){
-                this.$emit("changePage", this.currentPage - 1);
+            if(this.page > 1){
+                this.page--;
+                this.$emit("changePage", this.page);
             }
         },
+        firstPage() {
+            while(this.page > 1) this.decreasePage();
+        },
         increasePage() {
-            if(this.currentPage * this.itemsPerPage < this.totalItems) {
-                this.$emit("changePage", this.currentPage + 1);
+            if(this.page * this.itemsPerPage < this.totalItems) {
+                this.page++;
+                this.$emit("changePage", this.page);
             }
+        },
+        lastPage() {
+            while(this.page * this.itemsPerPage < this.totalItems) this.increasePage();
         }
     }
 }
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
     .pagination-wrapper {
         display: flex;
         justify-content: space-around;
+        padding-bottom: 12px;
     }
 
     .pagination {
         display: flex;
-        gap: 8px;
+        gap: 16px;
         text-align: center;
         margin: auto;
     }
@@ -72,5 +87,11 @@ export default {
 
     .pagination p {
         margin: 0px;
+        color: var(--light);
+    }
+
+    .material-icons {
+        color: var(--primary);
+        cursor: pointer;
     }
 </style>

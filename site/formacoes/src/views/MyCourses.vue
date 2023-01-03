@@ -8,7 +8,7 @@
                 <p>Não existem resultados para a pesquisa.</p>    
             </div>
         </div>
-        <Pagination v-on:change-page="changePage" v-bind:page="this.page" v-bind:numberOfPages="numberOfPages"/>
+        <Pagination v-on:change-page="changePage" v-bind:numberOfPages="numberOfPages"/>
     </div>
 </template>
 
@@ -285,7 +285,7 @@ export default {
 
 <style scoped>
     .courses-wrapper {
-        padding: 24px 24px 0px 24px;
+        padding: 24px 32px 0px 32px;
     }
 
     .row {

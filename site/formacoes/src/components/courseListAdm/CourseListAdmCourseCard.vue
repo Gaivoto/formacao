@@ -1,23 +1,27 @@
 <template>
     <div class="course-card-container">
-        <div class="course-card">
+        <div class="course-card" :class="{ 'videos-open': this.videosOpen }">
             <div class="course-card-left">
-                <img :src="this.imageUrl">
-                <div>
-                    <router-link :to="{ name: 'Curso', params: { id: this.course.id } }"><p>Nome: {{ this.course.name }}</p></router-link>
+                <router-link :to="{ name: 'Curso', params: { id: this.course.id } }">
+                    <img :src="this.imageUrl">
+                </router-link>
+                <div class="first-left-div">
+                    <router-link :to="{ name: 'Curso', params: { id: this.course.id } }"><p>{{ this.course.name }}</p></router-link>
                     <p>Criador: {{ this.course.creator.name }}</p>
                 </div>
                 <div>
-                    <p>Preço: {{ this.course.price }}</p>
-                    <p>Inscrições: {{ this.course.subscriptions }}</p>
+                    <p>Preço: {{ this.course.price }} €</p>
+                    <p>Inscs: {{ this.course.subscriptions }}</p>
                 </div>    
                 <div>
-                    <p>Categoria: {{ this.course.category }}</p>
+                    <p>Cat: {{ this.course.category }}</p>
                     <p>Estado: {{ this.course.state }}</p>
+                </div>    
+                <div>
+                    <p>Data: {{ this.course.date }}</p>
                 </div>    
             </div>
             <div class="course-card-right">
-                <img src="../../assets/chevron_down.png" v-on:click="toggleVideos">
                 <button v-if="showButton1" v-on:click="changeStateCourse('Ativo')">ATIVAR</button>
                 <button v-if="showButton2" v-on:click="changeStateCourse('Inativo')">DESATIVAR</button>
                 <div v-if="showButton3and4" class="button-wrapper">
@@ -27,8 +31,13 @@
                 <button v-if="showButton5" v-on:click="changeStateCourse('Pendente')">TORNAR PENDENTE</button>     
             </div>
         </div>
-        <div ref="pendingNotif" :class="{ notif: showNotif }"></div>
-        <div ref="videoList" class="d-none">
+        <div ref="pendingNotif" v-if="showNotif" class="pending-div">
+            <span class="material-icons notif-icon">report</span>
+        </div>
+        <div class="open-videos-div">
+            <span class="material-icons open-videos-icon" v-on:click="toggleVideos" :class="{ mirrored: this.videosOpen}">expand_more</span>
+        </div>
+        <div ref="videoList" class="video-list" :class="{ closed: !this.videosOpen }">
             <CourseListAdmVideoCard v-for="video in this.course.videos" :key="video.id" v-bind:video="video" v-bind:courseId="this.course.id" v-on:changeStateVideo="changeStateVideo"/>
         </div>
     </div>
@@ -50,7 +59,8 @@ export default {
     },
     data(){
         return {
-            imageUrl: ""
+            imageUrl: "",
+            videosOpen: false
         }
     },
     created(){
@@ -91,7 +101,7 @@ export default {
             this.$emit("changeStateVideo", info);
         },
         toggleVideos() {
-            this.$refs.videoList.classList.toggle("d-none");
+            this.videosOpen = !this.videosOpen;
         }
     }
 }
@@ -100,19 +110,61 @@ export default {
 <style scoped>
     .course-card-container {
         position: relative;
+        padding: 16px 16px 32px 16px;
+        height: auto;
     }
 
     .course-card {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 16px;
+        
+        padding: 16px 40px 16px 16px;
+        border-radius: 8px;
+        background: var(--mobalytics-card);
+        box-shadow: rgba(20, 14, 49, 0.6) 0px 2px 10px 4px;
+    }
+
+    .course-card.videos-open {
+        border-radius: 8px 8px 0px 8px;
     }
 
     .course-card-left {
         display: flex;
         align-items: center;
-        gap: 80px;
+        gap: 60px;
+    }
+
+    .course-card-left div {
+        width: 160px;
+    }
+
+    .course-card-left img {
+        height: 140px;
+        width: 140px;
+        border-radius: 8px;
+        object-fit: cover;
+    }
+
+    .course-card-left p {
+        color: var(--light);
+    }
+
+    .course-card-left .first-left-div {
+        width: 400px !important;
+    }
+
+    .course-card-left .first-left-div p {
+        width: 400px;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .course-card-left > div > a > p {
+        color: var(--primary);
+        font-size: 24px;
     }
 
     .course-card-right {
@@ -122,9 +174,13 @@ export default {
     }
 
     button {
-        background: grey;
+        background: var(--mobalytics-back);
+        color: var(--light);
         height: 50px;
         width: 120px;
+        border: none;
+        border-radius: 8px;
+        box-shadow: rgba(20, 14, 49, 0.6) 6px 6px 4px 4px;
     }
 
     .button-wrapper {
@@ -132,14 +188,72 @@ export default {
         gap: 16px;
     }
 
-    .notif {
-        width: 12px;
-        height: 12px;
-        border-radius: 50%;
-        background-color: red;
-
+    .pending-div {
         position: absolute;
-        top: 16px;
-        right: 16px;
+        top: 0px;
+        right: 0px;
+    }
+
+    .notif-icon {
+        font-size: 36px;
+        color: var(--primary);
+        animation: tilt-shaking 0.3s infinite;
+    }
+
+    @keyframes tilt-shaking {
+        0% { transform: rotate(0deg); }
+        25% { transform: rotate(10deg); }
+        50% { transform: rotate(0eg); }
+        75% { transform: rotate(-10deg); }
+        100% { transform: rotate(0deg); }
+    }
+
+    .open-videos-div {
+        position: absolute;
+        bottom: 8px;
+        right: 80px;
+
+        background: var(--mobalytics-card);
+        border-radius: 50%;
+        height: 60px;
+        width: 60px;
+        box-shadow: rgba(20, 14, 49, 0.6) 0px 10px 10px 0px;
+    }
+
+    .open-videos-icon {
+        object-fit: cover;
+        font-size: 60px;
+        color: var(--light);
+        cursor: pointer;
+        transition: 0.5s;
+    }
+
+    .video-list {
+        overflow: hidden;
+        margin-left: 160px;
+        border-radius: 0px 8px 0px 0px;
+        max-height: 500px;
+        box-shadow: rgba(20, 14, 49, 0.6) 0px 11px 10px 4px;
+        -webkit-transition: max-height 0.5s linear;
+        -moz-transition: max-height 0.5s linear;
+        -ms-transition: max-height 0.5s linear;
+        -o-transition: max-height 0.5s linear;
+        transition: max-height 0.5s linear;
+    }
+
+    .video-list.closed {
+        overflow: hidden;
+        max-height: 0px !important;
+        box-shadow: none !important;
+        -webkit-transition: max-height 0.5s linear, box-shadow 0s linear 0.5s;
+        -moz-transition: max-height 0.5s linear, box-shadow 0s linear 0.5s;
+        -ms-transition: max-height 0.5s linear, box-shadow 0s linear 0.5s;
+        -o-transition: max-height 0.5s linear, box-shadow 0s linear 0.5s;
+        transition: max-height 0.5s linear, box-shadow 0s linear 0.5s;
+    }
+
+    .mirrored {
+        transform: rotate(180deg);
+        transition: 0.5s;
     }
 </style>

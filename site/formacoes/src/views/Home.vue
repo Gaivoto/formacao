@@ -395,7 +395,7 @@ export default {
 
 <style scoped>
     .home-wrapper {
-        padding: 24px 16px 0px 16px;
+        padding: 24px 32px 0px 32px;
     }
 
     .categories-wrapper {
