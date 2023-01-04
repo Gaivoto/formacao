@@ -1,9 +1,13 @@
 <template>
     <div class="vid" :class="{'vidOpen': open}">
         <div class="left-side">
-            <img :src="this.imageUrl"/>
+            <router-link :to="{ name: 'Vídeo', params: { id: this.courseID } }">
+                <img :src="this.imageUrl">
+            </router-link>
             <div class="text">
-                <p>{{ video.name }}</p>
+                <router-link :to="{ name: 'Vídeo', params: { id: this.courseID } }">
+                    <p>{{ video.name }}</p>
+                </router-link>
                 <p>{{ video.duration }}</p>
                 <p v-show="open">{{ video.description }}</p>
             </div>
@@ -26,6 +30,10 @@ export default {
     props: {
         video: {
             type: Object,
+            required: true
+        },
+        courseID: {
+            type: Number,
             required: true
         }
     },
@@ -56,7 +64,7 @@ export default {
         height: 100%;
     }
 
-    .img {
+    .left-side a, .left-side img {
         height: 120px;
         width: 120px;
         object-fit: cover;

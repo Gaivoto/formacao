@@ -1,59 +1,57 @@
 <template>
-    <div class="table-wrapper">
-        <table>
-            <tr>
-                <th></th>
-                <th class="column-large">
-                    <div>
-                    <p>Nome</p>
+    <div class="content-wrapper">
+        <div class="table-wrapper">
+            <table class="table">
+                <tr>
+                    <th></th>
+                    <th class="column-large">
                         <div>
-                            <img src="../assets/chevron_up.png" />
-                            <img src="../assets/chevron_down.png" />
+                            <p>Nome</p>
                         </div>
-                    </div>
-                </th>
-                <th class="column-small">
-                    <div>
-                    <p>Data</p>
+                    </th>
+                    <th class="column-small">
                         <div>
-                            <img src="../assets/chevron_up.png" v-on:click="orderTable('date-asc')"/>
-                            <img src="../assets/chevron_down.png" v-on:click="orderTable('date-desc')"/>
+                            <p>Data</p>
+                            <div>
+                                <span class="material-icons" v-on:click="orderTable('date-asc')">expand_less</span>
+                                <span class="material-icons" v-on:click="orderTable('date-desc')">expand_more</span>
+                            </div>
                         </div>
-                    </div>
-                </th>
-                <th class="column-small">
-                    <div>
-                    <p>Inscrições</p>
+                    </th>
+                    <th class="column-small column-right">
                         <div>
-                            <img src="../assets/chevron_up.png" v-on:click="orderTable('subs-asc')"/>
-                            <img src="../assets/chevron_down.png" v-on:click="orderTable('subs-desc')"/>
+                            <p>Inscrições</p>
+                            <div>
+                                <span class="material-icons" v-on:click="orderTable('subs-asc')">expand_less</span>
+                                <span class="material-icons" v-on:click="orderTable('subs-desc')">expand_more</span>
+                            </div>
                         </div>
-                    </div>
-                </th>
-                <th class="column-small">
-                    <div>
-                    <p>Nº Videos</p>
+                    </th>
+                    <th class="column-small column-right">
                         <div>
-                            <img src="../assets/chevron_up.png" v-on:click="orderTable('nvids-asc')"/>
-                            <img src="../assets/chevron_down.png" v-on:click="orderTable('nvids-desc')"/>
+                            <p>Nº Videos</p>
+                            <div>
+                                <span class="material-icons" v-on:click="orderTable('nvids-asc')">expand_less</span>
+                                <span class="material-icons" v-on:click="orderTable('nvids-desc')">expand_more</span>
+                            </div>
                         </div>
-                    </div>
-                </th>
-                <th class="column-small">
-                    <div>
-                    <p>Duração</p>
+                    </th>
+                    <th class="column-small column-right">
                         <div>
-                            <img src="../assets/chevron_up.png" v-on:click="orderTable('duration-asc')"/>
-                            <img src="../assets/chevron_down.png" v-on:click="orderTable('duration-desc')"/>
+                            <p>Duração</p>
+                            <div>
+                                <span class="material-icons" v-on:click="orderTable('duration-asc')">expand_less</span>
+                                <span class="material-icons" v-on:click="orderTable('duration-desc')">expand_more</span>
+                            </div>
                         </div>
-                    </div>
-                </th>
-            </tr>
-            <tbody>
-                <ContentTableRow v-for="course in this.displayCourses" :key="course.id" v-bind:course="course" class="table-row-component"/>
-            </tbody>
-        </table>
-    <Pagination2 v-bind:totalItems="this.courses.length" v-bind:currentPage="this.currentPage" v-bind:itemsPerPage="this.itemsPerPage" v-on:changePage="changePage"/>
+                    </th>
+                </tr>
+                <tbody>
+                    <ContentTableRow v-for="course in this.displayCourses" :key="course.id" v-bind:course="course" class="table-row-component"/>
+                </tbody>
+            </table>
+        </div>
+        <Pagination2 v-bind:totalItems="this.courses.length" v-bind:currentPage="this.currentPage" v-bind:itemsPerPage="this.itemsPerPage" v-on:changePage="changePage"/>
     </div>
 </template>
 
@@ -90,7 +88,7 @@ export default {
             {
                 id: 2,
                 name: "Bingus Amogus",
-                description: "monkey",
+                description: "monkey monkey monkey monkey monkey monkey monkey monkey monkey monkey monkey monkey monkey monkey monkey monkey monkey monkey monkey monkey monkey monkey monkey monkey monkey monkey monkey monkey monkey monkey monkey monkey monkey monkey monkey monkey monkey monkey monkey monkey monkey monkey monkey monkey monkey monkey monkey",
                 subscriptions: 123,
                 numberOfVideos: 2,
                 image: "bingus",
@@ -119,6 +117,26 @@ export default {
             },
             {
                 id: 5,
+                name: "Bingus Amogus",
+                description: "monkey",
+                subscriptions: 0,
+                numberOfVideos: 1,
+                image: "bingus",
+                date: "03/12/2022",
+                duration: "10:31",
+            },
+            {
+                id: 6,
+                name: "Bingus Amogus",
+                description: "monkey",
+                subscriptions: 1234,
+                numberOfVideos: 14,
+                image: "bingus",
+                date: "02/12/2022",
+                duration: "5:32:58",
+            },
+            {
+                id: 7,
                 name: "Bingus Amogus",
                 description: "monkey",
                 subscriptions: 0,
@@ -189,62 +207,89 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
+    .content-wrapper {
+        padding: 24px 48px 0px 48px;
+    }
+
     .table-wrapper {
-        padding: 32px 5%;
+        min-height: 80vh;
+        margin-bottom: 24px;
     }
 
-    .table-wrapper table {
+    .table {
         width: 100%;
+        box-shadow: rgba(20, 14, 49, 0.6) 0px 2px 10px 4px;
     }
 
-    table th > div {
+    .table th {
+        background-color: var(--mobalytics-susge);
+    }
+
+    .table th > div {
         padding: 8px 16px;
+        height: 60px;
 
         display: flex;
         gap: 12px;
-        text-align: center;
+        align-items: center;
     }
 
-    table th > div > div {
-        width: 12px;
-        height: 26px;
+    .table th > div > div {
+        position: relative;
     }
 
-    table th p {
+    .table th p {
+        margin: 0px;
+        color: var(--light);
+        font-size: 18px;
+        font-weight: 500;
         margin: 0px;
     }
 
-    table th img {
-        height: 12px;
-        width: 12px;
-
+    .table th span {
+        color: var(--light);
         cursor: pointer;
+        font-size: 20px;
     }
 
-    table th img:first-child {
-        margin-top: -12px;
+    .table th span:first-child {
+        position: absolute;
+        top: -18px;
+        left: -4px;
     }
 
-    table th img:last-child {
-        margin-top: -36px;
+    .table th span:last-child {
+        position: absolute;
+        top: -2px;
+        left: -4px;
     }
 
-    table tbody .table-row-component:nth-child(2n) {
-        background-color: grey;
+    .table tbody .table-row-component {
+        border: none;
     }
 
-    table tbody .table-row-component:nth-child(2n + 1) {
-        background-color: goldenrod;
+    .table tbody .table-row-component:nth-child(2n) {
+        background-color: var(--mobalytics-card);
     }
 
-    .column-large {
+    .table tbody .table-row-component:nth-child(2n + 1) {
+        background-color: var(--mobalytics-back);
+    }
+
+    .table .column-large {
         width: 30%;
-        background-color: red;
     }
 
-    .column-small {
+    .table .column-small {
         width: 15%;
-        background-color: blue;
+    }
+
+    .table .column-right {
+        padding-right: 24px;
+    }
+
+    .table .column-right div {
+        float: right;
     }
 </style>

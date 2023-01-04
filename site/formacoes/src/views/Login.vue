@@ -47,7 +47,7 @@
               Criar Conta
             </button>
           </div>
-          <img src="../assets/loginimg2.svg" class="image boneco" alt="" />
+          <img src="../assets/loginimg2.svg" class="image boneco-left" :class="{ 'hidden': !this.loginMode }" alt="" />
         </div>
         <div class="panel right-panel">
           <div class="content">
@@ -59,7 +59,7 @@
               Iniciar Sessão
             </button>
           </div>
-          <img src="../assets/2.svg" class="image boneco" alt="" />
+          <img src="../assets/loginimg3.svg" class="image boneco-right" :class="{ 'hidden': this.loginMode }" alt="" />
         </div>
       </div>
     </div>
@@ -69,12 +69,25 @@
 
 export default {
   name: "Login",
+  data() {
+    return {
+      state: "login"
+    }
+  },
+  computed: {
+    loginMode() {
+      if(this.state == "login") return true;
+      return false;
+    }
+  },
   methods: {
     signupbtn() {
-    this.$refs.mycontainer.classList.add("sign-up-mode");
+      this.state = "registo"
+      this.$refs.mycontainer.classList.add("sign-up-mode");
     },
     signinbtn() {
-    this.$refs.mycontainer.classList.remove("sign-up-mode");  
+      this.state = "login"
+      this.$refs.mycontainer.classList.remove("sign-up-mode");  
     }
   }
 }
@@ -288,13 +301,30 @@ form.sign-in-form {
 
 .image {
   width: 70%;
-  transition: transform 1.1s ease-in-out;
-  transition-delay: 0.4s;
+  -webkit-transition: opacity 0.8s linear 1s;
+  -moz-transition: opacity 0.8s linear 1s;
+  -ms-transition: opacity 0.8s linear 1s;
+  -o-transition: opacity 0.8s linear 1s;
+  transition: opacity 0.8s linear 1s;
+  opacity: 1;
 }
 
-.boneco {
+.hidden {
+  -webkit-transition: opacity 0s linear;
+  -moz-transition: opacity 0s linear;
+  -ms-transition: opacity 0s linear;
+  -o-transition: opacity 0s linear;
+  transition: opacity 0s linear;
+  opacity: 0;
+}
+
+.boneco-left {
   transform: scale(-1, 1);
-  margin-right: -20%;
+  margin-right: -25%;
+}
+
+.boneco-right {
+  margin-right: 45%;
 }
 
 .panel {
@@ -515,5 +545,4 @@ form.sign-in-form {
     left: 50%;
   }
 }
-
 </style>

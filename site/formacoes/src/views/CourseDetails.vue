@@ -2,7 +2,7 @@
   <div class="course-details-wrapper">
     <CourseDetHeader v-bind:course="this.course" />
     <div class="vid-container">
-      <VidInfo v-for="vid in this.videos" :key="vid.id" v-bind:video="vid" />
+      <VidInfo v-for="vid in this.videos" :key="vid.id" v-bind:video="vid" v-bind:courseID="this.course.id"/>
     </div>
   </div>
 </template>

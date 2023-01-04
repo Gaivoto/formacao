@@ -4,33 +4,33 @@
   </div>
 </template>
   
-  <script>
+<script>
 export default {
   name: "VideoPlayerVideo",
   props: {
-    videoname: {
+    video: {
       type: String,
       required: true,
     },
   },
   computed: {
     videoPath() {
-      return new URL(`../../assets/${this.videoname}.mp4`, import.meta.url)
-        .href;
+      console.log(this.video)
+      return new URL(`../../assets/${this.video}.mp4`, import.meta.url).href;
     },
   },
 };
 </script>
   
-  <style>
-.videoplayer {
-  background-color: black;
+<style>
+  .videoplayer {
+    background-color: black;
+    max-height: 100%;
+  }
 
-  max-height: 500px;
-}
-
-.video {
-  width: 100%;
-  max-height: inherit;
-}
+  .video {
+    width: 100%;
+    max-height: inherit;
+    border-radius: 8px;
+  }
 </style>
