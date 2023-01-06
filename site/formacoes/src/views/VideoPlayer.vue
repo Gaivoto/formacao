@@ -3,6 +3,7 @@
         <div class="video-left">
             <p class="video-title">{{ this.video.name }}</p>
             <VideoPlayerVideo class="video-player" v-bind:video="this.video.name" />
+            <p class="desc-text">Descrição:</p>
             <span class="video-desc">{{ this.video.description }}</span>
         </div>
         <div class="list-container">
@@ -53,7 +54,7 @@ export default {
                 id: 1,
                 image: "bingus",
                 name: "Video1",
-                description: "video mostrando uma cria de hamburguer ma cria de hamburguma cria de hamburguma cria de hamburguma cria de hamburguma cria de hamburguma cria de hamburguma cria de hamburguma cria de hamburguma cria de hamburguma cria de hamburguma cria de hamburguma cria de hamburguma cria de hamburguma cria de hamburguma cria de hamburguma cria de hamburguselvagem alimentando se pela primeira vez sozinha",
+                description: "video mostrando uma cria de hamburguer ma cria de hamburndo uma cria de hamburguer ma cria de hamburndo uma cria de hamburguer ma cria de hamburndo uma cria de hamburguer ma cria de hamburndo uma cria de hamburguer ma cria de hamburndo uma cria de hamburguer ma cria de hamburndo uma cria de hamburguer ma cria de hamburndo uma cria de hamburguer ma cria de hamburguma cria de hamburguma cria de hamburguma cria de hamburguma cria de hamburguma cria de hamburguma cria de hamburguma cria de hamburguma cria de hamburguma cria de hamburguma cria de hamburguma cria de hamburguma cria de hamburguma cria de hamburguma cria de hamburguma cria de hamburguselvagem alimentando se pela primeira vez sozinha",
                 duration: "15 min",
             },
             {
@@ -151,7 +152,7 @@ export default {
     .videopage-wrapper {
         padding: 24px 48px 0px 48px;
         display: flex;
-        height: 85vh;
+        height: 88vh;
         gap: 32px;
     }
 
@@ -159,7 +160,7 @@ export default {
         width: 75%;
 
         background-color: var(--mobalytics-card);
-        padding: 32px;
+        padding: 24px 32px;
         border-radius: 8px;
         box-shadow: rgba(20, 14, 49, 0.6) 0px 2px 6px 4px;
     }
@@ -172,7 +173,13 @@ export default {
     .video-left .video-player {
         height: 75%;
         border-radius: 8px;
-        margin-bottom: 36px;
+        margin-bottom: 24px;
+    }
+
+    .video-left .desc-text {
+        color: var(--primary);
+        font-size: 20px;
+        margin-bottom: 8px;
     }
 
     .video-left .video-desc {

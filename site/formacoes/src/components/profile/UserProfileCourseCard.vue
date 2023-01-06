@@ -1,11 +1,11 @@
 <template>
-    <router-link :to="{ name: 'Curso', params: { id: this.course.id } }" class="user-profile-course-card col-md-2">
+    <router-link :to="{ name: 'Curso', params: { id: this.course.id } }" class="user-profile-course-card">
         <img :src="this.imageUrl">
         <p>{{ this.course.name }}</p>
         <div>
-            <progress id="progress" :value="this.course.progress" max="100"></progress>
+            <progress class="prog" id="progress" :value="this.course.progress" max="100"></progress>
             <p>{{ this.course.progress }} %</p>
-        </div>
+        </div>    
     </router-link>
 </template>
 
@@ -29,14 +29,57 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
     .user-profile-course-card {
+        border-radius: 8px;
         padding: 16px;
+        text-align: center;
+        height: 220px;
+        width: 196px;
     }
 
     img {
         height: 120px;
         width: 120px;
         object-fit: cover;
+        border-radius: 8px;
+        margin-bottom: 12px;
+        box-shadow: rgba(20, 14, 49, 0.6) 6px 6px 6px 2px;
+    }
+
+    p {
+        color: var(--light);
+        margin-bottom: 4px;
+        max-width: 160px;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .user-profile-course-card div {
+        text-align: center;
+    }
+
+    .prog {
+        height: 12px;
+        width: 75%;
+        margin: 0px;
+        border-radius: 8px;
+        background: var(--light);
+        box-shadow: rgba(20, 14, 49, 0.6) 6px 6px 6px 2px;
+    }
+
+    .prog::-moz-progress-bar {
+        background: var(--primary);
+    }
+
+    .prog::-webkit-progress-bar {
+        background: transparent;
+    }
+
+    .prog::-webkit-progress-value {
+        background: var(--primary);
+        border-radius: 8px;
     }
 </style>
