@@ -3,7 +3,7 @@ const uuid = require('uuid');
 
 const dbUser = require('../db/user.js');
 
-async function createUser(tokens, username, password){
+async function createUser(tokens, body){
     return new Promise((resolve, reject) => {
 
         utils.validateToken(tokens.access_token, tokens.refresh_token).then(value => {
@@ -11,7 +11,7 @@ async function createUser(tokens, username, password){
 
             let id = uuid.v4();
 
-            dbUser.createUser({id: id, username: username, password: password}).then(value => {
+            dbUser.createUser({id: id, username: body.username, name: body.name, password: body.password, type: body.type, email: body.email, image: body.image, description: body.description, country: body.country, price: body.price, state: body.state}).then(value => {
                 resolve({code: 201, info: info});
             })
             .catch(error => {
