@@ -1,7 +1,7 @@
 const serUser = require('../services/user.js');
 
-async function createUser(req, res){
-    serUser.createUser({access_token: req.headers['authorization'].split(' ')[1], refresh_token: req.headers.refreshtoken}, req.body).then(value => {
+async function getUser(req, res){
+    serUser.getUser({access_token: req.headers['authorization'].split(' ')[1], refresh_token: req.headers.refreshtoken}).then(value => {
         res.status(value.code).send(value.info);
     })
     .catch(error => {
@@ -9,6 +9,16 @@ async function createUser(req, res){
     });
 }
 
+/*async function createUser(req, res){
+    serUser.createUser({access_token: req.headers['authorization'].split(' ')[1], refresh_token: req.headers.refreshtoken}, req.body).then(value => {
+        res.status(value.code).send(value.info);
+    })
+    .catch(error => {
+        res.status(error.code).send(error.message);
+    });
+}*/
+
 module.exports = {
-    createUser: createUser
+    //createUser: createUser,
+    getUser: getUser,
 }
