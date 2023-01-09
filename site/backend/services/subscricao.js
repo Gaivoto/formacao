@@ -1,18 +1,21 @@
 const utils = require('../utils/index.js');
 
-const dbGast = require('../db/gasto.js');
+const dbSubs = require('../db/subscricao.js');
 
-async function getGastos(tokens){
+async function getSubscricoes(tokens){
     return new Promise((resolve, reject) => {
 
         utils.validateToken(tokens.access_token, tokens.refresh_token).then(value => {
             let info = value;
 
-            let resp = {gastos: []};
+            let resp = {subscricoes: []};
 
-            dbGast.getGastos().then(value => {
-                value.forEach(gas => {
-                    resp.gastos.push(gas);
+            dbSubs.getSubscricoes().then(value => {
+                let current_subs = 0;
+                
+                value.forEach(subs => {
+ 
+                    resp.subscricoes.push(subs)
                 });
 
                 if(info.access_token) resp.access_token = info.access_token;
@@ -29,5 +32,5 @@ async function getGastos(tokens){
 }
 
 module.exports = {
-    getGastos: getGastos
+    getSubscricoes: getSubscricoes
 }
