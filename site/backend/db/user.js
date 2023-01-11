@@ -1,18 +1,23 @@
-const sql = require('mssql');
+const sql = require("mssql");
 
-const client = {
-    server: process.env.DBHOST,
-    port: process.env.DBPORT,
-    user: process.env.DBUSER,
-    password: process.env.DBPW,
-    database: process.env.DBNAME
+const config = {
+    user: 'sa',
+    password: 'letbren3',
+    server: 'localhost',
+    database: 'projeto_discord',
+    trustServerCertificate: true,
+    encrypt: true
 };
 
-//client.connect();
+sql.connect(config, function (err) {
+    if (err) throw err;
+    console.log("Connected!");
+});
 
-sql.on('error', err => {
-    console.log(err.message)
-})
+const pool = new sql.Request();
+
+
+/*
 
 async function getUser(){
     try {
@@ -29,7 +34,7 @@ async function getUser(){
 
 //getUser()
 
-/*async function createUser(user){
+async function createUser(user){
     
     return new Promise((resolve, reject) => {
         client.query(`INSERT INTO utilizadores (id, username, password, type, email, image, description, country, price, state) VALUES ('${user.id}', '${user.username}', '${user.password}', '${user.type}', '${user.email}', '${user.image}', '${user.description}', '${user.country}', '${user.price}', '${user.state}')`, (err, res) => {
@@ -42,10 +47,10 @@ async function getUser(){
             client.end;
         });
     });
-}*/
+}
 
 module.exports = {
     //createUser: createUser,
     getUser: getUser,
 
-}
+}*/

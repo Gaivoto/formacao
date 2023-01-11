@@ -1,14 +1,20 @@
-const pg = require('pg');
+const sql = require("mssql");
 
-const client = new pg.Client({
-    host: process.env.DBHOST,
-    user: process.env.DBUSER,
-    port: process.env.DBPORT,
-    password: process.env.DBPW,
-    database: process.env.DBNAME
+const config = {
+    user: 'sa',
+    password: 'letbren3',
+    server: 'localhost',
+    database: 'projeto_discord',
+    trustServerCertificate: true,
+    encrypt: true
+};
+
+sql.connect(config, function (err) {
+    if (err) throw err;
+    console.log("Connected!");
 });
 
-client.connect();
+const pool = new sql.Request();
 
 async function authenticateUser(username, password){
     return new Promise((resolve, reject) => {
@@ -18,8 +24,6 @@ async function authenticateUser(username, password){
             } else {
                 reject(err.message);
             }
-
-            client.end;
         });
     });
 }
@@ -32,8 +36,6 @@ async function createToken(token){
             } else {
                 reject(err.message);
             }
-
-            client.end;
         });
     });
 }
@@ -46,8 +48,6 @@ async function checkToken(token){
             } else {
                 reject(err.message);
             }
-
-            client.end;
         });
     });
 }
@@ -60,8 +60,6 @@ async function deleteToken(token){
             } else {
                 reject(err.message);
             }
-
-            client.end;
         });
     });
 }
