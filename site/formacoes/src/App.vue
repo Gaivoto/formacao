@@ -5,7 +5,7 @@
 		<div class="topbar-wrapper" :class="{ sidebarTopbar: sidebarOpen, 'd-none': displaySidebarTopbar }">
 			<Topbar v-bind:notifsOpen="notifsOpen" v-bind:searchOpen="searchOpen" v-on:toggleNotifs="toggleNotifs" v-on:toggleSearch="toggleSearch" v-on:openSearch="openSearch"/>
 		</div>
-		<router-view  class="active-page" :class="{ sidebarMainPage: sidebarOpen }"/>	
+		<router-view class="active-page" :class="{ sidebarMainPage: sidebarOpen, spaceLeft: isNotLanding }"/>	
 	</div>
   </div>
 </template>
@@ -28,8 +28,12 @@ export default {
 	},
 	computed: {
 		displaySidebarTopbar() {
-			if(!this.$route.name || this.$route.name == "Login") return true;
+			if(this.$route.name == "Landing" || this.$route.name == "Login") return true;
 			return false;
+		},
+		isNotLanding() {
+			if(this.$route.name == "Landing") return false;
+			return true; 
 		}
 	},
 	methods: {
@@ -108,9 +112,12 @@ export default {
 	}
 
 	.active-page {
-		margin-left: 64px;
 		margin-top: 82px;
 		transition: 0.3s ease-in-out;
+	}
+
+	.spaceLeft {
+		margin-left: 64px;
 	}
 
 	.sidebarTopbar {

@@ -3,33 +3,47 @@
     <div class="landing-page-wrapper">
         <TopbarLandingPage/>
         <div class="info-blocks-wrapper">
-            <LandingPageInfoBlock class="landing-blocks" v-bind:imgPosition="side2" v-bind:picturePath="image1" v-bind:text="text1"/>
-            <LandingPageInfoBlock class="landing-blocks" v-bind:imgPosition="side1" v-bind:picturePath="image2" v-bind:text="text2"/>
+            <LandingPageInfoBlock v-for="ib in this.infoBlocks" :key="ib.id" class="landing-blocks" v-bind:info="ib" />
+            <LandingPageSocials />
+            <LandingPageGetStarted />
         </div>
     </div>
 </template>
 
 <script>
+import TopbarLandingPage from '../components/landingPage/TopbarLandingPage.vue';
 import LandingPageInfoBlock from '../components/landingPage/LandingPageInfoBlock.vue';
-import TopbarLandingPage from '../components/landingPage/TopbarLandingPage.vue'
+import LandingPageSocials from '../components/landingPage/LandingPageSocials.vue';
+import LandingPageGetStarted from '../components/landingPage/LandingPageGetStarted.vue';
 
 export default {
+    name: "LandingPage",
+    components: {
+        TopbarLandingPage,
+        LandingPageInfoBlock,
+        LandingPageSocials,
+        LandingPageGetStarted
+    },
     data: () => { 
         return {
-            side1: 'left',
-            side2: 'right',
-            image1: 'src/assets/tomasGostosa.jpg',
-            text1: '"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-            image2: 'src/assets/andreDick.png',
-            text2: '"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+            infoBlocks: [
+                {
+                    id: 1,
+                    title: "title 1",
+                    side: "right",
+                    image: "tomasGostosa",
+                    text: '"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+                },
+                {
+                    id: 2,
+                    title: "title 2",
+                    side: "left",
+                    image: "andreDick",
+                    text: '"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+                }
+            ]
         }
-    },
-    
-    components: {
-        LandingPageInfoBlock,
-        TopbarLandingPage
-    },
-
+    }
 }
 </script>
 
@@ -37,8 +51,9 @@ export default {
     .landing-page-wrapper {
         margin-top: 0px;
     }
+
     .info-blocks-wrapper {
-        padding: 0 10%;
+        padding: 130px 40px 24px 40px;
         width: 100%;
     }
 </style>

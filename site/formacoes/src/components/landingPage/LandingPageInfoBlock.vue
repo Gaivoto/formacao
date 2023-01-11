@@ -1,10 +1,11 @@
 <template>
-    <div :class="imgPosition">
+    <div class="info-block-wrapper" :class="this.info.side">
         <div class="photo">
-            <img :src="picturePath" />
+            <img :src="this.imageUrl" />
         </div>
         <div class="text">
-            <p>{{ text }}</p>
+            <p>{{ this.info.title }}</p>
+            <p>{{ this.info.text }}</p>
         </div>
     </div>
 </template>
@@ -13,23 +14,27 @@
 export default {
     name: "LandingPageInfoBlock",
     props: {
-        imgPosition: {
-            imgPosition: String,
-            required: true,
-        },
-        text: {
-            text: String,
-            required: true,
-        },
-        picturePath: {
-            picturePath: String,
+        info: {
+            type: Object,
             required: true,
         }
+    },
+    data() {
+        return {
+            imageUrl: ""
+        }
+    },
+    created() {
+        this.imageUrl = new URL(`../../assets/${this.info.image}.jpg`, import.meta.url).href;
     }
 }
 </script>
 
 <style scoped>
+    .info-block-wrapper {
+        margin-bottom: 48px;
+    }
+
     .left {
         width: 100%;
         display: flex;
