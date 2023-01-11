@@ -1,4 +1,4 @@
-const utils = require('../utils/index.js');
+/*const utils = require('../utils/index.js');
 
 const dbSubs = require('../db/subscricao.js');
 
@@ -33,4 +33,4 @@ async function getSubscricoes(tokens){
 
 module.exports = {
     getSubscricoes: getSubscricoes
-}
+}*/

@@ -1,4 +1,4 @@
-const express = require('express');
+/*const express = require('express');
 
 const router = express.Router();
 
@@ -8,4 +8,4 @@ const cntrSubs = require('../controllers/subscricao.js');
 router.post("/", cntrSubs.createSubscricao);
 
 
-module.exports = router
+module.exports = router*/

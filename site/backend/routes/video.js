@@ -1,4 +1,4 @@
-const express = require('express');
+/*const express = require('express');
 
 const router = express.Router();
 
@@ -8,4 +8,4 @@ const cntrVide = require('../controllers/video.js');
 router.post("/", cntrVide.createVideo);
 
 
-module.exports = router
+module.exports = router*/

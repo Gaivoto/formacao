@@ -1,4 +1,4 @@
-const express = require('express');
+/*const express = require('express');
 
 const router = express.Router();
 
@@ -8,4 +8,4 @@ const cntrDipl = require('../controllers/diploma.js');
 router.post("/", cntrDipl.createDiploma);
 
 
-module.exports = router
+module.exports = router*/

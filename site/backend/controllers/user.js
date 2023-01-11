@@ -1,7 +1,7 @@
 const serUser = require('../services/user.js');
 
-async function getUser(req, res){
-    serUser.getUser({access_token: req.headers['authorization'].split(' ')[1], refresh_token: req.headers.refreshtoken}).then(value => {
+async function getUser(id, req, res){
+    serUser.getUser(id, {access_token: req.headers['authorization'].split(' ')[1], refresh_token: req.headers.refreshtoken}).then(value => {
         res.status(value.code).send(value.info);
     })
     .catch(error => {

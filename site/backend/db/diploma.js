@@ -4,10 +4,10 @@ const app = express();
 const sql = require("mssql");
 
 const config = {
-    user: 'sa',
-    password: 'letbren3',
-    server: 'localhost',
-    database: 'projeto_discord',
+    user: process.env.DBUSER,
+    password: process.env.DBPW,
+    server: process.env.DBHOST,
+    database: process.env.DBNAME,
     trustServerCertificate: true,
     encrypt: true
 };

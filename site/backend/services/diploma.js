@@ -1,4 +1,4 @@
-const utils = require('../utils/index.js');
+/*const utils = require('../utils/index.js');
 
 const dbDipl = require('../db/dipoma.js');
 
@@ -30,4 +30,4 @@ async function getDiplomas(tokens){
 
 module.exports = {
     getDiplomas: getDiplomas
-}
+}*/
