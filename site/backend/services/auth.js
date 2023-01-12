@@ -6,9 +6,10 @@ const dbAuth = require('../db/auth.js');
 async function login(username, password){
     return new Promise((resolve, reject) => {
         dbAuth.authenticateUser(username, password).then(value => {
-            if(value.recordsets == []){  //o erro ta aqui, pq oq ta aqui foi feito para o postgres, pq la ele devolve vazio quando nao acha um user, no sql pelo visto nao
+            if(value.length == 0){   //o erro ta aqui, pq oq ta aqui foi feito para o postgres, pq la ele devolve vazio quando nao acha um user, no sql pelo visto nao
                 reject({code: 401, message: 'Utilizador/password inválido.'});
             } else {
+                console.log(value);
                 let user = {id: value[0].id, username: value[0].username};
                 let access_token = jwt.sign(user, process.env.ACCESS_SECRET, {expiresIn: '30m'});
                 let refresh_token = jwt.sign(user, process.env.REFRESH_SECRET);
