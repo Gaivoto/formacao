@@ -18,9 +18,9 @@ const pool = new sql.Request();
 
 async function getUser(id) {
     return new Promise((resolve, reject) => {
-        pool.query(`SELECT * FROM [Users] WHERE [id] = ${id}`, (err, res) => {
+        pool.query(`SELECT [name], [type], [country] FROM [Users] WHERE [id] = ${id}`, (err, res) => {
             if(!err) {
-                resolve(res.recordsets);
+                resolve(res.recordset);
             } else {
                 reject(err.message);
             }

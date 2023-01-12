@@ -8,9 +8,11 @@ content-type: application/json
 }
 
 ###
-DELETE {{hostname}}/api/auth/logout/2
+DELETE {{hostname}}/api/auth/logout/
+refreshtoken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQiLCJ1c2VybmFtZSI6ImRyZSIsImlhdCI6MTY3MzUzOTA1MX0.3oSHirr-FPOcHbbZ7wANo28i1jPO9u0ingaF0L4oTzs
 
 ###
 
-GET {{hostname}}/api/users/1
-Authorization: {{apiKey}}
+GET {{hostname}}/api/users/6
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQiLCJ1c2VybmFtZSI6ImRyZSIsImlhdCI6MTY3MzUzOTQzMiwiZXhwIjoxNjczNTQxMjMyfQ.Zar1lw-v5QQ8S8kVgbiwJX5LW5yav1duciU_ws2FMvw
+refreshtoken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQiLCJ1c2VybmFtZSI6ImRyZSIsImlhdCI6MTY3MzUzOTQzMn0.92KTcbYnJkjHn4ve0tujpE1S6Kbins8ExRLx5XlQ3Sk

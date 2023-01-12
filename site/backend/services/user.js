@@ -8,7 +8,9 @@ async function getUser(tokens, id) {
         utils.validateToken(tokens.access_token, tokens.refresh_token).then(value => {
             let info = value;
             dbUser.getUser(id).then(value => {
-                resolve({ code: 201, info: info });
+                value[0].access_token = info.access_token
+                console.log(value)
+                resolve({ code: 200, info: value[0] });
             })
                 .catch(error => {
                     reject({ code: 400, message: "Algo correu mal com a query." });
