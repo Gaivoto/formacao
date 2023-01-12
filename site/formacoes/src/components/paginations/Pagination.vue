@@ -132,4 +132,24 @@ export default {
         color: var(--primary);
         cursor: pointer;
     }
+
+    @media (max-width: 550px) {
+        .pagination {
+            gap: 4px;
+        }
+
+        .pagination > div {
+            gap: 4px;
+        }
+    }
+
+    @media (max-width: 450px) {
+        .pagination {
+            gap: 0px;
+        }
+
+        .pagination > div {
+            gap: 2px;
+        }
+    }
 </style>

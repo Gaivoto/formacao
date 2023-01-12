@@ -459,6 +459,7 @@ form.sign-in-form {
     width: 200px;
     transition: transform 0.9s ease-in-out;
     transition-delay: 0.6s;
+    display: none;
   }
 
   .panel .content {
@@ -517,6 +518,10 @@ form.sign-in-form {
   .login-container.sign-up-mode .signin-signup {
     top: 5%;
     transform: translate(-50%, 0);
+  }
+
+  .content {
+    margin-right: 0px;
   }
 }
 

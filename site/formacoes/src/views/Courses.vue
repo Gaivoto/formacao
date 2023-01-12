@@ -299,4 +299,10 @@ export default {
         color: var(--light);
         font-size: 40px;
     }
+
+    @media (max-width: 600px) {
+        .courses-wrapper {
+            padding: 24px 16px 0px 16px;
+        }
+	}
 </style>

@@ -163,4 +163,10 @@ export default {
         color: var(--light);
         font-size: 40px;
     }
+
+    @media (max-width: 600px) {
+        .user-list-wrapper {
+            padding: 24px 16px 0px 16px;
+        }
+	}
 </style>

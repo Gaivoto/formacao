@@ -161,4 +161,16 @@ export default {
 	a {
 		text-decoration: none !important;
 	}
+
+	@media (max-width: 800px) {
+		.topbar-wrapper {
+			padding: 16px 16px 8px 80px;
+		}
+	}
+
+	@media (max-width: 600px) {
+		.topbar-wrapper {
+			padding: 16px 8px 8px 72px;
+		}
+	}
 </style>

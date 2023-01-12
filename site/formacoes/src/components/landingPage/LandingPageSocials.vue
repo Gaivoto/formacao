@@ -34,6 +34,7 @@ export default {
 
 <style>
     .socials-wrapper {
+        margin-top: 120px;
         margin-bottom: 48px;
     }
 

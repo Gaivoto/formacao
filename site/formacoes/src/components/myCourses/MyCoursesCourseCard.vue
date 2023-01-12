@@ -1,5 +1,5 @@
 <template>
-    <div class="course-card-container col-6 col-xl-3" :class="{ shake: this.hoverImg }">
+    <div class="course-card-container col-12 col-md-6 col-xl-3" :class="{ shake: this.hoverImg }">
         <div class="course-card">
             <router-link :to="{ name: 'Curso', params: { id: this.course.id } }">
                 <img :src="this.imageUrl">
@@ -212,7 +212,6 @@ export default {
         margin-left: 7px;
         color: var(--light);
         position: absolute;
-        z-index: 100;
         font-weight: 700;
         font-size: 20px;
     }
@@ -220,5 +219,84 @@ export default {
     .mask .fill {
         clip: rect(0px, 37px, 75px, 0px);
         background-color: var(--primary);
+    }
+
+    @media (max-width: 600px) {
+        .course-card-container {
+            padding: 0px;
+        }
+    }
+
+    @media (max-width: 500px) {
+        .course-card {
+            padding: 12px 8px;
+        }
+        .course-card > a > img {
+            height: 160px;
+            margin: 16px;
+            width: 90%;
+        }
+
+        .card-info p.card-info-title {
+            margin-bottom: 2px;
+        }
+
+        .card-info p.card-info-category {
+            margin-bottom: 4px;
+        }
+
+        .card-info-div p {
+            margin-bottom: 6px !important;
+        }
+
+        .course-card hr {
+            margin: 6px 0px;
+        }
+
+        .circle-wrap {
+            width: 50px;
+            height: 50px;
+            background: var(--mobalytics-card);
+            border-radius: 50%;
+        }
+
+        .circle-wrap .circle .mask, .circle-wrap .circle .fill {
+            width: 50px;
+            height: 50px;
+            position: absolute;
+            border-radius: 50%;
+        }
+
+        .circle-wrap .circle .mask {
+            clip: rect(0px, 50px, 50px, 25px);
+        }
+
+        .circle-wrap .inside-circle {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: var(--mobalytics-card);
+            line-height: 40px;
+            text-align: center;
+            margin-top: 6px;
+            margin-left: 6px;
+            color: var(--light);
+            position: absolute;
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        .mask .fill {
+            clip: rect(0px, 25px, 50px, 0px);
+            background-color: var(--primary);
+        }
+    }
+
+    @media (max-width: 400px) {
+        .course-card > a > img {
+            margin: 0px;
+            margin-bottom: 12px;
+            width: 100%;
+        }
     }
 </style>

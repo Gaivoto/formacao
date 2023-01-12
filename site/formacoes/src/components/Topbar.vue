@@ -1,7 +1,8 @@
 <template>
     <div class="wrapper">
         <div class="topbar-text">
-            <p class="page-name">Formações Johnson - {{ this.$route.name }}</p>
+            <p class="page-name logo">Formações Johnson - </p>
+            <p class="page-name"> {{ this.$route.name }}</p>
         </div>
 
         <div class="searchbar-container" v-on:click.stop>
@@ -232,6 +233,11 @@ export default {
 </script>
  
 <style scoped>
+    .topbar-text {
+        display: flex;
+        gap: 6px;
+    }
+
     .page-name {
         color: var(--primary) !important;
         font-size: 24px;
@@ -258,7 +264,7 @@ export default {
         border: none;
         color: var(--light) !important;
         font-family: "Poppins";
-        min-width: 400px;
+        width: 400px;
     }
 
     .searchbar input::placeholder {
@@ -304,6 +310,7 @@ export default {
         align-items: center;
         justify-content: space-evenly;
         padding: 16px;
+        gap: 16px;
     }
 
     .searchbar-results .no-results p {
@@ -426,4 +433,62 @@ export default {
         border-radius: 50%;
         object-fit: cover;
     }
+
+    @media (max-width: 1450px) {
+		.topbar-text .logo  {
+			display: none;
+		}	
+	}
+
+    @media (max-width: 1200px) {
+		.user-wrapper .topbar-text {
+			display: none;
+		}	
+	}
+
+    @media (max-width: 1050px) {
+		.wrapper .topbar-text {
+			display: none;
+		}	
+	}
+
+    @media (max-width: 800px) {
+		.searchbar input {
+			width: 300px;
+		}	
+
+        .notif-list {
+            right: 16px;
+        }
+	}
+
+    @media (max-width: 700px) {
+		.searchbar input {
+			width: 200px;
+		}	
+	}
+
+    @media (max-width: 600px) {
+        .searchbar input {
+			width: 160px;
+		}	
+
+        .notif-list {
+            right: 8px;
+        }
+
+        .wrapper {
+            padding: 12px 14px;
+        }
+
+		.user-wrapper {
+			display: none;
+		}	
+	}
+
+    @media (max-width: 500px) {
+		.notif-list {
+			width: 300px;
+		}	
+	}
 </style>
