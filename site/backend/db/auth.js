@@ -56,7 +56,7 @@ async function deleteToken(token){
     return new Promise((resolve, reject) => {
         pool.query(`DELETE FROM [Refresh_Token] WHERE [token] = '${token}'`, (err, res) => {
             if(!err) {
-                resolve(res.recordset);
+                resolve(res);
             } else {
                 reject(err.message);
             }
