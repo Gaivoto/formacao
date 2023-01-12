@@ -3,7 +3,7 @@ const uuid = require('uuid');
 
 const dbUser = require('../db/user.js');
 
-async function getUser(id, tokens) {
+async function getUser(tokens, id) {
     return new Promise((resolve, reject) => {
         utils.validateToken(tokens.access_token, tokens.refresh_token).then(value => {
             let info = value;
