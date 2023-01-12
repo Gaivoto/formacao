@@ -1,0 +1,11 @@
+{
+    "rest-client.environmentVariables": {
+
+        "$shared": {
+            "apiKey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQiLCJ1c2VybmFtZSI6ImRyZSIsImlhdCI6MTY3MzUzNzI0OCwiZXhwIjoxNjczNTM5MDQ4fQ.Mrb744lyHBa160RJVdXTiV3pEhORB5P-T3k3wutxacw"
+        },
+        "Local Env": {
+            "hostname": "http://localhost:3000"
+        }
+    }
+}
