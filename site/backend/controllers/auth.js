@@ -20,6 +20,7 @@ async function logout(req, res){
     });
 }
 
+
 module.exports = {
     login: login,
     logout: logout

@@ -6,7 +6,7 @@ const config = {
     server: process.env.DBHOST,
     database: process.env.DBNAME,
     trustServerCertificate: true,
-    encrypt: true
+    encrypt:  true
 };
 
 sql.connect(config, function (err) {
@@ -20,7 +20,7 @@ async function authenticateUser(username, password){
     return new Promise((resolve, reject) => {
         pool.query(`SELECT * FROM [Users] WHERE [username] = '${username}' AND [password] = '${password}'`, (err, res) => {
             if(!err) {
-                resolve(res.recordsets);
+                resolve(res.recordset);
             } else {
                 reject(err.message);
             }
@@ -44,7 +44,7 @@ async function checkToken(token){
     return new Promise((resolve, reject) => {
         pool.query(`SELECT * FROM [Refresh_Token] WHERE [token] = '${token}'`, (err, res) => {
             if(!err) {
-                resolve(res.recordsets);
+                resolve(res.recordset);
             } else {
                 reject(err.message);
             }
@@ -56,7 +56,7 @@ async function deleteToken(token){
     return new Promise((resolve, reject) => {
         pool.query(`DELETE FROM [Refresh_Token] WHERE [token] = '${token}'`, (err, res) => {
             if(!err) {
-                resolve(res.recordsets);
+                resolve(res.recordset);
             } else {
                 reject(err.message);
             }
