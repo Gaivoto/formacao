@@ -18,7 +18,14 @@ const pool = new sql.Request();
 
 async function getUser(id) {
     return new Promise((resolve, reject) => {
-        pool.query(`SELECT * FROM [Users] WHERE [id] = ${id}`, (err, res) => {
+
+        if(isNaN(Number(id))) {
+            res.send(err)
+        }
+
+        const slct = `SELECT * FROM [Users] WHERE [id] = ${id}`;
+
+        pool.query(slct, (err, res) => {
             if(!err) {
                 resolve(res.recordset);
             } else {
