@@ -162,7 +162,7 @@ export default {
 		text-decoration: none !important;
 	}
 
-	@media (max-width: 800px) {
+	@media (max-width: 1050px) {
 		.topbar-wrapper {
 			padding: 16px 16px 8px 80px;
 		}

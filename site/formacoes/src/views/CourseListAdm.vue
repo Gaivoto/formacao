@@ -52,14 +52,14 @@ export default {
                 videos: [
                     {
                         id: 1,
-                        name: "v1",
+                        name: "urse 1 Course 1 Courseurse 1 Course 1 Coururse 1 Course 1 Coursese",
                         state: "Ativo",
                         image: "bingus",
                         date: "12-12-2022"
                     },
                     {
                         id: 2,
-                        name: "v2",
+                        name: "urse 1 Course 1 Courseurse 1 Course 1 Courseurse 1 Course 1 Courseurse 1 Course 1 Course",
                         state: "Ativo",
                         image: "bingus",
                         date: "12-12-2022"
@@ -526,7 +526,13 @@ export default {
         font-size: 40px;
     }
 
-    @media (max-width: 600px) {
+    @media (max-width: 1050px) {
+        .results {
+            padding: 0px;
+        }
+	}
+
+    @media (max-width: 800px) {
         .courses-list-wrapper {
             padding: 24px 16px 0px 16px;
         }

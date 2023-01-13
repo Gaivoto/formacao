@@ -397,7 +397,7 @@ export default {
         }
 	}
 
-    @media (max-width: 800px) {
+    @media (max-width: 900px) {
         .users-filter-wrapper {
             padding: 0px;
         }

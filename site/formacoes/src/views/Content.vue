@@ -1,55 +1,57 @@
 <template>
     <div class="content-wrapper">
         <div class="table-wrapper">
-            <table class="table">
-                <tr>
-                    <th></th>
-                    <th class="column-large">
-                        <div>
-                            <p>Nome</p>
-                        </div>
-                    </th>
-                    <th class="column-small">
-                        <div>
-                            <p>Data</p>
+            <div class="table-content" :class="{ 'invert-colors': this.isTableLengthEven }">
+                <table class="table">
+                    <tr>
+                        <th></th>
+                        <th class="column-large">
                             <div>
-                                <span class="material-icons" v-on:click="orderTable('date-asc')">expand_less</span>
-                                <span class="material-icons" v-on:click="orderTable('date-desc')">expand_more</span>
+                                <p>Nome</p>
                             </div>
-                        </div>
-                    </th>
-                    <th class="column-small column-right">
-                        <div>
-                            <p>Inscrições</p>
+                        </th>
+                        <th class="column-small">
                             <div>
-                                <span class="material-icons" v-on:click="orderTable('subs-asc')">expand_less</span>
-                                <span class="material-icons" v-on:click="orderTable('subs-desc')">expand_more</span>
+                                <p>Data</p>
+                                <div>
+                                    <span class="material-icons" v-on:click="orderTable('date-asc')">expand_less</span>
+                                    <span class="material-icons" v-on:click="orderTable('date-desc')">expand_more</span>
+                                </div>
                             </div>
-                        </div>
-                    </th>
-                    <th class="column-small column-right">
-                        <div>
-                            <p>Nº Videos</p>
+                        </th>
+                        <th class="column-small column-right">
                             <div>
-                                <span class="material-icons" v-on:click="orderTable('nvids-asc')">expand_less</span>
-                                <span class="material-icons" v-on:click="orderTable('nvids-desc')">expand_more</span>
+                                <p>Inscrições</p>
+                                <div>
+                                    <span class="material-icons" v-on:click="orderTable('subs-asc')">expand_less</span>
+                                    <span class="material-icons" v-on:click="orderTable('subs-desc')">expand_more</span>
+                                </div>
                             </div>
-                        </div>
-                    </th>
-                    <th class="column-small column-right">
-                        <div>
-                            <p>Duração</p>
+                        </th>
+                        <th class="column-small column-right">
                             <div>
-                                <span class="material-icons" v-on:click="orderTable('duration-asc')">expand_less</span>
-                                <span class="material-icons" v-on:click="orderTable('duration-desc')">expand_more</span>
+                                <p>Nº Videos</p>
+                                <div>
+                                    <span class="material-icons" v-on:click="orderTable('nvids-asc')">expand_less</span>
+                                    <span class="material-icons" v-on:click="orderTable('nvids-desc')">expand_more</span>
+                                </div>
                             </div>
-                        </div>
-                    </th>
-                </tr>
-                <tbody>
-                    <ContentTableRow v-for="course in this.displayCourses" :key="course.id" v-bind:course="course" class="table-row-component"/>
-                </tbody>
-            </table>
+                        </th>
+                        <th class="column-small column-right">
+                            <div>
+                                <p>Duração</p>
+                                <div>
+                                    <span class="material-icons" v-on:click="orderTable('duration-asc')">expand_less</span>
+                                    <span class="material-icons" v-on:click="orderTable('duration-desc')">expand_more</span>
+                                </div>
+                            </div>
+                        </th>
+                    </tr>
+                    <tbody>
+                        <ContentTableRow v-for="course in this.displayCourses" :key="course.id" v-bind:course="course" class="table-row-component"/>
+                    </tbody>
+                </table>
+            </div>
         </div>
         <Pagination2 v-bind:totalItems="this.courses.length" v-bind:currentPage="this.currentPage" v-bind:itemsPerPage="this.itemsPerPage" v-on:changePage="changePage"/>
     </div>
@@ -149,6 +151,12 @@ export default {
 
         this.displayCourses = this.courses.slice(0, this.itemsPerPage);
     },
+    computed: {
+        isTableLengthEven() {
+            if(this.displayCourses.length % 2 == 0) return true;
+            return false;
+        }
+    },
     methods: {
         orderTable(order) {
             switch (order) {
@@ -213,13 +221,34 @@ export default {
     }
 
     .table-wrapper {
-        min-height: 80vh;
-        margin-bottom: 24px;
+        min-height: 84vh;
+    }
+
+    .table-content {
+        max-width: 100%;
+        overflow-x: scroll;
+        box-shadow: rgba(20, 14, 49, 0.6) 0px 2px 10px 4px;
+    }
+
+    .table-content::-webkit-scrollbar {
+        width: 8px;
+        background: var(--mobalytics-back);
+    }
+
+    .table-content::-webkit-scrollbar-thumb {
+        background: var(--mobalytics-card);
+    }
+
+    .table-content.invert-colors::-webkit-scrollbar {
+        background: var(--mobalytics-card);
+    }
+
+    .table-content.invert-colors::-webkit-scrollbar-thumb {
+        background: var(--mobalytics-back);
     }
 
     .table {
-        width: 100%;
-        box-shadow: rgba(20, 14, 49, 0.6) 0px 2px 10px 4px;
+        margin-bottom: 0px;
     }
 
     .table th {
@@ -279,10 +308,12 @@ export default {
 
     .table .column-large {
         width: 30%;
+        min-width: 220px;
     }
 
     .table .column-small {
         width: 15%;
+        min-width: 150px;
     }
 
     .table .column-right {
@@ -291,5 +322,18 @@ export default {
 
     .table .column-right div {
         float: right;
+    }
+
+    @media (max-width: 1100px) {
+        .table {
+            max-width: 100%;
+            overflow-x: scroll;
+        }
+    }
+
+    @media (max-width: 800px) {
+        .content-wrapper {
+            padding: 24px 16px 0px 16px;
+        }
     }
 </style>

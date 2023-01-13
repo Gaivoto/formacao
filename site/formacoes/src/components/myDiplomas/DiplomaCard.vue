@@ -1,5 +1,5 @@
 <template>
-    <div class="diploma-card-container col-xl-4 col-lg-6">
+    <div class="diploma-card-container col-12 col-md-6 col-xl-3">
         <div class="diploma-wrapper">
             <div class="diploma-card">
                 <img class="logo" src="../../assets/logo3.png">
@@ -34,7 +34,7 @@ export default {
     data() {
         return {
             imageUrl: "",
-            user: "amongus"
+            user: "Asdfaeif Rkajdfioas"
         }
     },
     created() {
@@ -55,9 +55,9 @@ export default {
         display: flex;
         background: url("../../assets/certificate_bg.jpg");
         background-size: 400px;
-        padding: 80px 40px 0px 40px;
+        padding: 80px 20px 0px 20px;
         border-radius: 8px;
-        height: 460px;
+        height: fit-content;
         box-shadow: rgba(20, 14, 49, 1) 10px 10px 10px 4px;
     }
 
@@ -70,8 +70,8 @@ export default {
 
     .download {
         position: absolute;
-        right: 40px;
-        bottom: 40px;
+        right: 30px;
+        bottom: 30px;
         background: rgba(20, 20, 20, 0.15);
         padding: 8px 8px 0px 8px;
         box-shadow: rgba(20, 14, 49, 0.2) 0px 2px 5px 4px;
@@ -131,10 +131,40 @@ export default {
     }
 
     .formador {
-        width: 50%;
+        width: fit-content;
         margin: auto;
         font-size: 24px;
         margin-bottom: 0px;
         border-bottom: 2px solid var(--mobalytics-susge);
+    }
+
+    .formador-text {
+        width: fit-content;
+        margin: auto;
+        margin-bottom: 52px;
+    }
+
+    @media (max-width: 1500px) {
+        .diploma-card-container {
+            padding: 0px;
+        }
+
+        .curso {
+            margin-bottom: 10px;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .diploma-card-container {
+            padding: 0px;
+        }
+
+        .download {
+            padding: 8px 4px 0px 4px;
+        }
+
+        .download span {
+            font-size: 26px;
+        }
     }
 </style>

@@ -37,7 +37,7 @@ export default {
         this.users = [
             {
                 id: 1,
-                name: "Bingus",
+                name: "Bingus Bingus1234123123123",
                 username: "bingoid421",
                 type: "Admin",
                 image: "bingus",
@@ -164,7 +164,13 @@ export default {
         font-size: 40px;
     }
 
-    @media (max-width: 600px) {
+    @media (max-width: 1000px) {
+        .user-list-wrapper {
+            padding: 24px 24px 0px 24px;
+        }
+	}
+
+    @media (max-width: 800px) {
         .user-list-wrapper {
             padding: 24px 16px 0px 16px;
         }

@@ -35,7 +35,7 @@ export default {
         padding: 16px;
         text-align: center;
         height: 220px;
-        width: 196px;
+        min-width: 196px;
     }
 
     img {
@@ -82,4 +82,12 @@ export default {
         background: var(--primary);
         border-radius: 8px;
     }
+
+    @media (max-width: 1050px) {
+        
+        .user-profile-course-card {
+            padding: 16px 0px;
+            min-width: 164px;
+        }
+	}
 </style>

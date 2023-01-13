@@ -5,21 +5,25 @@
                 <router-link :to="{ name: 'Curso', params: { id: this.course.id } }">
                     <img :src="this.imageUrl">
                 </router-link>
-                <div class="first-left-div">
-                    <router-link :to="{ name: 'Curso', params: { id: this.course.id } }"><p>{{ this.course.name }}</p></router-link>
-                    <p>Criador: {{ this.course.creator.name }}</p>
+                <div>
+                    <div class="first-left-div">
+                        <router-link :to="{ name: 'Curso', params: { id: this.course.id } }"><p>{{ this.course.name }}</p></router-link>
+                        <p>Criador: {{ this.course.creator.name }}</p>
+                    </div>
+                    <div>
+                        <p>Preço: {{ this.course.price }} €</p>
+                        <p>Inscs: {{ this.course.subscriptions }}</p>
+                    </div> 
                 </div>
                 <div>
-                    <p>Preço: {{ this.course.price }} €</p>
-                    <p>Inscs: {{ this.course.subscriptions }}</p>
-                </div>    
-                <div>
-                    <p>Cat: {{ this.course.category }}</p>
-                    <p>Estado: {{ this.course.state }}</p>
-                </div>    
-                <div>
-                    <p>Data: {{ this.course.date }}</p>
-                </div>    
+                    <div>
+                        <p>Cat: {{ this.course.category }}</p>
+                        <p>Estado: {{ this.course.state }}</p>
+                    </div>    
+                    <div>
+                        <p>Data: {{ this.course.date }}</p>
+                    </div>   
+                </div> 
             </div>
             <div class="course-card-right">
                 <button v-if="showButton1" v-on:click="changeStateCourse('Ativo')">ATIVAR</button>
@@ -132,10 +136,16 @@ export default {
     .course-card-left {
         display: flex;
         align-items: center;
-        gap: 60px;
+        gap: 80px;
     }
 
-    .course-card-left div {
+    .course-card-left > div {
+        display: flex;
+        align-items: center;
+        gap: 80px;
+    }
+
+    .course-card-left > div > div {
         width: 160px;
     }
 
@@ -151,18 +161,18 @@ export default {
     }
 
     .course-card-left .first-left-div {
-        width: 400px !important;
+        width: 490px;
     }
 
     .course-card-left .first-left-div p {
-        width: 400px;
+        width: 490px;
         display: -webkit-box;
         -webkit-line-clamp: 1;
         -webkit-box-orient: vertical;
         overflow: hidden;
     }
 
-    .course-card-left > div > a > p {
+    .course-card-left > div > div > a > p {
         color: var(--primary);
         font-size: 24px;
     }
@@ -255,5 +265,125 @@ export default {
     .mirrored {
         transform: rotate(180deg);
         transition: 0.5s;
+    }
+
+    @media (max-width: 1650px) {
+
+        .course-card {
+            padding-top: 24px;
+            padding-bottom: 24px;
+        }
+        .course-card-left > div {
+            display: block;
+        }
+
+        .course-card-left > div:last-child > div:first-child {
+            padding-top: 52px;
+        }
+	}
+
+    @media (max-width: 1300px) {
+
+        .course-card-right {
+            width: 120px;
+        }
+
+        .button-wrapper {
+            display: block;
+            width: 120px;
+        }
+
+        .button-wrapper button:first-child {
+            margin-bottom: 16px;
+        }
+
+        .course-card-left {
+            gap: 40px;
+        }
+
+        .course-card-left .first-left-div {
+            width: 390px;
+        }
+
+        .course-card-left .first-left-div p {
+            width: 390px;
+        }
+    }
+
+    @media (max-width: 1150px) {
+        .course-card-left .first-left-div {
+            width: 310px;
+        }
+
+        .course-card-left .first-left-div p {
+            width: 310px;
+        }
+    }
+
+    @media (max-width: 1050px) {
+
+        .course-card-left .first-left-div {
+            width: 290px;
+        }
+
+        .course-card-left .first-left-div p {
+            width: 290px;
+        }
+
+        .course-card-left img {
+            width: 120px;
+            height: 120px;
+        }
+
+        .course-card-container {
+            padding-left: 0px;
+            padding-right: 0px;
+        }
+
+        .course-card-left {
+            gap: 20px;
+        }
+
+        .pending-div {
+            right: -16px;
+        }
+
+        .video-list {
+            margin-left: 80px;
+        }
+    }
+
+    @media (max-width: 900px) {
+
+        .course-card-left .first-left-div {
+            width: 210px;
+        }
+
+        .course-card-left .first-left-div p {
+            width: 210px;
+        }
+    }
+
+    @media (max-width: 850px) {
+
+        button {
+            width: 90px;
+        }
+
+        .course-card-right {
+            width: 90px;
+        }
+
+        .button-wrapper {
+            width: 90px;
+        }
+
+        .video-card {
+            gap: 20px;
+        }
+
+        .course-card-left > div:last-child > div {
+            width: 140px;
+        }
     }
 </style>

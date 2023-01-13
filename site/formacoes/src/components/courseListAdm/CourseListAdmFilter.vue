@@ -449,10 +449,13 @@ export default {
         }
     }
 
-    @media (max-width: 800px) {
+    @media (max-width: 1050px) {
         .courses-filter-wrapper {
             padding: 0px;
         }
+    }
+
+    @media (max-width: 850px) {
         .searchbar input {
             width: 160px;
         }

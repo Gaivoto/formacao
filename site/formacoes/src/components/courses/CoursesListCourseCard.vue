@@ -1,5 +1,5 @@
 <template>
-    <div class="course-card-container col-6 col-xl-3" :class="{ shake: this.hoverImg }">
+    <div class="course-card-container col-12 col-md-6 col-xl-3" :class="{ shake: this.hoverImg }">
         <div class="course-card">
             <router-link :to="{ name: 'Curso', params: { id: this.course.id } }">
                 <img :src="this.imageUrl">
@@ -160,5 +160,46 @@ export default {
     hr {
         height: 2px;
         color: var(--light);
+    }
+
+    @media (max-width: 600px) {
+        .course-card-container {
+            padding: 0px;
+        }
+    }
+
+    @media (max-width: 500px) {
+        .course-card {
+            padding: 12px 8px;
+        }
+        .course-card > a > img {
+            height: 160px;
+            margin: 16px;
+            width: 90%;
+        }
+
+        .card-info p.card-info-title {
+            margin-bottom: 2px;
+        }
+
+        .card-info p.card-info-category {
+            margin-bottom: 4px;
+        }
+
+        .card-info-div p {
+            margin-bottom: 6px !important;
+        }
+
+        .course-card hr {
+            margin: 6px 0px;
+        }
+    }
+
+    @media (max-width: 400px) {
+        .course-card > a > img {
+            margin: 0px;
+            margin-bottom: 12px;
+            width: 100%;
+        }
     }
 </style>

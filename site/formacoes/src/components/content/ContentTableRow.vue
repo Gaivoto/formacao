@@ -50,6 +50,7 @@ export default {
     .table-row td {
         padding: 16px;
         vertical-align: middle;
+        border: none;
     }
 
     .table-row img {
@@ -76,5 +77,12 @@ export default {
     .table .column-right {
         text-align: right;
         padding-right: 32px;
+    }
+
+    @media (max-width: 1500px) {  
+        .table-row img {
+            height: 90px;
+            width: 90px;
+        }
     }
 </style>

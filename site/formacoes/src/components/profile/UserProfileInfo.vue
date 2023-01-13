@@ -1,13 +1,13 @@
 <template>
-    <div ref="userProfileTop" class="user-profile-info">
+    <div ref="userProfileTop" class="user-profile-info" :class="{ 'edit-mode': this.editMode }">
         <div>
             <img class="profile-image" :src="this.imageUrl">
-            <div ref="profileInfoArea" class="profile-info-area">
+            <div ref="profileInfoArea" class="profile-info-area" :class="{ 'd-none': this.editMode }">
                 <p>{{ this.user.username }}</p>
                 <p>{{ this.user.name }}</p>
                 <p>{{ this.user.description }}</p>
             </div>
-            <div ref="profileEditingArea" class="profile-edit-area d-none">
+            <div ref="profileEditingArea" class="profile-edit-area" :class="{ 'd-none': !this.editMode }">
                 <div>
                     <div>
                         <p>Username</p>
@@ -26,8 +26,8 @@
                 </div>
             </div>
         </div>
-        <button ref="editProfileButton" v-on:click="editProfile">EDITAR</button>
-        <button ref="saveProfileButton" class="d-none" v-on:click="saveProfile">GUARDAR</button>
+        <button ref="editProfileButton" v-on:click="this.editMode=true" :class="{ 'd-none': this.editMode }">EDITAR</button>
+        <button ref="saveProfileButton" v-on:click="this.editMode=false" :class="{ 'd-none': !this.editMode }">GUARDAR</button>
     </div>
 </template>
 
@@ -42,44 +42,12 @@ export default {
     },
     data(){
         return {
-            countryOpen: false,
             imageUrl: "",
-            country: this.user.country
+            editMode: false
         }
     },
     created(){
         this.imageUrl = new URL(`../../assets/${this.user.image}.jpg`, import.meta.url).href;
-    },
-    watch: {
-        country: function() {
-            this.$emit("changeCountry", this.country);
-        }
-    },  
-    methods: {
-        editProfile() {
-            this.$refs.editProfileButton.classList.add("d-none");
-            this.$refs.saveProfileButton.classList.remove("d-none");
-
-            this.$refs.profileInfoArea.classList.add("d-none");
-            this.$refs.profileEditingArea.classList.remove("d-none");
-
-            this.$refs.userProfileTop.classList.add("edit");
-        },
-        saveProfile() {
-            this.$refs.editProfileButton.classList.remove("d-none");
-            this.$refs.saveProfileButton.classList.add("d-none");
-
-            this.$refs.profileInfoArea.classList.remove("d-none");
-            this.$refs.profileEditingArea.classList.add("d-none");
-
-            this.$refs.userProfileTop.classList.remove("edit");
-
-            this.$emit('alterar-dados', this.user); 
-        },
-        selectCountry(country) {
-            this.user.country = country;
-            this.countryOpen = false;
-        }
     }
 }
 </script>
@@ -95,6 +63,10 @@ export default {
         border-radius: 8px;
         box-shadow: rgba(20, 14, 49, 0.6) 0px 2px 10px 4px;
         margin-bottom: 32px;
+    }
+
+    .user-profile-info.edit-mode {
+        width: 100%;
     }
 
     .user-profile-info.edit {
@@ -125,6 +97,7 @@ export default {
         -webkit-line-clamp: 5;
         -webkit-box-orient: vertical;
         overflow: hidden;
+        width: 300px;
     }
 
     .profile-image {
@@ -186,6 +159,7 @@ export default {
         border: none;
         border-radius: 8px;
         box-shadow: rgba(20, 14, 49, 0.6) 6px 6px 4px 4px;
+        margin-bottom: 20px;
     }
 
     /* 
@@ -260,4 +234,105 @@ export default {
     .selectHide {
         display: none;
     }
+
+    @media (max-width: 1500px) {
+        .user-profile-info {
+            width: 70%;
+        }
+
+        .user-profile-info.edit-mode textarea {
+            width: 400px;
+        }
+	}
+
+    @media (max-width: 1300px) {
+        .user-profile-info.edit-mode .profile-edit-area {
+            display: block;
+        }
+	}
+
+    @media (max-width: 1250px) {
+        .user-profile-info {
+            width: 80%;
+        }
+	}
+
+    @media (max-width: 1150px) {
+        .user-profile-info {
+            width: 90%;
+        }
+	}
+
+    @media (max-width: 1100px) {
+        .user-profile-info.edit-mode > div {
+            display: block;
+        }
+
+        .user-profile-info.edit-mode .profile-image {
+            margin-bottom: 32px;
+        }
+
+        .user-profile-info.edit-mode textarea {
+            margin-bottom: 0px;
+        }
+
+        .user-profile-info.edit-mode button {
+            margin-bottom: 8px;
+        }
+	}
+
+    @media (max-width: 1050px) {
+        .user-profile-info {
+            width: 100%;
+        }
+        .user-profile-info {
+            padding: 20px 32px;
+        }
+
+        .profile-image {
+            margin-right: 24px;
+        }
+
+        .profile-info-area p:last-child {
+            width: 240px;
+        }
+	}
+
+    @media (max-width: 750px) {
+        .user-profile-info > div {
+            display: block;
+        }
+
+        .profile-image {
+            margin-bottom: 32px;
+        }
+	}
+
+    @media (max-width: 750px) {
+        .user-profile-info.edit-mode {
+            display: block;
+        }
+
+        .user-profile-info.edit-mode textarea {
+            margin-bottom: 24px;
+        }
+	}
+
+    @media (max-width: 575px) {
+        .user-profile-info.edit-mode textarea {
+            width: 100%;
+        }
+	}
+
+    @media (max-width: 550px) {
+        .user-profile-info {
+            display: block;
+        }
+	}
+
+    @media (max-width: 500px) {
+        .profile-info-area p:last-child {
+            width: 200px;
+        }
+	}
 </style>

@@ -187,4 +187,18 @@ export default {
         background: var(--mobalytics-back);
 		border-radius: 8px;
     }
+
+    @media (max-width: 1050px) {
+        
+        .profile-list {
+            margin: 0px 16px 24px;
+        }
+    }
+
+    @media (max-width: 800px) {
+        
+        .profile-wrapper {
+            padding: 24px 16px 0px 16px;
+        }
+    }
 </style>

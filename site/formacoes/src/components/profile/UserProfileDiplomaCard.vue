@@ -53,4 +53,12 @@ export default {
         -webkit-box-orient: vertical;
         overflow: hidden;
     }
+
+    @media (max-width: 1050px) {
+        
+        .user-profile-diploma-card {
+            padding: 16px 0px;
+            min-width: 164px;
+        }
+    }
 </style>

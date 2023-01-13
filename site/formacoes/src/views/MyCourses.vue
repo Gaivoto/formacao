@@ -30,7 +30,7 @@ export default {
             coursesFiltered: [],
             coursesDisplay: [],
             page: 1,
-            coursesPerPage: 2
+            coursesPerPage: 8
         }
     },
     created(){
@@ -316,7 +316,7 @@ export default {
         }
     }
 
-    @media (max-width: 600px) {
+    @media (max-width: 800px) {
         .courses-wrapper {
             padding: 24px 16px 0px 16px;
         }

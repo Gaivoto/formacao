@@ -5,7 +5,9 @@
                 <img :src="this.imageUrl">
                 <div class="first-left-div">
                     <p>{{ this.user.username }}</p>
-                    <p>Nome: {{ this.user.name }}</p>
+                    <div>
+                        <p>Nome: </p><p>{{ this.user.name }}</p>
+                    </div>
                 </div>
                 <div>
                     <p>Tipo: {{ this.user.type }}</p>
@@ -84,13 +86,36 @@ export default {
     }
 
     .user-card-left p:first-child {
-        margin-bottom: 30px;
+        margin-bottom: 28px;
+    }
+
+    .user-card-left > .first-left-div {
+        width: 260px;
+    }
+
+    .user-card-left > .first-left-div > div {
+        display: flex;
+        gap: 4px;
+    }
+
+    .user-card-left > .first-left-div > div > p{
+        margin-bottom: 4px;
+    }
+
+    .user-card-left > div > p:last-child {
+        margin-bottom: 4px;
+    }
+
+    .user-card-left > .first-left-div p:last-child {
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
     }
 
     .user-card-left > .first-left-div > p:first-child {
         color: var(--primary);
         font-size: 24px;
-        margin-bottom: 16px;
+        margin-bottom: 20px;
     }
 
     button {
@@ -102,4 +127,52 @@ export default {
         border-radius: 8px;
         box-shadow: rgba(20, 14, 49, 0.6) 6px 6px 4px 4px;
     }
+
+    @media (max-width: 1100px) {
+        .user-card-left {
+            gap: 40px;
+        }
+	}
+
+    @media (max-width: 1000px) {
+        .user-card-left > .first-left-div {
+            width: 200px;
+        }
+	}
+
+    @media (max-width: 900px) {
+        .user-card-left > .first-left-div {
+            width: 200px;
+        }
+
+        .user-card-container {
+            padding-left: 0px;
+            padding-right: 0px;
+        }
+
+        .user-card {
+            padding: 16px 24px 16px 16px;
+        }
+
+        .user-card-left img {
+            width: 120px;
+            height: 120px;
+        }
+
+        .user-card-left > .first-left-div > div p:first-child {
+            display: none;
+        }
+	}
+
+    @media (max-width: 850px) {
+        .user-card-left {
+            gap: 20px;
+        }
+	}
+
+    @media (max-width: 800px) {
+        .user-card-left > .first-left-div {
+            width: 140px;
+        }
+	}
 </style>
