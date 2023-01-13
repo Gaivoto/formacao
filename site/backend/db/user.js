@@ -18,26 +18,52 @@ const pool = new sql.Request();
 
 async function getUser(id) {
     return new Promise((resolve, reject) => {
-
-        if(isNaN(Number(id))) {
-            res.send(err)
+        if (isNaN(Number(id))) {
+            res.send(err);
         }
-
-        const slct = `SELECT * FROM [Users] WHERE [id] = ${id}`;
-
+        const slct = `SELECT [id], [username], [name], [description], [type], [price], [image] FROM [Users] WHERE [id] = ${id}`;
         pool.query(slct, (err, res) => {
-            if(!err) {
+            if (!err) {
                 resolve(res.recordset);
             } else {
                 reject(err.message);
             }
         });
     });
+}
 
+async function updateUser(user) {
+    return new Promise((resolve, reject) => {
+        const updt = `UPDATE [Users] SET [name] = '${user.name}', [description] = '${user.description}', [price] = ${user.price}, [image] = '${user.image}' WHERE id = ${user.id}`;
+        pool.query(updt, (err, res) => {
+            if (!err) {
+                resolve(res);
+            } else {
+                reject(err.message);
+            }
+        });
+    });
+}
+
+async function createUser(id, user) {
+    return new Promise((resolve, reject) => {
+        const insrt = `INSERT INTO [Users] ([id], [username], [password], [type], [name], [email], [description], [country], [price], [image], [state]) 
+        VALUES ('${id}', '${user.username}', '${user.password}', 'user', '${user.name}', '${user.email}', '${user.description}', '${user.country}', null, '${user.image}', 'Ativo')`;
+        pool.query(insrt, (err, res) => {
+            if (!err) {
+                resolve(res);
+            } else {
+                console.log("wooow")
+                console.log(err);
+                reject(err.message);
+            }
+        })
+    })
 }
 
 module.exports = {
     //createUser: createUser,
-    getUser: getUser
-
+    getUser: getUser,
+    updateUser: updateUser,
+    createUser: createUser,
 }

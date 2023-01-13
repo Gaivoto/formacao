@@ -9,6 +9,25 @@ async function getUser(req, res){
     });
 }
 
+async function updateUser(req, res) {
+    serUser.updateUser({access_token: req.headers['authorization'].split(' ')[1], refresh_token: req.headers.refreshtoken}, req.body).then(value => {
+        res.status(value.code).send(value.info);
+    })
+    .catch(error => {
+        res.status(error.code).send(error.message);
+    });
+}
+
+async function createUser(req, res) {
+    serUser.createUser(req.body).then(value => {
+        res.status(value.code).send({user: value.user, access_token: value.access_token, refresh_token: value.refresh_token});
+    })
+    .catch(error => {
+        res.status(error.code).send(error.message);
+    });
+}
+
+
 /*async function createUser(req, res){
     serUser.createUser({access_token: req.headers['authorization'].split(' ')[1], refresh_token: req.headers.refreshtoken}, req.body).then(value => {
         res.status(value.code).send(value.info);
@@ -19,6 +38,7 @@ async function getUser(req, res){
 }*/
 
 module.exports = {
-    //createUser: createUser,
+    createUser: createUser,
     getUser: getUser,
+    updateUser: updateUser
 }

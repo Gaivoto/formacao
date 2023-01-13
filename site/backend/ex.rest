@@ -1,5 +1,4 @@
-
-POST {{hostname}}/api/auth/login
+POST http://localhost:3000/api/auth/login
 content-type: application/json
 
 {
@@ -8,11 +7,54 @@ content-type: application/json
 }
 
 ###
-DELETE {{hostname}}/api/auth/logout/
+DELETE http://localhost:3000//api/auth/logout/
 refreshtoken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQiLCJ1c2VybmFtZSI6ImRyZSIsImlhdCI6MTY3MzUzOTA1MX0.3oSHirr-FPOcHbbZ7wANo28i1jPO9u0ingaF0L4oTzs
 
 ###
+GET http://localhost:3000/api/users/17
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQiLCJ1c2VybmFtZSI6ImRyZSIsImlhdCI6MTY3MzYyNTc1NCwiZXhwIjoxNjczNjI3NTU0fQ.aISN4BxxQAbzJNPZt6tyQVEULtau5zFvxLjpl3_oIBA
+refreshtoken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQiLCJ1c2VybmFtZSI6ImRyZSIsImlhdCI6MTY3MzYyNTc1NH0.LJY5B11lv1DtOAGiqd2Lg1wdzDFJzRhESk75wwcUb6w
 
-GET {{hostname}}/api/users/1
-authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQiLCJ1c2VybmFtZSI6ImRyZSIsImlhdCI6MTY3MzU0MTg5NSwiZXhwIjoxNjczNTQzNjk1fQ.wdlCW7MO9qg_bABPcGTTQLhaAwxXVngUajIoBz9mKP0
-refreshtoken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQiLCJ1c2VybmFtZSI6ImRyZSIsImlhdCI6MTY3MzUzOTQzMn0.92KTcbYnJkjHn4ve0tujpE1S6Kbins8ExRLx5XlQ3Sk
+###
+PUT http://localhost:3000/api/users/updateuser/
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQiLCJ1c2VybmFtZSI6ImRyZSIsImlhdCI6MTY3MzYyNDkyNywiZXhwIjoxNjczNjI2NzI3fQ.fbs9OsWWxMDAgIcVhZTO4pO9RoIJ_ExYbju9tDi0D34
+refreshtoken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQiLCJ1c2VybmFtZSI6ImRyZSIsImlhdCI6MTY3MzYyNDkyNywiZXhwIjoxNjczNjI2NzI3fQ.fbs9OsWWxMDAgIcVhZTO4pO9RoIJ_ExYbju9tDi0D34
+content-type: application/json
+
+{
+    "id": "17",
+    "name": "ccccccccc",
+    "description": "bbbbbbbbbb",
+    "price": 122,
+    "image": "aaaaaaaaa",
+    "type": "creator"
+}
+
+### 
+POST http://localhost:3000/api/users/createuser
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQiLCJ1c2VybmFtZSI6ImRyZSIsImlhdCI6MTY3MzYyNDkyNywiZXhwIjoxNjczNjI2NzI3fQ.fbs9OsWWxMDAgIcVhZTO4pO9RoIJ_ExYbju9tDi0D34
+refreshtoken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQiLCJ1c2VybmFtZSI6ImRyZSIsImlhdCI6MTY3MzYyNDkyNywiZXhwIjoxNjczNjI2NzI3fQ.fbs9OsWWxMDAgIcVhZTO4pO9RoIJ_ExYbju9tDi0D34
+content-type: application/json
+
+{
+    
+    "name": "ccccccccc",
+    "description": "bbbbbbbbbb",
+    "price": 122,
+    "image": "aaaaaaaaa",
+    "type": "creator"
+}
+###
+POST http://localhost:3000/api/users/createUser
+content-type: application/json
+
+{
+    "username": "carlos",
+    "password": "132",
+    "name": "carlos tevez",
+    "email": "tevez@gmail.com",
+    "description": "jogador argentino nojento",
+    "country": "argentina",
+    "image": "/imagem/tevez"
+
+}
