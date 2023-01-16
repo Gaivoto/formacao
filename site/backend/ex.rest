@@ -9,10 +9,69 @@ content-type: application/json
 
 ###
 DELETE {{hostname}}/api/auth/logout/
-refreshtoken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQiLCJ1c2VybmFtZSI6ImRyZSIsImlhdCI6MTY3MzUzOTA1MX0.3oSHirr-FPOcHbbZ7wANo28i1jPO9u0ingaF0L4oTzs
+refreshtoken: {{refreshKey}}
 
 ###
 
 GET {{hostname}}/api/users/1
-authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQiLCJ1c2VybmFtZSI6ImRyZSIsImlhdCI6MTY3MzU0MTg5NSwiZXhwIjoxNjczNTQzNjk1fQ.wdlCW7MO9qg_bABPcGTTQLhaAwxXVngUajIoBz9mKP0
-refreshtoken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQiLCJ1c2VybmFtZSI6ImRyZSIsImlhdCI6MTY3MzUzOTQzMn0.92KTcbYnJkjHn4ve0tujpE1S6Kbins8ExRLx5XlQ3Sk
+authorization: {{apiKey}}
+refreshtoken: {{refreshKey}}
+
+###
+
+GET {{hostname}}/api/cursos/1
+authorization: {{apiKey}}
+refreshtoken: {{refreshKey}}
+
+###
+
+GET {{hostname}}/api/cursos/
+authorization: {{apiKey}}
+refreshtoken: {{refreshKey}}
+content-type: application/json
+
+###
+
+POST {{hostname}}/api/cursos/
+authorization: {{apiKey}}
+refreshtoken: {{refreshKey}}
+content-type: application/json
+
+{
+    "name": "Curso do Teste", 
+    "category": "Gaming", 
+    "description": "teste do insert", 
+    "date": "2023-01-07 00:00:00.000", 
+    "state": "Ativo", 
+    "price": 15, 
+    "image": "./assets/fortnite", 
+    "id_creator": 4 
+}
+
+###
+
+PUT {{hostname}}/api/cursos/
+authorization: {{apiKey}}
+refreshtoken: {{refreshKey}}
+content-type: application/json
+
+{
+    "id": "0236fe39-c92b-4b60-bf20-b3fa6586d558", 
+    "state": "Inativo"
+}
+
+###
+
+PUT {{hostname}}/api/cursos/edit/
+authorization: {{apiKey}}
+refreshtoken: {{refreshKey}}
+content-type: application/json
+
+{
+    "id": "0236fe39-c92b-4b60-bf20-b3fa6586d558", 
+    "name": "a",
+    "category": "b",
+    "description": "c",
+    "price": 999,
+    "image": "./assets/d"
+}

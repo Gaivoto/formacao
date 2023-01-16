@@ -10,10 +10,10 @@ async function validateToken(access_token, refresh_token){
                 console.log(error);
                 reject();
             } else {
-                refreshToken({id: user.id, username: user.username}, refresh_token).then(value => resolve({user: {id: user.id, username: user.username}, access_token: value}))
+                refreshToken({id: user.id, username: user.username, type: user.type}, refresh_token).then(value => resolve({user: {id: user.id, username: user.username, type: user.type}, access_token: value}))
                 .catch(error => {
                     console.log(error);
-                    resolve({user: {id: user.id, username: user.username}});
+                    resolve({user: {id: user.id, username: user.username, type: user.type}});
                 });
             }
         });

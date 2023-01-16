@@ -9,7 +9,7 @@ async function login(username, password){
             if(value.length == 0){  
                 reject({code: 401, message: 'Utilizador/password inválido.'});
             } else {
-                let user = {id: value[0].id, username: value[0].username};
+                let user = {id: value[0].id, username: value[0].username, type: value[0].type};
                 let access_token = jwt.sign(user, process.env.ACCESS_SECRET, {expiresIn: '30m'});
                 let refresh_token = jwt.sign(user, process.env.REFRESH_SECRET);
                 dbAuth.createToken(crypto.SHA256(refresh_token, process.env.CRYPTO_KEY).toString()).then(value => {

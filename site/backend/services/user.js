@@ -9,7 +9,6 @@ async function getUser(tokens, id) {
             let info = value;
             dbUser.getUser(id).then(value => {
                 value[0].access_token = info.access_token
-                console.log(value)
                 resolve({ code: 200, info: value[0] });
             })
                 .catch(error => {
