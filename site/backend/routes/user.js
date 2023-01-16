@@ -10,4 +10,6 @@ router.put("/updateUser", cntrUser.updateUser);
 
 router.post("/createUser", cntrUser.createUser);
 
+router.put("/changeUserState", cntrUser.changeUserState);
+
 module.exports = router

@@ -21,7 +21,7 @@ async function getUser(id) {
         if (isNaN(Number(id))) {
             res.send(err);
         }
-        const slct = `SELECT [id], [username], [name], [description], [type], [price], [image] FROM [Users] WHERE [id] = ${id}`;
+        const slct = `SELECT [id], [username], [name], [description], [type], [price], [image] FROM [Users] WHERE [id] = '${id}'`;
         pool.query(slct, (err, res) => {
             if (!err) {
                 resolve(res.recordset);
@@ -34,7 +34,7 @@ async function getUser(id) {
 
 async function updateUser(user) {
     return new Promise((resolve, reject) => {
-        const updt = `UPDATE [Users] SET [name] = '${user.name}', [description] = '${user.description}', [price] = ${user.price}, [image] = '${user.image}' WHERE id = ${user.id}`;
+        const updt = `UPDATE [Users] SET [name] = '${user.name}', [description] = '${user.description}', [price] = ${user.price}, [image] = '${user.image}' WHERE id = '${user.id}'`;
         pool.query(updt, (err, res) => {
             if (!err) {
                 resolve(res);
@@ -53,12 +53,36 @@ async function createUser(id, user) {
             if (!err) {
                 resolve(res);
             } else {
-                console.log("wooow")
-                console.log(err);
                 reject(err.message);
             }
-        })
-    })
+        });
+    });
+}
+
+async function selectUserByUsername(username) {
+    return new Promise((resolve, reject) => {
+        const slct = `SELECT * FROM  [Users] WHERE [username] = '${username}'`;
+        pool.query(slct, (err,res) => {
+            if(!err) {
+                resolve(res.recordset);
+            } else {
+                reject(err.message)
+            }
+        });
+    });
+}
+
+async function changeUserState(state, id) {
+    return new Promise((resolve, reject) => {
+        const updt = `UPDATE [Users] SET [state] = '${state}' WHERE [id] = '${id}'`;
+        pool.query(updt, (err, res) => {
+            if(!err) {
+                resolve(res);
+            } else {
+                reject(err.message);
+            }
+        });
+    });
 }
 
 module.exports = {
@@ -66,4 +90,6 @@ module.exports = {
     getUser: getUser,
     updateUser: updateUser,
     createUser: createUser,
+    selectUserByUsername: selectUserByUsername,
+    changeUserState: changeUserState
 }
