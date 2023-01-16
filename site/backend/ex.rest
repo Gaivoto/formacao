@@ -1,5 +1,4 @@
-
-POST {{hostname}}/api/auth/login
+POST http://localhost:3000/api/auth/login
 content-type: application/json
 
 {
@@ -8,10 +7,49 @@ content-type: application/json
 }
 
 ###
-DELETE {{hostname}}/api/auth/logout/
+DELETE http://localhost:3000//api/auth/logout/
 refreshtoken: {{refreshKey}}
 
 ###
+GET http://localhost:3000/api/users/17
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQiLCJ1c2VybmFtZSI6ImRyZSIsImlhdCI6MTY3Mzg4NTU1MywiZXhwIjoxNjczODk2MzUzfQ.09uWwjbVcZNnHV3rIlueF8HU2TWf6YZoCqrVY3IyrS0
+refreshtoken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQiLCJ1c2VybmFtZSI6ImRyZSIsImlhdCI6MTY3Mzg4NTU1M30.NnX1MTBH-8tjWQ1VPcZxobIDdsLLeQk6jNrpa-5XlHs
+
+###
+PUT http://localhost:3000/api/users/updateuser/
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQiLCJ1c2VybmFtZSI6ImRyZSIsImlhdCI6MTY3Mzg3NjgzMSwiZXhwIjoxNjczODg3NjMxfQ.Qd5spZOEHkwOjJvUVTB9iOBWLA8vSarN3sBctKWUSks
+refreshtoken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQiLCJ1c2VybmFtZSI6ImRyZSIsImlhdCI6MTY3Mzg3NjgzMX0.5uYIXp1AgO48pKcqU299hHMTut6mcd_rNVgQg0HJbbo
+content-type: application/json
+
+{
+    "id": "5",
+    "name": "andrezito",
+    "description": "calvissimo KKKKKKKKKKKKK",
+    "price": null,
+    "image": "testeimagemandre",
+    "type": "admin"
+}
+
+
+###
+POST http://localhost:3000/api/users/createUser
+content-type: application/json
+
+{
+    "username": "lex",
+    "password": "132",
+    "name": "carlos tevez",
+    "email": "tevez@gmail.com",
+    "description": "jogador argentino nojento",
+    "country": "argentina",
+    "image": "/imagem/tevez"
+
+}
+###
+PUT http://localhost:3000/api/users/changeUserState
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQiLCJ1c2VybmFtZSI6ImRyZSIsImlhdCI6MTY3Mzg4NTU4NywiZXhwIjoxNjczODk2Mzg3fQ.1Rya_VnwKVAoxUp3_cIr88N4dCz7NpBXvB4_cnXPlmY
+refreshtoken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQiLCJ1c2VybmFtZSI6ImRyZSIsImlhdCI6MTY3Mzg4NTU4N30.HijvYt9al-GEf8vRy5kFsj4s6oLSb69mpWoiy1j7Jv4
+content-type: application/json
 
 GET {{hostname}}/api/users/1
 authorization: {{apiKey}}
