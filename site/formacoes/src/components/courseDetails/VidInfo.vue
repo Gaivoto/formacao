@@ -64,7 +64,12 @@ export default {
     .text .vid-title {
         color: var(--primary);
         font-size: 18px;
+        width: 400px;
         margin-bottom: 36px;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
     }
 
     .text p {
@@ -77,7 +82,55 @@ export default {
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
         overflow: hidden;
-        height: 48px;
+        max-height: 48px;
         margin-top: 16px;
+    }
+
+    @media (max-width: 1450px) {
+        .text .vid-title {
+            width: 300px;
+        }
+    }
+
+    @media (max-width: 1250px) {
+        .text > p {
+            max-width: 400px;
+        }
+    }
+
+    @media (max-width: 1150px) {
+        .vid .text {
+            display: block;
+            padding: 0px;
+        }
+
+        .text .vid-title {
+            width: 100%;
+            margin-bottom: 16px;
+        }
+
+        .text > p {
+            max-width: 100%;
+        }
+    }
+
+    @media (max-width: 950px) {
+        .text > p {
+            -webkit-line-clamp: 3;
+            max-height: 72px;
+        }
+    }
+
+    @media (max-width: 750px) {
+        .vid img {
+            display: none;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .text > p {
+            -webkit-line-clamp: 4;
+            max-height: 96px;
+        }
     }
 </style>

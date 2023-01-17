@@ -65,6 +65,10 @@ export default {
 
     .text .videoname {
         color: var(--primary);
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
     }
 
     .text .videoduration {

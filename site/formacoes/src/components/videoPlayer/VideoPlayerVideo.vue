@@ -31,6 +31,7 @@ export default {
   .video {
     width: 100%;
     max-height: inherit;
+    height: 100%;
     border-radius: 8px;
   }
 </style>

@@ -60,9 +60,12 @@ export default {
         height: 220px;
         width: 220px;
         border-radius: 8px;
+        object-fit: cover;
     }
+
     .text {
         padding-left: 36px;
+        width: 360px;
     }
 
     .text p:first-child {
@@ -95,5 +98,46 @@ export default {
 
     .right-side p:nth-child(2) {
         white-space: pre-wrap;
+    }
+
+    @media (max-width: 1200px) {
+        .header-wrapper {
+            display: block;
+        }
+
+        .left-side {
+            margin-bottom: 36px;
+        }
+
+        .right-side {
+            margin-bottom: 36px;
+        }
+    }
+
+    @media (max-width: 750px) {
+        .left-side {
+            display: block;
+            margin-right: 0px;
+        }
+
+        .left-side img {
+            margin-bottom: 24px;
+        }
+
+        .text {
+            padding: 0px;
+        }
+    }
+
+    @media (max-width: 500px) {
+        .text {
+            width: 100%;
+        }
+    }
+
+    @media (max-width: 400px) {
+        .left-side img {
+            width: 100%;
+        }
     }
 </style>

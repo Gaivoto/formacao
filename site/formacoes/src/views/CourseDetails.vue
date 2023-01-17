@@ -24,7 +24,7 @@ export default {
         this.course = {
             id: 1,
             image: "tomasGostosa",
-            name: "teste 1 teste 2",
+            name: "teste 1 teste 2 teste 2 teste 2 teste 2teste 2 teste 2 teste 2 teste 2teste 2 teste 2teste 2 teste 2teste 2teste 2teste 2 teste 2 teste 2 teste 2",
             creatorName: "seuku miyadora",
             description: `O curso de Python possui 60 aulas, neste curso o aluno aprenderá a linguagem Python. 
 
@@ -39,7 +39,7 @@ desenvolver sistemas, jogos, aplicativos mobile e muito mais.`,
             {
                 id: 1,
                 image: "tomasGostosa",
-                name: "video1",
+                name: "video1 video1 video1video1 video1 video1 video1video1 video1  video1 video1video1video1 video1",
                 description: "description1 description1 description1 description1 description1 description1 description1 description1 dedescription1 description1 description1 description1 dedescription1 description1 description1 description1 dedescription1 description1 description1 description1 dedescription1 description1 description1 description1 dedescription1 description1 description1 description1 dedescription1 description1 description1 description1 dedescription1 description1 description1 description1 dedescription1 description1 description1 description1 dedescription1 description1 description1 description1 dedescription1 description1 description1 description1 dedescription1 description1 description1 description1 dedescription1 description1 description1description1 description1 description1 description1 description1 description1 description1 description1 description1 description1 v description1",
                 duration: "0:15:23",
             },
@@ -101,7 +101,7 @@ desenvolver sistemas, jogos, aplicativos mobile e muito mais.`,
         background-color: var(--mobalytics-back);
         overflow-x: hidden;
         overflow-y: scroll;
-        height: 460px;
+        height: 440px;
     }
 
     .vid-container::-webkit-scrollbar {
@@ -113,5 +113,31 @@ desenvolver sistemas, jogos, aplicativos mobile e muito mais.`,
     .vid-container::-webkit-scrollbar-thumb {
         background: var(--mobalytics-susge);
         border-radius: 8px;
+    }
+
+    @media (max-width: 1200px) {
+        .vid-container {
+            height: 600px;
+        }
+    }
+
+    @media (max-width: 800px) {
+        .course-details-wrapper {
+            padding: 24px 24px 0px 24px;
+        }
+
+        .course-details-content {
+            padding: 12px;
+        }
+
+        .vid-container {
+            height: 700px;
+        }
+    }
+
+    @media (max-width: 400px) {
+        .course-details-content {
+            padding: 4px;
+        }
     }
 </style>
