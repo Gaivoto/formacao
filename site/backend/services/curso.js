@@ -69,16 +69,35 @@ async function getAllCursos(headers) {
 
 async function createCurso(tokens, body) {
     return new Promise((resolve, reject) => {
-        utils.validateToken(tokens.access_token, tokens.refresh_token).then(value => {
-            let info = value;
+        utils.validateToken(tokens.access_token, tokens.refresh_token).then(value1 => {
+            let info = value1;
+            let id
+            let existe
 
             dbCurs.isNameTaken(body.name).then(value2 => {
 
                 if(value2.length > 0) {
                     reject({ code: 403, error: {message: "Esse nome já está a ser utilizado." }});
                 } else {
+
+                    do {
+                        
+                        id = uuid.v4();
+                        existe = false;
+
+                        dbCurs.isIDTaken(id).then(value3 => {
+                            
+                            if(value3.length >= 0) {
+                                existe = true;
+                            }
+
+                        })
+                        .catch(error => {
+                            reject({ code: 400, error: {message: "Algo correu mal com a query." }});
+                        });
+
+                    } while(existe === true)
                     
-                    let id = uuid.v4();
                     dbCurs.createCurso(id, body).then(value => {
                         resolve({ code: 200, info: info });
                     })

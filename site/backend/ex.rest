@@ -8,13 +8,13 @@ content-type: application/json
     "password": "123" 
 }
 
-###
+### USERS
 
 GET {{hostname}}/api/users/1
 authorization: {{apiKey}}
 refreshtoken: {{refreshKey}}
 
-###
+### CURSOS
 
 GET {{hostname}}/api/cursos/1
 authorization: {{apiKey}}
@@ -73,3 +73,33 @@ content-type: application/json
     "image": "./assets/d"
 }
 
+### VIDEOS
+
+GET {{hostname}}/api/videos/1
+authorization: {{apiKey}}
+refreshtoken: {{refreshKey}}
+
+###
+
+GET {{hostname}}/api/videos/
+authorization: {{apiKey}}
+refreshtoken: {{refreshKey}}
+content-type: application/json
+
+###
+
+POST {{hostname}}/api/videos/
+authorization: {{apiKey}}
+refreshtoken: {{refreshKey}}
+content-type: application/json
+
+{
+    "title": "Teste titulo", 
+    "video": "Teste video", 
+    "duration": 500, 
+    "image": "./assets/thumbnails/teste1", 
+    "description": "im blue da ba di da ba dai", 
+    "date": "2023-01-07 00:00:00.000", 
+    "id_course": "1",
+    "position": 1
+}
