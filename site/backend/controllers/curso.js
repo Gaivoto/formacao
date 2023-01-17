@@ -5,7 +5,7 @@ async function getCurso(req, res){
         res.status(value.code).send(value.info);
     })
     .catch(error => {
-        res.status(error.code).send(error.message);
+        res.status(error.code).send(error.error);
     });
 }
 
@@ -14,7 +14,7 @@ async function getAllCursos(req, res){
         res.status(value.code).send(value.info);
     })
     .catch(error => {
-        res.status(error.code).send(error.message);
+        res.status(error.code).send(error.error);
     });
 }
 
@@ -23,7 +23,7 @@ async function createCurso(req, res){
         res.status(value.code).send(value.info);
     })
     .catch(error => {
-        res.status(error.code).send(error.message);
+        res.status(error.code).send(error.error);
     });
 }
 
@@ -32,7 +32,7 @@ async function removeCurso(req, res){
         res.status(value.code).send(value.info);
     })
     .catch(error => {
-        res.status(error.code).send(error.message);
+        res.status(error.code).send(error.error);
     });
 }
 
@@ -41,7 +41,7 @@ async function updateCurso(req, res){
         res.status(value.code).send(value.info);
     })
     .catch(error => {
-        res.status(error.code).send(error.message);
+        res.status(error.code).send(error.error);
     });
 }
 
