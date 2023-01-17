@@ -1,10 +1,13 @@
 const uuid = require('uuid');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto-js');
+const bcrypt = require('bcrypt');
 
 const utils = require('../utils/index.js');
 const dbUser = require('../db/user.js');
 const dbAuth = require('../db/auth.js');
+const dbCour = require('../db/curso');
+
 
 async function getUser(tokens, id) {
     return new Promise((resolve, reject) => {
@@ -20,6 +23,27 @@ async function getUser(tokens, id) {
         })
             .catch(error => reject({ code: 401, message: "Token inválido." }));;
     });
+}
+
+async function profilePage(tokens, id) {
+    return new Promise((resolve, reject) => {
+        utils.validateToken(tokens.access_token, tokens.refresh_token).then(value => {
+            let info = value;
+            dbUser.selectUserById(id).then(value2 => {
+                value2.acess_token = info.acess_token;
+                dbCour.getUserCourses(id).then(value3 => {
+                    value2[0].courses = value3;
+                    resolve({ code: 200, info: value2 });
+                }).catch(error => {
+                    reject({ code: 400, message: "Algo correu mal com a query dos cursos." });
+                });
+            }).catch(error => {
+                reject({ code: 400, message: "Algo correu mal com a query." });
+            });
+        }).catch(error => {
+            reject({ code: 401, message: "Token inválido." })
+        });;
+    })
 }
 
 async function updateUser(tokens, user) {
@@ -73,24 +97,29 @@ async function changeUserState(tokens, user) {
 
 async function createUser(user) {
     return new Promise((resolve, reject) => {
-        dbUser.selectUserByUsername(user.username).then(value => {
+        dbUser.selectUserByUsername(user.username).then(async value => {
             if (value.length == 0) {
                 let idGen = uuid.v4();
-                dbUser.createUser(idGen, user).then(value => {
-                    let userInfo = { id: idGen, username: user.username };
-                    let access_token = jwt.sign(userInfo, process.env.ACCESS_SECRET, { expiresIn: '30m' });
-                    let refresh_token = jwt.sign(userInfo, process.env.REFRESH_SECRET);
-                    dbAuth.createToken(crypto.SHA256(refresh_token, process.env.CRYPTO_KEY).toString()).then(value2 => {
-                        resolve({ code: 201, user: userInfo, access_token: access_token, refresh_token: refresh_token });
-                        console.log(crypto.SHA256(refresh_token, process.env.CRYPTO_KEY).toString())
-                    })
-                        .catch(error => {
-                            console.log(error);
-                            reject({ code: 400, message: 'Algo correu mal com a query.' });
-                        });
-                }).catch(error => {
-                    reject({ code: 400, message: "Algo correu mal com a query de insert." });
-                });
+                try {
+                    user.password = await bcrypt.hash(user.password, 10)
+                    dbUser.createUser(idGen, user).then(value => {
+                        let userInfo = { id: idGen, username: user.username, type: user.type };
+                        let access_token = jwt.sign(userInfo, process.env.ACCESS_SECRET, { expiresIn: '30m' });
+                        let refresh_token = jwt.sign(userInfo, process.env.REFRESH_SECRET);
+                        dbAuth.createToken(crypto.SHA256(refresh_token, process.env.CRYPTO_KEY).toString()).then(value2 => {
+                            resolve({ code: 201, user: userInfo, access_token: access_token, refresh_token: refresh_token });
+                        })
+                            .catch(error => {
+                                console.log(error);
+                                reject({ code: 400, message: 'Algo correu mal com a query.' });
+                            });
+                    }).catch(error => {
+                        reject({ code: 400, message: "Algo correu mal com a query de insert." });
+                    });
+                } catch {
+                    reject({ code: 400, message: "Erro ao encriptar a palavra-passe."})
+                }
+                
             } else {
                 reject({ code: 401, message: 'Já tem um user com esse username.' });
             }
@@ -124,5 +153,6 @@ module.exports = {
     getUser: getUser,
     updateUser: updateUser,
     createUser: createUser,
-    changeUserState: changeUserState
+    changeUserState: changeUserState,
+    profilePage: profilePage
 }

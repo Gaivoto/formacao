@@ -2,8 +2,8 @@ POST http://localhost:3000/api/auth/login
 content-type: application/json
 
 {
-    "username": "dre",
-    "password": "123"
+    "username": "vini",
+    "password": "16785"
 }
 
 ###
@@ -12,8 +12,8 @@ refreshtoken: {{refreshKey}}
 
 ###
 GET http://localhost:3000/api/users/17
-authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQiLCJ1c2VybmFtZSI6ImRyZSIsImlhdCI6MTY3Mzg4NTU1MywiZXhwIjoxNjczODk2MzUzfQ.09uWwjbVcZNnHV3rIlueF8HU2TWf6YZoCqrVY3IyrS0
-refreshtoken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQiLCJ1c2VybmFtZSI6ImRyZSIsImlhdCI6MTY3Mzg4NTU1M30.NnX1MTBH-8tjWQ1VPcZxobIDdsLLeQk6jNrpa-5XlHs
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjIiLCJ1c2VybmFtZSI6ImJyIiwidHlwZSI6ImFkbWluIiwiaWF0IjoxNjczOTY3ODgwLCJleHAiOjE2NzM5ODIyODB9.TxKY685CCusownx7paZyPFB9PJbFLNw66D64Z7Gave4
+refreshtoken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjIiLCJ1c2VybmFtZSI6ImJyIiwidHlwZSI6ImFkbWluIiwiaWF0IjoxNjczOTY3ODgwfQ.Vd1Gf9-_5ufE92TU86Mr5CV5xkT0HxqyoHZvhCVTbew
 
 ###
 PUT http://localhost:3000/api/users/updateuser/
@@ -36,9 +36,9 @@ POST http://localhost:3000/api/users/createUser
 content-type: application/json
 
 {
-    "username": "lex",
-    "password": "132",
-    "name": "carlos tevez",
+    "username": "vini",
+    "password": "1678",
+    "name": "testeste",
     "email": "tevez@gmail.com",
     "description": "jogador argentino nojento",
     "country": "argentina",

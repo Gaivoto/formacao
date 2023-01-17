@@ -18,7 +18,7 @@ const pool = new sql.Request();
 
 async function authenticateUser(username, password){
     return new Promise((resolve, reject) => {
-        pool.query(`SELECT * FROM [Users] WHERE [username] = '${username}' AND [password] = '${password}'`, (err, res) => {
+        pool.query(`SELECT * FROM [Users] WHERE [username] = '${username}'`, (err, res) => {
             if(!err) {
                 resolve(res.recordset);
             } else {

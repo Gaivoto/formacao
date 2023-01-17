@@ -85,11 +85,24 @@ async function changeUserState(state, id) {
     });
 }
 
+async function selectUserById(id) {
+    return new Promise((resolve, reject) => {
+        const slct = `SELECT * FROM  [Users] WHERE [id] = '${id}'`;
+        pool.query(slct, (err,res) => {
+            if(!err) {
+                resolve(res.recordset);
+            } else {
+                reject(err.message)
+            }
+        });
+    });
+}
+
 module.exports = {
-    //createUser: createUser,
     getUser: getUser,
     updateUser: updateUser,
     createUser: createUser,
     selectUserByUsername: selectUserByUsername,
-    changeUserState: changeUserState
+    changeUserState: changeUserState,
+    selectUserById: selectUserById
 }
