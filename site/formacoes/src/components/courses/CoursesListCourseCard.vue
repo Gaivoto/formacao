@@ -77,11 +77,15 @@ export default {
 
     .card-info p.card-info-title {
         color: var(--light);
-        font-size: 24px;
-        font-weight: 650;
+        font-size: 22px;
+        font-weight: 600;
         font-family: "Poppins", sans-serif;
         margin-bottom: 16px;
         width: fit-content;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
     }
 
     .card-info p.card-info-title:hover {
