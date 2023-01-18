@@ -94,12 +94,42 @@ refreshtoken: {{refreshKey}}
 content-type: application/json
 
 {
-    "title": "Teste titulo", 
-    "video": "Teste video", 
+    "title": "Video teste", 
+    "video": "../assets/videos/teste1", 
     "duration": 500, 
     "image": "./assets/thumbnails/teste1", 
     "description": "im blue da ba di da ba dai", 
     "date": "2023-01-07 00:00:00.000", 
-    "id_course": "1",
+    "id_course": "0236fe39-c92b-4b60-bf20-b3fa6586d558",
     "position": 1
+}
+
+###
+
+PUT {{hostname}}/api/videos/
+authorization: {{apiKey}}
+refreshtoken: {{refreshKey}}
+content-type: application/json
+
+{
+    "id": "66e689ca-2867-47e8-9943-ab35244681c4", 
+    "id_course": "1",
+    "state": "Ativo"
+}
+
+###
+
+PUT {{hostname}}/api/videos/edit/
+authorization: {{apiKey}}
+refreshtoken: {{refreshKey}}
+content-type: application/json
+
+{
+    "id": "7c268811-4103-49e6-a550-5a6d25b87da4", 
+    "title": "Teste2",
+    "video": "../assets/videos/teste2",
+    "duration": 999,
+    "image": "./assets/thumbnails/teste2",
+    "description": "hello friends",
+    "id_course": "0236fe39-c92b-4b60-bf20-b3fa6586d558"
 }

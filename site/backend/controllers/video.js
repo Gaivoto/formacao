@@ -27,9 +27,28 @@ async function createVideo(req, res){
     });
 }
 
+async function removeVideo(req, res){
+    serVide.removeVideo({access_token: req.headers['authorization'].split(' ')[1], refresh_token: req.headers.refreshtoken}, req.body).then(value => {
+        res.status(value.code).send(value.info);
+    })
+    .catch(error => {
+        res.status(error.code).send(error.error);
+    });
+}
+
+async function updateVideo(req, res){
+    serVide.updateVideo({access_token: req.headers['authorization'].split(' ')[1], refresh_token: req.headers.refreshtoken}, req.body).then(value => {
+        res.status(value.code).send(value.info);
+    })
+    .catch(error => {
+        res.status(error.code).send(error.error);
+    });
+}
+
 module.exports = {
     getVideo: getVideo,
     getAllVideos: getAllVideos,
     createVideo: createVideo,
-
+    removeVideo: removeVideo,
+    updateVideo: updateVideo,
 }
