@@ -43,10 +43,9 @@ export default {
         }
     },
     created(){
-        this.user.username = "Amogus Sus",
-        this.user.name = "Bruh ?"
-        this.user.country = "Portugal"
-        this.user.description = "Boa descrição bruvkek"
+        this.user.username = "Username user",
+        this.user.name = "Nome user"
+        this.user.description = "description description description description description"
         this.user.image = "bingus"
 
         this.courses = [

@@ -23,7 +23,7 @@ export default {
     created() {
         this.course = {
             id: 1,
-            image: "tomasGostosa",
+            image: "placeholder",
             name: "teste 1 teste 2 teste 2 teste 2 teste 2teste 2 teste 2 teste 2 teste 2teste 2 teste 2teste 2 teste 2teste 2teste 2teste 2 teste 2 teste 2 teste 2",
             creatorName: "seuku miyadora",
             description: `O curso de Python possui 60 aulas, neste curso o aluno aprenderá a linguagem Python. 
@@ -38,35 +38,35 @@ desenvolver sistemas, jogos, aplicativos mobile e muito mais.`,
         this.videos = [
             {
                 id: 1,
-                image: "tomasGostosa",
+                image: "placeholder",
                 name: "video1 video1 video1video1 video1 video1 video1video1 video1  video1 video1video1video1 video1",
                 description: "description1 description1 description1 description1 description1 description1 description1 description1 dedescription1 description1 description1 description1 dedescription1 description1 description1 description1 dedescription1 description1 description1 description1 dedescription1 description1 description1 description1 dedescription1 description1 description1 description1 dedescription1 description1 description1 description1 dedescription1 description1 description1 description1 dedescription1 description1 description1 description1 dedescription1 description1 description1 description1 dedescription1 description1 description1 description1 dedescription1 description1 description1 description1 dedescription1 description1 description1description1 description1 description1 description1 description1 description1 description1 description1 description1 description1 v description1",
                 duration: "0:15:23",
             },
             {
                 id: 2,
-                image: "tomasGostosa",
+                image: "placeholder",
                 name: "video2",
                 description: "iption1 description1 description1 description1 description1 desiption1 description1 description1 description1 description1 desiption1 description1 description1 description1 description1 desiption1 description1 description1 description1 description1 des",
                 duration: "0:16:12",
             },
             {
                 id: 3,
-                image: "tomasGostosa",
+                image: "placeholder",
                 name: "video3",
                 description: "description3",
                 duration: "0:17:46",
             },
             {
                 id: 4,
-                image: "tomasGostosa",
+                image: "placeholder",
                 name: "video4",
                 description: "description4",
                 duration: "0:18:52",
             },
             {
                 id: 5,
-                image: "tomasGostosa",
+                image: "placeholder",
                 name: "video5",
                 description: "description5",
                 duration: "2:00:00",

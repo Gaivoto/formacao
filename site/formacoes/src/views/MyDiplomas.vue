@@ -39,70 +39,70 @@ export default {
                 id: 1,
                 category: 'cat1',
                 date: "15-09-2022",
-                creator: "Ze Bitola",
+                creator: "Criador 1",
                 course: "Course 1"
             },
             {
                 id: 2,
                 category: 'cat2',
                 date: "11-02-2021",
-                creator: "Ze Bitola",
+                creator: "Criador 1",
                 course: "Course 2"
             },
             {
                 id: 3,
                 category: 'cat2',
                 date: "17-07-2022",
-                creator: "Ze Bitola",
+                creator: "Criador 1",
                 course: "Course 3"
             },
             {
                 id: 4,
                 category: 'cat14',
                 date: "05-12-2022",
-                creator: "Ze Bitola",
+                creator: "Criador 1",
                 course: "Course 4"
             },
             {
                 id: 5,
                 category: 'cat1',
                 date: "28-01-2022",
-                creator: "Ze Bitola",
+                creator: "Criador 1",
                 course: "Course 5"
             },
             {
                 id: 6,
                 category: 'cat1',
                 date: "22-08-2022",
-                creator: "Ze Bitola",
+                creator: "Criador 1",
                 course: "Course 6"
             },
             {
                 id: 7,
                 category: 'cat1',
                 date: "27-09-2022",
-                creator: "Ze Bitola",
+                creator: "Criador 1",
                 course: "Course 7"
             },
             {
                 id: 8,
                 category: 'cat1',
                 date: "12-11-2022",
-                creator: "Ze Bitola",
+                creator: "Criador 1",
                 course: "Course 8"
             },
             {
                 id: 9,
                 category: 'cat1',
                 date: "04-05-2022",
-                creator: "Ze Bitola",
+                creator: "Criador 1",
                 course: "Course 9"
             },
             {
                 id: 10,
                 category: 'cat1',
                 date: "16-10-2020",
-                creator: "Ze Bitola",
+                creator: "Criador 1",
                 course: "Course 10"
             },
         ]

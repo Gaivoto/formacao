@@ -53,8 +53,8 @@ export default {
             },
             {
                 id: 3,
-                name: "Retard",
-                username: "okbuddy",
+                name: "Nome",
+                username: "Username",
                 type: "Criador",
                 image: "bingus",
                 state: "Inativo"
@@ -69,16 +69,16 @@ export default {
             },
             {
                 id: 5,
-                name: "Caralho",
-                username: "ocrlh",
+                name: "Tiago",
+                username: "tiagotiggoa",
                 type: "Utilizador",
                 image: "bingus",
                 state: "Ativo"
             },
             {
                 id: 6,
-                name: "Yep Cock",
-                username: "andballs",
+                name: "Yep",
+                username: "yeppers",
                 type: "Utilizador",
                 image: "bingus",
                 state: "Ativo"

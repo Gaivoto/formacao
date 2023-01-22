@@ -47,7 +47,7 @@ export default {
                 progress: 20,
                 creator: {
                     image: "bingus",
-                    name: "Ze Bitola"
+                    name: "Criador 1"
                 }
             },
             {
@@ -62,7 +62,7 @@ export default {
                 progress: 90,
                 creator: {
                     image: "bingus",
-                    name: "Ze Bitola"
+                    name: "Criador 1"
                 }
             },
             {
@@ -77,7 +77,7 @@ export default {
                 progress: 48,
                 creator: {
                     image: "bingus",
-                    name: "Ze Bitola"
+                    name: "Criador 1"
                 }
             },
             {
@@ -92,7 +92,7 @@ export default {
                 progress: 66,
                 creator: {
                     image: "bingus",
-                    name: "Ze Bitola"
+                    name: "Criador 1"
                 }
             },
             {
@@ -107,7 +107,7 @@ export default {
                 progress: 48,
                 creator: {
                     image: "bingus",
-                    name: "Ze Bitola"
+                    name: "Criador 1"
                 }
             },
             {
@@ -122,7 +122,7 @@ export default {
                 progress: 48,
                 creator: {
                     image: "bingus",
-                    name: "Ze Bitola"
+                    name: "Criador 1"
                 }
             },
             {
@@ -137,7 +137,7 @@ export default {
                 progress: 48,
                 creator: {
                     image: "bingus",
-                    name: "Ze Bitola"
+                    name: "Criador 1"
                 }
             },
             {
@@ -152,7 +152,7 @@ export default {
                 progress: 48,
                 creator: {
                     image: "bingus",
-                    name: "Ze Bitola"
+                    name: "Criador 1"
                 }
             },
             {
@@ -167,7 +167,7 @@ export default {
                 progress: 48,
                 creator: {
                     image: "bingus",
-                    name: "Ze Bitola"
+                    name: "Criador 1"
                 }
             },
             {
@@ -182,7 +182,7 @@ export default {
                 progress: 48,
                 creator: {
                     image: "bingus",
-                    name: "Ze Bitola"
+                    name: "Criador 1"
                 }
             },
             {
@@ -197,7 +197,7 @@ export default {
                 progress: 48,
                 creator: {
                     image: "bingus",
-                    name: "Ze Bitola"
+                    name: "Criador 1"
                 }
             },
             {
@@ -212,7 +212,7 @@ export default {
                 progress: 48,
                 creator: {
                     image: "bingus",
-                    name: "Ze Bitola"
+                    name: "Criador 1"
                 }
             }
         ];

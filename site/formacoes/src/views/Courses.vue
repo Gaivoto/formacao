@@ -46,7 +46,7 @@ export default {
                 duration: "23h 12min",
                 creator: {
                     image: "bingus",
-                    name: "Ze Bitola"
+                    name: "Criador 1"
                 }
             },
             {
@@ -60,7 +60,7 @@ export default {
                 duration: "23h 12min",
                 creator: {
                     image: "bingus",
-                    name: "Ze Bitola"
+                    name: "Criador 1"
                 }
             },
             {
@@ -74,7 +74,7 @@ export default {
                 duration: "23h 12min",
                 creator: {
                     image: "bingus",
-                    name: "Ze Bitola"
+                    name: "Criador 1"
                 }
             },
             {
@@ -88,7 +88,7 @@ export default {
                 duration: "23h 12min",
                 creator: {
                     image: "bingus",
-                    name: "Ze Bitola"
+                    name: "Criador 1"
                 }
             },
             {
@@ -102,7 +102,7 @@ export default {
                 duration: "23h 12min",
                 creator: {
                     image: "bingus",
-                    name: "Ze Bitola"
+                    name: "Criador 1"
                 }
             },
             {
@@ -116,7 +116,7 @@ export default {
                 duration: "23h 12min",
                 creator: {
                     image: "bingus",
-                    name: "Ze Bitola"
+                    name: "Criador 1"
                 }
             },
             {
@@ -130,7 +130,7 @@ export default {
                 duration: "23h 12min",
                 creator: {
                     image: "bingus",
-                    name: "Ze Bitola"
+                    name: "Criador 1"
                 }
             },
             {
@@ -144,7 +144,7 @@ export default {
                 duration: "23h 12min",
                 creator: {
                     image: "bingus",
-                    name: "Ze Bitola"
+                    name: "Criador 1"
                 }
             },
             {
@@ -158,7 +158,7 @@ export default {
                 duration: "23h 12min",
                 creator: {
                     image: "bingus",
-                    name: "Ze Bitola"
+                    name: "Criador 1"
                 }
             },
             {
@@ -172,7 +172,7 @@ export default {
                 duration: "23h 12min",
                 creator: {
                     image: "bingus",
-                    name: "Ze Bitola"
+                    name: "Criador 1"
                 }
             },
             {
@@ -186,7 +186,7 @@ export default {
                 duration: "23h 12min",
                 creator: {
                     image: "bingus",
-                    name: "Ze Bitola"
+                    name: "Criador 1"
                 }
             },
             {
@@ -200,7 +200,7 @@ export default {
                 duration: "23h 12min",
                 creator: {
                     image: "bingus",
-                    name: "Ze Bitola"
+                    name: "Criador 1"
                 }
             }
         ];

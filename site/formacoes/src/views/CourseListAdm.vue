@@ -38,7 +38,7 @@ export default {
             {
                 id: 1,
                 name: "Course 1 Course 1 Course 1 Course 1 Course 1 Course 1 Course 1",
-                description: "desc 1 amongus",
+                description: "desc 1 desc",
                 image: "bingus",
                 price: 20,
                 category: "cat1",
@@ -69,7 +69,7 @@ export default {
             {
                 id: 2,
                 name: "Course 2",
-                description: "desc 2 amongus",
+                description: "desc 2 desc",
                 image: "bingus",
                 price: 12,
                 category: "cat13",
@@ -99,7 +99,7 @@ export default {
             {
                 id: 3,
                 name: "Course 3",
-                description: "desc 3 amongus",
+                description: "desc 3 desc",
                 image: "bingus",
                 price: 50,
                 category: "cat1",
@@ -130,7 +130,7 @@ export default {
             {
                 id: 4,
                 name: "Course 4",
-                description: "desc 4 amongus",
+                description: "desc 4 desc",
                 image: "bingus",
                 price: 80,
                 category: "cat12",
@@ -161,7 +161,7 @@ export default {
             {
                 id: 5,
                 name: "Course 5",
-                description: "desc 5 amongus",
+                description: "desc 5 desc",
                 image: "bingus",
                 price: 5,
                 category: "cat1",
@@ -192,7 +192,7 @@ export default {
             {
                 id: 6,
                 name: "Course 6",
-                description: "desc 6 amongus",
+                description: "desc 6 desc",
                 image: "bingus",
                 price: 25,
                 category: "cat1",
@@ -223,7 +223,7 @@ export default {
             {
                 id: 7,
                 name: "Course 7",
-                description: "desc 7 amongus",
+                description: "desc 7 desc",
                 image: "bingus",
                 price: 20,
                 category: "cat10",
@@ -254,7 +254,7 @@ export default {
             {
                 id: 8,
                 name: "Course 8",
-                description: "desc 8 amongus",
+                description: "desc 8 desc",
                 image: "bingus",
                 price: 10,
                 category: "cat1",
@@ -285,7 +285,7 @@ export default {
             {
                 id: 9,
                 name: "Course 9",
-                description: "desc 9 amongus",
+                description: "desc 9 desc",
                 image: "bingus",
                 price: 35,
                 category: "cat11",
@@ -316,7 +316,7 @@ export default {
             {
                 id: 10,
                 name: "Course 10",
-                description: "desc 10 amongus",
+                description: "desc 10 desc",
                 image: "bingus",
                 price: 15,
                 category: "cat1",
@@ -347,7 +347,7 @@ export default {
             {
                 id: 11,
                 name: "Course 11",
-                description: "desc 11 amongus",
+                description: "desc 11 desc",
                 image: "bingus",
                 price: 2,
                 category: "cat1",
@@ -378,7 +378,7 @@ export default {
             {
                 id: 12,
                 name: "Course 12",
-                description: "desc 12 amongus",
+                description: "desc 12 desc",
                 image: "bingus",
                 price: 120,
                 category: "cajsjd asdf asdf adf",

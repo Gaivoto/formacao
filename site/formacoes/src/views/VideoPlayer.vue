@@ -41,7 +41,7 @@ export default {
     created() {
         this.course = {
             id: 1,
-            image: "tomasGostosa",
+            image: "bingus",
             name: "nameCourse",
             creatorName: "seuku miyadora",
             description: "description2",
@@ -59,7 +59,7 @@ export default {
             },
             {
                 id: 2,
-                image: "tomasGostosa",
+                image: "bingus",
                 name:"Video2",
                 description: "video mostrando um rapaz meio humano meio notificação tendo uma conversa com a sua mae",
                 duration: "16 min",
@@ -80,7 +80,7 @@ export default {
             },
             {
                 id: 5,
-                image: "tomasGostosa",
+                image: "bingus",
                 name:"Video2",
                 description: "video mostrando um rapaz meio humano meio notificação tendo uma conversa com a sua mae",
                 duration: "16 min",
@@ -101,7 +101,7 @@ export default {
             },
             {
                 id: 8,
-                image: "tomasGostosa",
+                image: "bingus",
                 name:"Video2",
                 description:    "video mostrando um rapaz meio humano meio notificação tendo uma conversa com a sua mae",
                 duration: "16 min",
@@ -115,7 +115,7 @@ export default {
             },
             {
                 id: 8,
-                image: "tomasGostosa",
+                image: "bingus",
                 name:"Video2",
                 description:    "video mostrando um rapaz meio humano meio notificação tendo uma conversa com a sua mae",
                 duration: "16 min",
@@ -129,7 +129,7 @@ export default {
             },
             {
                 id: 8,
-                image: "tomasGostosa",
+                image: "bingus",
                 name:"Video2",
                 description:    "video mostrando um rapaz meio humano meio notificação tendo uma conversa com a sua mae",
                 duration: "16 min",

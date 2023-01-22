@@ -80,7 +80,7 @@ export default {
             {
                 id: 1,
                 name: "Bingus Amogus",
-                description: "monkey",
+                description: "desc",
                 subscriptions: 8123,
                 numberOfVideos: 5,
                 image: "bingus",
@@ -90,7 +90,7 @@ export default {
             {
                 id: 2,
                 name: "Bingus Amogus",
-                description: "monkey monkey monkey monkey monkey monkey monkey monkey monkey monkey monkey monkey monkey monkey monkey monkey monkey monkey monkey monkey monkey monkey monkey monkey monkey monkey monkey monkey monkey monkey monkey monkey monkey monkey monkey monkey monkey monkey monkey monkey monkey monkey monkey monkey monkey monkey monkey",
+                description: "desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc",
                 subscriptions: 123,
                 numberOfVideos: 2,
                 image: "bingus",
@@ -100,7 +100,7 @@ export default {
             {
                 id: 3,
                 name: "Bingus Amogus",
-                description: "monkey",
+                description: "desc",
                 subscriptions: 412,
                 numberOfVideos: 4,
                 image: "bingus",
@@ -110,7 +110,7 @@ export default {
             {
                 id: 4,
                 name: "Bingus Amogus",
-                description: "monkey",
+                description: "desc",
                 subscriptions: 1234,
                 numberOfVideos: 14,
                 image: "bingus",
@@ -120,7 +120,7 @@ export default {
             {
                 id: 5,
                 name: "Bingus Amogus",
-                description: "monkey",
+                description: "desc",
                 subscriptions: 0,
                 numberOfVideos: 1,
                 image: "bingus",
@@ -130,7 +130,7 @@ export default {
             {
                 id: 6,
                 name: "Bingus Amogus",
-                description: "monkey",
+                description: "desc",
                 subscriptions: 1234,
                 numberOfVideos: 14,
                 image: "bingus",
@@ -140,7 +140,7 @@ export default {
             {
                 id: 7,
                 name: "Bingus Amogus",
-                description: "monkey",
+                description: "desc",
                 subscriptions: 0,
                 numberOfVideos: 1,
                 image: "bingus",
