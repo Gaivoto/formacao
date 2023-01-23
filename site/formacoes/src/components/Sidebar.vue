@@ -1,37 +1,41 @@
 <template>
-  <aside :class="`${is_expanded && 'is-expanded'}`">
-    <div class="logo">
+  <aside :class="{ isExpanded: is_expanded }" >
+    <router-link class="logo" to="/home">
         <img src="../assets/vue.svg" alt="Vue">
-    </div>
+	</router-link>
 
     <div class="menu-toggle-wrap">
-        <button class="menu-toggle" @click="ToggleMenu">
+        <button class="menu-toggle" v-on:click="toggleMenu">
             <span class="material-icons">clear_all</span>
         </button>
     </div>
 
     <h3>Menu</h3>
     <div class="menu">
-        <router-link class="button" to="/">
+        <router-link class="button" to="/courses">
             <span class="material-icons">library_books</span>
             <span class="text">Cursos</span>
         </router-link>
-        <router-link class="button" to="/about">
+        <router-link class="button" :to="{ name: 'Conteúdo', params: { id: 1 } }">
             <span class="material-icons">home</span>
             <span class="text">Home</span>
         </router-link>
-        <router-link class="button" to="/team">
+        <router-link class="button" :to="{ name: 'Perfil do Utilizador', params: { id: 1 } }">
             <span class="material-icons">group</span>
             <span class="text">Team</span>
         </router-link>
-        <router-link class="button" to="/contact">
+        <router-link class="button" to="/courselist">
             <span class="material-icons">email</span>
             <span class="text">Contact Us</span>
+        </router-link>
+        <router-link class="button" to="/users">
+            <span class="material-icons">email</span>
+            <span class="text">Lista de Utilizadores</span>
         </router-link>
     </div>
 
     <div class="flex"></div>
-		
+		 
 	<div class="menu">
 		<router-link to="/settings" class="button">
 			<span class="material-icons">settings</span>
@@ -41,13 +45,19 @@
   </aside>
 </template>
 
-<script setup>
-import { ref }  from 'vue'
-
-const is_expanded = ref(false)
-
-const ToggleMenu = () => {
-    is_expanded.value = !is_expanded.value
+<script>
+export default {
+	data() {
+		return {
+			is_expanded: false
+		}
+	},
+	methods: {
+		toggleMenu() {
+			this.is_expanded = !this.is_expanded;
+			this.$emit("toggleSidebar");
+		}
+	}
 }
 </script>
 
@@ -55,21 +65,23 @@ const ToggleMenu = () => {
 aside {
 	display: flex;
 	flex-direction: column;
-	background-color: var(--dark);
-	color: var(--light);
 	width: calc(2rem + 32px);
 	overflow: hidden;
 	min-height: 100vh;
-	padding: 1rem;
-	transition: 0.2s ease-in-out;
+	padding: 32px 1rem 1rem 1rem;
+	transition: 0.3s ease-in-out;
 	margin: 0;
+	min-width: 64px;
+    box-shadow: rgba(20, 14, 49, 0.6) 0px 2px 10px 4px;
+	
+	background: var(--mobalytics-susge);
 
 	.flex {
 		flex: 1 1 0%;
 	}
 
 	.logo {
-		margin-bottom: 1rem;
+		margin-bottom: 24px;
 		img {
 			width: 2rem;
 		}
@@ -80,16 +92,17 @@ aside {
 		justify-content: flex-end;
 		position: relative;
 		top: 0;
-		transition: 0.2s ease-in-out;
+		transition: 0.3s ease-in-out;
 
 		.menu-toggle {
 			padding: 0;
-			transition: 0.2s ease-in-out;
+			transition: 0.3s ease-in-out;
+			height: 28px;
 
 			.material-icons {
 				font-size: 2rem;
 				color: var(--light);
-				transition: 0.2s ease-out;
+				transition: 0.3s ease-out;
 			}
 			
 			&:hover {
@@ -99,6 +112,14 @@ aside {
 				}
 			}
 		}
+	}
+
+	button {
+		cursor: pointer;
+		appearance: none;
+		border: none;
+		outline: none;
+		background: none;
 	}
 
 	h3, .button .text {
@@ -121,14 +142,14 @@ aside {
 			display: flex;
 			align-items: center;
 			text-decoration: none;
-			transition: 0.2s ease-in-out;
+			transition: 0.3s ease-in-out;
 			padding: 0.5rem 1rem;
 			height: 48px;
 
 			.material-icons {
 				font-size: 2rem;
 				color: var(--light);
-				transition: 0.2s ease-in-out;
+				transition: 0.3s ease-in-out;
 			}
 
 			.text {
@@ -137,14 +158,14 @@ aside {
 			}
 
 			&:hover {
-				background-color: var(--dark-alt);
+				background-color: var(--mobalytics-back);
 				.material-icons, .text {
 					color: var(--primary);
 				}
 			}
 
 			&.router-link-exact-active {
-				background-color: var(--dark-alt);
+				background-color: var(--mobalytics-back);
 				border-right: 5px solid var(--primary);
 				.material-icons, .text {
 					color: var(--primary);
@@ -163,8 +184,9 @@ aside {
 		}
 	}
 
-	&.is-expanded {
+	&.isExpanded {
 		width: var(--sidebar-width);
+		min-width: 300px;
 
 		.menu-toggle-wrap {
 			top: -3rem;
@@ -191,11 +213,6 @@ aside {
 		.footer {
 			opacity: 0;
 		}
-	}
-	
-	@media (max-width: 1024px) {
-		position: absolute;
-		z-index: 99;
 	}
 }
 </style>
