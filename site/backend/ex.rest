@@ -1,0 +1,75 @@
+
+
+POST {{hostname}}/api/auth/login
+content-type: application/json  
+
+{     
+    "username": "dre",     
+    "password": "123" 
+}
+
+###
+
+GET {{hostname}}/api/users/1
+authorization: {{apiKey}}
+refreshtoken: {{refreshKey}}
+
+###
+
+GET {{hostname}}/api/cursos/1
+authorization: {{apiKey}}
+refreshtoken: {{refreshKey}}
+
+###
+
+GET {{hostname}}/api/cursos/
+authorization: {{apiKey}}
+refreshtoken: {{refreshKey}}
+content-type: application/json
+
+###
+
+POST {{hostname}}/api/cursos/
+authorization: {{apiKey}}
+refreshtoken: {{refreshKey}}
+content-type: application/json
+
+{
+    "name": "Curso do Teste", 
+    "category": "Gaming", 
+    "description": "teste do insert", 
+    "date": "2023-01-07 00:00:00.000", 
+    "state": "Ativo", 
+    "price": 15, 
+    "image": "./assets/fortnite", 
+    "id_creator": 4 
+}
+
+###
+
+PUT {{hostname}}/api/cursos/
+authorization: {{apiKey}}
+refreshtoken: {{refreshKey}}
+content-type: application/json
+
+{
+    "id": "0236fe39-c92b-4b60-bf20-b3fa6586d558", 
+    "state": "Inativo"
+}
+
+###
+
+PUT {{hostname}}/api/cursos/edit/
+authorization: {{apiKey}}
+refreshtoken: {{refreshKey}}
+content-type: application/json
+
+{
+    "id": "0236fe39-c92b-4b60-bf20-b3fa6586d558", 
+    "name": "a",
+    "category": "b",
+    "description": "c",
+    "price": 999,
+    "image": "./assets/d"
+}
+

@@ -1,0 +1,12 @@
+{
+    "rest-client.environmentVariables": {
+
+        "$shared": {
+            "apiKey": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQiLCJ1c2VybmFtZSI6ImRyZSIsInR5cGUiOiJhZG1pbiIsImlhdCI6MTY3Mzk3MTQ0MywiZXhwIjoxNjczOTgyMjQzfQ.AOVbAbdTY3K6jXHIwqLwMBxUNa787M5n3zRXwEX92Xw",
+            "refreshKey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQiLCJ1c2VybmFtZSI6ImRyZSIsInR5cGUiOiJhZG1pbiIsImlhdCI6MTY3Mzk3MTQ0M30.T-chbangIm1o3ZC7lXttD9R-0wG1TZWrjKAVnFwKRN8",
+        },
+        "Local Env": {
+            "hostname": "http://localhost:3000"
+        }
+    }
+}
