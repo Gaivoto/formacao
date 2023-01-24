@@ -30,7 +30,7 @@ refreshtoken: {{refreshKey}}
 content-type: application/json
 
 {
-    "name": "Curso do Teste 4", 
+    "name": "Curso do Teste 5", 
     "category": "Gaming", 
     "description": "teste do insert", 
     "date": "2023-01-07 00:00:00.000", 
