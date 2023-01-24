@@ -125,6 +125,21 @@ async function isNameTaken(name) {
     });
 }
 
+async function isIDTaken(id) {
+    return new Promise((resolve, reject) => {
+        const slct = `SELECT * FROM [Course] WHERE [id] = '${id}'`;
+        pool.query(slct, (err, res) => {
+            if(!err) {
+                resolve(res.recordset);
+            } else {
+                reject(err.message);
+            }
+        });
+    });
+}
+
+
+
 
 module.exports = {
     getCurso: getCurso,
@@ -135,4 +150,5 @@ module.exports = {
     getUserCourses: getUserCourses,
     isCourseFromUser: isCourseFromUser,
     isNameTaken: isNameTaken,
+    isIDTaken: isIDTaken,
 }
