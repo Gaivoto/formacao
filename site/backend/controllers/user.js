@@ -20,7 +20,7 @@ async function updateUser(req, res) {
 
 async function createUser(req, res) {
     serUser.createUser(req.body).then(value => {
-        res.status(value.code).send({user: value.user, access_token: value.access_token, refresh_token: value.refresh_token});
+        res.status(value.code).send(value.info);
     })
     .catch(error => {
         res.status(error.code).send(error.error);
@@ -35,16 +35,6 @@ async function changeUserState(req, res) {
         res.status(error.code).send(error.error);
     });
 }
-
-
-/*async function createUser(req, res){
-    serUser.createUser({access_token: req.headers['authorization'].split(' ')[1], refresh_token: req.headers.refreshtoken}, req.body).then(value => {
-        res.status(value.code).send(value.info);
-    })
-    .catch(error => {
-        res.status(error.code).send(error.message);
-    });
-}*/
 
 module.exports = {
     createUser: createUser,

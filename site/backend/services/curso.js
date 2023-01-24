@@ -178,7 +178,6 @@ async function updateCurso(tokens, id, body) {
                             reject({ code: 403, error: {message: "Curso não pertence a este user." }});
                         } else {
 
-                            let id = id;
                             let name = body.name;
                             let category = body.category;
                             let description = body.description;

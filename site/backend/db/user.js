@@ -16,7 +16,7 @@ sql.connect(config, function (err) {
 
 const pool = new sql.Request();
 
-async function getUser(id) {
+async function selectUserById(id) {
     return new Promise((resolve, reject) => {
         if (isNaN(Number(id))) {
             res.send(err);
@@ -86,8 +86,7 @@ async function changeUserState(state, id) {
 }
 
 module.exports = {
-    //createUser: createUser,
-    getUser: getUser,
+    selectUserById: selectUserById,
     updateUser: updateUser,
     createUser: createUser,
     selectUserByUsername: selectUserByUsername,
