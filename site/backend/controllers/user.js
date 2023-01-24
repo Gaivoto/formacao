@@ -51,7 +51,6 @@ module.exports = {
     getUser: getUser,
     updateUser: updateUser,
     changeUserState: changeUserState,
-    profilePage: profilePage,
     getAllUsers: getAllUsers
     
 }

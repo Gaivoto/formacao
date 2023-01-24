@@ -14,6 +14,4 @@ router.post("/", cntrUser.createUser);
 
 router.put("/adm/:id", cntrUser.changeUserState);
 
-router.get("/profile/:id", cntrUser.profilePage);
-
 module.exports = router
