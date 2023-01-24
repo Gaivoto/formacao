@@ -8,12 +8,6 @@ content-type: application/json
     "password": "123" 
 }
 
-### USERS
-
-GET {{hostname}}/api/users/1
-authorization: {{apiKey}}
-refreshtoken: {{refreshKey}}
-
 ### CURSOS
 
 GET {{hostname}}/api/cursos/1
@@ -39,19 +33,21 @@ content-type: application/json
     "password": "123"
 }
 
-GET http://localhost:3000/api/courses/1
+###
+
+DELETE http://localhost:3000/api/cursos/0236fe39-c92b-4b60-bf20-b3fa6586d558
 content-type: application/json
 
 {
     "username": "dre",
     "password": "123",
     "id": "0236fe39-c92b-4b60-bf20-b3fa6586d558", 
-    "state": "Inativo"
+    "state": "Ativo"
 }
 
 ###
 
-PUT {{hostname}}/api/cursos/edit/
+PUT {{hostname}}/api/cursos/0236fe39-c92b-4b60-bf20-b3fa6586d558/
 authorization: {{apiKey}}
 refreshtoken: {{refreshKey}}
 content-type: application/json

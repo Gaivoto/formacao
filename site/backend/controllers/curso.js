@@ -1,7 +1,7 @@
 const serCurs = require('../services/curso.js');
 
 async function getCurso(req, res){
-    serCurs.getCurso({access_token: req.headers['authorization'].split(' ')[1], refresh_token: req.headers.refreshtoken}, req.params.id).then(value => {
+    serCurs.getCurso(req.headers, req.params.id).then(value => {
         res.status(value.code).send(value.info);
     })
     .catch(error => {
@@ -27,8 +27,8 @@ async function createCurso(req, res){
     });
 }
 
-async function removeCurso(req, res){
-    serCurs.removeCurso({access_token: req.headers['authorization'].split(' ')[1], refresh_token: req.headers.refreshtoken}, req.params.id, req.body).then(value => {
+async function updateStateCursoUser(req, res){
+    serCurs.updateStateCursoUser({access_token: req.headers['authorization'].split(' ')[1], refresh_token: req.headers.refreshtoken}, req.params.id, req.body).then(value => {
         res.status(value.code).send(value.info);
     })
     .catch(error => {
@@ -49,6 +49,6 @@ module.exports = {
     getCurso: getCurso,
     getAllCursos: getAllCursos,
     createCurso: createCurso,
-    removeCurso: removeCurso,
+    updateStateCursoUser: updateStateCursoUser,
     updateCurso: updateCurso,
 }

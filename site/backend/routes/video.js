@@ -10,8 +10,8 @@ router.get("/", cntrVide.getAllVideos);
 
 router.post("/", cntrVide.createVideo);
 
-router.put("/", cntrVide.removeVideo);
+router.delete("/:id", cntrVide.removeVideo);
 
-router.put("/edit/", cntrVide.updateVideo);
+router.put("/:id", cntrVide.updateVideo);
 
 module.exports = router

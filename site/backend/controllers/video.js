@@ -1,7 +1,7 @@
 const serVide = require('../services/video.js');
 
 async function getVideo(req, res){
-    serVide.getVideo({access_token: req.headers['authorization'].split(' ')[1], refresh_token: req.headers.refreshtoken}, req.params.id).then(value => {
+    serVide.getVideo(req.headers).then(value => {
         res.status(value.code).send(value.info);
     })
     .catch(error => {
