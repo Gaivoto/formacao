@@ -2,6 +2,7 @@ const utils = require('../utils/index.js');
 const uuid = require('uuid');
 
 const dbVideo = require('../db/video.js');
+const dbUser = require('../db/user.js');
 
 async function getVideo(tokens, id){
     return new Promise((resolve, reject) => {
@@ -96,33 +97,29 @@ async function createVideo(tokens, body) {
                     reject({ code: 403, error: {message: "Esse nome já está a ser utilizado." }});
                 } else {
 
-                    do {
-                        
-                        id = uuid.v4();
-                        existe = false;
+                    dbUser.getAllUsers().then(value3 => {
+    
+                        do {
+                            id = uuid.v4();
+                            existe = false;
+        
+                            value3.forEach(u => {
+                                if(u.id == id) existe = true;
+                            });
+                        } while(existe)
+    
+                        dbVideo.createVideo(id, body).then(value => {
 
-                        dbVideo.isIDTaken(id).then(value3 => {
-                            
-                            if(value3.length > 0) {
-                                existe = true;
-                            }
-
+                            resolve({ code: 200, info: info });
                         })
                         .catch(error => {
+                            console.log(error);
                             reject({ code: 400, error: {message: "Algo correu mal com a query." }});
                         });
-
-                    } while(existe)
-
-                    //FALTA METER FUNCAO PARA VER QUAL A POSITION DO VIDEO
-
-                    dbVideo.createVideo(id, body).then(value => {
-
-                        resolve({ code: 200, info: info });
                     })
                     .catch(error => {
                         console.log(error);
-                        reject({ code: 400, error: {message: "Algo correu mal com a query." }});
+                        reject({ code: 400, error: { message: "Algo correu mal com a query." }});
                     });
 
                 }

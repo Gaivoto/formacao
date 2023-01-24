@@ -2,6 +2,7 @@ const utils = require('../utils/index.js');
 const uuid = require('uuid');
 
 const dbCurs = require('../db/curso.js');
+const dbUser = require('../db/user.js');
 
 async function getCurso(headers, id) {
     return new Promise((resolve, reject) => {
@@ -122,31 +123,30 @@ async function createCurso(tokens, body) {
                     reject({ code: 400, error: {message: "Já existe um curso com este nome." }});
                 } else {
 
-                    do {
-                        
-                        id = uuid.v4();
-                        existe = false;
-
-                        dbCurs.isIDTaken(id).then(value3 => {
-                            
-                            if(value3.length > 0) {
-                                existe = true;
-                            }
-
+                    dbUser.getAllUsers().then(value3 => {
+    
+                        do {
+                            id = uuid.v4();
+                            existe = false;
+        
+                            value3.forEach(u => {
+                                if(u.id == id) existe = true;
+                            });
+                        } while(existe)
+    
+                        dbCurs.createCurso(id, body).then(value => {
+                            resolve({ code: 201, info: info });
                         })
                         .catch(error => {
+                            console.log(error);
                             reject({ code: 400, error: {message: "Algo correu mal com a query." }});
                         });
-
-                    } while(existe)
-                    
-                    dbCurs.createCurso(id, body).then(value => {
-                        resolve({ code: 201, info: info });
                     })
                     .catch(error => {
                         console.log(error);
-                        reject({ code: 400, error: {message: "Algo correu mal com a query." }});
+                        reject({ code: 400, error: { message: "Algo correu mal com a query." }});
                     });
+                    
                 }
             })
             .catch(error => {
