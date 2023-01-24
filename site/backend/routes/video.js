@@ -10,7 +10,9 @@ router.get("/", cntrVide.getAllVideos);
 
 router.post("/", cntrVide.createVideo);
 
-router.delete("/:id", cntrVide.removeVideo);
+router.put("/user/:id", cntrVide.updateStateVideoUser);
+
+router.put("/adm/:id", cntrVide.updateStateVideoAdm);
 
 router.put("/:id", cntrVide.updateVideo);
 

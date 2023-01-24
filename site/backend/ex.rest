@@ -8,7 +8,8 @@ content-type: application/json
     "password": "123" 
 }
 
-### CURSOS
+### VIDEOS
+
 
 GET {{hostname}}/api/cursos/1
 authorization: {{apiKey}}
@@ -29,25 +30,43 @@ refreshtoken: {{refreshKey}}
 content-type: application/json
 
 {
-    "username": "dre",
-    "password": "123"
+    "name": "Curso do Teste", 
+    "category": "Gaming", 
+    "description": "teste do insert", 
+    "date": "2023-01-07 00:00:00.000", 
+    "state": "Ativo", 
+    "price": 15, 
+    "image": "./assets/fortnite", 
+    "id_creator": 4 
 }
 
 ###
 
-DELETE http://localhost:3000/api/cursos/0236fe39-c92b-4b60-bf20-b3fa6586d558
+PUT {{hostname}}/api/cursos/user/0236fe39-c92b-4b60-bf20-b3fa6586d558
+authorization: {{apiKey}}
+refreshtoken: {{refreshKey}}
 content-type: application/json
 
 {
-    "username": "dre",
-    "password": "123",
     "id": "0236fe39-c92b-4b60-bf20-b3fa6586d558", 
-    "state": "Ativo"
+    "state": "Inativo"
 }
 
 ###
 
-PUT {{hostname}}/api/cursos/0236fe39-c92b-4b60-bf20-b3fa6586d558/
+PUT {{hostname}}/api/cursos/adm/0236fe39-c92b-4b60-bf20-b3fa6586d558
+authorization: {{apiKey}}
+refreshtoken: {{refreshKey}}
+content-type: application/json
+
+{
+    "id": "0236fe39-c92b-4b60-bf20-b3fa6586d558", 
+    "state": "Inativo"
+}
+
+###
+
+PUT {{hostname}}/api/cursos/edit/
 authorization: {{apiKey}}
 refreshtoken: {{refreshKey}}
 content-type: application/json
@@ -60,6 +79,8 @@ content-type: application/json
     "price": 999,
     "image": "./assets/d"
 }
+
+
 
 ### VIDEOS
 

@@ -73,7 +73,7 @@ async function getAllCursos(headers) {
             utils.validateToken(access_token, refresh_token).then(value => {
                 let info = value;
                 dbCurs.getAllCursos().then(value2 => {
-                    console.log("VALUEEE2222", value2);
+                    
                     let resp = {
                         courses: value2,
                         access_token: info.access_token
@@ -93,7 +93,7 @@ async function getAllCursos(headers) {
 
         } else {
             dbCurs.getAllCursos().then(value => {
-                console.log("VALUEEE", value);
+                
                 let resp = {
                     courses: value
                 }
@@ -138,7 +138,7 @@ async function createCurso(tokens, body) {
                             reject({ code: 400, error: {message: "Algo correu mal com a query." }});
                         });
 
-                    } while(existe === true)
+                    } while(existe)
                     
                     dbCurs.createCurso(id, body).then(value => {
                         resolve({ code: 201, info: info });
@@ -163,9 +163,9 @@ async function createCurso(tokens, body) {
 
 async function updateStateCursoUser(tokens, id, body) {
     return new Promise((resolve, reject) => {
+        
         utils.validateToken(tokens.access_token, tokens.refresh_token).then(value => {
             let info = value;
-            console.log("INFOOOOOO ", info);
 
             dbCurs.getCurso(id).then(value1 => {
                 
@@ -212,6 +212,50 @@ async function updateStateCursoUser(tokens, id, body) {
     });
 }
 
+async function updateStateCursoAdm(tokens, id, body) {
+    return new Promise((resolve, reject) => {
+        
+        utils.validateToken(tokens.access_token, tokens.refresh_token).then(value => {
+            let info = value;
+
+            dbCurs.getCurso(id).then(value1 => {
+                
+                if(value1.length <= 0) {
+                    reject({ code: 404, error: {message: "Curso não existe." }});
+                } else {
+
+                    if(info.user.type !== "admin") {
+                        reject({ code: 403, error: {message: "Não possui permissão para esta operação." }});
+                    } else {
+
+                        if(body.state === "Ativo" || body.state === "Inativo" || body.state === "Pendente" || body.state === "Rejeitado") {
+
+                            dbCurs.updateStateCurso(body).then(value3 => {
+                                resolve({ code: 200, info: info });
+                            })
+                            .catch(error => {
+                                console.log(error);
+                                reject({ code: 400, error: {message: "Algo correu mal com a query." }});
+                            });
+
+                        } else {
+                            reject({ code: 401, error: {message: "Current state invalid" }});
+                        }   
+                    }
+                }
+            })
+            .catch(error => {
+                console.log(error);
+                reject({ code: 400, error: {message: "Algo correu mal com a query." }});
+            });
+        })
+        .catch(error => {
+            console.log(error);
+            reject({ code: 401, error: {message: "Token inválido." }})
+        });
+    });
+}
+
 async function updateCurso(tokens, id, body) {
     return new Promise((resolve, reject) => {
         utils.validateToken(tokens.access_token, tokens.refresh_token).then(value => {
@@ -229,7 +273,6 @@ async function updateCurso(tokens, id, body) {
                             reject({ code: 403, error: {message: "Curso não pertence a este user." }});
                         } else {
 
-                            let id = id;
                             let name = body.name;
                             let category = body.category;
                             let description = body.description;
@@ -274,5 +317,6 @@ module.exports = {
     getAllCursos: getAllCursos,
     createCurso: createCurso,
     updateStateCursoUser: updateStateCursoUser,
+    updateStateCursoAdm: updateStateCursoAdm,
     updateCurso: updateCurso,
 }

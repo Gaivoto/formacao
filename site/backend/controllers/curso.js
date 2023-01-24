@@ -36,6 +36,15 @@ async function updateStateCursoUser(req, res){
     });
 }
 
+async function updateStateCursoAdm(req, res){
+    serCurs.updateStateCursoAdm({access_token: req.headers['authorization'].split(' ')[1], refresh_token: req.headers.refreshtoken}, req.params.id, req.body).then(value => {
+        res.status(value.code).send(value.info);
+    })
+    .catch(error => {
+        res.status(error.code).send(error.error);
+    });
+}
+
 async function updateCurso(req, res){
     serCurs.updateCurso({access_token: req.headers['authorization'].split(' ')[1], refresh_token: req.headers.refreshtoken}, req.params.id, req.body).then(value => {
         res.status(value.code).send(value.info);
@@ -50,5 +59,6 @@ module.exports = {
     getAllCursos: getAllCursos,
     createCurso: createCurso,
     updateStateCursoUser: updateStateCursoUser,
+    updateStateCursoAdm: updateStateCursoAdm,
     updateCurso: updateCurso,
 }
