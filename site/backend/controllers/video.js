@@ -1,7 +1,7 @@
 const serVide = require('../services/video.js');
 
 async function getVideo(req, res){
-    serVide.getVideo({access_token: req.headers['authorization'].split(' ')[1], refresh_token: req.headers.refreshtoken}, req.params.id).then(value => {
+    serVide.getVideo(req.headers, req.params.id).then(value => {
         res.status(value.code).send(value.info);
     })
     .catch(error => {
@@ -27,7 +27,16 @@ async function createVideo(req, res){
     });
 }
 
-async function removeVideo(req, res){
+async function updateStateVideoUser(req, res){
+    serVide.removeVideo({access_token: req.headers['authorization'].split(' ')[1], refresh_token: req.headers.refreshtoken}, req.body).then(value => {
+        res.status(value.code).send(value.info);
+    })
+    .catch(error => {
+        res.status(error.code).send(error.error);
+    });
+}
+
+async function updateStateVideoAdm(req, res){
     serVide.removeVideo({access_token: req.headers['authorization'].split(' ')[1], refresh_token: req.headers.refreshtoken}, req.body).then(value => {
         res.status(value.code).send(value.info);
     })
@@ -49,6 +58,7 @@ module.exports = {
     getVideo: getVideo,
     getAllVideos: getAllVideos,
     createVideo: createVideo,
-    removeVideo: removeVideo,
+    updateStateVideoUser: updateStateVideoUser,
+    updateStateVideoAdm: updateStateVideoAdm,
     updateVideo: updateVideo,
 }

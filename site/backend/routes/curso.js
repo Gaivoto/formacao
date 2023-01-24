@@ -10,9 +10,10 @@ router.get("/", cntrCurs.getAllCursos);
 
 router.post("/", cntrCurs.createCurso);
 
-router.delete("/:id", cntrCurs.removeCurso);
+router.put("/user/:id", cntrCurs.updateStateCursoUser);
+
+router.put("/adm/:id", cntrCurs.updateStateCursoAdm);
 
 router.put("/:id", cntrCurs.updateCurso);
-
 
 module.exports = router

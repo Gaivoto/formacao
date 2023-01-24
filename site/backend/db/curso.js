@@ -56,7 +56,7 @@ async function createCurso(id, body) {
     });
 }
 
-async function removeCurso(body) {
+async function updateStateCurso(body) {
     return new Promise((resolve, reject) => {
 
         let slct = `UPDATE Course SET [state] = '${body.state}' WHERE [id] = '${body.id}'`;
@@ -145,7 +145,7 @@ module.exports = {
     getCurso: getCurso,
     getAllCursos: getAllCursos,
     createCurso: createCurso,
-    removeCurso: removeCurso,
+    updateStateCurso: updateStateCurso,
     updateCurso: updateCurso,
     getUserCourses: getUserCourses,
     isCourseFromUser: isCourseFromUser,

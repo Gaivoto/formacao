@@ -3,28 +3,58 @@ const uuid = require('uuid');
 
 const dbCurs = require('../db/curso.js');
 
-async function getCurso(tokens, id) {
+async function getCurso(headers, id) {
     return new Promise((resolve, reject) => {
-        utils.validateToken(tokens.access_token, tokens.refresh_token).then(value1 => {
-            let info = value1;
-            dbCurs.getCurso(id).then(value2 => {
+        
+        let access_token;
+        let refresh_token;
+
+        if(headers['authorization']) {
+            access_token = headers['authorization'].split(' ')[1];
+            refresh_token = headers.refreshtoken;
+        }
+
+        if(access_token && refresh_token) {
+
+            utils.validateToken(access_token, refresh_token).then(value1 => {
+
+                let info = value1;
+                dbCurs.getCurso(id).then(value2 => {
+    
+                    if(value2.length <= 0) {
+                        reject({ code: 404, error: {message: "Curso não existe." }});
+                    } else {
+                        let resp = {
+                            courses: value2,
+                            access_token: info.access_token
+                        }
+                        resolve({ code: 200, info: resp });
+                    }
+                })
+                .catch(error => {
+                    console.log(error);
+                    reject({ code: 400, error: {message: "Algo correu mal com a query."}});
+                });
+            })
+            .catch(error => {
+                console.log(error);
+                reject({ code: 401, error: {message: "Token inválido."}})
+            });
+
+        } else {
+
+            dbCurs.getCurso(id).then(value3 => {
 
                 let resp = {
-                    courses: value2,
-                    access_token: info.access_token
+                    courses: value3
                 }
-
                 resolve({ code: 200, info: resp });
             })
             .catch(error => {
                 console.log(error);
                 reject({ code: 400, error: {message: "Algo correu mal com a query."}});
             });
-        })
-        .catch(error => {
-            console.log(error);
-            reject({ code: 401, error: {message: "Token inválido."}})
-        });
+        } 
     });
 }
 
@@ -63,7 +93,7 @@ async function getAllCursos(headers) {
 
         } else {
             dbCurs.getAllCursos().then(value => {
-
+                
                 let resp = {
                     courses: value
                 }
@@ -71,6 +101,7 @@ async function getAllCursos(headers) {
                 resolve({ code: 200, info: resp });
             })
             .catch(error => {
+                console.log(error);
                 reject({ code: 400, error: {message: "Algo correu mal com a query."}});
             });
         }
@@ -107,7 +138,7 @@ async function createCurso(tokens, body) {
                             reject({ code: 400, error: {message: "Algo correu mal com a query." }});
                         });
 
-                    } while(existe === true)
+                    } while(existe)
                     
                     dbCurs.createCurso(id, body).then(value => {
                         resolve({ code: 201, info: info });
@@ -130,8 +161,9 @@ async function createCurso(tokens, body) {
     });
 }
 
-async function removeCurso(tokens, id, body) {
+async function updateStateCursoUser(tokens, id, body) {
     return new Promise((resolve, reject) => {
+        
         utils.validateToken(tokens.access_token, tokens.refresh_token).then(value => {
             let info = value;
 
@@ -147,9 +179,9 @@ async function removeCurso(tokens, id, body) {
                             reject({ code: 403, error: {message: "Curso não pertence a este user." }});
                         } else {
 
-                            if(body.state === "Ativo" || body.state === "Inativo" || body.state === "Pendente") {
+                            if(body.state === "Ativo" || body.state === "Inativo") {
 
-                                dbCurs.removeCurso(body).then(value3 => {
+                                dbCurs.updateStateCursoUser(body).then(value3 => {
                                     resolve({ code: 200, info: info });
                                 })
                                 .catch(error => {
@@ -166,6 +198,50 @@ async function removeCurso(tokens, id, body) {
                         console.log(error);
                         reject({ code: 400, error: {message: "Algo correu mal com a query." }});
                     });
+                }
+            })
+            .catch(error => {
+                console.log(error);
+                reject({ code: 400, error: {message: "Algo correu mal com a query." }});
+            });
+        })
+        .catch(error => {
+            console.log(error);
+            reject({ code: 401, error: {message: "Token inválido." }})
+        });
+    });
+}
+
+async function updateStateCursoAdm(tokens, id, body) {
+    return new Promise((resolve, reject) => {
+        
+        utils.validateToken(tokens.access_token, tokens.refresh_token).then(value => {
+            let info = value;
+
+            dbCurs.getCurso(id).then(value1 => {
+                
+                if(value1.length <= 0) {
+                    reject({ code: 404, error: {message: "Curso não existe." }});
+                } else {
+
+                    if(info.user.type !== "admin") {
+                        reject({ code: 403, error: {message: "Não possui permissão para esta operação." }});
+                    } else {
+
+                        if(body.state === "Ativo" || body.state === "Inativo" || body.state === "Pendente" || body.state === "Rejeitado") {
+
+                            dbCurs.updateStateCurso(body).then(value3 => {
+                                resolve({ code: 200, info: info });
+                            })
+                            .catch(error => {
+                                console.log(error);
+                                reject({ code: 400, error: {message: "Algo correu mal com a query." }});
+                            });
+
+                        } else {
+                            reject({ code: 401, error: {message: "Current state invalid" }});
+                        }   
+                    }
                 }
             })
             .catch(error => {
@@ -240,6 +316,7 @@ module.exports = {
     getCurso: getCurso,
     getAllCursos: getAllCursos,
     createCurso: createCurso,
-    removeCurso: removeCurso,
+    updateStateCursoUser: updateStateCursoUser,
+    updateStateCursoAdm: updateStateCursoAdm,
     updateCurso: updateCurso,
 }

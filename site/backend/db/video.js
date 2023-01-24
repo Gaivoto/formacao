@@ -82,7 +82,7 @@ async function isIDTaken(id) {
     });
 }
 
-async function removeVideo(body) {
+async function updateStateVideo(body) {
     return new Promise((resolve, reject) => {
 
         let slct = `UPDATE Video SET [state] = '${body.state}' WHERE [id] = '${body.id}'`;
@@ -144,7 +144,7 @@ module.exports = {
     createVideo: createVideo,
     isTitleTaken: isTitleTaken,
     isIDTaken: isIDTaken,
-    removeVideo: removeVideo,
+    updateStateVideo: updateStateVideo,
     isVideoFromCourse: isVideoFromCourse,
     updateVideo: updateVideo,
     isCourseFromUser: isCourseFromUser,
