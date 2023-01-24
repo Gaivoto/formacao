@@ -115,12 +115,31 @@ async function createUser(user) {
     return new Promise((resolve, reject) => {
         dbUser.selectUserByUsername(user.username).then(value => {
             if (value.length == 0) {
-                let idGen = uuid.v4();
-                dbUser.createUser(idGen, user).then(value => {
-                    resolve({ code: 201, info: { message: "User registado com sucesso."} });
-                }).catch(error => {
+
+                dbUser.getAllUsers().then(value2 => {
+                    
+                    let id;
+                    let existe;
+
+                    do {
+                        id = uuid.v4();
+                        existe = false;
+    
+                        value2.forEach(u => {
+                            if(u.id == id) existe = true;
+                        });
+                    } while(existe)
+
+                    dbUser.createUser(id, user).then(value => {
+                        resolve({ code: 201, info: { message: "User registado com sucesso."} });
+                    }).catch(error => {
+                        console.log(error);
+                        reject({ code: 400, error: { message: "Algo correu mal com a query de insert." }});
+                    });
+                })
+                .catch(error => {
                     console.log(error);
-                    reject({ code: 400, error: { message: "Algo correu mal com a query de insert." }});
+                    reject({ code: 400, error: { message: "Algo correu mal com a query." }});
                 });
             } else {
                 reject({ code: 400, error: { message: 'Já tem um user com esse username.' }});
