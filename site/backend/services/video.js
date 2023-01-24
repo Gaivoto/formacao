@@ -103,7 +103,7 @@ async function createVideo(tokens, body) {
 
                         dbVideo.isIDTaken(id).then(value3 => {
                             
-                            if(value3.length >= 0) {
+                            if(value3.length > 0) {
                                 existe = true;
                             }
 
@@ -112,7 +112,7 @@ async function createVideo(tokens, body) {
                             reject({ code: 400, error: {message: "Algo correu mal com a query." }});
                         });
 
-                    } while(existe === true)
+                    } while(existe)
 
                     //FALTA METER FUNCAO PARA VER QUAL A POSITION DO VIDEO
 

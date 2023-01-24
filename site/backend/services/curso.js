@@ -129,7 +129,7 @@ async function createCurso(tokens, body) {
 
                         dbCurs.isIDTaken(id).then(value3 => {
                             
-                            if(value3.length >= 0) {
+                            if(value3.length > 0) {
                                 existe = true;
                             }
 

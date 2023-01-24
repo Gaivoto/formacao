@@ -16,6 +16,19 @@ sql.connect(config, function (err) {
 
 const pool = new sql.Request();
 
+async function getAllUsers() {
+    return new Promise((resolve, reject) => {
+        const slct = `SELECT * FROM [Users]`;
+        pool.query(slct, (err, res) => {
+            if(!err) {
+                resolve(res.recordset);
+            } else {
+                reject(err.message);
+            }
+        });
+    });
+}
+
 async function selectUserById(id) {
     return new Promise((resolve, reject) => {
         if (isNaN(Number(id))) {
@@ -85,10 +98,25 @@ async function changeUserState(state, id) {
     });
 }
 
+async function isIDTaken(id) {
+    return new Promise((resolve, reject) => {
+        const slct = `SELECT * FROM [Users] WHERE [id] = '${id}'`;
+        pool.query(slct, (err, res) => {
+            if(!err) {
+                resolve(res.recordset);
+            } else {
+                reject(err.message);
+            }
+        });
+    });
+}
+
 module.exports = {
+    getAllUsers: getAllUsers,
     selectUserById: selectUserById,
     updateUser: updateUser,
     createUser: createUser,
     selectUserByUsername: selectUserByUsername,
-    changeUserState: changeUserState
+    changeUserState: changeUserState,
+    isIDTaken: isIDTaken
 }

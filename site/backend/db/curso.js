@@ -138,9 +138,6 @@ async function isIDTaken(id) {
     });
 }
 
-
-
-
 module.exports = {
     getCurso: getCurso,
     getAllCursos: getAllCursos,
