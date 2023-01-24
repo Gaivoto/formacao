@@ -1,11 +1,17 @@
-/*const express = require('express');
+const express = require('express');
 
 const router = express.Router();
 
 const cntrVide = require('../controllers/video.js');
 
-//CHECK WITH THE REST OF THE SCOOBY GANG
+router.get("/:id", cntrVide.getVideo);
+
+router.get("/", cntrVide.getAllVideos);
+
 router.post("/", cntrVide.createVideo);
 
+router.put("/", cntrVide.removeVideo);
 
-module.exports = router*/
+router.put("/edit/", cntrVide.updateVideo);
+
+module.exports = router
