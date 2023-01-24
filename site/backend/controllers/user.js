@@ -5,16 +5,16 @@ async function getUser(req, res){
         res.status(value.code).send(value.info);
     })
     .catch(error => {
-        res.status(error.code).send(error.message);
+        res.status(error.code).send(error.error);
     });
 }
 
 async function updateUser(req, res) {
-    serUser.updateUser({access_token: req.headers['authorization'].split(' ')[1], refresh_token: req.headers.refreshtoken}, req.body).then(value => {
+    serUser.updateUser({access_token: req.headers['authorization'].split(' ')[1], refresh_token: req.headers.refreshtoken}, req.params.id, req.body).then(value => {
         res.status(value.code).send(value.info);
     })
     .catch(error => {
-        res.status(error.code).send(error.message);
+        res.status(error.code).send(error.error);
     });
 }
 
@@ -23,16 +23,16 @@ async function createUser(req, res) {
         res.status(value.code).send({user: value.user, access_token: value.access_token, refresh_token: value.refresh_token});
     })
     .catch(error => {
-        res.status(error.code).send(error.message);
+        res.status(error.code).send(error.error);
     });
 }
 
 async function changeUserState(req, res) {
-    serUser.changeUserState({access_token: req.headers['authorization'].split(' ')[1], refresh_token: req.headers.refreshtoken}, req.body).then(value => {
+    serUser.changeUserState({access_token: req.headers['authorization'].split(' ')[1], refresh_token: req.headers.refreshtoken}, req.params.id, req.body).then(value => {
         res.status(value.code).send(value.info);
     })
     .catch(error => {
-        res.status(error.code).send(error.message);
+        res.status(error.code).send(error.error);
     });
 }
 

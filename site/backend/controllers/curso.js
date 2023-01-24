@@ -28,7 +28,7 @@ async function createCurso(req, res){
 }
 
 async function removeCurso(req, res){
-    serCurs.removeCurso({access_token: req.headers['authorization'].split(' ')[1], refresh_token: req.headers.refreshtoken}, req.body).then(value => {
+    serCurs.removeCurso({access_token: req.headers['authorization'].split(' ')[1], refresh_token: req.headers.refreshtoken}, req.params.id, req.body).then(value => {
         res.status(value.code).send(value.info);
     })
     .catch(error => {
@@ -37,7 +37,7 @@ async function removeCurso(req, res){
 }
 
 async function updateCurso(req, res){
-    serCurs.updateCurso({access_token: req.headers['authorization'].split(' ')[1], refresh_token: req.headers.refreshtoken}, req.body).then(value => {
+    serCurs.updateCurso({access_token: req.headers['authorization'].split(' ')[1], refresh_token: req.headers.refreshtoken}, req.params.id, req.body).then(value => {
         res.status(value.code).send(value.info);
     })
     .catch(error => {

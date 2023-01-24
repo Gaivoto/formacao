@@ -5,30 +5,34 @@ const dbCurs = require('../db/curso.js');
 
 async function getCurso(tokens, id) {
     return new Promise((resolve, reject) => {
-        utils.validateToken(tokens.access_token, tokens.refresh_token).then(value => {
-            let info = value;
-            dbCurs.getCurso(id).then(value => {
+        utils.validateToken(tokens.access_token, tokens.refresh_token).then(value1 => {
+            let info = value1;
+            dbCurs.getCurso(id).then(value2 => {
 
                 let resp = {
-                    courses: value,
+                    courses: value2,
                     access_token: info.access_token
                 }
 
                 resolve({ code: 200, info: resp });
             })
             .catch(error => {
+                console.log(error);
                 reject({ code: 400, error: {message: "Algo correu mal com a query."}});
             });
         })
-        .catch(error => reject({ code: 401, error: {message: "Token inválido."}}));
+        .catch(error => {
+            console.log(error);
+            reject({ code: 401, error: {message: "Token inválido."}})
+        });
     });
 }
 
 async function getAllCursos(headers) {
     return new Promise((resolve, reject) => {
 
-        let access_token
-        let refresh_token
+        let access_token;
+        let refresh_token;
 
         if(headers['authorization']) {
             access_token = headers['authorization'].split(' ')[1];
@@ -44,19 +48,26 @@ async function getAllCursos(headers) {
                         courses: value2,
                         access_token: info.access_token
                     }
+
                     resolve({ code: 200, info: resp });
                 })
                 .catch(error => {
+                    console.log(error);
                     reject({ code: 400, error: {message: "Algo correu mal com a query."}});
                 });
             })
-            .catch(error => reject({ code: 401, error: {message: "Token inválido."}}));
+            .catch(error => {
+                console.log(error);
+                reject({ code: 401, error: {message: "Token inválido."}})
+            });
 
         } else {
             dbCurs.getAllCursos().then(value => {
+
                 let resp = {
                     courses: value
                 }
+
                 resolve({ code: 200, info: resp });
             })
             .catch(error => {
@@ -75,41 +86,43 @@ async function createCurso(tokens, body) {
             dbCurs.isNameTaken(body.name).then(value2 => {
 
                 if(value2.length > 0) {
-                    reject({ code: 403, error: {message: "Esse nome já está a ser utilizado." }});
+                    reject({ code: 400, error: {message: "Já existe um curso com este nome." }});
                 } else {
-                    
                     let id = uuid.v4();
+
                     dbCurs.createCurso(id, body).then(value => {
-                        resolve({ code: 200, info: info });
+                        resolve({ code: 201, info: info });
                     })
                     .catch(error => {
+                        console.log(error);
                         reject({ code: 400, error: {message: "Algo correu mal com a query." }});
                     });
-
                 }
             })
             .catch(error => {
                 console.log(error);
                 reject({ code: 400, error: {message: "Algo correu mal com a query." }});
             });
-
         })
-        .catch(error => reject({ code: 401, error: {message: "Token inválido." }}));;
+        .catch(error => {
+            console.log(error);
+            reject({ code: 401, error: {message: "Token inválido." }})
+        });
     });
 }
 
-async function removeCurso(tokens, body) {
+async function removeCurso(tokens, id, body) {
     return new Promise((resolve, reject) => {
         utils.validateToken(tokens.access_token, tokens.refresh_token).then(value => {
             let info = value;
 
-            dbCurs.getCurso(body.id).then(value1 => {
+            dbCurs.getCurso(id).then(value1 => {
                 
                 if(value1.length <= 0) {
                     reject({ code: 404, error: {message: "Curso não existe." }});
                 } else {
 
-                    dbCurs.isCourseFromUser(body.id, info.user.id).then(value2 => {
+                    dbCurs.isCourseFromUser(id, info.user.id).then(value2 => {
 
                         if(value2.length <= 0) {
                             reject({ code: 403, error: {message: "Curso não pertence a este user." }});
@@ -118,7 +131,6 @@ async function removeCurso(tokens, body) {
                             if(body.state === "Ativo" || body.state === "Inativo" || body.state === "Pendente") {
 
                                 dbCurs.removeCurso(body).then(value3 => {
-
                                     resolve({ code: 200, info: info });
                                 })
                                 .catch(error => {
@@ -127,9 +139,7 @@ async function removeCurso(tokens, body) {
                                 });
 
                             } else {
-
-                                reject({ code: 401, error: {message: "Current state invalid" }})
-
+                                reject({ code: 401, error: {message: "Current state invalid" }});
                             }
                         } 
                     })
@@ -144,28 +154,31 @@ async function removeCurso(tokens, body) {
                 reject({ code: 400, error: {message: "Algo correu mal com a query." }});
             });
         })
-        .catch(error => reject({ code: 401, error: {message: "Token inválido." }}));;
+        .catch(error => {
+            console.log(error);
+            reject({ code: 401, error: {message: "Token inválido." }})
+        });
     });
 }
 
-async function updateCurso(tokens, body) {
+async function updateCurso(tokens, id, body) {
     return new Promise((resolve, reject) => {
         utils.validateToken(tokens.access_token, tokens.refresh_token).then(value => {
             let info = value;
 
-            dbCurs.getCurso(body.id).then(value1 => {
+            dbCurs.getCurso(id).then(value1 => {
                 
                 if(value1.length <= 0) {
                     reject({ code: 404, error: {message: "Curso não existe." }});
                 } else {
 
-                    dbCurs.isCourseFromUser(body.id, info.user.id).then(value2 => {
+                    dbCurs.isCourseFromUser(id, info.user.id).then(value2 => {
 
                         if(value2.length <= 0) {
                             reject({ code: 403, error: {message: "Curso não pertence a este user." }});
                         } else {
 
-                            let id = body.id;
+                            let id = id;
                             let name = body.name;
                             let category = body.category;
                             let description = body.description;
@@ -178,13 +191,12 @@ async function updateCurso(tokens, body) {
                                     resolve({ code: 200, info: info });
                                 })
                                 .catch(error => {
+                                    console.log(error);
                                     reject({ code: 400, error: {message: "Algo correu mal com a query." }});
                                 });
-
                             } else {
-                                reject({ code: 401, error: {message: "Query has empty fields" }})
+                                reject({ code: 400, error: {message: "Query has empty fields." }});
                             }
-
                         } 
                     })
                     .catch(error => {
@@ -199,11 +211,12 @@ async function updateCurso(tokens, body) {
             });
 
         })
-        .catch(error => reject({ code: 401, error: {message: "Token inválido." }}));;
+        .catch(error => {
+            console.log(error);
+            reject({ code: 401, error: {message: "Token inválido." }})
+        });
     });
 }
-
-
 
 module.exports = {
     getCurso: getCurso,

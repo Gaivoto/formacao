@@ -10,64 +10,82 @@ async function getUser(tokens, id) {
     return new Promise((resolve, reject) => {
         utils.validateToken(tokens.access_token, tokens.refresh_token).then(value => {
             let info = value;
-            dbUser.getUser(id).then(value => {
-                value[0].access_token = info.access_token
-                resolve({ code: 200, info: value[0] });
-            })
+            //nigga
+            dbUser.selectUserById(id).then(value2 => {
+                value2.acess_token = info.acess_token;
+                dbCour.getUserCourses(id).then(value3 => {
+                    value2[0].courses = value3;
+                    resolve({ code: 200, info: value2 });
+                })
                 .catch(error => {
-                    reject({ code: 400, message: "Algo correu mal com a query." });
+                    console.log(error);
+                    reject({ code: 400, error: { message: "Algo correu mal com a query dos cursos." }});
                 });
+            })
+            .catch(error => {
+                console.log(error);
+                reject({ code: 400, error: { message: "Algo correu mal com a query." }});
+            });
         })
-            .catch(error => reject({ code: 401, message: "Token inválido." }));;
-    });
+        .catch(error => {
+            console.log(error);
+            reject({ code: 401, error: { message: "Token inválido." }});
+        });;
+    })
 }
 
-async function updateUser(tokens, user) {
+async function updateUser(tokens, id, user) {
     return new Promise((resolve, reject) => {
         utils.validateToken(tokens.access_token, tokens.refresh_token).then(value => {
             let info = value;
-            if (info.user.id == user.id) {
-                if (user.id == null) {
-                    reject({ code: 404, message: "Id inválido." });
-                }
-                if (user.name == "" && user.description == "" && user.image == "" && user.price == null) {
-                    reject({ code: 400, message: "A alteração não pode ser feita, porque todos os valores submetidos estão vazios." });
+            if (info.user.id == id) {
+                if (user.name == "" || user.description == "" || user.image == "" || user.price == null) {
+                    reject({ code: 400, error: { message: "A alteração não pode ser feita, porque há valores vazios." }});
                 }
                 else if (user.type != "creator" && user.price != null) {
-                    reject({ code: 400, message: "A alteração não pode ser feita, porque tentaste adicionar um preço a um utilizador que não é um criador." });
+                    reject({ code: 400, error: { message: "A alteração não pode ser feita, porque tentaste adicionar um preço a um utilizador que não é um criador." }});
                 }
                 else {
                     dbUser.updateUser(user).then(value => {
                         resolve({ code: 200, info: info });
-                    }).catch(error => {
-                        reject({ code: 400, message: "Algo correu mal com a query." });
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        reject({ code: 400, error: { message: "Algo correu mal com a query." }});
                     });
                 }
             } else {
-                reject({ code: 400, message: "A operação não foi possível porquê o user associado ao token não é o mesmo a qual estas a tentar fazer update." });
+                reject({ code: 403, error: { message: "A operação não foi possível porquê o user associado ao token não é o mesmo a qual estas a tentar fazer update." }});
             }
-        }).catch(error => reject({ code: 401, message: "Token inválido." }))
+        })
+        .catch(error => {
+            console.log(error);
+            reject({ code: 401, error: { message: "Token inválido." }});
+        });
     });
 }
 
-async function changeUserState(tokens, user) {
+async function changeUserState(tokens, id, user) {
     return new Promise((resolve, reject) => {
         utils.validateToken(tokens.access_token, tokens.refresh_token).then(value => {
             let info = value;
             if (info.user.type != 'admin') {
-                if (user.state != 'Inativo' && user.state != 'Ativo') {
-                    reject({ code: 400, message: "O estado inserido não é válido." });
-                } else {
-                    dbUser.changeUserState(user.state, user.id).then(value => {
-                        resolve({ code: 200, info: info });
-                    }).catch(error => {
-                        reject({ code: 400, message: "Algo correu mal com a query." });
-                    });
-                }
+
+                dbUser.changeUserState(user.state, id).then(value => {
+                    resolve({ code: 200, info: info });
+                })
+                .catch(error => {
+                    console.log(error);
+                    reject({ code: 400, error: { message: "Algo correu mal com a query." }});
+                });
             } else {
-                reject({ code: 400, message: "A operação não foi possível porquê o user não é um administrador." });
+                reject({ code: 403, error: { message: "A operação não foi possível porquê o user não é um administrador." }});
             }
-        }).catch(error => reject({ code: 401, message: "Token inválido." }))
+        })
+        .catch(error => {
+            console.log(error);
+            reject({ code: 401, error: { message: "Token inválido." }});
+        });
     });
 }
 
@@ -77,25 +95,18 @@ async function createUser(user) {
             if (value.length == 0) {
                 let idGen = uuid.v4();
                 dbUser.createUser(idGen, user).then(value => {
-                    let userInfo = { id: idGen, username: user.username };
-                    let access_token = jwt.sign(userInfo, process.env.ACCESS_SECRET, { expiresIn: '30m' });
-                    let refresh_token = jwt.sign(userInfo, process.env.REFRESH_SECRET);
-                    dbAuth.createToken(crypto.SHA256(refresh_token, process.env.CRYPTO_KEY).toString()).then(value2 => {
-                        resolve({ code: 201, user: userInfo, access_token: access_token, refresh_token: refresh_token });
-                        console.log(crypto.SHA256(refresh_token, process.env.CRYPTO_KEY).toString())
-                    })
-                        .catch(error => {
-                            console.log(error);
-                            reject({ code: 400, message: 'Algo correu mal com a query.' });
-                        });
+                    resolve({ code: 201, info: { message: "User registado com sucesso."} });
                 }).catch(error => {
-                    reject({ code: 400, message: "Algo correu mal com a query de insert." });
+                    console.log(error);
+                    reject({ code: 400, error: { message: "Algo correu mal com a query de insert." }});
                 });
             } else {
-                reject({ code: 401, message: 'Já tem um user com esse username.' });
+                reject({ code: 400, error: { message: 'Já tem um user com esse username.' }});
             }
-        }).catch(error => {
-            reject({ code: 401, message: 'Erro na query.' });
+        })
+        .catch(error => {
+            console.log(error);
+            reject({ code: 401, error: { message: 'Erro na query.' }});
         });
     })
 }
