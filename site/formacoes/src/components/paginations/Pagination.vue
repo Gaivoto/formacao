@@ -1,13 +1,15 @@
 <template>
     <div class="pagination-wrapper">
         <div class="pagination">
-            <img src="../../assets/left_chevron.png" v-on:click="decreasePage"/>
+            <span class="material-icons" v-on:click="firstPage">first_page</span>
+            <span class="material-icons" v-on:click="decreasePage">chevron_left</span>
             <div>
                 <p :ref="'p' + n" v-for="n of pageRange" :key="n" v-on:click="changePage(n)" :class="{'selected-page': isSelected(n)}">
                     {{ n }}
                 </p>
             </div>
-            <img src="../../assets/right_chevron.png" v-on:click="increasePage"/>    
+            <span class="material-icons" v-on:click="increasePage">chevron_right</span> 
+            <span class="material-icons" v-on:click="lastPage">last_page</span> 
         </div>
     </div>
 </template>
@@ -62,11 +64,17 @@ export default {
                 this.$emit("changePage", this.page);
             }
         },
+        firstPage() {
+            while(this.page > 1) this.decreasePage();
+        },
         decreasePage(){
             if(this.page > 1) {
                 this.page--;
                 this.$emit("changePage", this.page);
             }
+        },
+        lastPage() {
+            while(this.page < this.numberOfPages) this.increasePage();
         },
         changePage(page){
             this.page = page;
@@ -76,16 +84,17 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
     .pagination-wrapper {
         display: flex;
         justify-content: space-around;
+        padding-bottom: 12px;
     }
 
     .pagination {
         display: flex;
         align-items: center;
-        gap: 8px;
+        gap: 16px;
     }
 
     .pagination img {
@@ -97,21 +106,50 @@ export default {
 
     .pagination > div {
         display: flex;
-        gap: 4px;
+        gap: 16px;
     }
 
     .pagination-wrapper p {
-        background-color: white;
         margin-bottom: 0px;
+        font-size: 22px;
         padding: 4px 0px;
-        width: 32px;
+        width: 40px;
         text-align: center;
+        color: white;
 
         cursor: pointer;
+
+        background: rgba(200, 200, 200, 0.08);
+        border-radius: 8px;
     }
 
     .selected-page {
-        background-color: black !important;
-        color: white;
+        background: rgba(200, 200, 200, 0.3) !important;
+        color: var(--primary) !important;
+    }
+
+    .material-icons {
+        color: var(--primary);
+        cursor: pointer;
+    }
+
+    @media (max-width: 550px) {
+        .pagination {
+            gap: 4px;
+        }
+
+        .pagination > div {
+            gap: 4px;
+        }
+    }
+
+    @media (max-width: 450px) {
+        .pagination {
+            gap: 0px;
+        }
+
+        .pagination > div {
+            gap: 2px;
+        }
     }
 </style>

@@ -1,59 +1,59 @@
 <template>
-    <div class="table-wrapper">
-        <table>
-            <tr>
-                <th></th>
-                <th class="column-large">
-                    <div>
-                    <p>Nome</p>
-                        <div>
-                            <img src="../assets/chevron_up.png" />
-                            <img src="../assets/chevron_down.png" />
-                        </div>
-                    </div>
-                </th>
-                <th class="column-small">
-                    <div>
-                    <p>Data</p>
-                        <div>
-                            <img src="../assets/chevron_up.png" v-on:click="orderTable('date-asc')"/>
-                            <img src="../assets/chevron_down.png" v-on:click="orderTable('date-desc')"/>
-                        </div>
-                    </div>
-                </th>
-                <th class="column-small">
-                    <div>
-                    <p>Inscrições</p>
-                        <div>
-                            <img src="../assets/chevron_up.png" v-on:click="orderTable('subs-asc')"/>
-                            <img src="../assets/chevron_down.png" v-on:click="orderTable('subs-desc')"/>
-                        </div>
-                    </div>
-                </th>
-                <th class="column-small">
-                    <div>
-                    <p>Nº Videos</p>
-                        <div>
-                            <img src="../assets/chevron_up.png" v-on:click="orderTable('nvids-asc')"/>
-                            <img src="../assets/chevron_down.png" v-on:click="orderTable('nvids-desc')"/>
-                        </div>
-                    </div>
-                </th>
-                <th class="column-small">
-                    <div>
-                    <p>Duração</p>
-                        <div>
-                            <img src="../assets/chevron_up.png" v-on:click="orderTable('duration-asc')"/>
-                            <img src="../assets/chevron_down.png" v-on:click="orderTable('duration-desc')"/>
-                        </div>
-                    </div>
-                </th>
-            </tr>
-            <tbody>
-                <ContentTableRow v-for="course in this.displayCourses" :key="course.id" v-bind:course="course" class="table-row-component"/>
-            </tbody>
-        </table>
-    <Pagination2 v-bind:totalItems="this.courses.length" v-bind:currentPage="this.currentPage" v-bind:itemsPerPage="this.itemsPerPage" v-on:changePage="changePage"/>
+    <div class="content-wrapper">
+        <div class="table-wrapper">
+            <div class="table-content" :class="{ 'invert-colors': this.isTableLengthEven }">
+                <table class="table">
+                    <tr>
+                        <th></th>
+                        <th class="column-large">
+                            <div>
+                                <p>Nome</p>
+                            </div>
+                        </th>
+                        <th class="column-small">
+                            <div>
+                                <p>Data</p>
+                                <div>
+                                    <span class="material-icons" v-on:click="orderTable('date-asc')">expand_less</span>
+                                    <span class="material-icons" v-on:click="orderTable('date-desc')">expand_more</span>
+                                </div>
+                            </div>
+                        </th>
+                        <th class="column-small column-right">
+                            <div>
+                                <p>Inscrições</p>
+                                <div>
+                                    <span class="material-icons" v-on:click="orderTable('subs-asc')">expand_less</span>
+                                    <span class="material-icons" v-on:click="orderTable('subs-desc')">expand_more</span>
+                                </div>
+                            </div>
+                        </th>
+                        <th class="column-small column-right">
+                            <div>
+                                <p>Nº Videos</p>
+                                <div>
+                                    <span class="material-icons" v-on:click="orderTable('nvids-asc')">expand_less</span>
+                                    <span class="material-icons" v-on:click="orderTable('nvids-desc')">expand_more</span>
+                                </div>
+                            </div>
+                        </th>
+                        <th class="column-small column-right">
+                            <div>
+                                <p>Duração</p>
+                                <div>
+                                    <span class="material-icons" v-on:click="orderTable('duration-asc')">expand_less</span>
+                                    <span class="material-icons" v-on:click="orderTable('duration-desc')">expand_more</span>
+                                </div>
+                            </div>
+                        </th>
+                    </tr>
+                    <tbody>
+                        <ContentTableRow v-for="course in this.displayCourses" :key="course.id" v-bind:course="course" class="table-row-component"/>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <Pagination2 v-bind:totalItems="this.courses.length" v-bind:currentPage="this.currentPage" v-bind:itemsPerPage="this.itemsPerPage" v-on:changePage="changePage"/>
     </div>
 </template>
 
@@ -80,7 +80,7 @@ export default {
             {
                 id: 1,
                 name: "Bingus Amogus",
-                description: "monkey",
+                description: "desc",
                 subscriptions: 8123,
                 numberOfVideos: 5,
                 image: "bingus",
@@ -90,7 +90,7 @@ export default {
             {
                 id: 2,
                 name: "Bingus Amogus",
-                description: "monkey",
+                description: "desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc",
                 subscriptions: 123,
                 numberOfVideos: 2,
                 image: "bingus",
@@ -100,7 +100,7 @@ export default {
             {
                 id: 3,
                 name: "Bingus Amogus",
-                description: "monkey",
+                description: "desc",
                 subscriptions: 412,
                 numberOfVideos: 4,
                 image: "bingus",
@@ -110,7 +110,7 @@ export default {
             {
                 id: 4,
                 name: "Bingus Amogus",
-                description: "monkey",
+                description: "desc",
                 subscriptions: 1234,
                 numberOfVideos: 14,
                 image: "bingus",
@@ -120,7 +120,27 @@ export default {
             {
                 id: 5,
                 name: "Bingus Amogus",
-                description: "monkey",
+                description: "desc",
+                subscriptions: 0,
+                numberOfVideos: 1,
+                image: "bingus",
+                date: "03/12/2022",
+                duration: "10:31",
+            },
+            {
+                id: 6,
+                name: "Bingus Amogus",
+                description: "desc",
+                subscriptions: 1234,
+                numberOfVideos: 14,
+                image: "bingus",
+                date: "02/12/2022",
+                duration: "5:32:58",
+            },
+            {
+                id: 7,
+                name: "Bingus Amogus",
+                description: "desc",
                 subscriptions: 0,
                 numberOfVideos: 1,
                 image: "bingus",
@@ -130,6 +150,12 @@ export default {
         ];
 
         this.displayCourses = this.courses.slice(0, this.itemsPerPage);
+    },
+    computed: {
+        isTableLengthEven() {
+            if(this.displayCourses.length % 2 == 0) return true;
+            return false;
+        }
     },
     methods: {
         orderTable(order) {
@@ -189,62 +215,125 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
+    .content-wrapper {
+        padding: 24px 48px 0px 48px;
+    }
+
     .table-wrapper {
-        padding: 32px 5%;
+        min-height: 84vh;
     }
 
-    .table-wrapper table {
-        width: 100%;
+    .table-content {
+        max-width: 100%;
+        overflow-x: scroll;
+        box-shadow: rgba(20, 14, 49, 0.6) 0px 2px 10px 4px;
     }
 
-    table th > div {
+    .table-content::-webkit-scrollbar {
+        width: 8px;
+        background: var(--mobalytics-back);
+    }
+
+    .table-content::-webkit-scrollbar-thumb {
+        background: var(--mobalytics-card);
+    }
+
+    .table-content.invert-colors::-webkit-scrollbar {
+        background: var(--mobalytics-card);
+    }
+
+    .table-content.invert-colors::-webkit-scrollbar-thumb {
+        background: var(--mobalytics-back);
+    }
+
+    .table {
+        margin-bottom: 0px;
+    }
+
+    .table th {
+        background-color: var(--mobalytics-susge);
+    }
+
+    .table th > div {
         padding: 8px 16px;
+        height: 60px;
 
         display: flex;
         gap: 12px;
-        text-align: center;
+        align-items: center;
     }
 
-    table th > div > div {
-        width: 12px;
-        height: 26px;
+    .table th > div > div {
+        position: relative;
     }
 
-    table th p {
+    .table th p {
+        margin: 0px;
+        color: var(--light);
+        font-size: 18px;
+        font-weight: 500;
         margin: 0px;
     }
 
-    table th img {
-        height: 12px;
-        width: 12px;
-
+    .table th span {
+        color: var(--light);
         cursor: pointer;
+        font-size: 20px;
     }
 
-    table th img:first-child {
-        margin-top: -12px;
+    .table th span:first-child {
+        position: absolute;
+        top: -18px;
+        left: -4px;
     }
 
-    table th img:last-child {
-        margin-top: -36px;
+    .table th span:last-child {
+        position: absolute;
+        top: -2px;
+        left: -4px;
     }
 
-    table tbody .table-row-component:nth-child(2n) {
-        background-color: grey;
+    .table tbody .table-row-component {
+        border: none;
     }
 
-    table tbody .table-row-component:nth-child(2n + 1) {
-        background-color: goldenrod;
+    .table tbody .table-row-component:nth-child(2n) {
+        background-color: var(--mobalytics-card);
     }
 
-    .column-large {
+    .table tbody .table-row-component:nth-child(2n + 1) {
+        background-color: var(--mobalytics-back);
+    }
+
+    .table .column-large {
         width: 30%;
-        background-color: red;
+        min-width: 220px;
     }
 
-    .column-small {
+    .table .column-small {
         width: 15%;
-        background-color: blue;
+        min-width: 150px;
+    }
+
+    .table .column-right {
+        padding-right: 24px;
+    }
+
+    .table .column-right div {
+        float: right;
+    }
+
+    @media (max-width: 1100px) {
+        .table {
+            max-width: 100%;
+            overflow-x: scroll;
+        }
+    }
+
+    @media (max-width: 800px) {
+        .content-wrapper {
+            padding: 24px 16px 0px 16px;
+        }
     }
 </style>

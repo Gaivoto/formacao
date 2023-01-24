@@ -6,11 +6,11 @@ const cntrUser = require('../controllers/user.js');
 
 router.get("/:id", cntrUser.getUser);
 
-router.put("/updateUser", cntrUser.updateUser);
+router.put("/:id", cntrUser.updateUser);
 
-router.post("/createUser", cntrUser.createUser);
+router.post("/", cntrUser.createUser);
 
-router.put("/changeUserState", cntrUser.changeUserState);
+router.put("/adm/:id", cntrUser.changeUserState);
 
 router.get("/profile/:id", cntrUser.profilePage);
 

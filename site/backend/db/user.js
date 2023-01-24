@@ -47,8 +47,8 @@ async function updateUser(user) {
 
 async function createUser(id, user) {
     return new Promise((resolve, reject) => {
-        const insrt = `INSERT INTO [Users] ([id], [username], [password], [type], [name], [email], [description], [country], [price], [image], [state]) 
-        VALUES ('${id}', '${user.username}', '${user.password}', 'user', '${user.name}', '${user.email}', '${user.description}', '${user.country}', null, '${user.image}', 'Ativo')`;
+        const insrt = `INSERT INTO [Users] ([id], [username], [password], [type], [name], [email], [description], [image], [state]) 
+        VALUES ('${id}', '${user.username}', '${user.password}', 'user', '${user.name}', '${user.email}', '${user.description}', '${user.image}', 'Ativo')`;
         pool.query(insrt, (err, res) => {
             if (!err) {
                 resolve(res);

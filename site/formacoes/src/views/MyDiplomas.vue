@@ -1,19 +1,16 @@
 <template>
     <div class="diplomas-wrapper">
-        <div>
-            <!--Topbar-->
-        </div>
-        <div class="filter">
-            <DiplomaFilter v-bind:diplomas="this.diplomas" v-on:filter="filter" />
-        </div>
+        <DiplomaFilter v-bind:diplomas="this.diplomas" v-on:filter="filter" />
         <div class="row">
-            <DiplomaCard v-for="diploma in this.diplomasDisplay" :key="diploma.id" v-bind:diploma="diploma"
-                class="col-xl-6 col-md-6" />
+            <DiplomaCard v-for="diploma in this.diplomasDisplay" :key="diploma.id" v-bind:diploma="diploma"/>
+            <div class="no-results" :class="{ 'd-none': !noResults }">
+                <span class="material-icons search-icon">warning</span>
+                <p>Não existem resultados para a pesquisa.</p>    
+            </div>
         </div>
-        <Pagination v-on:change-page="changePage" v-bind:page="this.page" v-bind:numberOfPages="numberOfPages" />
+        <Pagination v-on:change-page="changePage" v-bind:numberOfPages="numberOfPages" />
     </div>
 </template>
-
 
 <script>
 import DiplomaCard from "../components/myDiplomas/DiplomaCard.vue";
@@ -21,140 +18,129 @@ import DiplomaFilter from "../components/myDiplomas/DiplomaFilter.vue";
 import Pagination from "../components/paginations/Pagination.vue";
 
 export default {
-    data: () => {
+    name: "MyDiplomas",
+    components: {
+        DiplomaCard,
+        DiplomaFilter,
+        Pagination
+    },
+    data() {
         return {
             diplomas: [],
             diplomasFiltered: [],
             diplomasDisplay: [],
-            page: 1
+            page: 1,
+            diplomasPerPage: 6
         }
     },
     created() {
         this.diplomas = [
             {
                 id: 1,
-                image: 'tomasGostosa',
-                name: 'texto1',
-                description: 'description2',
                 category: 'cat1',
-                date: "15-09-2022"
+                date: "15-09-2022",
+                creator: "Criador 1",
+                course: "Course 1"
             },
             {
                 id: 2,
-                image: 'tomasGostosa',
-                name: 'abc',
-                desc: 'description2',
                 category: 'cat2',
-                date: "11-02-2021"
+                date: "11-02-2021",
+                creator: "Criador 1",
+                course: "Course 2"
             },
             {
                 id: 3,
-                image: 'tomasGostosa',
-                name: 'def',
-                desc: 'description3',
                 category: 'cat2',
-                date: "17-07-2022"
+                date: "17-07-2022",
+                creator: "Criador 1",
+                course: "Course 3"
             },
             {
                 id: 4,
-                image: 'tomasGostosa',
-                name: 'ghi',
-                desc: 'description4',
                 category: 'cat14',
-                date: "05-12-2022"
+                date: "05-12-2022",
+                creator: "Criador 1",
+                course: "Course 4"
             },
             {
                 id: 5,
-                image: 'tomasGostosa',
-                name: 'jkl',
-                desc: 'description2',
                 category: 'cat1',
-                date: "28-01-2022"
+                date: "28-01-2022",
+                creator: "Criador 1",
+                course: "Course 5"
             },
             {
                 id: 6,
-                image: 'tomasGostosa',
-                name: 'mno',
-                desc: 'description2',
                 category: 'cat1',
-                date: "22-08-2022"
+                date: "22-08-2022",
+                creator: "Criador 1",
+                course: "Course 6"
             },
             {
                 id: 7,
-                image: 'tomasGostosa',
-                name: 'pqr',
-                desc: 'description2',
                 category: 'cat1',
-                date: "27-09-2022"
+                date: "27-09-2022",
+                creator: "Criador 1",
+                course: "Course 7"
             },
             {
                 id: 8,
-                image: 'tomasGostosa',
-                name: 'stu',
-                desc: 'description2',
                 category: 'cat1',
-                date: "12-11-2022"
+                date: "12-11-2022",
+                creator: "Criador 1",
+                course: "Course 8"
             },
             {
                 id: 9,
-                image: 'tomasGostosa',
-                name: 'vxy',
-                desc: 'description2',
                 category: 'cat1',
-                date: "04-05-2022"
+                date: "04-05-2022",
+                creator: "Criador 1",
+                course: "Course 9"
             },
             {
                 id: 10,
-                image: 'tomasGostosa',
-                name: 'stu',
-                desc: 'description2',
                 category: 'cat1',
-                date: "16-10-2020"
+                date: "16-10-2020",
+                creator: "Criador 1",
+                course: "Course 10"
             },
         ]
     },
-
-    components: {
-        DiplomaCard,
-        DiplomaFilter,
-        Pagination
-    },
     computed: {
         numberOfPages() {
-            return Math.ceil(this.diplomasFiltered.length / 6);
+            return Math.ceil(this.diplomasFiltered.length / this.diplomasPerPage);
+        },
+        noResults() {
+            if(this.diplomasFiltered.length == 0) return true;
+            return false;  
         }
     },
     methods: {
         filter(filter) {
             this.diplomasDisplay = [];
-            this.diplomasFiltered = [];
+            this.diplomasFiltered = [...this.diplomas];
 
-            if (filter.name) {
-                this.diplomas.forEach(d => {
-                    if (d.name.includes(filter.name) && d.category == filter.category) {
-                        this.diplomasFiltered.push(d);
-                    }
-                });
-            } else {
-                this.diplomas.forEach(d => {
-                    if (d.category == filter.category) {
-                        this.diplomasFiltered.push(d);
-                    }
-                });
+            if(filter.name) {
+                this.diplomasFiltered = this.diplomasFiltered.filter(d => d.course.toLowerCase().includes(filter.name));
+            }
+
+            if(filter.category != "Todas") {
+                this.diplomasFiltered = this.diplomasFiltered.filter(d => d.category == filter.category);
             }
 
             switch (filter.order) {
-                case "date-new":
+                case "Mais recente":
                     this.diplomasFiltered.sort((a, b) => (new Date(a.date.substring(6) + "-" + a.date.substring(3, 5) + "-" + a.date.substring(0, 2)) < new Date(b.date.substring(6) + "-" + b.date.substring(3, 5) + "-" + b.date.substring(0, 2))) ? 1 : ((new Date(b.date.substring(6) + "-" + b.date.substring(3, 5) + "-" + b.date.substring(0, 2)) < new Date(a.date.substring(6) + "-" + a.date.substring(3, 5) + "-" + a.date.substring(0, 2))) ? -1 : 0));
                     break;
-                case "date-old":
+                case "Mais antigo":
                     this.diplomasFiltered.sort((a, b) => (new Date(a.date.substring(6) + "-" + a.date.substring(3, 5) + "-" + a.date.substring(0, 2)) > new Date(b.date.substring(6) + "-" + b.date.substring(3, 5) + "-" + b.date.substring(0, 2))) ? 1 : ((new Date(b.date.substring(6) + "-" + b.date.substring(3, 5) + "-" + b.date.substring(0, 2)) > new Date(a.date.substring(6) + "-" + a.date.substring(3, 5) + "-" + a.date.substring(0, 2))) ? -1 : 0));
                     break;
                 default:
                     break;
             }
 
-            for (var i = (this.page - 1) * 6; i < this.page * 6; i++) {
+            for (var i = (this.page - 1) * this.diplomasPerPage; i < this.page * this.diplomasPerPage; i++) {
                 if (this.diplomasFiltered[i]) {
                     this.diplomasDisplay.push(this.diplomasFiltered[i]);
                 }
@@ -165,7 +151,7 @@ export default {
 
             this.diplomasDisplay = [];
 
-            for (var i = (this.page - 1) * 6; i < this.page * 6; i++) {
+            for (var i = (this.page - 1) * this.diplomasPerPage; i < this.page * this.diplomasPerPage; i++) {
                 if (this.diplomasFiltered[i]) {
                     this.diplomasDisplay.push(this.diplomasFiltered[i]);
                 }
@@ -178,7 +164,41 @@ export default {
 </script>
 
 <style scoped>
+    .diplomas-wrapper {
+        padding: 24px 32px 0px 32px;
+    }
+
     .row {
         margin: 0px;
+        padding: 0px 8px;
+        min-height: 70vh;
     }
+
+    .no-results {
+        padding-top: 100px;
+        width: 100%;
+        text-align: center;
+    }
+
+    .no-results .material-icons {
+        font-size: 200px;
+        color: var(--light);
+    }
+
+    .no-results p {
+        color: var(--light);
+        font-size: 40px;
+    }
+
+    @media (max-width: 900px) {
+        .row {
+            padding: 0px;
+        }
+    }
+
+    @media (max-width: 800px) {
+        .diplomas-wrapper {
+            padding: 24px 16px 0px 16px;
+        }
+	}
 </style>

@@ -3,8 +3,12 @@
         <CoursesListFilter v-on:filter="filter" />
         <div class="row">
             <CoursesListCourseCard v-for="course in this.coursesDisplay" :key="course.id" v-bind:course="course"/>
+            <div class="no-results" :class="{ 'd-none': !noResults }">
+                <span class="material-icons search-icon">warning</span>
+                <p>Não existem resultados para a pesquisa.</p>    
+            </div>
         </div>
-        <Pagination v-on:change-page="changePage" v-bind:page="this.page" v-bind:numberOfPages="numberOfPages"/>
+        <Pagination v-on:change-page="changePage" v-bind:numberOfPages="numberOfPages"/>
     </div>
 </template>
 
@@ -12,15 +16,13 @@
 import CoursesListFilter from "../components/courses/CoursesListFilter.vue";
 import CoursesListCourseCard from "../components/courses/CoursesListCourseCard.vue";
 import Pagination from "../components/paginations/Pagination.vue";
-import Topbar from "../components/Topbar.vue";
 
 export default {
     name: "Courses",
     components: {
         CoursesListFilter,
         CoursesListCourseCard,
-        Pagination,
-        Topbar,
+        Pagination
     },
     data() {
         return {
@@ -28,6 +30,7 @@ export default {
             coursesFiltered: [],
             coursesDisplay: [],
             page: 1,
+            coursesPerPage: 8
         }
     },
     created() {
@@ -40,6 +43,11 @@ export default {
                 price: 20,
                 category: "cat1",
                 date: "05-12-2022",
+                duration: "23h 12min",
+                creator: {
+                    image: "bingus",
+                    name: "Criador 1"
+                }
             },
             {
                 id: 2,
@@ -49,6 +57,11 @@ export default {
                 price: 12,
                 category: "cat1",
                 date: "05-11-2022",
+                duration: "23h 12min",
+                creator: {
+                    image: "bingus",
+                    name: "Criador 1"
+                }
             },
             {
                 id: 3,
@@ -58,6 +71,11 @@ export default {
                 price: 50,
                 category: "cat1",
                 date: "05-10-2022",
+                duration: "23h 12min",
+                creator: {
+                    image: "bingus",
+                    name: "Criador 1"
+                }
             },
             {
                 id: 4,
@@ -67,6 +85,11 @@ export default {
                 price: 80,
                 category: "cat1",
                 date: "05-09-2022",
+                duration: "23h 12min",
+                creator: {
+                    image: "bingus",
+                    name: "Criador 1"
+                }
             },
             {
                 id: 5,
@@ -76,6 +99,11 @@ export default {
                 price: 5,
                 category: "cat1",
                 date: "05-08-2022",
+                duration: "23h 12min",
+                creator: {
+                    image: "bingus",
+                    name: "Criador 1"
+                }
             },
             {
                 id: 6,
@@ -85,6 +113,11 @@ export default {
                 price: 25,
                 category: "cat1",
                 date: "05-07-2022",
+                duration: "23h 12min",
+                creator: {
+                    image: "bingus",
+                    name: "Criador 1"
+                }
             },
             {
                 id: 7,
@@ -94,6 +127,11 @@ export default {
                 price: 20,
                 category: "cat1",
                 date: "05-06-2022",
+                duration: "23h 12min",
+                creator: {
+                    image: "bingus",
+                    name: "Criador 1"
+                }
             },
             {
                 id: 8,
@@ -103,6 +141,11 @@ export default {
                 price: 10,
                 category: "cat1",
                 date: "05-05-2022",
+                duration: "23h 12min",
+                creator: {
+                    image: "bingus",
+                    name: "Criador 1"
+                }
             },
             {
                 id: 9,
@@ -112,6 +155,11 @@ export default {
                 price: 35,
                 category: "cat1",
                 date: "05-04-2022",
+                duration: "23h 12min",
+                creator: {
+                    image: "bingus",
+                    name: "Criador 1"
+                }
             },
             {
                 id: 10,
@@ -121,6 +169,11 @@ export default {
                 price: 15,
                 category: "cat1",
                 date: "05-03-2022",
+                duration: "23h 12min",
+                creator: {
+                    image: "bingus",
+                    name: "Criador 1"
+                }
             },
             {
                 id: 11,
@@ -130,6 +183,11 @@ export default {
                 price: 2,
                 category: "cat1",
                 date: "05-01-2022",
+                duration: "23h 12min",
+                creator: {
+                    image: "bingus",
+                    name: "Criador 1"
+                }
             },
             {
                 id: 12,
@@ -139,50 +197,53 @@ export default {
                 price: 120,
                 category: "cat1",
                 date: "05-02-2022",
+                duration: "23h 12min",
+                creator: {
+                    image: "bingus",
+                    name: "Criador 1"
+                }
             }
         ];
     },
     computed: {
         numberOfPages() {
-            return Math.ceil(this.coursesFiltered.length / 6);
+            return Math.ceil(this.coursesFiltered.length / this.coursesPerPage);
+        },
+        noResults() {
+            if(this.coursesFiltered.length == 0) return true;
+            return false;  
         }
     },
     methods: {
         filter(filter) {
             this.coursesDisplay = [];
-            this.coursesFiltered = [];
+            this.coursesFiltered = [...this.courses];
 
-            if (filter.name) {
-                this.courses.forEach((c) => {
-                    if (c.name.includes(filter.name) && c.category == filter.category) {
-                        this.coursesFiltered.push(c);
-                    }
-                });
-            } else {
-                this.courses.forEach((c) => {
-                    if (c.category == filter.category) {
-                        this.coursesFiltered.push(c);
-                    }
-                });
+            if(filter.name) {
+                this.coursesFiltered = this.coursesFiltered.filter(c => c.name.toLowerCase().includes(filter.name) || c.creator.name.toLowerCase().includes(filter.name));
+            }
+
+            if(filter.category != "Todas") {
+                this.coursesFiltered = this.coursesFiltered.filter(c => c.category == filter.category);
             }
 
             switch (filter.order) {
-                case "date-new":
+                case "Mais recente":
                     this.coursesFiltered.sort((a, b) =>
                         new Date(a.date.substring(6) + "-" + a.date.substring(3, 5) + "-" + a.date.substring(0, 2)) < new Date(b.date.substring(6) + "-" + b.date.substring(3, 5) + "-" + b.date.substring(0, 2)) ? 1 : new Date(b.date.substring(6) + "-" + b.date.substring(3, 5) + "-" + b.date.substring(0, 2)) < new Date(a.date.substring(6) + "-" + a.date.substring(3, 5) + "-" + a.date.substring(0, 2)) ? -1 : 0
                     );
                     break;
-                case "date-old":
+                case "Mais antigo":
                     this.coursesFiltered.sort((a, b) =>
                         new Date( a.date.substring(6) + "-" + a.date.substring(3, 5) + "-" + a.date.substring(0, 2)) > new Date(b.date.substring(6) + "-" + b.date.substring(3, 5) + "-" + b.date.substring(0, 2) ) ? 1 : new Date( b.date.substring(6) + "-" + b.date.substring(3, 5) + "-" + b.date.substring(0, 2)) > new Date(a.date.substring(6) + "-" + a.date.substring(3, 5) + "-" + a.date.substring(0, 2)) ? -1 : 0
                     );
                     break;
-                case "price-desc":
+                case "Preço decrescente":
                     this.coursesFiltered.sort((a, b) =>
                         a.price < b.price ? 1 : b.price < a.price ? -1 : 0
                     );
                     break;
-                case "price-asc":
+                case "Preço crescente":
                     this.coursesFiltered.sort((a, b) =>
                         a.price > b.price ? 1 : b.price > a.price ? -1 : 0
                     );
@@ -191,7 +252,7 @@ export default {
                     break;
             }
 
-            for (var i = (this.page - 1) * 6; i < this.page * 6; i++) {
+            for (var i = (this.page - 1) * this.coursesPerPage; i < this.page * this.coursesPerPage; i++) {
                 if (this.coursesFiltered[i]) {
                     this.coursesDisplay.push(this.coursesFiltered[i]);
                 }
@@ -202,7 +263,7 @@ export default {
 
             this.coursesDisplay = [];
 
-            for (var i = (this.page - 1) * 6; i < this.page * 6; i++) {
+            for (var i = (this.page - 1) * this.coursesPerPage; i < this.page * this.coursesPerPage; i++) {
                 if (this.coursesFiltered[i]) {
                     this.coursesDisplay.push(this.coursesFiltered[i]);
                 }
@@ -212,8 +273,36 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
+    .courses-wrapper {
+        padding: 24px 32px 0px 32px;
+    }
+
     .row {
         margin: 0px;
+        padding: 0px 8px;
+        min-height: 70vh;
     }
+
+    .no-results {
+        padding-top: 100px;
+        width: 100%;
+        text-align: center;
+    }
+
+    .no-results .material-icons {
+        font-size: 200px;
+        color: var(--light);
+    }
+
+    .no-results p {
+        color: var(--light);
+        font-size: 40px;
+    }
+
+    @media (max-width: 800px) {
+        .courses-wrapper {
+            padding: 24px 16px 0px 16px;
+        }
+	}
 </style>

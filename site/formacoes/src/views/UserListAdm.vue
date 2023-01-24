@@ -1,8 +1,12 @@
 <template>
     <div class="user-list-wrapper">
         <UserListAdmFilter v-on:filter="filter"/>
-        <div>
+        <div class="results">
             <UserListAdmUserCard v-for="user in this.usersDisplay" :key="user.id" v-bind:user="user" v-on:changeState="changeState"/>
+            <div class="no-results" :class="{ 'd-none': !noResults }">
+                <span class="material-icons search-icon">warning</span>
+                <p>Não existem resultados para a pesquisa.</p>    
+            </div>
         </div>
         <Pagination2 v-bind:totalItems="this.usersFiltered.length" v-bind:currentPage="this.currentPage" v-bind:itemsPerPage="this.itemsPerPage" v-on:changePage="changePage"/>
     </div>
@@ -33,7 +37,7 @@ export default {
         this.users = [
             {
                 id: 1,
-                name: "Bingus",
+                name: "Bingus Bingus1234123123123",
                 username: "bingoid421",
                 type: "Admin",
                 image: "bingus",
@@ -49,8 +53,8 @@ export default {
             },
             {
                 id: 3,
-                name: "Retard",
-                username: "okbuddy",
+                name: "Nome",
+                username: "Username",
                 type: "Criador",
                 image: "bingus",
                 state: "Inativo"
@@ -65,16 +69,16 @@ export default {
             },
             {
                 id: 5,
-                name: "Caralho",
-                username: "ocrlh",
+                name: "Tiago",
+                username: "tiagotiggoa",
                 type: "Utilizador",
                 image: "bingus",
                 state: "Ativo"
             },
             {
                 id: 6,
-                name: "Yep Cock",
-                username: "andballs",
+                name: "Yep",
+                username: "yeppers",
                 type: "Utilizador",
                 image: "bingus",
                 state: "Ativo"
@@ -91,20 +95,26 @@ export default {
 
         this.usersDisplay = this.users.slice(0, this.itemsPerPage);
     },
+    computed: {
+        noResults() {
+            if(this.usersFiltered.length == 0) return true;
+            return false;  
+        }
+    },
     methods: {
         filter(filter) {
             this.usersDisplay = [];
             this.usersFiltered = [...this.users];
 
             if(filter.name) {
-                this.usersFiltered = this.usersFiltered.filter(user => user.name.toLowerCase().includes(filter.name.toLowerCase()) || user.username.toLowerCase().includes(filter.name.toLowerCase()));
+                this.usersFiltered = this.usersFiltered.filter(user => user.name.toLowerCase().includes(filter.name) || user.username.toLowerCase().includes(filter.name));
             }
 
-            if(filter.type != 'all') {
+            if(filter.type != 'Todos') {
                 this.usersFiltered = this.usersFiltered.filter(user => user.type == filter.type);
             }
 
-            if(filter.state != 'all') {
+            if(filter.state != 'Todos') {
                 this.usersFiltered = this.usersFiltered.filter(user => user.state == filter.state);
             }
 
@@ -128,4 +138,41 @@ export default {
 </script>
 
 <style scoped>
+    .user-list-wrapper {
+        padding: 24px 32px 0px 32px;
+    }
+
+    .results {
+        margin: 0px;
+        padding: 0px 8px;
+        min-height: 70vh;
+    }
+
+    .no-results {
+        padding-top: 100px;
+        width: 100%;
+        text-align: center;
+    }
+
+    .no-results .material-icons {
+        font-size: 200px;
+        color: var(--light);
+    }
+
+    .no-results p {
+        color: var(--light);
+        font-size: 40px;
+    }
+
+    @media (max-width: 1000px) {
+        .user-list-wrapper {
+            padding: 24px 24px 0px 24px;
+        }
+	}
+
+    @media (max-width: 800px) {
+        .user-list-wrapper {
+            padding: 24px 16px 0px 16px;
+        }
+	}
 </style>

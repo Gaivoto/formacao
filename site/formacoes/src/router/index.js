@@ -22,7 +22,8 @@ const router = createRouter({
     routes: [
         {
             path: '/',
-            component: Landing
+            component: Landing,
+            name: "Landing"
         },
         {
             path: '/home',

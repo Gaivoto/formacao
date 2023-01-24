@@ -5,7 +5,7 @@ async function getCurso(req, res){
         res.status(value.code).send(value.info);
     })
     .catch(error => {
-        res.status(error.code).send(error.message);
+        res.status(error.code).send(error.error);
     });
 }
 
@@ -14,7 +14,7 @@ async function getAllCursos(req, res){
         res.status(value.code).send(value.info);
     })
     .catch(error => {
-        res.status(error.code).send(error.message);
+        res.status(error.code).send(error.error);
     });
 }
 
@@ -23,25 +23,25 @@ async function createCurso(req, res){
         res.status(value.code).send(value.info);
     })
     .catch(error => {
-        res.status(error.code).send(error.message);
+        res.status(error.code).send(error.error);
     });
 }
 
 async function removeCurso(req, res){
-    serCurs.removeCurso({access_token: req.headers['authorization'].split(' ')[1], refresh_token: req.headers.refreshtoken}, req.body).then(value => {
+    serCurs.removeCurso({access_token: req.headers['authorization'].split(' ')[1], refresh_token: req.headers.refreshtoken}, req.params.id, req.body).then(value => {
         res.status(value.code).send(value.info);
     })
     .catch(error => {
-        res.status(error.code).send(error.message);
+        res.status(error.code).send(error.error);
     });
 }
 
 async function updateCurso(req, res){
-    serCurs.updateCurso({access_token: req.headers['authorization'].split(' ')[1], refresh_token: req.headers.refreshtoken}, req.body).then(value => {
+    serCurs.updateCurso({access_token: req.headers['authorization'].split(' ')[1], refresh_token: req.headers.refreshtoken}, req.params.id, req.body).then(value => {
         res.status(value.code).send(value.info);
     })
     .catch(error => {
-        res.status(error.code).send(error.message);
+        res.status(error.code).send(error.error);
     });
 }
 

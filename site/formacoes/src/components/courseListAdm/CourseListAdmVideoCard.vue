@@ -1,19 +1,24 @@
 <template>
-    <div class="video-card-container">
+    <div class="video-card">
         <div class="video-card-left">
             <img :src="this.imageUrl">
             <div>
-                <router-link :to="{ name: 'Vídeo', params: { id: this.courseId } }"><p>Nome: {{ this.video.name }}</p></router-link>
+                <router-link :to="{ name: 'Vídeo', params: { id: this.courseId } }"><p>{{ this.video.name }}</p></router-link>
+            </div>
+            <div>
                 <p>Estado: {{ this.video.state }}</p>
+                <p>Data: {{ this.video.date }}</p>
             </div>
         </div>
-        <button v-if="showButton1" v-on:click="changeState('Ativo')">ATIVAR</button>
-        <button v-if="showButton2" v-on:click="changeState('Inativo')">DESATIVAR</button>
-        <div v-if="showButton3and4" class="button-wrapper">
-            <button v-on:click="changeState('Ativo')">APROVAR</button>
-            <button v-on:click="changeState('Rejeitado')">REJEITAR</button>
+        <div class="video-card-right">
+            <button v-if="showButton1" v-on:click="changeState('Ativo')">ATIVAR</button>
+            <button v-if="showButton2" v-on:click="changeState('Inativo')">DESATIVAR</button>
+            <div v-if="showButton3and4" class="button-wrapper">
+                <button v-on:click="changeState('Ativo')">APROVAR</button>
+                <button v-on:click="changeState('Rejeitado')">REJEITAR</button>
+            </div>
+            <button v-if="showButton5" v-on:click="changeState('Pendente')">TORNAR PENDENTE</button>      
         </div>
-        <button v-if="showButton5" v-on:click="changeState('Pendente')">TORNAR PENDENTE</button>
     </div>
 </template>
 
@@ -65,12 +70,13 @@ export default {
 </script>
 
 <style scoped>
-    .video-card-container {
-        margin-left: 30px;
+    .video-card {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 16px;
+        
+        padding: 16px 40px 16px 16px;
+        background: var(--mobalytics-card);
     }
 
     .video-card-left {
@@ -80,17 +86,112 @@ export default {
     }
 
     .video-card-left img {
-        height: 80px;
+        height: 110px;
+        width: 110px;
+        border-radius: 8px;
+        object-fit: cover;
+    }
+
+    .video-card-left p {
+        color: var(--light);
+    }
+
+    .video-card-left > div > a > p {
+        color: var(--primary);
+        font-size: 20px;
+        width: 360px;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
     }
 
     button {
-        background: grey;
+        background: var(--mobalytics-back);
+        color: var(--light);
         height: 50px;
         width: 120px;
+        border: none;
+        border-radius: 8px;
+        box-shadow: rgba(20, 14, 49, 0.6) 6px 6px 4px 4px;
     }
 
     .button-wrapper {
         display: flex;
         gap: 16px;
+    }
+
+    @media (max-width: 1300px) {
+
+        .video-card-right {
+            width: 120px;
+        }
+
+        .button-wrapper {
+            display: block;
+            width: 120px;
+        }
+
+        .button-wrapper button:first-child {
+            margin-bottom: 16px;
+        }
+
+        .video-card-left > div > a > p {
+            width: 260px;
+        }
+
+        .video-card-left {
+            gap: 40px;
+        }
+    }
+
+    @media (max-width: 1150px) {
+
+        .video-card-left > div > a > p {
+            width: 200px;
+        }
+    }
+
+    @media (max-width: 1150px) {
+
+        .video-card-left img {
+            width: 90px;
+            height: 90px;
+        }
+
+        .video-card-left > div:last-child {
+            min-width: 160px;
+        }
+    }
+
+    @media (max-width: 900px) {
+
+        .video-card-left > div > a > p {
+            width: 160px;
+            -webkit-line-clamp: 3;
+        }
+
+        .video-card-left {
+            gap: 20px;
+        }
+    }
+
+    @media (max-width: 850px) {
+
+        button {
+            width: 90px;
+        }
+
+        .video-card-right {
+            width: 90px;
+        }
+
+        .button-wrapper {
+            width: 90px;
+        }
+
+        .video-card-left > div:last-child {
+            min-width: 120px;
+        }
     }
 </style>

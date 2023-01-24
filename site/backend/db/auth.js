@@ -6,7 +6,7 @@ const config = {
     server: process.env.DBHOST,
     database: process.env.DBNAME,
     trustServerCertificate: true,
-    encrypt:  true
+    encrypt: true
 };
 
 sql.connect(config, function (err) {

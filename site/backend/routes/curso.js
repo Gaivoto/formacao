@@ -10,9 +10,9 @@ router.get("/", cntrCurs.getAllCursos);
 
 router.post("/", cntrCurs.createCurso);
 
-router.put("/", cntrCurs.removeCurso);
+router.delete("/:id", cntrCurs.removeCurso);
 
-router.put("/edit/", cntrCurs.updateCurso);
+router.put("/:id", cntrCurs.updateCurso);
 
 
 module.exports = router

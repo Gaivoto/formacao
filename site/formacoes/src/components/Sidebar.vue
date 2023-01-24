@@ -1,8 +1,8 @@
 <template>
-  <aside :class="{ isExpanded: is_expanded }">
-    <div class="logo">
+  <aside :class="{ isExpanded: is_expanded }" >
+    <router-link class="logo" to="/home">
         <img src="../assets/vue.svg" alt="Vue">
-    </div>
+	</router-link>
 
     <div class="menu-toggle-wrap">
         <button class="menu-toggle" v-on:click="toggleMenu">
@@ -30,7 +30,7 @@
         </router-link>
         <router-link class="button" to="/users">
             <span class="material-icons">email</span>
-            <span class="text">ADM Users</span>
+            <span class="text">Lista de Utilizadores</span>
         </router-link>
     </div>
 
@@ -65,22 +65,23 @@ export default {
 aside {
 	display: flex;
 	flex-direction: column;
-	background-color: var(--dark);
-	color: var(--light);
 	width: calc(2rem + 32px);
 	overflow: hidden;
 	min-height: 100vh;
-	padding: 1rem;
+	padding: 32px 1rem 1rem 1rem;
 	transition: 0.3s ease-in-out;
 	margin: 0;
 	min-width: 64px;
+    box-shadow: rgba(20, 14, 49, 0.6) 0px 2px 10px 4px;
+	
+	background: var(--mobalytics-susge);
 
 	.flex {
 		flex: 1 1 0%;
 	}
 
 	.logo {
-		margin-bottom: 1rem;
+		margin-bottom: 24px;
 		img {
 			width: 2rem;
 		}
@@ -96,6 +97,7 @@ aside {
 		.menu-toggle {
 			padding: 0;
 			transition: 0.3s ease-in-out;
+			height: 28px;
 
 			.material-icons {
 				font-size: 2rem;
@@ -156,14 +158,14 @@ aside {
 			}
 
 			&:hover {
-				background-color: var(--dark-alt);
+				background-color: var(--mobalytics-back);
 				.material-icons, .text {
 					color: var(--primary);
 				}
 			}
 
 			&.router-link-exact-active {
-				background-color: var(--dark-alt);
+				background-color: var(--mobalytics-back);
 				border-right: 5px solid var(--primary);
 				.material-icons, .text {
 					color: var(--primary);

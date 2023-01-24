@@ -1,10 +1,14 @@
 <template>
     <div class="courses-list-wrapper">
         <CourseListAdmFilter v-on:filter="filter"/>
-        <div>
+        <div class="results">
             <CourseListAdmCourseCard v-for="course in this.coursesDisplay" :key="course.id" v-bind:course="course" v-on:changeStateCourse="changeStateCourse" v-on:changeStateVideo="changeStateVideo"/>
+            <div class="no-results" :class="{ 'd-none': !noResults }">
+                <span class="material-icons search-icon">warning</span>
+                <p>Não existem resultados para a pesquisa.</p>    
+            </div>
         </div>
-        <Pagination2 v-bind:totalItems="this.coursesFiltered.length" v-bind:currentPage="this.currentPage" v-bind:itemsPerPage="this.itemsPerPage" v-on:changePage="changePage"/>
+        <Pagination2 v-bind:totalItems="this.coursesFiltered.length" v-bind:itemsPerPage="this.itemsPerPage" v-on:changePage="changePage"/>
     </div>
 </template>
 
@@ -33,8 +37,8 @@ export default {
         this.courses = [
             {
                 id: 1,
-                name: "Course 1",
-                description: "desc 1 amongus",
+                name: "Course 1 Course 1 Course 1 Course 1 Course 1 Course 1 Course 1",
+                description: "desc 1 desc",
                 image: "bingus",
                 price: 20,
                 category: "cat1",
@@ -48,22 +52,24 @@ export default {
                 videos: [
                     {
                         id: 1,
-                        name: "v1",
+                        name: "urse 1 Course 1 Courseurse 1 Course 1 Coururse 1 Course 1 Coursese",
                         state: "Ativo",
-                        image: "bingus"
+                        image: "bingus",
+                        date: "12-12-2022"
                     },
                     {
                         id: 2,
-                        name: "v2",
+                        name: "urse 1 Course 1 Courseurse 1 Course 1 Courseurse 1 Course 1 Courseurse 1 Course 1 Course",
                         state: "Ativo",
-                        image: "bingus"
+                        image: "bingus",
+                        date: "12-12-2022"
                     },
                 ]
             },
             {
                 id: 2,
                 name: "Course 2",
-                description: "desc 2 amongus",
+                description: "desc 2 desc",
                 image: "bingus",
                 price: 12,
                 category: "cat13",
@@ -85,14 +91,15 @@ export default {
                         id: 4,
                         name: "v2",
                         state: "Ativo",
-                        image: "bingus"
+                        image: "bingus",
+                        date: "12-12-2022"
                     },
                 ]
             },
             {
                 id: 3,
                 name: "Course 3",
-                description: "desc 3 amongus",
+                description: "desc 3 desc",
                 image: "bingus",
                 price: 50,
                 category: "cat1",
@@ -108,20 +115,22 @@ export default {
                         id: 5,
                         name: "v1",
                         state: "Ativo",
-                        image: "bingus"
+                        image: "bingus",
+                        date: "12-12-2022"
                     },
                     {
                         id: 6,
                         name: "v2",
                         state: "Ativo",
-                        image: "bingus"
+                        image: "bingus",
+                        date: "12-12-2022"
                     },
                 ]
             },
             {
                 id: 4,
                 name: "Course 4",
-                description: "desc 4 amongus",
+                description: "desc 4 desc",
                 image: "bingus",
                 price: 80,
                 category: "cat12",
@@ -137,20 +146,22 @@ export default {
                         id: 7,
                         name: "v1",
                         state: "Ativo",
-                        image: "bingus"
+                        image: "bingus",
+                        date: "12-12-2022"
                     },
                     {
                         id: 8,
                         name: "v2",
                         state: "Ativo",
-                        image: "bingus"
+                        image: "bingus",
+                        date: "12-12-2022"
                     },
                 ]
             },
             {
                 id: 5,
                 name: "Course 5",
-                description: "desc 5 amongus",
+                description: "desc 5 desc",
                 image: "bingus",
                 price: 5,
                 category: "cat1",
@@ -166,20 +177,22 @@ export default {
                         id: 9,
                         name: "v1",
                         state: "Ativo",
-                        image: "bingus"
+                        image: "bingus",
+                        date: "12-12-2022"
                     },
                     {
                         id: 10,
                         name: "v2",
                         state: "Ativo",
-                        image: "bingus"
+                        image: "bingus",
+                        date: "12-12-2022"
                     },
                 ]
             },
             {
                 id: 6,
                 name: "Course 6",
-                description: "desc 6 amongus",
+                description: "desc 6 desc",
                 image: "bingus",
                 price: 25,
                 category: "cat1",
@@ -195,20 +208,22 @@ export default {
                         id: 11,
                         name: "v1",
                         state: "Ativo",
-                        image: "bingus"
+                        image: "bingus",
+                        date: "12-12-2022"
                     },
                     {
                         id: 12,
                         name: "v2",
                         state: "Ativo",
-                        image: "bingus"
+                        image: "bingus",
+                        date: "12-12-2022"
                     },
                 ]
             },
             {
                 id: 7,
                 name: "Course 7",
-                description: "desc 7 amongus",
+                description: "desc 7 desc",
                 image: "bingus",
                 price: 20,
                 category: "cat10",
@@ -224,20 +239,22 @@ export default {
                         id: 13,
                         name: "v1",
                         state: "Ativo",
-                        image: "bingus"
+                        image: "bingus",
+                        date: "12-12-2022"
                     },
                     {
                         id: 14,
                         name: "v2",
                         state: "Ativo",
-                        image: "bingus"
+                        image: "bingus",
+                        date: "12-12-2022"
                     },
                 ]
             },
             {
                 id: 8,
                 name: "Course 8",
-                description: "desc 8 amongus",
+                description: "desc 8 desc",
                 image: "bingus",
                 price: 10,
                 category: "cat1",
@@ -253,20 +270,22 @@ export default {
                         id: 15,
                         name: "v1",
                         state: "Ativo",
-                        image: "bingus"
+                        image: "bingus",
+                        date: "12-12-2022"
                     },
                     {
                         id: 16,
                         name: "v2",
                         state: "Ativo",
-                        image: "bingus"
+                        image: "bingus",
+                        date: "12-12-2022"
                     },
                 ]
             },
             {
                 id: 9,
                 name: "Course 9",
-                description: "desc 9 amongus",
+                description: "desc 9 desc",
                 image: "bingus",
                 price: 35,
                 category: "cat11",
@@ -282,20 +301,22 @@ export default {
                         id: 17,
                         name: "v1",
                         state: "Ativo",
-                        image: "bingus"
+                        image: "bingus",
+                        date: "12-12-2022"
                     },
                     {
                         id: 18,
                         name: "v2",
                         state: "Ativo",
-                        image: "bingus"
+                        image: "bingus",
+                        date: "12-12-2022"
                     },
                 ]
             },
             {
                 id: 10,
                 name: "Course 10",
-                description: "desc 10 amongus",
+                description: "desc 10 desc",
                 image: "bingus",
                 price: 15,
                 category: "cat1",
@@ -311,20 +332,22 @@ export default {
                         id: 19,
                         name: "v1",
                         state: "Ativo",
-                        image: "bingus"
+                        image: "bingus",
+                        date: "12-12-2022"
                     },
                     {
                         id: 20,
                         name: "v2",
                         state: "Ativo",
-                        image: "bingus"
+                        image: "bingus",
+                        date: "12-12-2022"
                     },
                 ]
             },
             {
                 id: 11,
                 name: "Course 11",
-                description: "desc 11 amongus",
+                description: "desc 11 desc",
                 image: "bingus",
                 price: 2,
                 category: "cat1",
@@ -340,23 +363,25 @@ export default {
                         id: 21,
                         name: "v1",
                         state: "Ativo",
-                        image: "bingus"
+                        image: "bingus",
+                        date: "12-12-2022"
                     },
                     {
                         id: 22,
                         name: "v2",
                         state: "Ativo",
-                        image: "bingus"
+                        image: "bingus",
+                        date: "12-12-2022"
                     },
                 ]
             },
             {
                 id: 12,
                 name: "Course 12",
-                description: "desc 12 amongus",
+                description: "desc 12 desc",
                 image: "bingus",
                 price: 120,
-                category: "cat1",
+                category: "cajsjd asdf asdf adf",
                 date: "05-02-2022",
                 subscriptions: 0,
                 creator: {
@@ -375,7 +400,8 @@ export default {
                         id: 24,
                         name: "v2",
                         state: "Ativo",
-                        image: "bingus"
+                        image: "bingus",
+                        date: "12-12-2022"
                     },
                 ]
             }
@@ -383,34 +409,52 @@ export default {
 
         this.coursesDisplay = this.courses.slice(0, this.itemsPerPage);
     },
+    computed: {
+        noResults() {
+            if(this.coursesFiltered.length == 0) return true;
+            return false;  
+        }
+    },
     methods: {
         filter(filter) {
             this.coursesDisplay = [];
             this.coursesFiltered = [...this.courses];
 
-            if(filter.name) {
-                this.coursesFiltered = this.coursesFiltered.filter(course => course.name.toLowerCase().includes(filter.name.toLowerCase()) || course.creator.name.toLowerCase().includes(filter.name.toLowerCase()));
+            if(filter.state != 'Todos') {
+                if(filter.state == "Pendente") {
+                    this.coursesFiltered = [];
+                    this.courses.forEach(course => {
+                        if(course.state == "Pendente") this.coursesFiltered.push(course);
+                        else {
+                            course.videos.forEach(vid => {
+                                if(vid.state == "Pendente") this.coursesFiltered.push(course);
+                            });    
+                        }
+                    });
+                } else {
+                    this.coursesFiltered = this.courses.filter(course => course.state == filter.state);
+                }
             }
 
-            if(filter.category != 'all') {
+            if(filter.name) {
+                this.coursesFiltered = this.coursesFiltered.filter(course => course.name.toLowerCase().includes(filter.name) || course.creator.name.toLowerCase().includes(filter.name));
+            }
+
+            if(filter.category != 'Todas') {
                 this.coursesFiltered = this.coursesFiltered.filter(course => course.category == filter.category);
             }
 
-            if(filter.state != 'all') {
-                this.coursesFiltered = this.coursesFiltered.filter(course => course.state == filter.state);
-            }
-
             switch(filter.order) {
-                case "price-desc":
+                case "Preço decrescente":
                     this.coursesFiltered.sort((a, b) => a.price < b.price ? 1 : (b.price < a.price ? -1 : 0));
                     break;
-                case "price-asc":
+                case "Preço crescente":
                     this.coursesFiltered.sort((a, b) => (a.price > b.price ? 1 : (b.price > a.price) ? -1 : 0));
                     break;
-                case "subs-desc":
+                case "Inscs. decrescente":
                     this.coursesFiltered.sort((a, b) => a.subscriptions < b.subscriptions ? 1 : (b.subscriptions < a.subscriptions ? -1 : 0));
                     break;
-                case "subs-asc":
+                case "Inscs. crescente":
                     this.coursesFiltered.sort((a, b) => a.subscriptions > b.subscriptions ? 1 : (b.subscriptions > a.subscriptions ? -1 : 0));
                     break;
                 default:
@@ -456,4 +500,41 @@ export default {
 </script>
 
 <style scoped>
+    .courses-list-wrapper {
+        padding: 24px 32px 0px 32px;
+    }
+
+    .results { 
+        margin: 0px;
+        padding: 0px 8px;
+        min-height: 70vh;
+    }
+
+    .no-results {
+        padding-top: 100px;
+        width: 100%;
+        text-align: center;
+    }
+
+    .no-results .material-icons {
+        font-size: 200px;
+        color: var(--light);
+    }
+
+    .no-results p {
+        color: var(--light);
+        font-size: 40px;
+    }
+
+    @media (max-width: 1050px) {
+        .results {
+            padding: 0px;
+        }
+	}
+
+    @media (max-width: 800px) {
+        .courses-list-wrapper {
+            padding: 24px 16px 0px 16px;
+        }
+	}
 </style>

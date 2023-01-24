@@ -112,4 +112,10 @@ content-type: application/json
     "description": "c",
     "price": 999,
     "image": "./assets/d"
+GET http://localhost:3000/api/courses/1
+content-type: application/json
+
+{
+    "username": "dre",
+    "password": "123"
 }

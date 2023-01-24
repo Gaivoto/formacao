@@ -45,7 +45,7 @@ async function getAllCursos() {
 async function createCurso(id, body) {
     return new Promise((resolve, reject) => {
 
-        const slct = `INSERT INTO Course (id, name, category, description, date, state, price, image, id_creator, rating) VALUES ('${id}', '${body.name}', '${body.category}', '${body.description}', '${body.date}', '${body.state}', ${body.price}, '${body.image}', '${body.id_creator}', 0)`;
+        const slct = `INSERT INTO Course (id, name, category, description, date, state, price, image, id_creator, rating) VALUES ('${id}', '${body.name}', '${body.category}', '${body.description}', '${body.date}', 'Pendente', ${body.price}, '${body.image}', '${body.id_creator}', 0)`;
         pool.query(slct, (err, res) => {
             if(!err) {
                 resolve(res.recordset);
@@ -59,11 +59,7 @@ async function createCurso(id, body) {
 async function removeCurso(body) {
     return new Promise((resolve, reject) => {
 
-        let id = body.id;
-        let state = body.state;
-        let slct
-
-        slct = `UPDATE Course SET [state] = '${state}' WHERE [id] = '${id}'`;
+        let slct = `UPDATE Course SET [state] = '${body.state}' WHERE [id] = '${body.id}'`;
         
         pool.query(slct, (err, res) => {
             if(!err) {
@@ -78,19 +74,7 @@ async function removeCurso(body) {
 async function updateCurso(body) {
     return new Promise((resolve, reject) => {
 
-        let id = body.id;
-        let name = body.name;
-        let category = body.category;
-        let description = body.description;
-        let price = body.price;
-        let image = body.image;
-        
-
-        if(id !== null || name !== null || category !== null || description !== null || price !== null || image !== null) {
-            slct = `UPDATE Course SET [name] = '${name}', [category] = '${category}', [description] = '${description}', [price] = ${price}, [image] = '${image}'  WHERE [id] = '${id}'`;
-        } else {
-            reject({ code: 401, message: "Query has empty fields" })
-        }
+        slct = `UPDATE Course SET [name] = '${body.name}', [category] = '${body.category}', [description] = '${body.description}', [price] = ${body.price}, [image] = '${body.image}'  WHERE [id] = '${body.id}'`;
 
         pool.query(slct, (err, res) => {
             if(!err) {
@@ -128,6 +112,18 @@ async function isCourseFromUser(idC, idU) {
     });
 }
 
+async function isNameTaken(name) {
+    return new Promise((resolve, reject) => {
+        const slct = `SELECT * FROM [Course] WHERE [name] = '${name}'`;
+        pool.query(slct, (err, res) => {
+            if(!err) {
+                resolve(res.recordset);
+            } else {
+                reject(err.message);
+            }
+        });
+    });
+}
 
 
 module.exports = {
@@ -138,4 +134,5 @@ module.exports = {
     updateCurso: updateCurso,
     getUserCourses: getUserCourses,
     isCourseFromUser: isCourseFromUser,
+    isNameTaken: isNameTaken,
 }
