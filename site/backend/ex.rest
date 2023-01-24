@@ -2,42 +2,47 @@ POST http://localhost:3000/api/auth/login
 content-type: application/json
 
 {
-    "username": "vini",
-    "password": "16785"
+    "username": "adm",
+    "password": "123"
 }
 
 ###
-DELETE http://localhost:3000//api/auth/logout/
+
+GET http://localhost:3000/api/users/
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk4NDEwMzEyLWE0YjQtNGE2YS1iMDQ4LTI3NTJiODIxMGUyMyIsInVzZXJuYW1lIjoiYWRtIiwidHlwZSI6ImFkbWluIiwiaWF0IjoxNjc0NTc1NDY5LCJleHAiOjE2NzQ1ODk4Njl9._IMrjIiHFbBSJk_J0mP2zvJA9d-TwWQTWD2l_dDqz6I
+refreshtoken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk4NDEwMzEyLWE0YjQtNGE2YS1iMDQ4LTI3NTJiODIxMGUyMyIsInVzZXJuYW1lIjoiYWRtIiwidHlwZSI6ImFkbWluIiwiaWF0IjoxNjc0NTc1NDY5fQ.hXKUuPyEJvbEQREpM-WccNMuH_0iXMLBMQdaXGYGKZw
+
+###
+DELETE http://localhost:3000/api/auth/logout/
 refreshtoken: {{refreshKey}}
 
 ###
 GET http://localhost:3000/api/users/17
-authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjIiLCJ1c2VybmFtZSI6ImJyIiwidHlwZSI6ImFkbWluIiwiaWF0IjoxNjczOTY3ODgwLCJleHAiOjE2NzM5ODIyODB9.TxKY685CCusownx7paZyPFB9PJbFLNw66D64Z7Gave4
-refreshtoken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjIiLCJ1c2VybmFtZSI6ImJyIiwidHlwZSI6ImFkbWluIiwiaWF0IjoxNjczOTY3ODgwfQ.Vd1Gf9-_5ufE92TU86Mr5CV5xkT0HxqyoHZvhCVTbew
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk4NDEwMzEyLWE0YjQtNGE2YS1iMDQ4LTI3NTJiODIxMGUyMyIsInVzZXJuYW1lIjoiYWRtIiwidHlwZSI6ImFkbWluIiwiaWF0IjoxNjc0NTc1NDY5LCJleHAiOjE2NzQ1ODk4Njl9._IMrjIiHFbBSJk_J0mP2zvJA9d-TwWQTWD2l_dDqz6I
+refreshtoken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk4NDEwMzEyLWE0YjQtNGE2YS1iMDQ4LTI3NTJiODIxMGUyMyIsInVzZXJuYW1lIjoiYWRtIiwidHlwZSI6ImFkbWluIiwiaWF0IjoxNjc0NTc1NDY5fQ.hXKUuPyEJvbEQREpM-WccNMuH_0iXMLBMQdaXGYGKZw
 
 ###
-PUT http://localhost:3000/api/users/updateuser/
-authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQiLCJ1c2VybmFtZSI6ImRyZSIsImlhdCI6MTY3Mzg3NjgzMSwiZXhwIjoxNjczODg3NjMxfQ.Qd5spZOEHkwOjJvUVTB9iOBWLA8vSarN3sBctKWUSks
-refreshtoken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQiLCJ1c2VybmFtZSI6ImRyZSIsImlhdCI6MTY3Mzg3NjgzMX0.5uYIXp1AgO48pKcqU299hHMTut6mcd_rNVgQg0HJbbo
+PUT http://localhost:3000/api/users/
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImY0OThiYWQwLTk3ZTUtNDAzNC1iYWE1LWU1MGQyN2I2YWU2MiIsInVzZXJuYW1lIjoicm9iZXJ0b2NhcmxvczEyMzQ1IiwidHlwZSI6InVzZXIiLCJpYXQiOjE2NzQ1NjY4MDksImV4cCI6MTY3NDU4MTIwOX0.utJbwHrF9U803lH5Bq3yvQL3TQV9NtS2O4YXetYXiF8
+refreshtoken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImY0OThiYWQwLTk3ZTUtNDAzNC1iYWE1LWU1MGQyN2I2YWU2MiIsInVzZXJuYW1lIjoicm9iZXJ0b2NhcmxvczEyMzQ1IiwidHlwZSI6InVzZXIiLCJpYXQiOjE2NzQ1NjY4MDl9.ZUdVcL04WBRmKQKbJFcLw9VGquVTxptZ1HLT4G3CBNY
 content-type: application/json
 
 {
-    "id": "5",
     "name": "andrezito",
-    "description": "calvissimo KKKKKKKKKKKKK",
+    "description": "calvo",
     "price": null,
     "image": "testeimagemandre",
-    "type": "admin"
+    "type": "user"
 }
 
 
 ###
-POST http://localhost:3000/api/users/createUser
+POST http://localhost:3000/api/users/
 content-type: application/json
 
 {
-    "username": "vini",
-    "password": "1678",
+    "username": "adm",
+    "password": "123",
     "name": "testeste",
     "email": "tevez@gmail.com",
     "description": "jogador argentino nojento",

@@ -32,9 +32,22 @@ async function getUser(id) {
     });
 }
 
-async function updateUser(user) {
+async function getAllUsers() {
     return new Promise((resolve, reject) => {
-        const updt = `UPDATE [Users] SET [name] = '${user.name}', [description] = '${user.description}', [price] = ${user.price}, [image] = '${user.image}' WHERE id = '${user.id}'`;
+        const slct = `SELECT * FROM [Users]`;
+        pool.query(slct, (err, res) => {
+            if(!err) {
+                resolve(res.recordset);
+            } else {
+                reject(err.message);
+            }
+        });
+    });
+}
+
+async function updateUser(user, id) {
+    return new Promise((resolve, reject) => {
+        const updt = `UPDATE [Users] SET [name] = '${user.name}', [description] = '${user.description}', [price] = ${user.price}, [image] = '${user.image}' WHERE id = '${id}'`;
         pool.query(updt, (err, res) => {
             if (!err) {
                 resolve(res);
@@ -104,5 +117,6 @@ module.exports = {
     createUser: createUser,
     selectUserByUsername: selectUserByUsername,
     changeUserState: changeUserState,
-    selectUserById: selectUserById
+    selectUserById: selectUserById,
+    getAllUsers: getAllUsers
 }

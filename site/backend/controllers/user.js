@@ -1,7 +1,17 @@
 const serUser = require('../services/user.js');
 
 async function getUser(req, res){
-    serUser.getUser({access_token: req.headers['authorization'].split(' ')[1], refresh_token: req.headers.refreshtoken}, req.params.id).then(value => {
+serUser.getUser({access_token: req.headers['authorization'].split(' ')[1], refresh_token: req.headers.refreshtoken}, req.params.id).then(value => {
+        res.status(value.code).send(value.info);
+    })
+    .catch(error => {
+        console.log(req.headers['authorization'].split(' ')[1])
+        res.status(error.code).send(error.error);
+    });
+}
+
+async function getAllUsers(req, res){
+    serUser.getAllUsers({access_token: req.headers['authorization'].split(' ')[1], refresh_token: req.headers.refreshtoken}).then(value => {
         res.status(value.code).send(value.info);
     })
     .catch(error => {
@@ -20,7 +30,7 @@ async function updateUser(req, res) {
 
 async function createUser(req, res) {
     serUser.createUser(req.body).then(value => {
-        res.status(value.code).send({user: value.user, access_token: value.access_token, refresh_token: value.refresh_token});
+        res.status(value.code).send(value.info);
     })
     .catch(error => {
         res.status(error.code).send(error.error);
@@ -61,6 +71,7 @@ module.exports = {
     getUser: getUser,
     updateUser: updateUser,
     changeUserState: changeUserState,
-    profilePage: profilePage
+    profilePage: profilePage,
+    getAllUsers: getAllUsers
     
 }

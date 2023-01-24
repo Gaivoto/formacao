@@ -15,7 +15,7 @@ async function getUser(tokens, id) {
             let info = value;
             //nigga
             dbUser.selectUserById(id).then(value2 => {
-                value2.acess_token = info.acess_token;
+                value2.access_token = info.access_token;
                 dbCour.getUserCourses(id).then(value3 => {
                     value2[0].courses = value3;
                     resolve({ code: 200, info: value2 });
@@ -37,12 +37,37 @@ async function getUser(tokens, id) {
     })
 }
 
+async function getAllUsers(tokens) {
+    return new Promise((resolve, reject) => {
+        console.log(tokens.access_token, tokens.refresh_token)
+        utils.validateToken(tokens.access_token, tokens.refresh_token).then(value => {
+            let info = value;
+            if (info.user.type == "admin") {
+                dbUser.getAllUsers().then(value2 => {
+                    info.users = value2;
+                    resolve({ code: 200, info: info });
+                })
+                .catch(error => {
+                    console.log(error);
+                    reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                })
+            } else {
+                reject({ code: 400, error: { message: "O user que tentou completar essa ação não é administrador." } });
+            }
+        })
+        .catch(error => {
+            console.log(error);
+            reject({ code: 401, error: { message: "Token inválido." } });
+        })
+    })
+}
+
 async function updateUser(tokens, user) {
     return new Promise((resolve, reject) => {
         utils.validateToken(tokens.access_token, tokens.refresh_token).then(value => {
             let info = value;
             dbUser.selectUserById(id).then(value2 => {
-                value2.acess_token = info.acess_token;
+                value2.access_token = info.access_token;
                 dbCour.getUserCourses(id).then(value3 => {
                     value2[0].courses = value3;
                     resolve({ code: 200, info: value2 });
@@ -58,19 +83,18 @@ async function updateUser(tokens, user) {
     })
 }
 
+
+//da pra alterar username nessa funçao e tem q verificar se o username ja existe, e tirar price de tudo daqui
 async function updateUser(tokens, id, user) {
     return new Promise((resolve, reject) => {
         utils.validateToken(tokens.access_token, tokens.refresh_token).then(value => {
             let info = value;
             if (info.user.id == id) {
-                if (user.name == "" || user.description == "" || user.image == "" || user.price == null) {
+                if (user.name == "" || user.description == "" || user.image == "") {
                     reject({ code: 400, error: { message: "A alteração não pode ser feita, porque há valores vazios." }});
                 }
-                else if (user.type != "creator" && user.price != null) {
-                    reject({ code: 400, error: { message: "A alteração não pode ser feita, porque tentaste adicionar um preço a um utilizador que não é um criador." }});
-                }
                 else {
-                    dbUser.updateUser(user).then(value => {
+                    dbUser.updateUser(user, id).then(value => {
                         resolve({ code: 200, info: info });
                     })
                     .catch(error => {
@@ -94,7 +118,6 @@ async function changeUserState(tokens, id, user) {
         utils.validateToken(tokens.access_token, tokens.refresh_token).then(value => {
             let info = value;
             if (info.user.type != 'admin') {
-
                 dbUser.changeUserState(user.state, id).then(value => {
                     resolve({ code: 200, info: info });
                 })
@@ -118,12 +141,16 @@ async function createUser(user) {
         dbUser.selectUserByUsername(user.username).then(async value => {
             if (value.length == 0) {
                 let idGen = uuid.v4();
-                dbUser.createUser(idGen, user).then(value => {
-                    resolve({ code: 201, info: { message: "User registado com sucesso."} });
-                }).catch(error => {
-                    console.log(error);
-                    reject({ code: 400, error: { message: "Algo correu mal com a query de insert." }});
-                });
+                try {
+                    user.password = await bcrypt.hash(user.password, 10)
+                    dbUser.createUser(idGen, user).then(value => {
+                        resolve({ code: 201, info: { message: "User registado com sucesso."} });
+                    }).catch(error => {
+                        reject({ code: 400, message: "Algo correu mal com a query de insert." });
+                    });
+                } catch {
+                    reject({ code: 400, message: "Erro ao encriptar a palavra-passe."})
+                }
             } else {
                 reject({ code: 400, error: { message: 'Já tem um user com esse username.' }});
             }
@@ -155,6 +182,7 @@ async function createUser(user) {
 }*/
 
 module.exports = {
+    getAllUsers: getAllUsers,
     getUser: getUser,
     updateUser: updateUser,
     createUser: createUser,
