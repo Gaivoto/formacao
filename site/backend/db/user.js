@@ -45,9 +45,22 @@ async function selectUserById(id) {
     });
 }
 
-async function updateUser(user) {
+async function getAllUsers() {
     return new Promise((resolve, reject) => {
-        const updt = `UPDATE [Users] SET [name] = '${user.name}', [description] = '${user.description}', [price] = ${user.price}, [image] = '${user.image}' WHERE id = '${user.id}'`;
+        const slct = `SELECT * FROM [Users]`;
+        pool.query(slct, (err, res) => {
+            if(!err) {
+                resolve(res.recordset);
+            } else {
+                reject(err.message);
+            }
+        });
+    });
+}
+
+async function updateUser(user, id) {
+    return new Promise((resolve, reject) => {
+        const updt = `UPDATE [Users] SET [name] = '${user.name}', [description] = '${user.description}', [price] = ${user.price}, [image] = '${user.image}' WHERE id = '${id}'`;
         pool.query(updt, (err, res) => {
             if (!err) {
                 resolve(res);
@@ -98,25 +111,26 @@ async function changeUserState(state, id) {
     });
 }
 
-async function isIDTaken(id) {
+async function selectUserById(id) {
     return new Promise((resolve, reject) => {
-        const slct = `SELECT * FROM [Users] WHERE [id] = '${id}'`;
-        pool.query(slct, (err, res) => {
+        const slct = `SELECT * FROM  [Users] WHERE [id] = '${id}'`;
+        pool.query(slct, (err,res) => {
             if(!err) {
                 resolve(res.recordset);
             } else {
-                reject(err.message);
+                reject(err.message)
             }
         });
     });
 }
 
 module.exports = {
-    getAllUsers: getAllUsers,
-    selectUserById: selectUserById,
+    //createUser: createUser,
+
     updateUser: updateUser,
     createUser: createUser,
     selectUserByUsername: selectUserByUsername,
     changeUserState: changeUserState,
-    isIDTaken: isIDTaken
+    selectUserById: selectUserById,
+    getAllUsers: getAllUsers
 }

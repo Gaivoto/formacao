@@ -1,6 +1,7 @@
 const uuid = require('uuid');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto-js');
+const bcrypt = require('bcrypt');
 
 const utils = require('../utils/index.js');
 const dbUser = require('../db/user.js');
@@ -52,19 +53,45 @@ async function getUser(tokens, id) {
     });
 }
 
+async function getAllUsers(tokens) {
+    return new Promise((resolve, reject) => {
+        console.log(tokens.access_token, tokens.refresh_token)
+        utils.validateToken(tokens.access_token, tokens.refresh_token).then(value => {
+            let info = value;
+            if (info.user.type == "admin") {
+                dbUser.getAllUsers().then(value2 => {
+                    info.users = value2;
+                    resolve({ code: 200, info: info });
+                })
+                .catch(error => {
+                    console.log(error);
+                    reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                })
+            } else {
+                reject({ code: 400, error: { message: "O user que tentou completar essa ação não é administrador." } });
+            }
+        })
+        .catch(error => {
+            console.log(error);
+            reject({ code: 401, error: { message: "Token inválido." } });
+        })
+    })
+}
+
+
+
+
+//da pra alterar username nessa funçao e tem q verificar se o username ja existe, e tirar price de tudo daqui
 async function updateUser(tokens, id, user) {
     return new Promise((resolve, reject) => {
         utils.validateToken(tokens.access_token, tokens.refresh_token).then(value => {
             let info = value;
             if (info.user.id == id) {
-                if (user.name == "" || user.description == "" || user.image == "" || user.price == null) {
+                if (user.name == "" || user.description == "" || user.image == "") {
                     reject({ code: 400, error: { message: "A alteração não pode ser feita, porque há valores vazios." }});
                 }
-                else if (user.type != "creator" && user.price != null) {
-                    reject({ code: 400, error: { message: "A alteração não pode ser feita, porque tentaste adicionar um preço a um utilizador que não é um criador." }});
-                }
                 else {
-                    dbUser.updateUser(user).then(value => {
+                    dbUser.updateUser(user, id).then(value => {
                         resolve({ code: 200, info: info });
                     })
                     .catch(error => {
@@ -113,7 +140,7 @@ async function changeUserState(tokens, id, user) {
 
 async function createUser(user) {
     return new Promise((resolve, reject) => {
-        dbUser.selectUserByUsername(user.username).then(value => {
+        dbUser.selectUserByUsername(user.username).then(async value => {
             if (value.length == 0) {
 
                 dbUser.getAllUsers().then(value2 => {
@@ -153,8 +180,9 @@ async function createUser(user) {
 }
 
 module.exports = {
+    getAllUsers: getAllUsers,
     getUser: getUser,
     updateUser: updateUser,
     createUser: createUser,
-    changeUserState: changeUserState
+    changeUserState: changeUserState,
 }
