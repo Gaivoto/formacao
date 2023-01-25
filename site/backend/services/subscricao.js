@@ -121,8 +121,6 @@ async function createSubscricao(tokens, body) {
             let id
             let existe
 
-            console.log("CHECK ", info);
-
             if(body.id_subscriber !== info.user.id) {
                 reject({ code: 400, error: {message: "Não pode subscrever outros utilizadores." }});
             } else {
