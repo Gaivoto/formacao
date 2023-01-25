@@ -78,9 +78,6 @@ async function getAllUsers(tokens) {
     })
 }
 
-
-
-
 //da pra alterar username nessa funçao e tem q verificar se o username ja existe, e tirar price de tudo daqui
 async function updateUser(tokens, id, user) {
     return new Promise((resolve, reject) => {

@@ -1,7 +1,7 @@
 <template>
     <div class="wrapper">
         <div class="topbar-text">
-            <p class="page-name logo">Formações Johnson - </p>
+            <p class="page-name logo">Guide Line - </p>
             <p class="page-name"> {{ this.$route.name }}</p>
         </div>
 
@@ -73,7 +73,7 @@ export default {
         this.isMounted = true;
     }, 
     created() {
-        this.user.username = "Amogus Sus";
+        this.user.username = "Utilizador teste";
         this.user.image = "bingus";
 
         this.notifications = [

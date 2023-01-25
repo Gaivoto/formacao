@@ -125,8 +125,6 @@ async function selectUserById(id) {
 }
 
 module.exports = {
-    //createUser: createUser,
-
     updateUser: updateUser,
     createUser: createUser,
     selectUserByUsername: selectUserByUsername,
