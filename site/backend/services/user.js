@@ -55,7 +55,6 @@ async function getUser(tokens, id) {
 
 async function getAllUsers(tokens) {
     return new Promise((resolve, reject) => {
-        console.log(tokens.access_token, tokens.refresh_token)
         utils.validateToken(tokens.access_token, tokens.refresh_token).then(value => {
             let info = value;
             if (info.user.type == "admin") {
@@ -68,7 +67,7 @@ async function getAllUsers(tokens) {
                     reject({ code: 400, error: { message: "Algo correu mal com a query." } });
                 })
             } else {
-                reject({ code: 400, error: { message: "O user que tentou completar essa ação não é administrador." } });
+                reject({ code: 403, error: { message: "O user que tentou completar essa ação não é administrador." } });
             }
         })
         .catch(error => {
@@ -77,9 +76,6 @@ async function getAllUsers(tokens) {
         })
     })
 }
-
-
-
 
 //da pra alterar username nessa funçao e tem q verificar se o username ja existe, e tirar price de tudo daqui
 async function updateUser(tokens, id, user) {
@@ -115,7 +111,6 @@ async function changeUserState(tokens, id, user) {
         utils.validateToken(tokens.access_token, tokens.refresh_token).then(value => {
             let info = value;
             if (info.user.type == 'admin') {
-
                 if(user.state == "Inativo" || user.state == "Ativo") {
                     dbUser.changeUserState(user.state, id).then(value => {
                         resolve({ code: 200, info: info });
