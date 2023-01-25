@@ -56,6 +56,7 @@ async function updateNotifFromUser(tokens, id) {
 }
 
 
+
 module.exports = {
     getAllNotifFromUser: getAllNotifFromUser,
     updateNotifFromUser: updateNotifFromUser
