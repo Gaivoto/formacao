@@ -63,6 +63,7 @@ async function getAllUsers(tokens) {
                 })
             } else {
                 reject({ code: 403, error: { message: "O user que tentou completar essa ação não é administrador." } });
+                reject({ code: 403, error: { message: "O user que tentou completar essa ação não é administrador." } });
             }
         })
         .catch(error => {

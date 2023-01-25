@@ -4,6 +4,7 @@ const uuid = require('uuid');
 const dbCurs = require('../db/curso.js');
 const dbUser = require('../db/user.js');
 const dbVide = require('../db/video.js');
+const dbNotif = require('../db/notification.js');
 
 async function getCurso(headers, id) {
     return new Promise((resolve, reject) => {
@@ -267,7 +268,7 @@ async function updateStateCursoAdm(tokens, id, body) {
                 if(value1.length <= 0) {
                     reject({ code: 404, error: {message: "Curso não existe." }});
                 } else {
-
+                    
                     if(info.user.type !== "admin") {
                         reject({ code: 403, error: {message: "Não possui permissão para esta operação." }});
                     } else {
@@ -275,8 +276,30 @@ async function updateStateCursoAdm(tokens, id, body) {
                         if(body.state === "Ativo" || body.state === "Inativo" || body.state === "Pendente" || body.state === "Rejeitado") {
 
                             dbCurs.updateStateCurso(body).then(value3 => {
-                                info.message = "Estado alterado com sucesso.";
-                                resolve({ code: 200, info: info });
+                                //ainda falta dar uma olhadinha em verificacoes aqui, por exemplo quando uma pessoa se inscreveu em um curso mas ja acabou a subscricao ele nao deve mais receber notificacoes
+                                //aqui vai entrar a notificaçao pro dono do curso e se for tornado ativo as pessoas que seguem aquele criador tambem vao receber aquele curso
+                                //ainda falta mandar aqui tambem uma notificacao para o user que segue esse criador CASO o estado fique ativo
+                                let notif = {}
+                                notif.id = uuid.v4();
+                                notif.message = 'O estado do curso ' + value1[0].name + ' foi alterado para ' + body.state + '.';
+
+                                data = new Date().toLocaleDateString();
+                                dias = data.split('/')[0];
+                                mes = data.split('/')[1];
+                                ano = data.split('/')[2];
+                                notif.date = mes + '-' + dias + '-' + ano
+
+                                notif.id_user = value1[0].id_creator;
+                                notif.id_course = id;
+                                notif.id_video = null;
+                                dbNotif.createNotification(notif).then(value4 => {
+                                    info.message = "Estado alterado com sucesso.";
+                                    resolve({ code: 200, info: info });
+                                })
+                                .catch(error => {
+                                    console.log(error);
+                                    reject( { code: 400, error: {message: "Erro ao executar a query da notificação."}})
+                                })
                             })
                             .catch(error => {
                                 console.log(error);
