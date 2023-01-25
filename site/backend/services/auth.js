@@ -11,12 +11,12 @@ async function login(username, password) {
             reject({ code: 400, message: 'Username ou password vazios.' });
         } else {
             dbAuth.authenticateUser(username, password).then(async value => {
-                try {
+                /*try {
                     if (await bcrypt.compare(password, value[0].password)) {
-                        console.log("entrou aqui4")
+                        
                         if (value.length == 0) {
                             reject({ code: 401, error: { message: 'Utilizador/password inválido.' } });
-                        } else {
+                        } else {*/
                             let user = { id: value[0].id, username: value[0].username, type: value[0].type, type: value[0].type };
                             let access_token = jwt.sign(user, process.env.ACCESS_SECRET, { expiresIn: '240m' });
                             let refresh_token = jwt.sign(user, process.env.REFRESH_SECRET);
@@ -27,13 +27,13 @@ async function login(username, password) {
                                 console.log(error);
                                 reject({ code: 400, message: 'Algo correu mal com a query.' });
                             });
-                        }
+                        /*}
                     } else {
                         reject({ code: 400, error: { message: 'Username ou password inválido.' } });
                     }
                 } catch {
                     reject({ code: 400, message: 'Algo correu mal com a query.' });
-                }
+                }*/
             })
                 .catch(error => {
                     console.log(error);

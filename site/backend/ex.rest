@@ -8,8 +8,33 @@ content-type: application/json
     "password": "123" 
 }
 
-### VIDEOS
+### SUBSCRIPTION
 
+GET {{hostname}}/api/subscricoes/1
+authorization: {{apiKey}}
+refreshtoken: {{refreshKey}}
+
+###
+
+GET {{hostname}}/api/subscricoes/
+authorization: {{apiKey}}
+refreshtoken: {{refreshKey}}
+
+###
+
+POST {{hostname}}/api/subscricoes/
+authorization: {{apiKey}}
+refreshtoken: {{refreshKey}}
+content-type: application/json
+
+{
+    "id_subscriber": "4", 
+    "id_subscribed": "1", 
+    "start_date": "2023-01-25 00:00:00.000", 
+    "final_date": "2023-06-25 00:00:00.000" 
+}
+
+### CURSOS
 
 GET {{hostname}}/api/cursos/1
 authorization: {{apiKey}}
@@ -178,73 +203,3 @@ content-type: application/json
 GET {{hostname}}/api/users/1
 authorization: {{apiKey}}
 refreshtoken: {{refreshKey}}
-
-###
-
-GET {{hostname}}/api/cursos/1
-authorization: {{apiKey}}
-refreshtoken: {{refreshKey}}
-
-###
-
-GET {{hostname}}/api/cursos/
-authorization: {{apiKey}}
-refreshtoken: {{refreshKey}}
-content-type: application/json
-
-###
-
-POST {{hostname}}/api/cursos/
-authorization: {{apiKey}}
-refreshtoken: {{refreshKey}}
-content-type: application/json
-
-{
-    "name": "Curso do Teste", 
-    "category": "Gaming", 
-    "description": "teste do insert", 
-    "date": "2023-01-07 00:00:00.000", 
-    "state": "Ativo", 
-    "price": 15, 
-    "image": "./assets/fortnite", 
-    "id_creator": 4 
-}
-
-###
-
-PUT {{hostname}}/api/cursos/
-authorization: {{apiKey}}
-refreshtoken: {{refreshKey}}
-content-type: application/json
-
-{
-    "id": "0236fe39-c92b-4b60-bf20-b3fa6586d558", 
-    "state": "Inativo"
-}
-
-###
-
-PUT {{hostname}}/api/cursos/edit/
-authorization: {{apiKey}}
-refreshtoken: {{refreshKey}}
-content-type: application/json
-
-{
-    "id": "0236fe39-c92b-4b60-bf20-b3fa6586d558", 
-    "name": "a",
-    "category": "b",
-    "description": "c",
-    "price": 999,
-    "image": "./assets/d"
-GET http://localhost:3000/api/courses/1
-content-type: application/json
-
-{
-    "id": "7c268811-4103-49e6-a550-5a6d25b87da4", 
-    "title": "Teste2",
-    "video": "../assets/videos/teste2",
-    "duration": 999,
-    "image": "./assets/thumbnails/teste2",
-    "description": "hello friends",
-    "id_course": "0236fe39-c92b-4b60-bf20-b3fa6586d558"
-}

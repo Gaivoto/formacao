@@ -29,12 +29,12 @@ async function getAllUsers() {
     });
 }
 
-async function selectUserById(id) {
+async function getUser(id) {
     return new Promise((resolve, reject) => {
         if (isNaN(Number(id))) {
             res.send(err);
         }
-        const slct = `SELECT [id], [username], [name], [description], [type], [price], [image] FROM [Users] WHERE [id] = '${id}'`;
+        const slct = `SELECT * FROM [Users] WHERE [id] = '${id}'`;
         pool.query(slct, (err, res) => {
             if (!err) {
                 resolve(res.recordset);
@@ -129,6 +129,6 @@ module.exports = {
     createUser: createUser,
     selectUserByUsername: selectUserByUsername,
     changeUserState: changeUserState,
-    selectUserById: selectUserById,
+    getUser: getUser,
     getAllUsers: getAllUsers
 }
