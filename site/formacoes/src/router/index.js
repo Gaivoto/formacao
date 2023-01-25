@@ -9,7 +9,6 @@ import Workshop from '../views/Workshop.vue'
 import Analytics from '../views/Analytics.vue'
 import Content from '../views/Content.vue'
 import Login from '../views/Login.vue'
-import Register from '../views/Register.vue'
 import Profile from '../views/Profile.vue'
 import MyCourses from '../views/MyCourses.vue'
 import MyDiplomas from '../views/MyDiplomas.vue'
@@ -64,11 +63,6 @@ const router = createRouter({
             path: '/login',
             component: Login,
             name: "Login"
-        },
-        {
-            path: '/register',
-            component: Register,
-            name: "Registo"
         },
         {
             path: '/users/:id',
