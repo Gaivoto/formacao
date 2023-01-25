@@ -1,11 +1,15 @@
-/*const express = require('express');
+const express = require('express');
 
 const router = express.Router();
 
 const cntrSubs = require('../controllers/subscricao.js');
 
-//CHECK WITH THE REST OF THE SCOOBY GANG
+router.get("/:id", cntrSubs.getSubscricao);
+
+router.get("/", cntrSubs.getAllSubscricoes);
+
 router.post("/", cntrSubs.createSubscricao);
 
+//router.post("/", cntrSubs.createSubscricao);
 
-module.exports = router*/
+module.exports = router

@@ -15,3 +15,49 @@ sql.connect(config, function (err) {
 });
 
 const pool = new sql.Request();
+
+async function getSubscricao(id) {
+    return new Promise((resolve, reject) => {
+        const slct = `SELECT * FROM [Subscription] WHERE [id] = '${id}'`;
+        pool.query(slct, (err, res) => {
+            if(!err) {
+                resolve(res.recordset);
+            } else {
+                reject(err.message);
+            }
+        });
+    });
+}
+
+async function getAllSubscricoes() {
+    return new Promise((resolve, reject) => {
+        const slct = `SELECT * FROM [Subscription]`;
+        pool.query(slct, (err, res) => {
+            if(!err) {
+                resolve(res.recordset);
+            } else {
+                reject(err.message);
+            }
+        });
+    });
+}
+
+async function createSubscricao(id, body) {
+    return new Promise((resolve, reject) => {
+
+        const slct = `INSERT INTO Subscription (id, id_subscriber, id_subscribed, start_date, final_date) VALUES ('${id}', '${body.id_subscriber}', '${body.id_subscribed}', '${body.start_date}', '${body.final_date}')`;
+        pool.query(slct, (err, res) => {
+            if(!err) {
+                resolve(res.recordset);
+            } else {
+                reject(err.message);
+            }
+        });
+    });
+}
+
+module.exports = {
+    getSubscricao: getSubscricao,
+    getAllSubscricoes: getAllSubscricoes,
+    createSubscricao: createSubscricao,
+}
