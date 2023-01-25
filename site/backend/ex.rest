@@ -1,15 +1,250 @@
-POST http://localhost:3000/api/auth/login
+
+
+POST {{hostname}}/api/auth/login
+content-type: application/json  
+
+{     
+    "username": "dre",     
+    "password": "123" 
+}
+
+### VIDEOS
+
+
+GET {{hostname}}/api/cursos/1
+authorization: {{apiKey}}
+refreshtoken: {{refreshKey}}
+
+###
+
+GET {{hostname}}/api/cursos/
+authorization: {{apiKey}}
+refreshtoken: {{refreshKey}}
+content-type: application/json
+
+###
+
+POST {{hostname}}/api/cursos/
+authorization: {{apiKey}}
+refreshtoken: {{refreshKey}}
 content-type: application/json
 
 {
-    "username": "dre",
+    "name": "Curso do Teste 5", 
+    "category": "Gaming", 
+    "description": "teste do insert", 
+    "date": "2023-01-07 00:00:00.000", 
+    "state": "Ativo", 
+    "price": 15, 
+    "image": "./assets/fortnite", 
+    "id_creator": 4 
+}
+
+###
+
+PUT {{hostname}}/api/cursos/user/0236fe39-c92b-4b60-bf20-b3fa6586d558
+authorization: {{apiKey}}
+refreshtoken: {{refreshKey}}
+content-type: application/json
+
+{
+    "id": "0236fe39-c92b-4b60-bf20-b3fa6586d558", 
+    "state": "Inativo"
+}
+
+###
+
+PUT {{hostname}}/api/cursos/adm/0236fe39-c92b-4b60-bf20-b3fa6586d558
+authorization: {{apiKey}}
+refreshtoken: {{refreshKey}}
+content-type: application/json
+
+{
+    "id": "0236fe39-c92b-4b60-bf20-b3fa6586d558", 
+    "state": "Inativo"
+}
+
+###
+
+PUT {{hostname}}/api/cursos/edit/
+authorization: {{apiKey}}
+refreshtoken: {{refreshKey}}
+content-type: application/json
+
+{
+    "id": "0236fe39-c92b-4b60-bf20-b3fa6586d558", 
+    "name": "a",
+    "category": "b",
+    "description": "c",
+    "price": 999,
+    "image": "./assets/d"
+}
+
+
+
+### VIDEOS
+
+GET {{hostname}}/api/videos/1
+authorization: {{apiKey}}
+refreshtoken: {{refreshKey}}
+
+###
+
+GET {{hostname}}/api/videos/
+authorization: {{apiKey}}
+refreshtoken: {{refreshKey}}
+content-type: application/json
+
+###
+
+POST {{hostname}}/api/videos/
+authorization: {{apiKey}}
+refreshtoken: {{refreshKey}}
+content-type: application/json
+
+{
+    "title": "Video teste 1", 
+    "video": "../assets/videos/teste1", 
+    "duration": 500, 
+    "image": "./assets/thumbnails/teste1", 
+    "description": "im blue da ba di da ba dai", 
+    "date": "2023-01-07 00:00:00.000", 
+    "id_course": "0236fe39-c92b-4b60-bf20-b3fa6586d558",
+    "position": 1
+}
+
+###
+
+PUT {{hostname}}/api/videos/
+authorization: {{apiKey}}
+refreshtoken: {{refreshKey}}
+content-type: application/json
+
+{
+    "username": "adm",
     "password": "123"
 }
 
+###
+
+GET http://localhost:3000/api/users/
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk4NDEwMzEyLWE0YjQtNGE2YS1iMDQ4LTI3NTJiODIxMGUyMyIsInVzZXJuYW1lIjoiYWRtIiwidHlwZSI6ImFkbWluIiwiaWF0IjoxNjc0NTc1NDY5LCJleHAiOjE2NzQ1ODk4Njl9._IMrjIiHFbBSJk_J0mP2zvJA9d-TwWQTWD2l_dDqz6I
+refreshtoken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk4NDEwMzEyLWE0YjQtNGE2YS1iMDQ4LTI3NTJiODIxMGUyMyIsInVzZXJuYW1lIjoiYWRtIiwidHlwZSI6ImFkbWluIiwiaWF0IjoxNjc0NTc1NDY5fQ.hXKUuPyEJvbEQREpM-WccNMuH_0iXMLBMQdaXGYGKZw
+
+###
+DELETE http://localhost:3000/api/auth/logout/
+refreshtoken: {{refreshKey}}
+
+###
+GET http://localhost:3000/api/users/17
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk4NDEwMzEyLWE0YjQtNGE2YS1iMDQ4LTI3NTJiODIxMGUyMyIsInVzZXJuYW1lIjoiYWRtIiwidHlwZSI6ImFkbWluIiwiaWF0IjoxNjc0NTc1NDY5LCJleHAiOjE2NzQ1ODk4Njl9._IMrjIiHFbBSJk_J0mP2zvJA9d-TwWQTWD2l_dDqz6I
+refreshtoken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk4NDEwMzEyLWE0YjQtNGE2YS1iMDQ4LTI3NTJiODIxMGUyMyIsInVzZXJuYW1lIjoiYWRtIiwidHlwZSI6ImFkbWluIiwiaWF0IjoxNjc0NTc1NDY5fQ.hXKUuPyEJvbEQREpM-WccNMuH_0iXMLBMQdaXGYGKZw
+
+###
+PUT http://localhost:3000/api/users/
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImY0OThiYWQwLTk3ZTUtNDAzNC1iYWE1LWU1MGQyN2I2YWU2MiIsInVzZXJuYW1lIjoicm9iZXJ0b2NhcmxvczEyMzQ1IiwidHlwZSI6InVzZXIiLCJpYXQiOjE2NzQ1NjY4MDksImV4cCI6MTY3NDU4MTIwOX0.utJbwHrF9U803lH5Bq3yvQL3TQV9NtS2O4YXetYXiF8
+refreshtoken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImY0OThiYWQwLTk3ZTUtNDAzNC1iYWE1LWU1MGQyN2I2YWU2MiIsInVzZXJuYW1lIjoicm9iZXJ0b2NhcmxvczEyMzQ1IiwidHlwZSI6InVzZXIiLCJpYXQiOjE2NzQ1NjY4MDl9.ZUdVcL04WBRmKQKbJFcLw9VGquVTxptZ1HLT4G3CBNY
+content-type: application/json
+
+{
+    "name": "andrezito",
+    "description": "calvo",
+    "price": null,
+    "image": "testeimagemandre",
+    "type": "user"
+}
+
+
+###
+POST http://localhost:3000/api/users/
+content-type: application/json
+
+{
+    "username": "adm",
+    "password": "123",
+    "name": "testeste",
+    "email": "tevez@gmail.com",
+    "description": "jogador argentino nojento",
+    "country": "argentina",
+    "image": "/imagem/tevez"
+
+}
+###
+PUT http://localhost:3000/api/users/changeUserState
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQiLCJ1c2VybmFtZSI6ImRyZSIsImlhdCI6MTY3Mzg4NTU4NywiZXhwIjoxNjczODk2Mzg3fQ.1Rya_VnwKVAoxUp3_cIr88N4dCz7NpBXvB4_cnXPlmY
+refreshtoken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQiLCJ1c2VybmFtZSI6ImRyZSIsImlhdCI6MTY3Mzg4NTU4N30.HijvYt9al-GEf8vRy5kFsj4s6oLSb69mpWoiy1j7Jv4
+content-type: application/json
+
+GET {{hostname}}/api/users/1
+authorization: {{apiKey}}
+refreshtoken: {{refreshKey}}
+
+###
+
+GET {{hostname}}/api/cursos/1
+authorization: {{apiKey}}
+refreshtoken: {{refreshKey}}
+
+###
+
+GET {{hostname}}/api/cursos/
+authorization: {{apiKey}}
+refreshtoken: {{refreshKey}}
+content-type: application/json
+
+###
+
+POST {{hostname}}/api/cursos/
+authorization: {{apiKey}}
+refreshtoken: {{refreshKey}}
+content-type: application/json
+
+{
+    "name": "Curso do Teste", 
+    "category": "Gaming", 
+    "description": "teste do insert", 
+    "date": "2023-01-07 00:00:00.000", 
+    "state": "Ativo", 
+    "price": 15, 
+    "image": "./assets/fortnite", 
+    "id_creator": 4 
+}
+
+###
+
+PUT {{hostname}}/api/cursos/
+authorization: {{apiKey}}
+refreshtoken: {{refreshKey}}
+content-type: application/json
+
+{
+    "id": "0236fe39-c92b-4b60-bf20-b3fa6586d558", 
+    "state": "Inativo"
+}
+
+###
+
+PUT {{hostname}}/api/cursos/edit/
+authorization: {{apiKey}}
+refreshtoken: {{refreshKey}}
+content-type: application/json
+
+{
+    "id": "0236fe39-c92b-4b60-bf20-b3fa6586d558", 
+    "name": "a",
+    "category": "b",
+    "description": "c",
+    "price": 999,
+    "image": "./assets/d"
 GET http://localhost:3000/api/courses/1
 content-type: application/json
 
 {
-    "username": "dre",
-    "password": "123"
+    "id": "7c268811-4103-49e6-a550-5a6d25b87da4", 
+    "title": "Teste2",
+    "video": "../assets/videos/teste2",
+    "duration": 999,
+    "image": "./assets/thumbnails/teste2",
+    "description": "hello friends",
+    "id_course": "0236fe39-c92b-4b60-bf20-b3fa6586d558"
 }

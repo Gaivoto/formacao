@@ -56,7 +56,7 @@ async function createCurso(id, body) {
     });
 }
 
-async function removeCurso(body) {
+async function updateStateCurso(body) {
     return new Promise((resolve, reject) => {
 
         let slct = `UPDATE Course SET [state] = '${body.state}' WHERE [id] = '${body.id}'`;
@@ -125,14 +125,27 @@ async function isNameTaken(name) {
     });
 }
 
+async function isIDTaken(id) {
+    return new Promise((resolve, reject) => {
+        const slct = `SELECT * FROM [Course] WHERE [id] = '${id}'`;
+        pool.query(slct, (err, res) => {
+            if(!err) {
+                resolve(res.recordset);
+            } else {
+                reject(err.message);
+            }
+        });
+    });
+}
 
 module.exports = {
     getCurso: getCurso,
     getAllCursos: getAllCursos,
     createCurso: createCurso,
-    removeCurso: removeCurso,
+    updateStateCurso: updateStateCurso,
     updateCurso: updateCurso,
     getUserCourses: getUserCourses,
     isCourseFromUser: isCourseFromUser,
     isNameTaken: isNameTaken,
+    isIDTaken: isIDTaken,
 }
