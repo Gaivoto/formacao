@@ -1,11 +1,6 @@
 const uuid = require('uuid');
-const jwt = require('jsonwebtoken');
-const crypto = require('crypto-js');
-const bcrypt = require('bcrypt');
-
 const utils = require('../utils/index.js');
 const dbUser = require('../db/user.js');
-const dbAuth = require('../db/auth.js');
 const dbCour = require('../db/curso.js');
 
 async function getUser(tokens, id) {
@@ -14,7 +9,7 @@ async function getUser(tokens, id) {
             let info = value;
 
             if(info.user.id == id) {
-                dbUser.selectUserById(id).then(value2 => {
+                dbUser.getUser(id).then(value2 => {
 
                     if(value2.length == 0){
                         reject({ code: 404, error: { message: "Este utilizador não existe." }});
@@ -55,7 +50,6 @@ async function getUser(tokens, id) {
 
 async function getAllUsers(tokens) {
     return new Promise((resolve, reject) => {
-        console.log(tokens.access_token, tokens.refresh_token)
         utils.validateToken(tokens.access_token, tokens.refresh_token).then(value => {
             let info = value;
             if (info.user.type == "admin") {
@@ -68,7 +62,7 @@ async function getAllUsers(tokens) {
                     reject({ code: 400, error: { message: "Algo correu mal com a query." } });
                 })
             } else {
-                reject({ code: 400, error: { message: "O user que tentou completar essa ação não é administrador." } });
+                reject({ code: 403, error: { message: "O user que tentou completar essa ação não é administrador." } });
             }
         })
         .catch(error => {
@@ -78,17 +72,16 @@ async function getAllUsers(tokens) {
     })
 }
 
-//da pra alterar username nessa funçao e tem q verificar se o username ja existe, e tirar price de tudo daqui
 async function updateUser(tokens, id, user) {
     return new Promise((resolve, reject) => {
         utils.validateToken(tokens.access_token, tokens.refresh_token).then(value => {
             let info = value;
             if (info.user.id == id) {
-                if (user.name == "" || user.description == "" || user.image == "") {
+                if (user.name == "" || user.image == "" || user.name == null || user.image == null || user.description == null) {
                     reject({ code: 400, error: { message: "A alteração não pode ser feita, porque há valores vazios." }});
-                }
-                else {
+                } else {
                     dbUser.updateUser(user, id).then(value => {
+                        info.message = "User alterado com sucesso.";
                         resolve({ code: 200, info: info });
                     })
                     .catch(error => {
@@ -113,17 +106,28 @@ async function changeUserState(tokens, id, user) {
             let info = value;
             if (info.user.type == 'admin') {
 
-                if(user.state == "Inativo" || user.state == "Ativo") {
-                    dbUser.changeUserState(user.state, id).then(value => {
-                        resolve({ code: 200, info: info });
-                    })
-                    .catch(error => {
-                        console.log(error);
-                        reject({ code: 400, error: { message: "Algo correu mal com a query." }});
-                    });
-                } else {
-                    reject({ code: 400, error: { message: "Estado inválido." }});
-                }
+                dbUser.getUser(id).then(value2 => {
+                    if(value2.length == 0) {
+                        reject({ code: 404, error: { message: "Este utilizador não existe." }});
+                    } else {
+                        if(user.state == "Inativo" || user.state == "Ativo") {
+                            dbUser.changeUserState(user.state, id).then(value => {
+                                info.message = "Estado alterado com sucesso.";
+                                resolve({ code: 200, info: info });
+                            })
+                            .catch(error => {
+                                console.log(error);
+                                reject({ code: 400, error: { message: "Algo correu mal com a query." }});
+                            });
+                        } else {
+                            reject({ code: 400, error: { message: "Estado inválido." }});
+                        }
+                    }
+                })
+                .catch(error => {
+                    console.log(error);
+                    reject({ code: 400, error: { message: "Algo correu mal com a query." }});
+                });
             } else {
                 reject({ code: 403, error: { message: "A operação não foi possível porquê o user não é um administrador." }});
             }
@@ -137,10 +141,10 @@ async function changeUserState(tokens, id, user) {
 
 async function createUser(user) {
     return new Promise((resolve, reject) => {
-        dbUser.selectUserByUsername(user.username).then(async value => {
+        dbUser.isUsernameTaken(user.username).then(async value => {
             if (value.length == 0) {
 
-                dbUser.getAllUsers().then(value2 => {
+                dbUser.getAllIDs().then(value2 => {
                     
                     let id;
                     let existe;
@@ -149,8 +153,8 @@ async function createUser(user) {
                         id = uuid.v4();
                         existe = false;
     
-                        value2.forEach(u => {
-                            if(u.id == id) existe = true;
+                        value2.forEach(i => {
+                            if(i.id == id) existe = true;
                         });
                     } while(existe)
 

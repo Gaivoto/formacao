@@ -42,6 +42,19 @@ async function getAllCursos() {
     });
 }
 
+async function getCursosByCriador(id) {
+    return new Promise((resolve, reject) => {
+        const slct = `SELECT * FROM [Course] WHERE [id_creator] = '${id}'`;
+        pool.query(slct, (err, res) => {
+            if(!err) {
+                resolve(res.recordset);
+            } else {
+                reject(err.message);
+            }
+        });
+    });
+}
+
 async function createCurso(id, body) {
     return new Promise((resolve, reject) => {
 
@@ -125,27 +138,14 @@ async function isNameTaken(name) {
     });
 }
 
-async function isIDTaken(id) {
-    return new Promise((resolve, reject) => {
-        const slct = `SELECT * FROM [Course] WHERE [id] = '${id}'`;
-        pool.query(slct, (err, res) => {
-            if(!err) {
-                resolve(res.recordset);
-            } else {
-                reject(err.message);
-            }
-        });
-    });
-}
-
 module.exports = {
     getCurso: getCurso,
     getAllCursos: getAllCursos,
+    getCursosByCriador: getCursosByCriador,
     createCurso: createCurso,
     updateStateCurso: updateStateCurso,
     updateCurso: updateCurso,
     getUserCourses: getUserCourses,
     isCourseFromUser: isCourseFromUser,
-    isNameTaken: isNameTaken,
-    isIDTaken: isIDTaken,
+    isNameTaken: isNameTaken
 }

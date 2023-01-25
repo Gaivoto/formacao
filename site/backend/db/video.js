@@ -29,9 +29,9 @@ async function getVideo(id) {
     });
 }
 
-async function getAllVideos() {
+async function getAllVideosFromCourse(id) {
     return new Promise((resolve, reject) => {
-        const slct = `SELECT * FROM [Video]`;
+        const slct = `SELECT * FROM [Video] WHERE [id_course] = '${id}'`;
         pool.query(slct, (err, res) => {
             if(!err) {
                 resolve(res.recordset);
@@ -59,19 +59,6 @@ async function createVideo(id, body) {
 async function isTitleTaken(title) {
     return new Promise((resolve, reject) => {
         const slct = `SELECT * FROM [Video] WHERE [title] = '${title}'`;
-        pool.query(slct, (err, res) => {
-            if(!err) {
-                resolve(res.recordset);
-            } else {
-                reject(err.message);
-            }
-        });
-    });
-}
-
-async function isIDTaken(id) {
-    return new Promise((resolve, reject) => {
-        const slct = `SELECT * FROM [Video] WHERE [id] = '${id}'`;
         pool.query(slct, (err, res) => {
             if(!err) {
                 resolve(res.recordset);
@@ -140,10 +127,9 @@ async function isCourseFromUser(idC, idU) {
 
 module.exports = {
     getVideo: getVideo,
-    getAllVideos: getAllVideos,
+    getAllVideosFromCourse: getAllVideosFromCourse,
     createVideo: createVideo,
     isTitleTaken: isTitleTaken,
-    isIDTaken: isIDTaken,
     updateStateVideo: updateStateVideo,
     isVideoFromCourse: isVideoFromCourse,
     updateVideo: updateVideo,

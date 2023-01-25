@@ -13,16 +13,9 @@ async function getVideo(tokens, id){
                 if(value2.length <= 0) {
                     reject({ code: 404, error: {message: "Curso não existe." }});
                 } else {
-
-                    let resp = {
-                        videos: value,
-                        access_token: info.access_token
-                    }
-    
-                    resolve({ code: 200, info: resp });
-
+                    info.video = value2;
+                    resolve({ code: 200, info: info });
                 }
-
             })
             .catch(error => {
                 console.log(error);
@@ -36,11 +29,11 @@ async function getVideo(tokens, id){
     });
 }
 
-async function getAllVideos(headers) {
+async function getAllVideos(headers, id) {
     return new Promise((resolve, reject) => {
 
-        let access_token
-        let refresh_token
+        let access_token;
+        let refresh_token;
 
         if(headers['authorization']) {
             access_token = headers['authorization'].split(' ')[1];
@@ -50,13 +43,9 @@ async function getAllVideos(headers) {
         if(access_token && refresh_token) {
             utils.validateToken(access_token, refresh_token).then(value => {
                 let info = value;
-                dbVideo.getAllVideos().then(value2 => {
-                    
-                    let resp = {
-                        videos: value2,
-                        access_token: info.access_token
-                    }
-                    resolve({ code: 200, info: resp });
+                dbVideo.getAllVideosFromCourse(id).then(value2 => { 
+                    info.videos = value2;
+                    resolve({ code: 200, info: info });
                 })
                 .catch(error => {
                     console.log(error);
@@ -69,7 +58,7 @@ async function getAllVideos(headers) {
             });
 
         } else {
-            dbVideo.getAllVideos().then(value => {
+            dbVideo.getAllVideosFromCourse(id).then(value => {
                 let resp = {
                     videos: value
                 }
@@ -109,7 +98,7 @@ async function createVideo(tokens, body) {
                         } while(existe)
     
                         dbVideo.createVideo(id, body).then(value => {
-
+                            info.message = "Vídeo criado com sucesso.";
                             resolve({ code: 200, info: info });
                         })
                         .catch(error => {
@@ -163,7 +152,7 @@ async function updateStateVideoUser(tokens, body) {
                                     if(body.state === "Ativo" || body.state === "Inativo") {
                                 
                                         dbVideo.updateStateVideo(body).then(value3 => {
-
+                                            info.message = "Estado alterado com sucesso.";
                                             resolve({ code: 200, info: info });
                                         })
                                         .catch(error => {
@@ -226,7 +215,7 @@ async function updateStateVideoAdm(tokens, body) {
                                 if(body.state === "Ativo" || body.state === "Inativo" || body.state === "Pendente" || body.state === "Rejeitado") {
                             
                                     dbVideo.updateStateVideo(body).then(value3 => {
-
+                                        info.message = "Estado alterado com sucesso.";
                                         resolve({ code: 200, info: info });
                                     })
                                     .catch(error => {
@@ -294,6 +283,7 @@ async function updateVideo(tokens, body) {
                                     if(id !== null || title !== null || video !== null || duration !== null || image !== null || description !== null) {
                                         
                                         dbVideo.updateVideo(body).then(value3 => {
+                                            info.message = "Vídeo alterado com sucesso.";
                                             resolve({ code: 200, info: info });
                                         })
                                         .catch(error => {

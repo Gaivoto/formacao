@@ -3,6 +3,7 @@ const uuid = require('uuid');
 
 const dbCurs = require('../db/curso.js');
 const dbUser = require('../db/user.js');
+const dbVide = require('../db/video.js');
 
 async function getCurso(headers, id) {
     return new Promise((resolve, reject) => {
@@ -22,14 +23,19 @@ async function getCurso(headers, id) {
                 let info = value1;
                 dbCurs.getCurso(id).then(value2 => {
     
-                    if(value2.length <= 0) {
+                    if(value2.length == 0) {
                         reject({ code: 404, error: {message: "Curso não existe." }});
                     } else {
-                        let resp = {
-                            courses: value2,
-                            access_token: info.access_token
-                        }
-                        resolve({ code: 200, info: resp });
+                        info.course = value2[0];
+
+                        dbVide.getAllVideosFromCourse(id).then(value3 => {
+                            info.course.videos = value3;
+                            resolve({ code: 200, info: info });
+                        })
+                        .catch(error => {
+                            console.log(error);
+                            reject({ code: 400, error: {message: "Algo correu mal com a query."}});
+                        });
                     }
                 })
                 .catch(error => {
@@ -44,12 +50,23 @@ async function getCurso(headers, id) {
 
         } else {
 
-            dbCurs.getCurso(id).then(value3 => {
+            dbCurs.getCurso(id).then(value => {
+                if(value.length == 0) {
+                    reject({ code: 404, error: {message: "Curso não existe." }});
+                } else {
+                    let resp = {
+                        course: value[0]
+                    }
 
-                let resp = {
-                    courses: value3
+                    dbVide.getAllVideosFromCourse(id).then(value2 => {
+                        resp.course.videos = value2;
+                        resolve({ code: 200, info: resp });
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        reject({ code: 400, error: {message: "Algo correu mal com a query."}});
+                    });
                 }
-                resolve({ code: 200, info: resp });
             })
             .catch(error => {
                 console.log(error);
@@ -64,6 +81,7 @@ async function getAllCursos(headers) {
 
         let access_token;
         let refresh_token;
+        let promises = [];
 
         if(headers['authorization']) {
             access_token = headers['authorization'].split(' ')[1];
@@ -74,13 +92,23 @@ async function getAllCursos(headers) {
             utils.validateToken(access_token, refresh_token).then(value => {
                 let info = value;
                 dbCurs.getAllCursos().then(value2 => {
+                    info.courses = value2;
                     
-                    let resp = {
-                        courses: value2,
-                        access_token: info.access_token
-                    }
-
-                    resolve({ code: 200, info: resp });
+                    info.courses.forEach(cou => {
+                        promises.push(dbVide.getAllVideosFromCourse(cou.id));
+                    });
+    
+                    Promise.all(promises).then(values => {
+                        for(let i = 0; i < info.courses.length; i++) {
+                            info.courses[i].videos = values[i];
+                        }
+    
+                        resolve({ code: 200, info: info });
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        reject({ code: 400, error: {message: "Algo correu mal com a query."}});
+                    });
                 })
                 .catch(error => {
                     console.log(error);
@@ -99,7 +127,21 @@ async function getAllCursos(headers) {
                     courses: value
                 }
 
-                resolve({ code: 200, info: resp });
+                resp.courses.forEach(cou => {
+                    promises.push(dbVide.getAllVideosFromCourse(cou.id));
+                });
+
+                Promise.all(promises).then(values => {
+                    for(let i = 0; i < resp.courses.length; i++) {
+                        resp.courses[i].videos = values[i];
+                    }
+
+                    resolve({ code: 200, info: resp });
+                })
+                .catch(error => {
+                    console.log(error);
+                    reject({ code: 400, error: {message: "Algo correu mal com a query."}});
+                });
             })
             .catch(error => {
                 console.log(error);
@@ -135,6 +177,7 @@ async function createCurso(tokens, body) {
                         } while(existe)
     
                         dbCurs.createCurso(id, body).then(value => {
+                            info.message = "Curso criado com sucesso.";
                             resolve({ code: 201, info: info });
                         })
                         .catch(error => {
@@ -182,6 +225,7 @@ async function updateStateCursoUser(tokens, id, body) {
                             if(body.state === "Ativo" || body.state === "Inativo") {
 
                                 dbCurs.updateStateCursoUser(body).then(value3 => {
+                                    info.message = "Estado alterado com sucesso.";
                                     resolve({ code: 200, info: info });
                                 })
                                 .catch(error => {
@@ -231,6 +275,7 @@ async function updateStateCursoAdm(tokens, id, body) {
                         if(body.state === "Ativo" || body.state === "Inativo" || body.state === "Pendente" || body.state === "Rejeitado") {
 
                             dbCurs.updateStateCurso(body).then(value3 => {
+                                info.message = "Estado alterado com sucesso.";
                                 resolve({ code: 200, info: info });
                             })
                             .catch(error => {
@@ -282,6 +327,7 @@ async function updateCurso(tokens, id, body) {
                             if(id !== null || name !== null || category !== null || description !== null || price !== null || image !== null) {
                                 
                                 dbCurs.updateCurso(body).then(value3 => {
+                                    info.message = "Curso alterado com sucesso.";
                                     resolve({ code: 200, info: info });
                                 })
                                 .catch(error => {

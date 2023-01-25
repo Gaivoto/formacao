@@ -10,7 +10,7 @@ async function getVideo(req, res){
 }
 
 async function getAllVideos(req, res){
-    serVide.getAllVideos(req.headers).then(value => {
+    serVide.getAllVideos(req.headers, req.params.id).then(value => {
         res.status(value.code).send(value.info);
     })
     .catch(error => {

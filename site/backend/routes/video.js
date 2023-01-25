@@ -6,7 +6,7 @@ const cntrVide = require('../controllers/video.js');
 
 router.get("/:id", cntrVide.getVideo);
 
-router.get("/", cntrVide.getAllVideos);
+router.get("/curso/:id", cntrVide.getAllVideos);
 
 router.post("/", cntrVide.createVideo);
 
