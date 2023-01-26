@@ -5,9 +5,14 @@
         <input style="display: none" multiple="multiple" type="file" accept="video/*" @input="onFileSelected" ref="fileInput">
         <button @click="$refs.fileInput.click()">Escolher Videos</button>
         </div>
-        <div v-if ="fileSelected">
-            <UploadedVideoCard @remover="removerVideo" v-for="video in videoSrc" :videoSrc="video" :key="video.id"/>
+        <div v-if ="fileSelected" >
+            <draggable handle=".handle" v-model="videoSrc" :animation="300" ghost-class="hidden-ghost">
+                <template #item="{element: video}">
+                    <UploadedVideoCard @remover="removerVideo" :videoSrc="video" :key="video.id"/>
+                </template>
+            </draggable>
         </div>
+        <button @click="Enviar">Enviar</button>
     </div>
 </template>
 
@@ -15,12 +20,14 @@
 import nanoMetadata from 'nano-metadata'
 import courseInfo from '../components/workshop/courseinfo.vue'
 import UploadedVideoCard from '../components/workshop/UploadedVideoCard.vue'
+import draggable from 'vuedraggable';
 import { v4 } from 'uuid'
 export default {
     name: 'Workshop',
     components: {
         courseInfo,
-        UploadedVideoCard
+        UploadedVideoCard,
+        draggable
     },
     data () {
         return {
@@ -30,6 +37,9 @@ export default {
         }
     },
     methods: {
+        Enviar(){
+            console.log(this.videoSrc)
+        },
         pushVideo(video){
             nanoMetadata.video.duration(video).then((duration) => {
                             let hrs = ~~(duration / 3600);
@@ -45,7 +55,8 @@ export default {
                                 id : v4(),
                                 url : URL.createObjectURL(video),    
                                 titulo : video.name.split(".")[0],
-                                duracao : ret
+                                duracao : ret,
+                                descricao: ""
                             };
                             console.log(myObj)
                             this.videoSrc.push(myObj)
@@ -90,4 +101,7 @@ export default {
 .fileform {
     margin-top: 30px;
 }
+.hidden-ghost {
+    opacity: 0;
+ }
 </style>

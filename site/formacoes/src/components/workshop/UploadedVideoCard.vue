@@ -1,5 +1,6 @@
 <template>
       <div class="app-grid__preview">
+        <span class="material-icons handle">drag_indicator</span>
             <VueVideoThumbnail
             :show-play-button="showPlayButton"
             :video-src="this.videoSrc.url"
@@ -32,13 +33,12 @@
             </div>
             <div class="descricao">
                 <p>Descrição</p>
-                <textarea name="descricao" id="descricao" cols="80" rows="6"></textarea>
+                <textarea @input="updateTheVariable($event.target.value)" v-model="this.videoSrc.descricao" name="descricao" id="descricao" cols="80" rows="6"></textarea>
             </div>
         </div>
         <button @click="remove">X</button>
       </div>
 </template>
-
 <script>
 import VueVideoThumbnail from '../VueVideoThumbnail.vue';
 export default {
@@ -67,6 +67,9 @@ export default {
         remove() {
         this.$emit('remover', this.videoSrc.id)
         },
+        updateTheVariable(value){
+         this.videoSrc.descricao = value;
+        },
     }
 }
 </script>
@@ -84,5 +87,14 @@ export default {
 }
 .descricao {
     margin-left: 10px;
+}
+.handle {
+  float: left;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  margin-right: 10px;
+  font-size: 32px;
+  cursor: pointer;
+  height: fit-content;
 }
 </style>
