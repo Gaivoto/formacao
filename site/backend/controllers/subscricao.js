@@ -27,8 +27,18 @@ async function createSubscricao(req, res){
     });
 }
 
+async function endSubscricao(req, res){
+    serSubs.endSubscricao({access_token: req.headers['authorization'].split(' ')[1], refresh_token: req.headers.refreshtoken}, req.params.id, req.body).then(value => {
+        res.status(value.code).send(value.info);
+    })
+    .catch(error => {
+        res.status(error.code).send(error.error);
+    });
+}
+
 module.exports = {
     getSubscricao: getSubscricao,
     getAllSubscricoes: getAllSubscricoes,
     createSubscricao: createSubscricao,
+    endSubscricao: endSubscricao,
 }

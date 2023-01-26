@@ -131,29 +131,34 @@ async function createSubscricao(tokens, body) {
                         reject({ code: 400, error: {message: "Criador não encontrado." }});
                     } else {
 
-                        dbSubs.getAllSubscricoes().then(value4 => {
+                        if(value3[0].type !== "creator") {
+                            reject({ code: 400, error: {message: "Utilizador não é criador." }});
+                        } else {
+
+                            dbSubs.getAllSubscricoes().then(value4 => {
         
-                            do {
-                                id = uuid.v4();
-                                existe = false;
+                                do {
+                                    id = uuid.v4();
+                                    existe = false;
+                
+                                    value4.forEach(u => {
+                                        if(u.id == id) existe = true;
+                                    });
+                                } while(existe)
             
-                                value4.forEach(u => {
-                                    if(u.id == id) existe = true;
+                                dbSubs.createSubscricao(id, body).then(value => {
+                                    resolve({ code: 201, info: info });
+                                })
+                                .catch(error => {
+                                    console.log(error);
+                                    reject({ code: 400, error: {message: "Algo correu mal com a query." }});
                                 });
-                            } while(existe)
-        
-                            dbSubs.createSubscricao(id, body).then(value => {
-                                resolve({ code: 201, info: info });
                             })
                             .catch(error => {
                                 console.log(error);
-                                reject({ code: 400, error: {message: "Algo correu mal com a query." }});
+                                reject({ code: 400, error: { message: "Algo correu mal com a query." }});
                             });
-                        })
-                        .catch(error => {
-                            console.log(error);
-                            reject({ code: 400, error: { message: "Algo correu mal com a query." }});
-                        });
+                        } 
                     }
                 })
                 .catch(error => {
@@ -170,8 +175,56 @@ async function createSubscricao(tokens, body) {
     });
 }
 
+async function endSubscricao(tokens, id, body) {
+    return new Promise((resolve, reject) => {
+        
+        utils.validateToken(tokens.access_token, tokens.refresh_token).then(value => {
+            let info = value;
+
+            dbSubs.getSubscricao(id).then(value1 => {
+                
+                if(value1.length <= 0) {
+                    reject({ code: 404, error: {message: "Subscrição não existe." }});
+                } else {
+
+                    if(value1[0].id_subscriber !== info.user.id) {
+                        
+                        reject({ code: 403, error: {message: "Curso não pertence a este user." }});
+                    } else {
+
+                        if(body.final_date) {
+
+                            dbSubs.endSubscricao(body.final_date, id).then(value3 => {
+                                info.message = "Estado alterado com sucesso.";
+                                resolve({ code: 200, info: info });
+                            })
+                            .catch(error => {
+                                console.log(error);
+                                reject({ code: 400, error: {message: "Algo correu mal com a query." }});
+                            });
+
+                        } else {
+                            reject({ code: 401, error: {message: "Current state invalid" }});
+                        }
+                    } 
+
+                }
+            })
+            .catch(error => {
+                console.log(error);
+                reject({ code: 400, error: {message: "Algo correu mal com a query." }});
+            });
+        })
+        .catch(error => {
+            console.log(error);
+            reject({ code: 401, error: {message: "Token inválido." }})
+        });
+    });
+}
+
 module.exports = {
     getSubscricao: getSubscricao,
     getAllSubscricoes: getAllSubscricoes,
     createSubscricao: createSubscricao,
+    endSubscricao: endSubscricao,
 }

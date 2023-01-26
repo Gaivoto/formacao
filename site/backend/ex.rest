@@ -29,9 +29,19 @@ content-type: application/json
 
 {
     "id_subscriber": "4", 
-    "id_subscribed": "1", 
-    "start_date": "2023-01-25 00:00:00.000", 
-    "final_date": "2023-06-25 00:00:00.000" 
+    "id_subscribed": "16", 
+    "start_date": "2023-01-25 00:00:00.000"
+}
+
+###
+
+DELETE {{hostname}}/api/subscricoes/e1de0915-fcf1-406f-81eb-b0050ec01ed8
+authorization: {{apiKey}}
+refreshtoken: {{refreshKey}}
+content-type: application/json
+
+{
+    "final_date": "2023-07-07 00:00:00.000"
 }
 
 ### CURSOS

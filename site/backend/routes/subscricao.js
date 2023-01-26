@@ -10,6 +10,6 @@ router.get("/", cntrSubs.getAllSubscricoes);
 
 router.post("/", cntrSubs.createSubscricao);
 
-//router.post("/", cntrSubs.createSubscricao);
+router.delete("/:id", cntrSubs.endSubscricao);
 
 module.exports = router
