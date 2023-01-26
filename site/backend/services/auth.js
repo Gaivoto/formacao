@@ -11,8 +11,8 @@ async function login(username, password) {
             reject({ code: 400, message: 'Username ou password vazios.' });
         } else {
             dbAuth.authenticateUser(username, password).then(async value => {
-                /*try {
-                    if (await bcrypt.compare(password, value[0].password)) {*/
+                try {
+                    if (await bcrypt.compare(password, value[0].password)) {
                         if (value.length == 0) {
                             reject({ code: 401, error: { message: 'Utilizador/password inválido.' } });
                         } else if (value[0].state == "Inativo") {
@@ -22,24 +22,24 @@ async function login(username, password) {
                             let access_token = jwt.sign(user, process.env.ACCESS_SECRET, { expiresIn: '240m' });
                             let refresh_token = jwt.sign(user, process.env.REFRESH_SECRET);
                             dbAuth.createToken(crypto.SHA256(refresh_token, process.env.CRYPTO_KEY).toString()).then(value => {
-                                resolve({ code: 201, info: {user: user, access_token: access_token, refresh_token: refresh_token} });
+                                resolve({ code: 201, info: { user: user, access_token: access_token, refresh_token: refresh_token } });
                             })
-                            .catch(error => {
-                                console.log(error);
-                                reject({ code: 400, message: 'Algo correu mal com a query.' });
-                            });
+                                .catch(error => {
+                                    console.log(error);
+                                    reject({ code: 400, message: 'Algo correu mal com a query.' });
+                                });
                         }
-                    /*} else {
+                    } else {
                         reject({ code: 400, error: { message: 'Username ou password inválido.' } });
                     }
                 } catch {
                     reject({ code: 400, message: 'Algo correu mal com a query.' });
-                }*/
+                }
             })
-            .catch(error => {
-                console.log(error);
-                reject({ code: 400, error: { message: 'Algo correu mal com a query.' } });
-            });
+                .catch(error => {
+                    console.log(error);
+                    reject({ code: 400, error: { message: 'Algo correu mal com a query.' } });
+                });
         }
     });
 }
@@ -54,10 +54,10 @@ async function logout(refresh_token) {
                 resolve({ code: 200 });
             }
         })
-        .catch(error => {
-            reject({ code: 400, error: { message: 'Algo correu mal com a query.' } });
-            console.log(error);
-        });
+            .catch(error => {
+                reject({ code: 400, error: { message: 'Algo correu mal com a query.' } });
+                console.log(error);
+            });
     });
 }
 
