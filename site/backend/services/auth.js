@@ -26,14 +26,14 @@ async function login(username, password) {
                             })
                             .catch(error => {
                                 console.log(error);
-                                reject({ code: 400, message: 'Algo correu mal com a query.' });
+                                reject({ code: 400, error: { message: 'Algo correu mal com a query.' }});
                             });
                         }
                     } else {
                         reject({ code: 400, error: { message: 'Username ou password inválido.' } });
                     }
                 } catch {
-                    reject({ code: 400, message: 'Algo correu mal com a query.' });
+                    reject({ code: 400, error: { message: 'Algo correu mal com a query.' }});
                 }
             })
             .catch(error => {

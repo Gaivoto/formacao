@@ -143,44 +143,48 @@ async function changeUserState(tokens, id, user) {
 
 async function createUser(user) {
     return new Promise((resolve, reject) => {
-        dbUser.isUsernameTaken(user.username).then(async value => {
-            if (value.length == 0) {
-
-                dbUser.getAllIDs().then(async value2 => {
-                    
-                    let id;
-                    let existe;
-
-                    do {
-                        id = uuid.v4();
-                        existe = false;
+        if(user.username != null && user.name != null && user.password != null) {
+            dbUser.isUsernameTaken(user.username).then(async value => {
+                if (value.length == 0) {
     
-                        value2.forEach(i => {
-                            if(i.id == id) existe = true;
+                    dbUser.getAllIDs().then(async value2 => {
+                        
+                        let id;
+                        let existe;
+    
+                        do {
+                            id = uuid.v4();
+                            existe = false;
+        
+                            value2.forEach(i => {
+                                if(i.id == id) existe = true;
+                            });
+                        } while(existe)
+    
+                        user.password = await bcrypt.hash(user.password, 10);
+    
+                        dbUser.createUser(id, user).then(value => {
+                            resolve({ code: 201, info: { message: "User registado com sucesso."} });
+                        }).catch(error => {
+                            console.log(error);
+                            reject({ code: 400, error: { message: "Algo correu mal com a query de insert." }});
                         });
-                    } while(existe)
-
-                    user.password = await bcrypt.hash(user.password, 10);
-
-                    dbUser.createUser(id, user).then(value => {
-                        resolve({ code: 201, info: { message: "User registado com sucesso."} });
-                    }).catch(error => {
+                    })
+                    .catch(error => {
                         console.log(error);
-                        reject({ code: 400, error: { message: "Algo correu mal com a query de insert." }});
+                        reject({ code: 400, error: { message: "Algo correu mal com a query." }});
                     });
-                })
-                .catch(error => {
-                    console.log(error);
-                    reject({ code: 400, error: { message: "Algo correu mal com a query." }});
-                });
-            } else {
-                reject({ code: 400, error: { message: 'Já tem um user com esse username.' }});
-            }
-        })
-        .catch(error => {
-            console.log(error);
-            reject({ code: 401, error: { message: 'Erro na query.' }});
-        });
+                } else {
+                    reject({ code: 400, error: { message: 'Já tem um user com esse username.' }});
+                }
+            })
+            .catch(error => {
+                console.log(error);
+                reject({ code: 401, error: { message: 'Erro na query.' }});
+            });
+        } else {
+            reject({ code: 400, error: { message: 'Campos obrigatórios estão vazios.' }});
+        }
     })
 }
 
