@@ -259,26 +259,25 @@ async function updateStateCursoUser(tokens, id, body) {
 
 async function updateStateCursoAdm(tokens, id, body) {
     return new Promise((resolve, reject) => {
-        
+
         utils.validateToken(tokens.access_token, tokens.refresh_token).then(value => {
             let info = value;
 
             dbCurs.getCurso(id).then(value1 => {
-                
-                if(value1.length <= 0) {
-                    reject({ code: 404, error: {message: "Curso não existe." }});
+
+                if (value1.length <= 0) {
+                    reject({ code: 404, error: { message: "Curso não existe." } });
                 } else {
-                    
-                    if(info.user.type !== "admin") {
-                        reject({ code: 403, error: {message: "Não possui permissão para esta operação." }});
+
+                    if (info.user.type !== "admin") {
+                        reject({ code: 403, error: { message: "Não possui permissão para esta operação." } });
                     } else {
 
-                        if(body.state === "Ativo" || body.state === "Inativo" || body.state === "Pendente" || body.state === "Rejeitado") {
+                        if (body.state === "Ativo" || body.state === "Inativo" || body.state === "Pendente" || body.state === "Rejeitado") {
 
                             dbCurs.updateStateCurso(body).then(value3 => {
-                                //ainda falta dar uma olhadinha em verificacoes aqui, por exemplo quando uma pessoa se inscreveu em um curso mas ja acabou a subscricao ele nao deve mais receber notificacoes
-                                //aqui vai entrar a notificaçao pro dono do curso e se for tornado ativo as pessoas que seguem aquele criador tambem vao receber aquele curso
-                                //ainda falta mandar aqui tambem uma notificacao para o user que segue esse criador CASO o estado fique ativo
+                                //ainda falta dar uma olhadinha em verificacoes aqui, por exemplo quando uma pessoa se inscreveu em um curso mas ja acabou a subscricao ele nao deve mais receber notificacoes, isso vai ser feito aqui mesmo
+                                //aqui vai entrar a notificaçao pro dono do curso e se for tornado ativo as pessoas que seguem aquele criador tambem vao receber aquele curso, isso preciso esperar o andre fazer a funçao
                                 let notif = {}
                                 notif.id = uuid.v4();
                                 notif.message = 'O estado do curso ' + value1[0].name + ' foi alterado para ' + body.state + '.';
@@ -298,29 +297,29 @@ async function updateStateCursoAdm(tokens, id, body) {
                                 })
                                 .catch(error => {
                                     console.log(error);
-                                    reject( { code: 400, error: {message: "Erro ao executar a query da notificação."}})
+                                    reject({ code: 400, error: { message: "Erro ao executar a query da notificação." } })
                                 })
                             })
                             .catch(error => {
                                 console.log(error);
-                                reject({ code: 400, error: {message: "Algo correu mal com a query." }});
+                                reject({ code: 400, error: { message: "Algo correu mal com a query." } });
                             });
 
                         } else {
-                            reject({ code: 401, error: {message: "Current state invalid" }});
-                        }   
+                            reject({ code: 401, error: { message: "Current state invalid" } });
+                        }
                     }
                 }
             })
+                .catch(error => {
+                    console.log(error);
+                    reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                });
+        })
             .catch(error => {
                 console.log(error);
-                reject({ code: 400, error: {message: "Algo correu mal com a query." }});
+                reject({ code: 401, error: { message: "Token inválido." } })
             });
-        })
-        .catch(error => {
-            console.log(error);
-            reject({ code: 401, error: {message: "Token inválido." }})
-        });
     });
 }
 

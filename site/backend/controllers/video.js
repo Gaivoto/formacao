@@ -28,7 +28,7 @@ async function createVideo(req, res){
 }
 
 async function updateStateVideoUser(req, res){
-    serVide.removeVideo({access_token: req.headers['authorization'].split(' ')[1], refresh_token: req.headers.refreshtoken}, req.body).then(value => {
+    serVide.updateStateVideoUser({access_token: req.headers['authorization'].split(' ')[1], refresh_token: req.headers.refreshtoken}, req.body).then(value => {
         res.status(value.code).send(value.info);
     })
     .catch(error => {
@@ -37,7 +37,7 @@ async function updateStateVideoUser(req, res){
 }
 
 async function updateStateVideoAdm(req, res){
-    serVide.removeVideo({access_token: req.headers['authorization'].split(' ')[1], refresh_token: req.headers.refreshtoken}, req.body).then(value => {
+    serVide.updateStateVideoAdm({access_token: req.headers['authorization'].split(' ')[1], refresh_token: req.headers.refreshtoken}, req.body).then(value => {
         res.status(value.code).send(value.info);
     })
     .catch(error => {

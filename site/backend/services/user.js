@@ -146,7 +146,7 @@ async function createUser(user) {
         dbUser.isUsernameTaken(user.username).then(async value => {
             if (value.length == 0) {
 
-                dbUser.getAllIDs().then(value2 => {
+                dbUser.getAllIDs().then(async value2 => {
                     
                     let id;
                     let existe;
@@ -159,6 +159,8 @@ async function createUser(user) {
                             if(i.id == id) existe = true;
                         });
                     } while(existe)
+
+                    user.password = await bcrypt.hash(user.password, 10); //encriptacao---> depois ver se é ok essa linha obrigar a funçao que ela pertence ser async
 
                     dbUser.createUser(id, user).then(value => {
                         resolve({ code: 201, info: { message: "User registado com sucesso."} });

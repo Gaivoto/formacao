@@ -3,6 +3,8 @@ const uuid = require('uuid');
 
 const dbVideo = require('../db/video.js');
 const dbUser = require('../db/user.js');
+const dbNotif = require('../db/notification.js');
+const dbCurs = require('../db/curso.js')
 
 async function getVideo(tokens, id){
     return new Promise((resolve, reject) => {
@@ -195,56 +197,83 @@ async function updateStateVideoAdm(tokens, body) {
     return new Promise((resolve, reject) => {
         utils.validateToken(tokens.access_token, tokens.refresh_token).then(value => {
             let info = value;
-
             dbVideo.getVideo(body.id).then(value1 => {
-                
-                if(value1.length <= 0) {
-                    reject({ code: 404, error: {message: "Video não existe." }});
+
+                if (value1.length <= 0) {
+                    reject({ code: 404, error: { message: "Video não existe." } });
                 } else {
 
                     dbVideo.isVideoFromCourse(body.id, body.id_course).then(value2 => {
 
-                        if(value2.length <= 0) {
-                            reject({ code: 403, error: {message: "Video não pertence a este curso." }});
+                        if (value2.length <= 0) {
+                            reject({ code: 403, error: { message: "Video não pertence a este curso." } });
                         } else {
 
-                            if(info.user.type !== "admin") {
-                                reject({ code: 403, error: {message: "Não possui permissão para esta operação." }});
+                            if (info.user.type !== "admin") {
+                                reject({ code: 403, error: { message: "Não possui permissão para esta operação." } });
                             } else {
 
-                                if(body.state === "Ativo" || body.state === "Inativo" || body.state === "Pendente" || body.state === "Rejeitado") {
-                            
+                                if (body.state === "Ativo" || body.state === "Inativo" || body.state === "Pendente" || body.state === "Rejeitado") {
+
                                     dbVideo.updateStateVideo(body).then(value3 => {
-                                        info.message = "Estado alterado com sucesso.";
-                                        resolve({ code: 200, info: info });
+                                        dbCurs.getCurso(body.id_course).then(value4 => {
+
+                                        let notif = {}
+                                        notif.id = uuid.v4();
+                                        notif.message = 'O estado do video ' + value1[0].title +  ' que pertence ao curso ' + value4[0].name + ' foi alterado para ' + body.state + '.';
+
+                                        data = new Date().toLocaleDateString();
+                                        dias = data.split('/')[0];
+                                        mes = data.split('/')[1];
+                                        ano = data.split('/')[2];
+                                        notif.date = mes + '-' + dias + '-' + ano
+
+                                        notif.id_user = value4[0].id_creator;
+                                        notif.id_course = body.id_course;
+                                        notif.id_video = null;
+                                        dbNotif.createNotification(notif).then(value4 => {
+                                            info.message = "Estado alterado com sucesso.";
+                                            resolve({ code: 200, info: info });
+                                        })
+                                        .catch(error => {
+                                            console.log(error);
+                                             reject({ code: 400, error: { message: "Erro ao executar a query da notificação." } })
+                                        })
+
+                                        })
+                                        .catch(error => {
+                                            console.log(error);
+                                            reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                                        })
+                                        
                                     })
                                     .catch(error => {
                                         console.log(error);
-                                        reject({ code: 400, error: {message: "Algo correu mal com a query." }});
+                                        reject({ code: 400, error: { message: "Algo correu mal com a query." } });
                                     });
 
                                 } else {
 
-                                    reject({ code: 401, error: {message: "Current state invalid" }})
+                                    reject({ code: 401, error: { message: "Current state invalid" } })
 
                                 }
-                            } 
-                        } 
+                            }
+                        }
                     })
                     .catch(error => {
                         console.log(error);
-                        reject({ code: 400, error: {message: "Algo correu mal com a query." }});
+                        reject({ code: 400, error: { message: "Algo correu mal com a query." } });
                     });
                 }
             })
             .catch(error => {
                 console.log(error);
-                reject({ code: 400, error: {message: "Algo correu mal com a query." }});
+                reject({ code: 400, error: { message: "Algo correu mal com a query." } });
             });
         })
         .catch(error => {
             console.log(error);
-            reject({ code: 401, error: {message: "Token inválido."}})
+            reject({ code: 401, error: { message: "Token inválido." } })
         });
     });
 }
