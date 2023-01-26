@@ -22,3 +22,24 @@ content-type: application/json
     "id": "98410312-a4b4-4a6a-b048-2752b8210e23", 
     "state": "Inativo"
 }
+
+###
+PUT {{hostname}}api/videos/adm/98410312-a4b4-4a6a-b048-2752b8210e23
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk4NDEwMzEyLWE0YjQtNGE2YS1iMDQ4LTI3NTJiODIxMGUyMyIsInVzZXJuYW1lIjoiYWRtIiwidHlwZSI6ImFkbWluIiwiaWF0IjoxNjc0NzQwNDQ0LCJleHAiOjE2NzQ3NTQ4NDR9.BaEt4kDLb61IuuqU931IfFId6LdeL-UnQjGQYnMi5rU
+refreshtoken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk4NDEwMzEyLWE0YjQtNGE2YS1iMDQ4LTI3NTJiODIxMGUyMyIsInVzZXJuYW1lIjoiYWRtIiwidHlwZSI6ImFkbWluIiwiaWF0IjoxNjc0NzQwNDQ0fQ.Neh4N-oUmTxP5HOlID4ooIBVfjRWmpBWLF17HzgYdmc
+content-type: application/json
+
+{
+    "id": "1", 
+    "id_course": "8",
+    "state": "Inativo"
+}
+
+###
+POST {{hostname}}api/auth/login
+content-type: application/json  
+
+{     
+    "username": "adm",     
+    "password": "123" 
+}
