@@ -9,7 +9,7 @@ async function getUser(tokens, id) {
         utils.validateToken(tokens.access_token, tokens.refresh_token).then(value => {
             let info = value;
 
-            if(info.user.id = id) {
+            if(info.user.id == id) {
                 dbUser.getUser(id).then(value2 => {
 
                     if(value2.length == 0){
