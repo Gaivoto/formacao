@@ -14,6 +14,7 @@ const rtCria = require('./routes/criador.js');
 const rtNotf = require('./routes/notification.js')
 const rtDipl = require('./routes/diploma.js');
 const rtSubs = require('./routes/subscricao.js');
+const rtComp = require('./routes/compra.js');
 
 app.use("/api/auth", rtAuth);
 
@@ -32,5 +33,7 @@ app.use("/api/notification", rtNotf);
 app.use("/api/diplomas", rtDipl);
 
 app.use("/api/subscricoes", rtSubs);
+
+app.use("/api/compras", rtComp);
 
 app.listen(process.env.PORT, () => console.log(`Listening to port ${process.env.PORT}`));
