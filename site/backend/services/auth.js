@@ -11,8 +11,8 @@ async function login(username, password) {
             reject({ code: 400, message: 'Username ou password vazios.' });
         } else {
             dbAuth.authenticateUser(username, password).then(async value => {
-                try {
-                    if (await bcrypt.compare(password, value[0].password)) {
+                /*try {
+                    if (await bcrypt.compare(password, value[0].password)) {*/
                         if (value.length == 0) {
                             reject({ code: 401, error: { message: 'Utilizador/password inválido.' } });
                         } else if (value[0].state == "Inativo") {
@@ -29,12 +29,12 @@ async function login(username, password) {
                                 reject({ code: 400, message: 'Algo correu mal com a query.' });
                             });
                         }
-                    } else {
+                    /*} else {
                         reject({ code: 400, error: { message: 'Username ou password inválido.' } });
                     }
                 } catch {
                     reject({ code: 400, message: 'Algo correu mal com a query.' });
-                }
+                }*/
             })
             .catch(error => {
                 console.log(error);
