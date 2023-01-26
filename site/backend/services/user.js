@@ -1,4 +1,5 @@
 const uuid = require('uuid');
+const bcrypt = require('bcrypt');
 const utils = require('../utils/index.js');
 const dbUser = require('../db/user.js');
 const dbCour = require('../db/curso.js');
@@ -63,7 +64,6 @@ async function getAllUsers(tokens) {
                     reject({ code: 400, error: { message: "Algo correu mal com a query." } });
                 })
             } else {
-                reject({ code: 403, error: { message: "O user que tentou completar essa ação não é administrador." } });
                 reject({ code: 403, error: { message: "O user que tentou completar essa ação não é administrador." } });
             }
         })
@@ -160,7 +160,7 @@ async function createUser(user) {
                         });
                     } while(existe)
 
-                    user.password = await bcrypt.hash(user.password, 10); //encriptacao---> depois ver se é ok essa linha obrigar a funçao que ela pertence ser async
+                    user.password = await bcrypt.hash(user.password, 10);
 
                     dbUser.createUser(id, user).then(value => {
                         resolve({ code: 201, info: { message: "User registado com sucesso."} });
