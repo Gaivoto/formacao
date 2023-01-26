@@ -45,10 +45,25 @@ async function getAllSubscricoes() {
 async function createSubscricao(id, body) {
     return new Promise((resolve, reject) => {
 
-        const slct = `INSERT INTO Subscription (id, id_subscriber, id_subscribed, start_date, final_date) VALUES ('${id}', '${body.id_subscriber}', '${body.id_subscribed}', '${body.start_date}', '${body.final_date}')`;
+        const slct = `INSERT INTO Subscription (id, id_subscriber, id_subscribed, start_date) VALUES ('${id}', '${body.id_subscriber}', '${body.id_subscribed}', '${body.start_date}')`;
         pool.query(slct, (err, res) => {
             if(!err) {
                 resolve(res.recordset);
+            } else {
+                reject(err.message);
+            }
+        });
+    });
+}
+
+async function endSubscricao(final_date, id) {
+    return new Promise((resolve, reject) => {
+
+        let slct = `UPDATE Subscription SET [final_date] = '${final_date}' WHERE [id] = '${id}'`;
+        
+        pool.query(slct, (err, res) => {
+            if(!err) {
+                resolve(res);
             } else {
                 reject(err.message);
             }
@@ -60,4 +75,5 @@ module.exports = {
     getSubscricao: getSubscricao,
     getAllSubscricoes: getAllSubscricoes,
     createSubscricao: createSubscricao,
+    endSubscricao: endSubscricao,
 }
