@@ -165,7 +165,8 @@ async function createUser(user) {
     
                         dbUser.createUser(id, user).then(value => {
                             resolve({ code: 201, info: { message: "User registado com sucesso."} });
-                        }).catch(error => {
+                        })
+                        .catch(error => {
                             console.log(error);
                             reject({ code: 400, error: { message: "Algo correu mal com a query de insert." }});
                         });

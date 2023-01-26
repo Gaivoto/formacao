@@ -34,15 +34,15 @@ async function getCompra(headers, id) {
                         resolve({ code: 200, info: resp });
                     }
                 })
-                    .catch(error => {
-                        console.log(error);
-                        reject({ code: 400, error: { message: "Algo correu mal com a query." } });
-                    });
-            })
                 .catch(error => {
                     console.log(error);
-                    reject({ code: 401, error: { message: "Token inválido." } })
+                    reject({ code: 400, error: { message: "Algo correu mal com a query." } });
                 });
+            })
+            .catch(error => {
+                console.log(error);
+                reject({ code: 401, error: { message: "Token inválido." } })
+            });
 
         }
     });
@@ -71,15 +71,15 @@ async function getAllCompras(headers) {
 
                     resolve({ code: 200, info: resp });
                 })
-                    .catch(error => {
-                        console.log(error);
-                        reject({ code: 400, error: { message: "Algo correu mal com a query." } });
-                    });
-            })
                 .catch(error => {
                     console.log(error);
-                    reject({ code: 401, error: { message: "Token inválido." } })
+                    reject({ code: 400, error: { message: "Algo correu mal com a query." } });
                 });
+            })
+            .catch(error => {
+                console.log(error);
+                reject({ code: 401, error: { message: "Token inválido." } })
+            });
 
         } else {
             dbComp.getAllCompras().then(value => {
@@ -90,10 +90,10 @@ async function getAllCompras(headers) {
 
                 resolve({ code: 200, info: resp });
             })
-                .catch(error => {
-                    console.log(error);
-                    reject({ code: 400, error: { message: "Algo correu mal com a query." } });
-                });
+            .catch(error => {
+                console.log(error);
+                reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+            });
         }
 
     });
@@ -153,15 +153,15 @@ async function createCompra(tokens, body) {
                                                     dbComp.createCompra(id, body, currentDate).then(value => {
                                                         resolve({ code: 201, info: info });
                                                     })
-                                                        .catch(error => {
-                                                            console.log(error);
-                                                            reject({ code: 400, error: { message: "Algo correu mal com a query." } });
-                                                        });
-                                                })
                                                     .catch(error => {
                                                         console.log(error);
                                                         reject({ code: 400, error: { message: "Algo correu mal com a query." } });
                                                     });
+                                                })
+                                                .catch(error => {
+                                                    console.log(error);
+                                                    reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                                                });
                                             }
                                         } else {
                                             dbComp.getAllCompras().then(value5 => {
@@ -176,21 +176,21 @@ async function createCompra(tokens, body) {
                                                 dbComp.createCompra(id, body, currentDate).then(value => {
                                                     resolve({ code: 201, info: info });
                                                 })
-                                                    .catch(error => {
-                                                        console.log(error);
-                                                        reject({ code: 400, error: { message: "Algo correu mal com a query." } });
-                                                    });
-                                            })
                                                 .catch(error => {
                                                     console.log(error);
                                                     reject({ code: 400, error: { message: "Algo correu mal com a query." } });
                                                 });
+                                            })
+                                            .catch(error => {
+                                                console.log(error);
+                                                reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                                            });
                                         }
                                     })
-                                        .catch(error => {
-                                            console.log(error);
-                                            reject({ code: 400, error: { message: "Algo correu mal com a query." } });
-                                        });
+                                    .catch(error => {
+                                        console.log(error);
+                                        reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                                    });
                                 }
                             } else {
                                 dbSubs.existsSubscricao(body.id_user, id_creator).then(value4 => {
@@ -215,15 +215,15 @@ async function createCompra(tokens, body) {
                                                 dbComp.createCompra(id, body, currentDate).then(value => {
                                                     resolve({ code: 201, info: info });
                                                 })
-                                                    .catch(error => {
-                                                        console.log(error);
-                                                        reject({ code: 400, error: { message: "Algo correu mal com a query." } });
-                                                    });
-                                            })
                                                 .catch(error => {
                                                     console.log(error);
                                                     reject({ code: 400, error: { message: "Algo correu mal com a query." } });
                                                 });
+                                            })
+                                            .catch(error => {
+                                                console.log(error);
+                                                reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                                            });
                                         }
                                     } else {
                                         dbComp.getAllCompras().then(value5 => {
@@ -237,39 +237,39 @@ async function createCompra(tokens, body) {
                                             dbComp.createCompra(id, body, currentDate).then(value => {
                                                 resolve({ code: 201, info: info });
                                             })
-                                                .catch(error => {
-                                                    console.log(error);
-                                                    reject({ code: 400, error: { message: "Algo correu mal com a query." } });
-                                                });
-                                        })
                                             .catch(error => {
                                                 console.log(error);
                                                 reject({ code: 400, error: { message: "Algo correu mal com a query." } });
                                             });
+                                        })
+                                        .catch(error => {
+                                            console.log(error);
+                                            reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                                        });
                                     }
                                 })
-                                    .catch(error => {
-                                        console.log(error);
-                                        reject({ code: 400, error: { message: "Algo correu mal com a query." } });
-                                    });
+                                .catch(error => {
+                                    console.log(error);
+                                    reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                                });
                             }
                         })
-                            .catch(error => {
-                                console.log(error);
-                                reject({ code: 400, error: { message: "Algo correu mal com a query." } });
-                            });
-                    })
                         .catch(error => {
                             console.log(error);
                             reject({ code: 400, error: { message: "Algo correu mal com a query." } });
                         });
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                    });
                 }
             }
         })
-            .catch(error => {
-                console.log(error);
-                reject({ code: 401, error: { message: "Token inválido." } })
-            });
+        .catch(error => {
+            console.log(error);
+            reject({ code: 401, error: { message: "Token inválido." } })
+        });
     });
 }
 
