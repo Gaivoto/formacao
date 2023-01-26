@@ -4,8 +4,32 @@ POST {{hostname}}/api/auth/login
 content-type: application/json  
 
 {     
-    "username": "dre",     
+    "username": "daav",     
     "password": "123" 
+}
+
+### COMPRA
+
+GET {{hostname}}/api/compras/1
+authorization: {{apiKey}}
+refreshtoken: {{refreshKey}}
+
+###
+
+GET {{hostname}}/api/compras/
+authorization: {{apiKey}}
+refreshtoken: {{refreshKey}}
+
+###
+
+POST {{hostname}}/api/compras/
+authorization: {{apiKey}}
+refreshtoken: {{refreshKey}}
+content-type: application/json
+
+{
+    "id_user": "10", 
+    "id_course": "1"
 }
 
 ### SUBSCRIPTION
@@ -28,9 +52,9 @@ refreshtoken: {{refreshKey}}
 content-type: application/json
 
 {
-    "id_subscriber": "4", 
-    "id_subscribed": "16", 
-    "start_date": "2023-01-25 00:00:00.000"
+    "id_subscriber": "10", 
+    "id_subscribed": "15", 
+    "start_date": "2022-01-25 00:00:00.000"
 }
 
 ###

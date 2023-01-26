@@ -42,23 +42,6 @@ async function getSubscricao(headers, id) {
                 reject({ code: 401, error: {message: "Token inválido."}})
             });
 
-        } else {
-
-            dbSubs.getSubscricao(id).then(value3 => {
-
-                if(value3.length <= 0) {
-                    reject({ code: 404, error: {message: "Subscrição não existe." }});
-                } else {
-                    let resp = {
-                        subs: value3
-                    }
-                    resolve({ code: 200, info: resp });
-                }
-            })
-            .catch(error => {
-                console.log(error);
-                reject({ code: 400, error: {message: "Algo correu mal com a query."}});
-            });
         } 
     });
 }

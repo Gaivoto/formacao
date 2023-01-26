@@ -16,9 +16,9 @@ sql.connect(config, function (err) {
 
 const pool = new sql.Request();
 
-async function getSubscricao(id) {
+async function getCompra(id) {
     return new Promise((resolve, reject) => {
-        const slct = `SELECT * FROM [Subscription] WHERE [id] = '${id}'`;
+        const slct = `SELECT * FROM [User_Course] WHERE [id] = '${id}'`;
         pool.query(slct, (err, res) => {
             if(!err) {
                 resolve(res.recordset);
@@ -29,9 +29,9 @@ async function getSubscricao(id) {
     });
 }
 
-async function getAllSubscricoes() {
+async function getAllCompras() {
     return new Promise((resolve, reject) => {
-        const slct = `SELECT * FROM [Subscription]`;
+        const slct = `SELECT * FROM [User_Course]`;
         pool.query(slct, (err, res) => {
             if(!err) {
                 resolve(res.recordset);
@@ -42,10 +42,9 @@ async function getAllSubscricoes() {
     });
 }
 
-async function createSubscricao(id, body) {
+async function existsCompra(idU, idC) {
     return new Promise((resolve, reject) => {
-
-        const slct = `INSERT INTO Subscription (id, id_subscriber, id_subscribed, start_date) VALUES ('${id}', '${body.id_subscriber}', '${body.id_subscribed}', '${body.start_date}')`;
+        const slct = `SELECT * FROM [User_Course] WHERE [id_user] = '${idU}' AND [id_course] = '${idC}'`;
         pool.query(slct, (err, res) => {
             if(!err) {
                 resolve(res.recordset);
@@ -56,24 +55,10 @@ async function createSubscricao(id, body) {
     });
 }
 
-async function endSubscricao(final_date, id) {
+async function createCompra(id, body, currentDate) {
     return new Promise((resolve, reject) => {
 
-        let slct = `UPDATE Subscription SET [final_date] = '${final_date}' WHERE [id] = '${id}'`;
-        
-        pool.query(slct, (err, res) => {
-            if(!err) {
-                resolve(res);
-            } else {
-                reject(err.message);
-            }
-        });
-    });
-}
-
-async function existsSubscricao(id_subscriber, id_subscribed) {
-    return new Promise((resolve, reject) => {
-        const slct = `SELECT * FROM [Subscription] WHERE [id_subscriber] = '${id_subscriber}' AND [id_subscribed] = '${id_subscribed}'`;
+        const slct = `INSERT INTO User_Course (id, id_user, id_course, date_bought, progress) VALUES ('${id}', '${body.id_user}', '${body.id_course}', '${currentDate}', 0)`;
         pool.query(slct, (err, res) => {
             if(!err) {
                 resolve(res.recordset);
@@ -85,9 +70,8 @@ async function existsSubscricao(id_subscriber, id_subscribed) {
 }
 
 module.exports = {
-    getSubscricao: getSubscricao,
-    getAllSubscricoes: getAllSubscricoes,
-    createSubscricao: createSubscricao,
-    endSubscricao: endSubscricao,
-    existsSubscricao: existsSubscricao,
+    getCompra: getCompra,
+    getAllCompras: getAllCompras,
+    existsCompra: existsCompra,
+    createCompra: createCompra,
 }
