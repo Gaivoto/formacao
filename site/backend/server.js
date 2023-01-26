@@ -12,7 +12,7 @@ const rtVide = require('./routes/video.js');
 const rtAdm = require('./routes/admin.js');
 const rtCria = require('./routes/criador.js');
 const rtNotf = require('./routes/notification.js')
-//const rtDipl = require('./routes/diploma.js');
+const rtDipl = require('./routes/diploma.js');
 const rtSubs = require('./routes/subscricao.js');
 
 app.use("/api/auth", rtAuth);
@@ -29,7 +29,7 @@ app.use("/api/criadores", rtCria);
 
 app.use("/api/notification", rtNotf);
 
-//app.use("/api/diplomas", rtDipl);
+app.use("/api/diplomas", rtDipl);
 
 app.use("/api/subscricoes", rtSubs);
 

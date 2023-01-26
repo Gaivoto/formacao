@@ -101,7 +101,7 @@ async function updateCurso(body) {
 
 async function getUserCourses(id) {
     return new Promise((resolve, reject) => {
-        const slct = `SELECT c.id, c.name, c.category, c.description, c.price, c.id_creator, (SELECT name FROM Users WHERE id = c.id_creator) AS nome_creator FROM Course c INNER JOIN User_Course uc ON c.id = uc.id_course INNER JOIN Users u ON uc.id_user = u.id WHERE u.id = '${id}'`;
+        const slct = `SELECT c.id as id_course, c.name as course, c.image as image, uc.progress as progress FROM [Course] c LEFT JOIN [User_Course] uc ON c.id = uc.id_course LEFT JOIN [Users] u ON uc.id_user = u.id WHERE u.id = '${id}'`;
         pool.query(slct, (err, res) => {
             if(!err) {
                 resolve(res.recordset);

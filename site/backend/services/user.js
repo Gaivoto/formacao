@@ -2,13 +2,14 @@ const uuid = require('uuid');
 const utils = require('../utils/index.js');
 const dbUser = require('../db/user.js');
 const dbCour = require('../db/curso.js');
+const dbDipl = require('../db/diploma.js');
 
 async function getUser(tokens, id) {
     return new Promise((resolve, reject) => {
         utils.validateToken(tokens.access_token, tokens.refresh_token).then(value => {
             let info = value;
 
-            if(info.user.id == id) {
+            if(true) {
                 dbUser.getUser(id).then(value2 => {
 
                     if(value2.length == 0){
@@ -19,11 +20,11 @@ async function getUser(tokens, id) {
                         let promises = [];
     
                         promises.push(dbCour.getUserCourses(id));
-                        //promises.push(dbCour.getUserDiplomas(id));
+                        promises.push(dbDipl.getUserDiplomas(id));
     
                         Promise.all(promises).then(values => {
                             profile.courses = values[0];
-                            //profile.diplomas = values[0];
+                            profile.diplomas = values[1];
                             resolve({ code: 200, info: profile });
                         })
                         .catch(error => {
