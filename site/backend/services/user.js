@@ -3,6 +3,7 @@ const utils = require('../utils/index.js');
 const dbUser = require('../db/user.js');
 const dbCour = require('../db/curso.js');
 const dbDipl = require('../db/diploma.js');
+const bcrypt = require('bcrypt');
 
 async function getUser(tokens, id) {
     return new Promise((resolve, reject) => {
@@ -161,7 +162,6 @@ async function createUser(user) {
                     } while(existe)
 
                     user.password = await bcrypt.hash(user.password, 10); //encriptacao---> depois ver se é ok essa linha obrigar a funçao que ela pertence ser async
-
                     dbUser.createUser(id, user).then(value => {
                         resolve({ code: 201, info: { message: "User registado com sucesso."} });
                     }).catch(error => {

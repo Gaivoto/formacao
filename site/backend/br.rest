@@ -40,6 +40,19 @@ POST {{hostname}}api/auth/login
 content-type: application/json  
 
 {     
-    "username": "adm",     
-    "password": "123" 
+    "username": "julinho",     
+    "password": "1323" 
+}
+###
+POST {{hostname}}api/users/
+content-type: application/json  
+
+{     
+    "username": "julinho",     
+    "password": "123" ,
+    "name": "julio",
+    "email": "julio@gmail.com",
+    "description": "eu sou o julio",
+    "image": "imagem do julio"
+
 }
