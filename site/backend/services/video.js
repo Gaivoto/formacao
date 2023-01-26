@@ -218,34 +218,34 @@ async function updateStateVideoAdm(tokens, body) {
                                     dbVideo.updateStateVideo(body).then(value3 => {
                                         dbCurs.getCurso(body.id_course).then(value4 => {
 
-                                        let notif = {}
-                                        notif.id = uuid.v4();
-                                        notif.message = 'O estado do video ' + value1[0].title +  ' que pertence ao curso ' + value4[0].name + ' foi alterado para ' + body.state + '.';
+                                            let notif = {}
+                                            notif.id = uuid.v4();
+                                            notif.message = 'O estado do video ' + value1[0].title + ' que pertence ao curso ' + value4[0].name + ' foi alterado para ' + body.state + '.';
 
-                                        data = new Date().toLocaleDateString();
-                                        dias = data.split('/')[0];
-                                        mes = data.split('/')[1];
-                                        ano = data.split('/')[2];
-                                        notif.date = mes + '-' + dias + '-' + ano
+                                            data = new Date().toLocaleDateString();
+                                            dias = data.split('/')[0];
+                                            mes = data.split('/')[1];
+                                            ano = data.split('/')[2];
+                                            notif.date = mes + '-' + dias + '-' + ano
 
-                                        notif.id_user = value4[0].id_creator;
-                                        notif.id_course = body.id_course;
-                                        notif.id_video = null;
-                                        dbNotif.createNotification(notif).then(value4 => {
-                                            info.message = "Estado alterado com sucesso.";
-                                            resolve({ code: 200, info: info });
-                                        })
-                                        .catch(error => {
-                                            console.log(error);
-                                             reject({ code: 400, error: { message: "Erro ao executar a query da notificação." } })
-                                        })
+                                            notif.id_user = value4[0].id_creator;
+                                            notif.id_course = body.id_course;
+                                            notif.id_video = null;
+                                            dbNotif.createNotification(notif).then(value4 => {
+                                                info.message = "Estado alterado com sucesso.";
+                                                resolve({ code: 200, info: info });
+                                            })
+                                            .catch(error => {
+                                                console.log(error);
+                                                reject({ code: 400, error: { message: "Erro ao executar a query da notificação." } })
+                                            })
 
                                         })
                                         .catch(error => {
                                             console.log(error);
                                             reject({ code: 400, error: { message: "Algo correu mal com a query." } });
                                         })
-                                        
+
                                     })
                                     .catch(error => {
                                         console.log(error);
@@ -253,9 +253,7 @@ async function updateStateVideoAdm(tokens, body) {
                                     });
 
                                 } else {
-
                                     reject({ code: 401, error: { message: "Current state invalid" } })
-
                                 }
                             }
                         }
