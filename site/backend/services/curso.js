@@ -31,7 +31,7 @@ async function getCurso(headers, id) {
                     } else {
 
                         info.course = value2[0];
-                        info.courses.access = false;
+                        info.course.access = false;
                         let promises = [];
 
                         promises.push(dbSubs.existsSubscricao(info.user.id, value2[0].id_creator))
@@ -41,7 +41,7 @@ async function getCurso(headers, id) {
                         Promise.all(promises).then(values => {
 
                             if (values[0].length > 0 || values[1].length > 0) {
-                                info.courses.access = true;
+                                info.course.access = true;
                             }
 
                             info.course.videos = values[2];

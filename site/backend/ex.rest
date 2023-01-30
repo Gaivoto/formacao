@@ -4,7 +4,7 @@ POST {{hostname}}/api/auth/login
 content-type: application/json  
 
 {     
-    "username": "daav",     
+    "username": "adm",     
     "password": "123" 
 }
 
@@ -70,7 +70,7 @@ content-type: application/json
 
 ### CURSOS
 
-GET {{hostname}}/api/cursos/1
+GET {{hostname}}/api/cursos/0236fe39-c92b-4b60-bf20-b3fa6586d558
 authorization: {{apiKey}}
 refreshtoken: {{refreshKey}}
 
