@@ -1,21 +1,19 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-import Landing from '../views/Landing.vue'
-import Home from '../views/Home.vue'
+import Analytics from '../views/Analytics.vue'
+import Content from '../views/Content.vue'
 import CourseDetails from '../views/CourseDetails.vue'
 import CourseListAdm from '../views/CourseListAdm.vue'
 import Courses from '../views/Courses.vue'
-import Workshop from '../views/Workshop.vue'
-import Analytics from '../views/Analytics.vue'
-import Content from '../views/Content.vue'
 import Login from '../views/Login.vue'
-import Register from '../views/Register.vue'
-import Profile from '../views/Profile.vue'
 import MyCourses from '../views/MyCourses.vue'
 import MyDiplomas from '../views/MyDiplomas.vue'
-import VideoPlayer from '../views/VideoPlayer.vue'
+import Profile from '../views/Profile.vue'
+import Register from '../views/Register.vue'
 import Settings from '../views/Settings.vue'
 import UserListAdm from '../views/UserListAdm.vue'
+import VideoPlayer from '../views/VideoPlayer.vue'
+import { default as Workshop, default as Workshop } from '../views/Workshop.vue'
 
 const router = createRouter({
     history: createWebHistory(),
