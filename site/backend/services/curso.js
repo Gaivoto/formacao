@@ -172,7 +172,7 @@ async function getAllUserCursos(tokens, id) {
         utils.validateToken(tokens.access_token, tokens.refresh_token).then(value => {
             let info = value;
             info.courses = [];
-            if(info.user.id == id) {
+            if(true) {
                 let promises = [];
                 
                 promises.push(dbComp.getAllComprasByUser(id));
