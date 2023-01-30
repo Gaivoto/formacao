@@ -6,6 +6,8 @@ const cntrCria = require('../controllers/criador.js');
 
 router.get("/", cntrCria.getAllCriadores);
 
+router.get("/home", cntrCria.getCriadoresHomepage);
+
 router.get("/:id", cntrCria.getCriador);
 
 router.post("/", cntrCria.createCriador);
@@ -13,5 +15,6 @@ router.post("/", cntrCria.createCriador);
 router.put("/adm/:id", cntrCria.changeCriadorState);
 
 router.put("/:id", cntrCria.updateCriador);
+
 
 module.exports = router

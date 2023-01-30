@@ -8,6 +8,11 @@ content-type: application/json
     "password": "123" 
 }
 
+### TESTE
+
+GET {{hostname}}/api/criadores/home
+
+
 ### COMPRA
 
 GET {{hostname}}/api/compras/1
