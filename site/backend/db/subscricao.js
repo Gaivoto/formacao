@@ -84,10 +84,38 @@ async function existsSubscricao(id_subscriber, id_subscribed) {
     });
 }
 
+async function getSubscribersFromCreator(id_creator, date) {
+    return new Promise((resolve, reject) => {
+        const slct = `SELECT [id], [id_subscriber] FROM Subscription WHERE [final_date] >= '${date}' AND [id_subscribed] = '${id_creator}'`;
+        pool.query(slct, (err, res) => {
+            if(!err) {
+                resolve(res.recordset);
+            } else {
+                reject(err.message);
+            }
+        });
+    });
+}
+
+async function getUsersThatBoughtThisCourse(id_course) {
+    return new Promise((resolve, reject) => {
+        const slct = `SELECT * FROM [User_Course] WHERE [id_course] = ${id_course}`;
+        pool.query(slct, (err, res) => {
+            if(!err) {
+                resolve(res.recordset);
+            } else {
+                reject(err.message);
+            }
+        });
+    });
+}
+
 module.exports = {
     getSubscricao: getSubscricao,
     getAllSubscricoes: getAllSubscricoes,
     createSubscricao: createSubscricao,
     endSubscricao: endSubscricao,
     existsSubscricao: existsSubscricao,
+    getSubscribersFromCreator: getSubscribersFromCreator,
+    getUsersThatBoughtThisCourse: getUsersThatBoughtThisCourse
 }
