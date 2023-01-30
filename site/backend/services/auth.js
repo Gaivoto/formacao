@@ -3,7 +3,6 @@ const crypto = require('crypto-js');
 const bcrypt = require('bcrypt');
 
 const dbAuth = require('../db/auth.js');
-const dbUser = require('../db/user');
 
 async function login(username, password) {
     return new Promise((resolve, reject) => {
@@ -36,10 +35,10 @@ async function login(username, password) {
                     reject({ code: 400, error: { message: 'Algo correu mal com a query.' } });
                 }
             })
-                .catch(error => {
-                    console.log(error);
-                    reject({ code: 400, error: { message: 'Algo correu mal com a query.' } });
-                });
+            .catch(error => {
+                console.log(error);
+                reject({ code: 400, error: { message: 'Algo correu mal com a query.' } });
+            });
         }
     });
 }
@@ -54,10 +53,10 @@ async function logout(refresh_token) {
                 resolve({ code: 200 });
             }
         })
-            .catch(error => {
-                reject({ code: 400, error: { message: 'Algo correu mal com a query.' } });
-                console.log(error);
-            });
+        .catch(error => {
+            reject({ code: 400, error: { message: 'Algo correu mal com a query.' } });
+            console.log(error);
+        });
     });
 }
 
