@@ -205,13 +205,13 @@ async function updateCriador(tokens, id, criador) {
                 } else {
                     dbCria.getCriador(id).then(value1 => {
                         if(value1[0].price != criador.price) {
+                            
                             dbCria.updateCriador(criador, id).then(value => {
                                 let data = new Date().toLocaleDateString();
                                 let dias = data.split('/')[0];
                                 let mes = data.split('/')[1];
                                 ano = data.split('/')[2];
-                                dataAtual = mes + '-' + dias + '-' + ano;
-                            
+                                dataAtual = mes + '-' + dias + '-' + ano
                                 dbSubs.getSubscribersFromCreator(id).then(value2 => {
                                     if(value2.length == 0) {
                                         info.message = "Criador alterado com sucesso.";
