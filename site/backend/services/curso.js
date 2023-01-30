@@ -6,6 +6,7 @@ const dbUser = require('../db/user.js');
 const dbVide = require('../db/video.js');
 const dbNotif = require('../db/notification.js');
 const dbSubs = require('../db/subscricao')
+const dbComp = require('../db/compra.js');
 
 async function getCurso(headers, id) {
     return new Promise((resolve, reject) => {
@@ -37,9 +38,21 @@ async function getCurso(headers, id) {
                                 reject({ code: 404, error: { message: "Subscricao não existe." } });
                             } else {
 
-                                dbVide.getAllVideosFromCourse(id).then(value4 => {
-                                    info.course.videos = value4;
-                                    resolve({ code: 200, info: info });
+                                dbComp.existsCompra(info.user.id, id).then(value4 => {
+
+                                    if (value4.length <= 0) {
+                                        reject({ code: 404, error: { message: "Compra não existe." } });
+                                    } else {
+
+                                        dbVide.getAllVideosFromCourse(id).then(value5 => {
+                                            info.course.videos = value5;
+                                            resolve({ code: 200, info: info });
+                                        })
+                                            .catch(error => {
+                                                console.log(error);
+                                                reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                                            });
+                                    }
                                 })
                                     .catch(error => {
                                         console.log(error);
