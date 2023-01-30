@@ -31,39 +31,26 @@ async function getCurso(headers, id) {
                     } else {
 
                         info.course = value2[0];
+                        info.courses.access = false;
+                        let promises = [];
 
-                        dbSubs.existsSubscricao(info.user.id, value2[0].id_creator).then(value3 => {
+                        promises.push(dbSubs.existsSubscricao(info.user.id, value2[0].id_creator))
+                        promises.push(dbComp.existsCompra(info.user.id, id))
+                        promises.push(dbVide.getAllVideosFromCourse(id))
 
-                            if (value3.length <= 0) {
-                                reject({ code: 404, error: { message: "Subscricao não existe." } });
-                            } else {
+                        Promise.all(promises).then(values => {
 
-                                dbComp.existsCompra(info.user.id, id).then(value4 => {
-
-                                    if (value4.length <= 0) {
-                                        reject({ code: 404, error: { message: "Compra não existe." } });
-                                    } else {
-
-                                        dbVide.getAllVideosFromCourse(id).then(value5 => {
-                                            info.course.videos = value5;
-                                            resolve({ code: 200, info: info });
-                                        })
-                                            .catch(error => {
-                                                console.log(error);
-                                                reject({ code: 400, error: { message: "Algo correu mal com a query." } });
-                                            });
-                                    }
-                                })
-                                    .catch(error => {
-                                        console.log(error);
-                                        reject({ code: 400, error: { message: "Algo correu mal com a query." } });
-                                    });
+                            if (values[0].length > 0 || values[1].length > 0) {
+                                info.courses.access = true;
                             }
-                        })
-                            .catch(error => {
-                                console.log(error);
-                                reject({ code: 400, error: { message: "Algo correu mal com a query." } });
-                            });
+
+                            info.course.videos = values[2];
+                            resolve({ code: 200, info: info });
+
+                        }).catch(error => {
+                            console.log(error);
+                            reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                        });
                     }
                 })
                     .catch(error => {
