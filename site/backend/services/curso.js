@@ -366,7 +366,7 @@ async function updateStateCursoAdm(tokens, id, body) {
                                 //notificacao para o user
                                 if (body.state === "Ativo") {
                                     //perguntar pro nerdola do leo onde e como meter o resolve aqui
-                                    dbSubs.getSubscribersFromCreator(notif.id_user, notif.date).then(value5 => {
+                                    dbSubs.getSubscribersFromCreator(notif.id_user).then(value5 => {
                                         for (let i = 0; i < value5.length; i++) {
                                             let notifUser = {}
                                             notifUser.id = uuid.v4();

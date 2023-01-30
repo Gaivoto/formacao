@@ -96,7 +96,7 @@ async function existsSubscricao(id_subscriber, id_subscribed) {
     });
 }
 
-async function getSubscribersFromCreator(id_creator, date) {
+async function getSubscribersFromCreator(id_creator) {
     return new Promise((resolve, reject) => {
         const slct = `SELECT [id], [id_subscriber] FROM Subscription WHERE [final_date] IS NULL AND [id_subscribed] = '${id_creator}'`;
         pool.query(slct, (err, res) => {

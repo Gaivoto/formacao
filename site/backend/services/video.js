@@ -238,7 +238,7 @@ async function updateStateVideoAdm(tokens, body) {
                                             
                                             if (body.state === "Ativo") {
                                                
-                                                promises.push(dbSubs.getSubscribersFromCreator(notif.id_user, notif.date));
+                                                promises.push(dbSubs.getSubscribersFromCreator(notif.id_user));
                                                 
                                                 //notificacao pra quem comprou o curso
                                                 promises.push(dbComp.getUsersThatBoughtThisCourse(body.id_course));
