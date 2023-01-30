@@ -5,6 +5,7 @@ const dbCurs = require('../db/curso.js');
 const dbUser = require('../db/user.js');
 const dbVide = require('../db/video.js');
 const dbNotif = require('../db/notification.js');
+const dbSubs = require('../db/subscricao')
 
 async function getCurso(headers, id) {
     return new Promise((resolve, reject) => {
@@ -276,29 +277,58 @@ async function updateStateCursoAdm(tokens, id, body) {
                         if (body.state === "Ativo" || body.state === "Inativo" || body.state === "Pendente" || body.state === "Rejeitado") {
 
                             dbCurs.updateStateCurso(body).then(value3 => {
+
                                 //ainda falta dar uma olhadinha em verificacoes aqui, por exemplo quando uma pessoa se inscreveu em um curso mas ja acabou a subscricao ele nao deve mais receber notificacoes, isso vai ser feito aqui mesmo
                                 //aqui vai entrar a notificaçao pro dono do curso e se for tornado ativo as pessoas que seguem aquele criador tambem vao receber aquele curso, isso preciso esperar o andre fazer a funçao
+                                //notificacao pro criador do curso
+                                let promises = [];
                                 let notif = {}
                                 notif.id = uuid.v4();
                                 notif.message = 'O estado do curso ' + value1[0].name + ' foi alterado para ' + body.state + '.';
 
-                                data = new Date().toLocaleDateString();
-                                dias = data.split('/')[0];
-                                mes = data.split('/')[1];
-                                ano = data.split('/')[2];
+                                let data = new Date().toLocaleDateString();
+                                let dias = data.split('/')[0];
+                                let mes = data.split('/')[1];
+                                let ano = data.split('/')[2];
                                 notif.date = mes + '-' + dias + '-' + ano
 
                                 notif.id_user = value1[0].id_creator;
                                 notif.id_course = id;
                                 notif.id_video = null;
-                                dbNotif.createNotification(notif).then(value4 => {
-                                    info.message = "Estado alterado com sucesso.";
-                                    resolve({ code: 200, info: info });
-                                })
-                                .catch(error => {
-                                    console.log(error);
-                                    reject({ code: 400, error: { message: "Erro ao executar a query da notificação." } })
-                                })
+                                promisesNotif.push(dbNotif.createNotification(notif));
+                                //notificacao para o user
+                                if (body.state === "Ativo") {
+                                    //perguntar pro nerdola do leo onde e como meter o resolve aqui
+                                    dbSubs.getSubscribersFromCreator(notif.id_user, notif.date).then(value5 => {
+                                        for(let i = 0; i < value5.length; i++) {
+                                            let notifUser = {}
+                                            notifUser.id = uuid.v4();
+                                            notifUser.message = 'O criador X(botar aqui nome do criador) que você esta inscrito acabou de postar um novo curso!';
+
+                                            notifUser.date = notif.date;
+
+                                            notifUser.id_user = value5[i].id_subscriber;
+                                            notifUser.id_course = id;
+                                            notifUser.id_video = null;
+
+                                            promises.push(dbNotif.createNotification(notifUser));
+                                             
+                                        }
+                                        Promise.all(promises).then(values => {
+                                            info.message = "Estado alterado com sucesso.";
+                                            resolve({ code: 200, info: info });
+                                        })
+                                        .catch(error => {
+                                            console.log(error);
+                                            reject({ code: 400, error: {message: "Erro ao executar a criação das notificações." } })
+                                        })
+                                    })
+                                    .catch(error => {
+                                        console.log(error);
+                                        reject({ code: 400, error: { message: "Erro ao executar a query da notificação." } })
+                                    });
+                                }
+
                             })
                             .catch(error => {
                                 console.log(error);
@@ -311,15 +341,15 @@ async function updateStateCursoAdm(tokens, id, body) {
                     }
                 }
             })
-                .catch(error => {
-                    console.log(error);
-                    reject({ code: 400, error: { message: "Algo correu mal com a query." } });
-                });
-        })
             .catch(error => {
                 console.log(error);
-                reject({ code: 401, error: { message: "Token inválido." } })
+                reject({ code: 400, error: { message: "Algo correu mal com a query." } });
             });
+        })
+        .catch(error => {
+            console.log(error);
+            reject({ code: 401, error: { message: "Token inválido." } })
+        });
     });
 }
 
@@ -329,15 +359,15 @@ async function updateCurso(tokens, id, body) {
             let info = value;
 
             dbCurs.getCurso(id).then(value1 => {
-                
-                if(value1.length <= 0) {
-                    reject({ code: 404, error: {message: "Curso não existe." }});
+
+                if (value1.length <= 0) {
+                    reject({ code: 404, error: { message: "Curso não existe." } });
                 } else {
 
                     dbCurs.isCourseFromUser(id, info.user.id).then(value2 => {
 
-                        if(value2.length <= 0) {
-                            reject({ code: 403, error: {message: "Curso não pertence a este user." }});
+                        if (value2.length <= 0) {
+                            reject({ code: 403, error: { message: "Curso não pertence a este user." } });
                         } else {
 
                             let name = body.name;
@@ -346,36 +376,36 @@ async function updateCurso(tokens, id, body) {
                             let price = body.price;
                             let image = body.image;
 
-                            if(id !== null || name !== null || category !== null || description !== null || price !== null || image !== null) {
-                                
+                            if (id !== null || name !== null || category !== null || description !== null || price !== null || image !== null) {
+
                                 dbCurs.updateCurso(body).then(value3 => {
                                     info.message = "Curso alterado com sucesso.";
                                     resolve({ code: 200, info: info });
                                 })
-                                .catch(error => {
-                                    console.log(error);
-                                    reject({ code: 400, error: {message: "Algo correu mal com a query." }});
-                                });
+                                    .catch(error => {
+                                        console.log(error);
+                                        reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                                    });
                             } else {
-                                reject({ code: 400, error: {message: "Query has empty fields." }});
+                                reject({ code: 400, error: { message: "Query has empty fields." } });
                             }
-                        } 
+                        }
                     })
                     .catch(error => {
                         console.log(error);
-                        reject({ code: 400, error: {message: "Algo correu mal com a query." }});
+                        reject({ code: 400, error: { message: "Algo correu mal com a query." } });
                     });
                 }
             })
             .catch(error => {
                 console.log(error);
-                reject({ code: 400, error: {message: "Algo correu mal com a query." }});
+                reject({ code: 400, error: { message: "Algo correu mal com a query." } });
             });
 
         })
         .catch(error => {
             console.log(error);
-            reject({ code: 401, error: {message: "Token inválido." }})
+            reject({ code: 401, error: { message: "Token inválido." } })
         });
     });
 }
