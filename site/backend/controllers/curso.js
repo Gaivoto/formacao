@@ -18,6 +18,15 @@ async function getAllCursos(req, res){
     });
 }
 
+async function getAllUserCursos(req, res){
+    serCurs.getAllUserCursos({access_token: req.headers['authorization'].split(' ')[1], refresh_token: req.headers.refreshtoken}, req.params.id).then(value => {
+        res.status(value.code).send(value.info);
+    })
+    .catch(error => {
+        res.status(error.code).send(error.error);
+    });
+}
+
 async function createCurso(req, res){
     serCurs.createCurso({access_token: req.headers['authorization'].split(' ')[1], refresh_token: req.headers.refreshtoken}, req.body).then(value => {
         res.status(value.code).send(value.info);
@@ -61,4 +70,5 @@ module.exports = {
     updateStateCursoUser: updateStateCursoUser,
     updateStateCursoAdm: updateStateCursoAdm,
     updateCurso: updateCurso,
+    getAllUserCursos: getAllUserCursos
 }

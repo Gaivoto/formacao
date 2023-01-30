@@ -8,6 +8,8 @@ router.get("/:id", cntrCurs.getCurso);
 
 router.get("/", cntrCurs.getAllCursos);
 
+router.get("/user/:id", cntrCurs.getAllUserCursos);
+
 router.post("/", cntrCurs.createCurso);
 
 router.put("/user/:id", cntrCurs.updateStateCursoUser);

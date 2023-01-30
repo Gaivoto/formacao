@@ -11,7 +11,6 @@ const config = {
 
 sql.connect(config, function (err) {
     if (err) throw err;
-    console.log("Connected!");
 });
 
 const pool = new sql.Request();
@@ -32,6 +31,19 @@ async function getSubscricao(id) {
 async function getAllSubscricoes() {
     return new Promise((resolve, reject) => {
         const slct = `SELECT * FROM [Subscription]`;
+        pool.query(slct, (err, res) => {
+            if(!err) {
+                resolve(res.recordset);
+            } else {
+                reject(err.message);
+            }
+        });
+    });
+}
+
+async function getAllSubscricoesByUser(id) {
+    return new Promise((resolve, reject) => {
+        const slct = `SELECT * FROM [Subscription] WHERE [id_subscriber] = '${id}' AND [final_date] IS NULL`;
         pool.query(slct, (err, res) => {
             if(!err) {
                 resolve(res.recordset);
@@ -86,20 +98,7 @@ async function existsSubscricao(id_subscriber, id_subscribed) {
 
 async function getSubscribersFromCreator(id_creator, date) {
     return new Promise((resolve, reject) => {
-        const slct = `SELECT [id], [id_subscriber] FROM Subscription WHERE [final_date] >= '${date}' AND [id_subscribed] = '${id_creator}'`;
-        pool.query(slct, (err, res) => {
-            if(!err) {
-                resolve(res.recordset);
-            } else {
-                reject(err.message);
-            }
-        });
-    });
-}
-
-async function getUsersThatBoughtThisCourse(id_course) {
-    return new Promise((resolve, reject) => {
-        const slct = `SELECT * FROM [User_Course] WHERE [id_course] = ${id_course}`;
+        const slct = `SELECT [id], [id_subscriber] FROM Subscription WHERE [final_date] IS NULL AND [id_subscribed] = '${id_creator}'`;
         pool.query(slct, (err, res) => {
             if(!err) {
                 resolve(res.recordset);
@@ -113,9 +112,9 @@ async function getUsersThatBoughtThisCourse(id_course) {
 module.exports = {
     getSubscricao: getSubscricao,
     getAllSubscricoes: getAllSubscricoes,
+    getAllSubscricoesByUser: getAllSubscricoesByUser,
     createSubscricao: createSubscricao,
     endSubscricao: endSubscricao,
     existsSubscricao: existsSubscricao,
-    getSubscribersFromCreator: getSubscribersFromCreator,
-    getUsersThatBoughtThisCourse: getUsersThatBoughtThisCourse
+    getSubscribersFromCreator: getSubscribersFromCreator
 }

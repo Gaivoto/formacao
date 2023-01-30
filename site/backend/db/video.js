@@ -11,7 +11,6 @@ const config = {
 
 sql.connect(config, function (err) {
     if (err) throw err;
-    console.log("Connected!");
 });
 
 const pool = new sql.Request();

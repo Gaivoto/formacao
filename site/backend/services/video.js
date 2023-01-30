@@ -5,6 +5,7 @@ const dbVideo = require('../db/video.js');
 const dbUser = require('../db/user.js');
 const dbNotif = require('../db/notification.js');
 const dbCurs = require('../db/curso.js');
+const dbComp = require('../db/compra');
 const dbSubs = require('../db/subscricao');
 
 async function getVideo(tokens, id){
@@ -240,7 +241,7 @@ async function updateStateVideoAdm(tokens, body) {
                                                 promises.push(dbSubs.getSubscribersFromCreator(notif.id_user, notif.date));
                                                 
                                                 //notificacao pra quem comprou o curso
-                                                promises.push(dbSubs.getUsersThatBoughtThisCourse(body.id_course));
+                                                promises.push(dbComp.getUsersThatBoughtThisCourse(body.id_course));
 
                                                 Promise.all(promises).then(values => {
                                                     for (let i = 0; i < values[0].length; i++) {

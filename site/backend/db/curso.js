@@ -11,7 +11,6 @@ const config = {
 
 sql.connect(config, function (err) {
     if (err) throw err;
-    console.log("Connected!");
 });
 
 const pool = new sql.Request();
@@ -44,7 +43,7 @@ async function getAllCursos() {
 
 async function getCursosByCriador(id) {
     return new Promise((resolve, reject) => {
-        const slct = `SELECT * FROM [Course] WHERE [id_creator] = '${id}'`;
+        const slct = `SELECT c.id as id, c.name as name, c.category as category, c.description as description, c.image as image, u.id as idCr, u.name as nameCr, u.image as imageCr FROM [Course] c LEFT JOIN [Users] u ON c.id_creator = u.id WHERE [id_creator] = '${id}'`;
         pool.query(slct, (err, res) => {
             if(!err) {
                 resolve(res.recordset);
@@ -57,7 +56,6 @@ async function getCursosByCriador(id) {
 
 async function createCurso(id, body) {
     return new Promise((resolve, reject) => {
-
         const slct = `INSERT INTO Course (id, name, category, description, date, state, price, image, id_creator, rating) VALUES ('${id}', '${body.name}', '${body.category}', '${body.description}', '${body.date}', 'Pendente', ${body.price}, '${body.image}', '${body.id_creator}', 0)`;
         pool.query(slct, (err, res) => {
             if(!err) {

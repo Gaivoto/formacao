@@ -4,7 +4,7 @@ const router = express.Router();
 
 const cntrNotif = require('../controllers/notification.js');
 
-router.get("/:id", cntrNotif.getAllNotifFromUser);
+router.get("/user/:id", cntrNotif.getAllNotifFromUser);
 
 router.put("/:id", cntrNotif.updateNotifFromUse);
 

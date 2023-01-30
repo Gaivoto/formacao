@@ -120,20 +120,20 @@ async function getAllCursos(headers) {
 
                         resolve({ code: 200, info: info });
                     })
-                        .catch(error => {
-                            console.log(error);
-                            reject({ code: 400, error: { message: "Algo correu mal com a query." } });
-                        });
-                })
                     .catch(error => {
                         console.log(error);
                         reject({ code: 400, error: { message: "Algo correu mal com a query." } });
                     });
-            })
+                })
                 .catch(error => {
                     console.log(error);
-                    reject({ code: 401, error: { message: "Token inválido." } })
+                    reject({ code: 400, error: { message: "Algo correu mal com a query." } });
                 });
+            })
+            .catch(error => {
+                console.log(error);
+                reject({ code: 401, error: { message: "Token inválido." } });
+            });
 
         } else {
             dbCurs.getAllCursos().then(value => {
@@ -153,17 +153,71 @@ async function getAllCursos(headers) {
 
                     resolve({ code: 200, info: resp });
                 })
-                    .catch(error => {
-                        console.log(error);
-                        reject({ code: 400, error: { message: "Algo correu mal com a query." } });
-                    });
-            })
                 .catch(error => {
                     console.log(error);
                     reject({ code: 400, error: { message: "Algo correu mal com a query." } });
                 });
+            })
+            .catch(error => {
+                console.log(error);
+                reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+            });
         }
 
+    });
+}
+
+async function getAllUserCursos(tokens, id) {
+    return new Promise((resolve, reject) => {
+        utils.validateToken(tokens.access_token, tokens.refresh_token).then(value => {
+            let info = value;
+            info.courses = [];
+            if(info.user.id == id) {
+                let promises = [];
+                
+                promises.push(dbComp.getAllComprasByUser(id));
+
+                dbSubs.getAllSubscricoesByUser(id).then(value => {
+                    value.forEach(sub => {
+                        promises.push(dbCurs.getCursosByCriador(sub.id_subscribed));
+                    });
+
+                    Promise.all(promises).then(values => {
+                        let currentDate = new Date().toLocaleDateString();
+                        let dias = currentDate.split('/')[0];
+                        let mes = currentDate.split('/')[1];
+                        let ano = currentDate.split('/')[2];
+                        currentDate = mes + '-' + dias + '-' + ano;
+
+                        let sixmonthsago = new Date();
+                        sixmonthsago.setMonth(sixmonthsago.getMonth() - 6);
+
+                        values[0].forEach(cur => {
+                            if(cur.dateBought >= sixmonthsago) info.courses.push(cur);
+                        });
+
+                        for(let i = 1; i < values.length; i++) {
+                            values[i].forEach(cur => info.courses.push(cur));
+                        }
+                        resolve({code: 200, info: info});
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                    });
+                })
+                .catch(error => {
+                    console.log(error);
+                    reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                })
+            } else {
+                reject({ code: 403, error: { message: "Um user pode apenas ver os seus cursos comprados e não os de outros users." }});
+            }
+        })
+        .catch(error => {
+            console.log(error);
+            reject({ code: 401, error: { message: "Token inválido." } });
+        })
     });
 }
 
@@ -180,7 +234,7 @@ async function createCurso(tokens, body) {
                     reject({ code: 400, error: { message: "Já existe um curso com este nome." } });
                 } else {
 
-                    dbUser.getAllUsers().then(value3 => {
+                    dbCurs.getAllCursos().then(value3 => {
 
                         do {
                             id = uuid.v4();
@@ -195,27 +249,27 @@ async function createCurso(tokens, body) {
                             info.message = "Curso criado com sucesso.";
                             resolve({ code: 201, info: info });
                         })
-                            .catch(error => {
-                                console.log(error);
-                                reject({ code: 400, error: { message: "Algo correu mal com a query." } });
-                            });
-                    })
                         .catch(error => {
                             console.log(error);
                             reject({ code: 400, error: { message: "Algo correu mal com a query." } });
                         });
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                    });
 
                 }
             })
-                .catch(error => {
-                    console.log(error);
-                    reject({ code: 400, error: { message: "Algo correu mal com a query." } });
-                });
-        })
             .catch(error => {
                 console.log(error);
-                reject({ code: 401, error: { message: "Token inválido." } })
+                reject({ code: 400, error: { message: "Algo correu mal com a query." } });
             });
+        })
+        .catch(error => {
+            console.log(error);
+            reject({ code: 401, error: { message: "Token inválido." } })
+        });
     });
 }
 
@@ -243,31 +297,31 @@ async function updateStateCursoUser(tokens, id, body) {
                                     info.message = "Estado alterado com sucesso.";
                                     resolve({ code: 200, info: info });
                                 })
-                                    .catch(error => {
-                                        console.log(error);
-                                        reject({ code: 400, error: { message: "Algo correu mal com a query." } });
-                                    });
+                                .catch(error => {
+                                    console.log(error);
+                                    reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                                });
 
                             } else {
                                 reject({ code: 401, error: { message: "Current state invalid" } });
                             }
                         }
                     })
-                        .catch(error => {
-                            console.log(error);
-                            reject({ code: 400, error: { message: "Algo correu mal com a query." } });
-                        });
+                    .catch(error => {
+                        console.log(error);
+                        reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                    });
                 }
             })
-                .catch(error => {
-                    console.log(error);
-                    reject({ code: 400, error: { message: "Algo correu mal com a query." } });
-                });
-        })
             .catch(error => {
                 console.log(error);
-                reject({ code: 401, error: { message: "Token inválido." } })
+                reject({ code: 400, error: { message: "Algo correu mal com a query." } });
             });
+    })
+        .catch(error => {
+            console.log(error);
+            reject({ code: 401, error: { message: "Token inválido." } })
+        });
     });
 }
 
@@ -426,6 +480,7 @@ async function updateCurso(tokens, id, body) {
 module.exports = {
     getCurso: getCurso,
     getAllCursos: getAllCursos,
+    getAllUserCursos: getAllUserCursos,
     createCurso: createCurso,
     updateStateCursoUser: updateStateCursoUser,
     updateStateCursoAdm: updateStateCursoAdm,

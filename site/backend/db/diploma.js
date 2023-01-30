@@ -1,6 +1,3 @@
-const express = require('express');
-const app = express();
-
 const sql = require("mssql");
 
 const config = {
@@ -14,7 +11,6 @@ const config = {
 
 sql.connect(config, function (err) {
     if (err) throw err;
-    console.log("Connected!");
 });
 
 const pool = new sql.Request();
