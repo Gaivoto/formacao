@@ -273,6 +273,7 @@ async function updateStateVideoAdm(tokens, body) {
                                                         notifUser.id_video = null;
                                                         promisesNotif.push(dbNotif.createNotification(notifUser));
                                                     }
+                                                    
                                                     Promise.all(promisesNotif).then(valuesFinal => {
                                                         info.message = "Estado alterado com sucesso.";
                                                         resolve({ code: 200, info: info });
