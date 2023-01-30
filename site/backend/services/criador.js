@@ -3,7 +3,8 @@ const utils = require('../utils/index.js');
 const dbCria = require('../db/criador.js');
 const dbCour = require('../db/curso.js');
 const dbUser = require('../db/user.js');
-const user = require('../db/user.js');
+const dbNotif = require('../db/notification.js');
+const dbSubs = require('../db/subscricao.js');
 
 async function getAllCriadores(tokens) {
     return new Promise((resolve, reject) => {
@@ -194,6 +195,7 @@ async function changeCriadorState(tokens, id, criador) {
 }
 
 async function updateCriador(tokens, id, criador) {
+
     return new Promise((resolve, reject) => {
         utils.validateToken(tokens.access_token, tokens.refresh_token).then(value => {
             let info = value;
@@ -201,14 +203,67 @@ async function updateCriador(tokens, id, criador) {
                 if (criador.name == "" || criador.image == "" || criador.price == "" || criador.name == null || criador.image == null || criador.price == null || criador.description == null || criador.price < 0) {
                     reject({ code: 400, error: { message: "A alteração não pode ser feita, porque há valores vazios/inválidos." }});
                 } else {
-                    dbCria.updateCriador(criador, id).then(value => {
-                        info.message = "Criador alterado com sucesso.";
-                        resolve({ code: 200, info: info });
+                    dbCria.getCriador(id).then(value1 => {
+                        if(value1[0].price != criador.price) {
+                            dbCria.updateCriador(criador, id).then(value => {
+                                let data = new Date().toLocaleDateString();
+                                let dias = data.split('/')[0];
+                                let mes = data.split('/')[1];
+                                ano = data.split('/')[2];
+                                dataAtual = mes + '-' + dias + '-' + ano;
+                            
+                                dbSubs.getSubscribersFromCreator(id).then(value2 => {
+                                    if(value2.length == 0) {
+                                        info.message = "Criador alterado com sucesso.";
+                                        resolve({ code: 200, info: info });
+                                    } else {
+                                        for (let i = 0; i < value2.length; i++) {
+                                            let notif = {}
+                                            notif.id = uuid.v4();
+                                            notif.message = 'O valor da subscrição do criador ' + value1[0].name + 'foi alterado de €' + value1[0].price + ' para ' +  '€' + criador.price + '.';
+                                            notif.date = dataAtual
+                                            notif.id_user = value2[i].id;
+                                            notif.id_course = null;
+                                            notif.id_video = null;
+                                            dbNotif.createNotification(notif).then(value3 => {
+                                                info.message = "Criador alterado com sucesso.";
+                                                resolve({ code: 200, info: info });
+                                            })
+                                            .catch(error => {
+                                                console.log(error);
+                                                reject({ code: 400, error: { message: "Algo correu mal com a query de insert das notificações." }});
+                                            })
+                                        }
+                                    }
+                                })
+                                .catch(error => {
+                                    console.log(error);
+                                    reject({ code: 400, error: { message: "Algo correu mal com a query de busca de subscribers." }});
+                                })
+    
+                        })
+                        .catch(error => {
+                            console.log(error);
+                            reject({ code: 400, error: { message: "Algo correu mal com a query." }});
+                        });
+                        } else {
+                            dbCria.updateCriador(criador, id).then(value3 => {
+                                info.message = "Criador alterado com sucesso.";
+                                resolve({ code: 200, info: info });
+                            })
+                            .catch(error => {
+                                console.log(error);
+                                reject({ code: 400, error: { message: "Algo correu mal com a query de insert das notificações." }});
+                            })
+                        }
                     })
                     .catch(error => {
                         console.log(error);
-                        reject({ code: 400, error: { message: "Algo correu mal com a query." }});
-                    });
+                        reject({ code: 400, error: { message: "Algo correu mal com a query de busca de subscribers." }});
+                    })
+
+                        
+                    
                 }
             } else {
                 reject({ code: 403, error: { message: "A operação não foi possível porquê o user associado ao token não é o mesmo a qual estas a tentar fazer update." }});
