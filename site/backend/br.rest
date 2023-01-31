@@ -1,0 +1,72 @@
+GET http://localhost:3000/api/users/profile/17
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjIiLCJ1c2VybmFtZSI6ImJyIiwidHlwZSI6ImFkbWluIiwiaWF0IjoxNjczOTY5MTEwLCJleHAiOjE2NzM5ODM1MTB9.a0j8jST1PhLGTO9OG9uKbB7W12r_YZdArIxyuyxktAc
+refreshtoken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjIiLCJ1c2VybmFtZSI6ImJyIiwidHlwZSI6ImFkbWluIiwiaWF0IjoxNjczOTY5MTEwfQ.W42wL1Z-XYRRh0AcOERQv19oGgU-S0aCts6p1icfibM
+###
+
+GET {{hostname}}api/notification/98410312-a4b4-4a6a-b048-2752b8210e23
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk4NDEwMzEyLWE0YjQtNGE2YS1iMDQ4LTI3NTJiODIxMGUyMyIsInVzZXJuYW1lIjoiYWRtIiwidHlwZSI6ImFkbWluIiwiaWF0IjoxNjc0NjUwNzY5LCJleHAiOjE2NzQ2NjUxNjl9.kdBaYDPSJWxQJmd4ctG0k_EfClRoJ11Wi5-Mxw_A0bQ
+refreshtoken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk4NDEwMzEyLWE0YjQtNGE2YS1iMDQ4LTI3NTJiODIxMGUyMyIsInVzZXJuYW1lIjoiYWRtIiwidHlwZSI6ImFkbWluIiwiaWF0IjoxNjc0NjUwNzY5fQ.YetuQ0ih6VBp7ph4EXJBb29J-KrzXaln83JdyfNgTZQ
+
+###
+PUT {{hostname}}api/notification/98410312-a4b4-4a6a-b048-2752b8210e23
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk4NDEwMzEyLWE0YjQtNGE2YS1iMDQ4LTI3NTJiODIxMGUyMyIsInVzZXJuYW1lIjoiYWRtIiwidHlwZSI6ImFkbWluIiwiaWF0IjoxNjc0NjUwNzY5LCJleHAiOjE2NzQ2NjUxNjl9.kdBaYDPSJWxQJmd4ctG0k_EfClRoJ11Wi5-Mxw_A0bQ
+refreshtoken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk4NDEwMzEyLWE0YjQtNGE2YS1iMDQ4LTI3NTJiODIxMGUyMyIsInVzZXJuYW1lIjoiYWRtIiwidHlwZSI6ImFkbWluIiwiaWF0IjoxNjc0NjUwNzY5fQ.YetuQ0ih6VBp7ph4EXJBb29J-KrzXaln83JdyfNgTZQ
+
+###
+PUT {{hostname}}api/cursos/adm/22
+authorization:  Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk4NDEwMzEyLWE0YjQtNGE2YS1iMDQ4LTI3NTJiODIxMGUyMyIsInVzZXJuYW1lIjoiYWRtIiwidHlwZSI6ImFkbWluIiwiaWF0IjoxNjc1MDgxMTg4LCJleHAiOjE2NzUwOTU1ODh9.00ktaumt6QFUV_D-WPVgmrTOqeEUBcroeqvGai3aiTA
+refreshtoken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk4NDEwMzEyLWE0YjQtNGE2YS1iMDQ4LTI3NTJiODIxMGUyMyIsInVzZXJuYW1lIjoiYWRtIiwidHlwZSI6ImFkbWluIiwiaWF0IjoxNjc1MDgxMTg4fQ.kEuPAt492a8HV2Q4_wec-0REyCncawf8kO27JJvdRMM
+content-type: application/json
+
+{
+    "id": "98410312-a4b4-4a6a-b048-2752b8210e23", 
+    "state": "Ativo"
+}
+
+###
+PUT {{hostname}}api/videos/adm/98410312-a4b4-4a6a-b048-2752b8210e23
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk4NDEwMzEyLWE0YjQtNGE2YS1iMDQ4LTI3NTJiODIxMGUyMyIsInVzZXJuYW1lIjoiYWRtIiwidHlwZSI6ImFkbWluIiwiaWF0IjoxNjc1MDgyODAzLCJleHAiOjE2NzUwOTcyMDN9.jiVOeSz07SCc3kHZHUJdKccSYNzjCDozaAq-XU6xqZE
+refreshtoken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk4NDEwMzEyLWE0YjQtNGE2YS1iMDQ4LTI3NTJiODIxMGUyMyIsInVzZXJuYW1lIjoiYWRtIiwidHlwZSI6ImFkbWluIiwiaWF0IjoxNjc1MDgyODAzfQ.XWesEshGL_oqtd6kbP8J0ED7RaR-yBVvg82_rAhJAuk
+content-type: application/json
+
+{
+    "id": "65", 
+    "id_course": "16",
+    "state": "Ativo"
+}
+
+###
+POST {{hostname}}api/auth/login
+content-type: application/json  
+
+{     
+    "username": "migorna7",     
+    "password": "123" 
+}
+###
+POST {{hostname}}api/users/
+content-type: application/json  
+
+{     
+    "username": "locriador",     
+    "password": "123" ,
+    "name": "julio",
+    "email": "julio@gmail.com",
+    "description": "eu sou o julio",
+    "image": "imagem do julio"
+
+}
+
+###
+
+PUT {{hostname}}api/criadores/15
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjE1IiwidXNlcm5hbWUiOiJtaWdvcm5hNyIsInR5cGUiOiJjcmVhdG9yIiwiaWF0IjoxNjc1MDkwOTc4LCJleHAiOjE2NzUxMDUzNzh9.9x89kFZFNjZy_dQ_qBWBtEzNkovDEKedeanxBWs4orA
+refreshtoken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjE1IiwidXNlcm5hbWUiOiJtaWdvcm5hNyIsInR5cGUiOiJjcmVhdG9yIiwiaWF0IjoxNjc1MDkwOTc4fQ.97fzsSsaFDQnwsnmmw_Q4o099PTSElFY-IfeH6amsoY
+content-type: application/json  
+
+{
+    "price": 60,
+    "image": "testeupdate",
+    "name": "hahateste",
+    "description": "descripteste"
+}
