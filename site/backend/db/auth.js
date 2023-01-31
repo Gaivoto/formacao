@@ -15,7 +15,7 @@ sql.connect(config, function (err) {
 
 const pool = new sql.Request();
 
-async function authenticateUser(username, password){
+async function authenticateUser(username){
     return new Promise((resolve, reject) => {
         pool.query(`SELECT * FROM [Users] WHERE [username] = '${username}'`, (err, res) => {
             if(!err) {

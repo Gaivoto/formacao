@@ -3,20 +3,20 @@
       <div class="forms-container">
         <div class="signin-signup">
               <!--Login Form-->
-          <form action="#" class="sign-in-form">
+          <div class="sign-in-form form">
             <h2 class="title">Iniciar Sessão</h2>
             <div class="input-field">
               <span class="material-icons">person</span>
-              <input type="text" placeholder="Nome de Utilizador" />
+              <input ref="loginUsername" type="text" placeholder="Nome de Utilizador" />
             </div>
             <div class="input-field">
               <span class="material-icons">lock</span>
-              <input type="password" placeholder="Palavra-Passe" />
+              <input ref="loginPassword" type="password" placeholder="Palavra-Passe" />
             </div>
-            <input type="submit" value="Entrar" class="btn solid" />
-          </form>
+            <input v-on:click="login" type="submit" value="Entrar" class="btn solid" />
+          </div>
               <!--Registo Form-->
-          <form action="#" class="sign-up-form">
+          <div class="sign-up-form form">
             <h2 class="title">Criar Conta</h2>
             <div class="input-field">
               <span class="material-icons">person</span>
@@ -31,8 +31,7 @@
               <input type="password" placeholder="Palavra-Passe" />
             </div>
             <input type="submit" class="btn" value="Registar" />
-               
-          </form>
+          </div>
         </div>
       </div>
 
@@ -66,6 +65,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 
 export default {
   name: "Login",
@@ -88,6 +88,30 @@ export default {
     signinbtn() {
       this.state = "login"
       this.$refs.mycontainer.classList.remove("sign-up-mode");  
+    },
+    login() {
+      if(this.$refs.loginUsername.value != "" && this.$refs.loginPassword.value != "") {
+        axios({
+          method: 'post',
+          url: `${import.meta.env.VITE_HOST}/auth/login`,
+          data: {
+            username: this.$refs.loginUsername.value,
+            password: this.$refs.loginPassword.value
+          }
+        })
+        .then(value => {
+          this.$store.commit('setUser', value.data.user);
+          this.$store.commit('setRefreshToken', value.data.refresh_token);
+          this.$store.commit('setAccessToken', value.data.access_token);
+          this.$router.push({ name: "Home" })
+        })
+        .catch(error => {
+          if(error.code) console.log(error.response.data);
+          else console.log(error);
+        });
+      } else {
+        console.log("Password/username vazios.")
+      }
     }
   }
 }
@@ -139,7 +163,7 @@ input {
   z-index: 5;
 }
 
-form {
+.form {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -151,12 +175,12 @@ form {
   grid-row: 1 / 2;
 }
 
-form.sign-up-form {
+.form.sign-up-form {
   opacity: 0;
   z-index: 1;
 }
 
-form.sign-in-form {
+.form.sign-in-form {
   z-index: 2;
 }
 
@@ -394,12 +418,12 @@ form.sign-in-form {
   left: 25%;
 }
 
-.login-container.sign-up-mode form.sign-up-form {
+.login-container.sign-up-mode .form.sign-up-form {
   opacity: 1;
   z-index: 2;
 }
 
-.login-container.sign-up-mode form.sign-in-form {
+.login-container.sign-up-mode .form.sign-in-form {
   opacity: 0;
   z-index: 1;
 }
@@ -526,7 +550,7 @@ form.sign-in-form {
 }
 
 @media (max-width: 570px) {
-  form {
+  .form {
     padding: 0 1.5rem;
   }
 
