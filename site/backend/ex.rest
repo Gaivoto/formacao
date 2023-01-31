@@ -12,6 +12,9 @@ content-type: application/json
 
 GET {{hostname}}/api/criadores/home
 
+###
+
+GET {{hostname}}/api/cursos/home
 
 ### COMPRA
 

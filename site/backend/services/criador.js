@@ -307,9 +307,6 @@ async function getCriadoresHomepage() {
             console.log(error);
             reject({ code: 400, error: { message: "Algo correu mal com a query." } });
         });
-
-
-
     });
 }
 

@@ -4,6 +4,8 @@ const router = express.Router();
 
 const cntrCurs = require('../controllers/curso.js');
 
+router.get("/home", cntrCurs.getCursosHomePage);
+
 router.get("/:id", cntrCurs.getCurso);
 
 router.get("/", cntrCurs.getAllCursos);
