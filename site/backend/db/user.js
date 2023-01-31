@@ -13,13 +13,12 @@ sql.connect(config, function (err) {
     if (err) throw err;
 });
 
-const pool = new sql.Request();
-
 async function getAllUsers() {
+    const pool = new sql.Request();
     return new Promise((resolve, reject) => {
         const slct = `SELECT * FROM [Users] where [type] = 'user`;
         pool.query(slct, (err, res) => {
-            if(!err) {
+            if (!err) {
                 resolve(res.recordset);
             } else {
                 reject(err.message);
@@ -29,9 +28,10 @@ async function getAllUsers() {
 }
 
 async function getUser(id) {
+    const pool = new sql.Request();
     return new Promise((resolve, reject) => {
-        const slct = `SELECT * FROM [Users] WHERE [id] = '${id}'`;
-        pool.query(slct, (err, res) => {
+        const slct = `SELECT * FROM [Users] WHERE [id] = @id`;
+        pool.input('id', sql.VarChar(200), id).query(slct, (err, res) => {
             if (!err) {
                 resolve(res.recordset);
             } else {
@@ -42,9 +42,10 @@ async function getUser(id) {
 }
 
 async function updateUser(user, id) {
+    const pool = new sql.Request();
     return new Promise((resolve, reject) => {
-        const updt = `UPDATE [Users] SET [name] = '${user.name}', [description] = '${user.description}', [image] = '${user.image}' WHERE id = '${id}' AND [type] = 'user`;
-        pool.query(updt, (err, res) => {
+        const updt = `UPDATE [Users] SET [name] = @name, [description] = @description, [image] = @image WHERE id = @id AND [type] = 'user`;
+        pool.input('id', sql.VarChar(200), id).input('name', sql.VarChar(50), user.name).input('description', sql.VarChar(200), user.description).input('image', sql.VarChar(50), user.image).query(updt, (err, res) => {
             if (!err) {
                 resolve(res);
             } else {
@@ -55,10 +56,11 @@ async function updateUser(user, id) {
 }
 
 async function createUser(id, user) {
+    const pool = new sql.Request();
     return new Promise((resolve, reject) => {
         const insrt = `INSERT INTO [Users] ([id], [username], [password], [type], [name], [email], [description], [image], [state]) 
-        VALUES ('${id}', '${user.username}', '${user.password}', 'user', '${user.name}', '', '', '', 'Ativo')`;
-        pool.query(insrt, (err, res) => {
+        VALUES (@id, @username, @password, 'user', @name, '', '', '', 'Ativo')`;
+        pool.input('id', sql.VarChar(200), id).input('username', sql.VarChar(50), user.username).input('password', sql.VarChar(200), user.password).input('name', sql.VarChar(50), user.name).query(insrt, (err, res) => {
             if (!err) {
                 resolve(res);
             } else {
@@ -69,10 +71,11 @@ async function createUser(id, user) {
 }
 
 async function isUsernameTaken(username) {
+    const pool = new sql.Request();
     return new Promise((resolve, reject) => {
-        const slct = `SELECT * FROM [Users] WHERE [username] = '${username}'`;
-        pool.query(slct, (err,res) => {
-            if(!err) {
+        const slct = `SELECT * FROM [Users] WHERE [username] = @username`;
+        pool.input('username', sql.VarChar(50), username).query(slct, (err, res) => {
+            if (!err) {
                 resolve(res.recordset);
             } else {
                 reject(err.message)
@@ -82,10 +85,11 @@ async function isUsernameTaken(username) {
 }
 
 async function getAllIDs() {
+    const pool = new sql.Request();
     return new Promise((resolve, reject) => {
         const slct = `SELECT [id] FROM [Users]`;
-        pool.query(slct, (err,res) => {
-            if(!err) {
+        pool.query(slct, (err, res) => {
+            if (!err) {
                 resolve(res.recordset);
             } else {
                 reject(err.message)
@@ -95,10 +99,11 @@ async function getAllIDs() {
 }
 
 async function changeUserState(state, id) {
+    const pool = new sql.Request();
     return new Promise((resolve, reject) => {
-        const updt = `UPDATE [Users] SET [state] = '${state}' WHERE [id] = '${id}' AND [type] = 'user`;
-        pool.query(updt, (err, res) => {
-            if(!err) {
+        const updt = `UPDATE [Users] SET [state] = @state WHERE [id] = @id AND [type] = 'user`;
+        pool.input('id', sql.VarChar(200), id).input('state', sql.VarChar(50), state).query(updt, (err, res) => {
+            if (!err) {
                 resolve(res);
             } else {
                 reject(err.message);

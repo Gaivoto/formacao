@@ -13,12 +13,11 @@ sql.connect(config, function (err) {
     if (err) throw err;
 });
 
-const pool = new sql.Request();
-
-async function authenticateUser(username, password){
+async function authenticateUser(username, password) {
+    const pool = new sql.Request();
     return new Promise((resolve, reject) => {
-        pool.query(`SELECT * FROM [Users] WHERE [username] = '${username}'`, (err, res) => {
-            if(!err) {
+        pool.input('username', sql.VarChar(50), username).query(`SELECT * FROM [Users] WHERE [username] = @username`, (err, res) => {
+            if (!err) {
                 resolve(res.recordset);
             } else {
                 reject(err.message);
@@ -27,10 +26,11 @@ async function authenticateUser(username, password){
     });
 }
 
-async function createToken(token){
+async function createToken(token) {
+    const pool = new sql.Request();
     return new Promise((resolve, reject) => {
         pool.query(`INSERT INTO [Refresh_Token] ([token]) VALUES ('${token}')`, (err, res) => {
-            if(!err) {
+            if (!err) {
                 resolve('Token stored with success.');
             } else {
                 reject(err.message);
@@ -39,10 +39,11 @@ async function createToken(token){
     });
 }
 
-async function checkToken(token){
+async function checkToken(token) {
+    const pool = new sql.Request();
     return new Promise((resolve, reject) => {
         pool.query(`SELECT * FROM [Refresh_Token] WHERE [token] = '${token}'`, (err, res) => {
-            if(!err) {
+            if (!err) {
                 resolve(res.recordset);
             } else {
                 reject(err.message);
@@ -51,10 +52,11 @@ async function checkToken(token){
     });
 }
 
-async function deleteToken(token){
+async function deleteToken(token) {
+    const pool = new sql.Request();
     return new Promise((resolve, reject) => {
         pool.query(`DELETE FROM [Refresh_Token] WHERE [token] = '${token}'`, (err, res) => {
-            if(!err) {
+            if (!err) {
                 resolve(res);
             } else {
                 reject(err.message);
