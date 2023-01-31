@@ -348,6 +348,7 @@ async function updateStateCursoAdm(tokens, id, body) {
                                 //ainda falta dar uma olhadinha em verificacoes aqui, por exemplo quando uma pessoa se inscreveu em um curso mas ja acabou a subscricao ele nao deve mais receber notificacoes, isso vai ser feito aqui mesmo
                                 //aqui vai entrar a notificaçao pro dono do curso e se for tornado ativo as pessoas que seguem aquele criador tambem vao receber aquele curso, isso preciso esperar o andre fazer a funçao
                                 //notificacao pro criador do curso
+                                let promisesNotif = [];
                                 let promises = [];
                                 let notif = {}
                                 notif.id = uuid.v4();
@@ -365,7 +366,6 @@ async function updateStateCursoAdm(tokens, id, body) {
                                 promisesNotif.push(dbNotif.createNotification(notif));
                                 //notificacao para o user
                                 if (body.state === "Ativo") {
-                                    //perguntar pro nerdola do leo onde e como meter o resolve aqui
                                     dbSubs.getSubscribersFromCreator(notif.id_user).then(value5 => {
                                         for (let i = 0; i < value5.length; i++) {
                                             let notifUser = {}
@@ -377,7 +377,6 @@ async function updateStateCursoAdm(tokens, id, body) {
                                             notifUser.id_user = value5[i].id_subscriber;
                                             notifUser.id_course = id;
                                             notifUser.id_video = null;
-
                                             promises.push(dbNotif.createNotification(notifUser));
 
                                         }
@@ -394,6 +393,9 @@ async function updateStateCursoAdm(tokens, id, body) {
                                             console.log(error);
                                             reject({ code: 400, error: { message: "Erro ao executar a query da notificação." } })
                                         });
+                                } else {
+                                    info.message = "Estado alterado com sucesso.";
+                                    resolve({ code: 200, info: info });
                                 }
 
                             })
