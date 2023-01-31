@@ -13,15 +13,16 @@ sql.connect(config, function (err) {
     if (err) throw err;
 });
 
-const pool = new sql.Request();
 
 async function getCurso(id) {
+    const pool = new sql.Request();
     return new Promise((resolve, reject) => {
-        const slct = `SELECT * FROM [Course] WHERE [id] = '${id}'`;
-        pool.query(slct, (err, res) => {
+        let slct =  `SELECT * FROM [Course] WHERE [id] = @id`
+        pool.input('id', sql.VarChar(200), id).query(slct, (err, res) => {
             if (!err) {
                 resolve(res.recordset);
             } else {
+                console.log(err);
                 reject(err.message);
             }
         });
@@ -29,6 +30,7 @@ async function getCurso(id) {
 }
 
 async function getAllCursos() {
+    const pool = new sql.Request();
     return new Promise((resolve, reject) => {
         const slct = `SELECT * FROM [Course]`;
         pool.query(slct, (err, res) => {
@@ -42,9 +44,10 @@ async function getAllCursos() {
 }
 
 async function getCursosByCriador(id) {
+    const pool = new sql.Request();
     return new Promise((resolve, reject) => {
-        const slct = `SELECT c.id as id, c.name as name, c.category as category, c.description as description, c.image as image, u.id as idCr, u.name as nameCr, u.image as imageCr FROM [Course] c LEFT JOIN [Users] u ON c.id_creator = u.id WHERE [id_creator] = '${id}'`;
-        pool.query(slct, (err, res) => {
+        const slct = `SELECT c.id as id, c.name as name, c.category as category, c.description as description, c.image as image, u.id as idCr, u.name as nameCr, u.image as imageCr FROM [Course] c LEFT JOIN [Users] u ON c.id_creator = u.id WHERE [id_creator] = @id`;
+        pool.input('id', sql.VarChar(200), id).query(slct, (err, res) => {
             if (!err) {
                 resolve(res.recordset);
             } else {
@@ -55,9 +58,11 @@ async function getCursosByCriador(id) {
 }
 
 async function createCurso(id, body) {
+    const pool = new sql.Request();
     return new Promise((resolve, reject) => {
-        const slct = `INSERT INTO Course (id, name, category, description, date, state, price, image, id_creator, rating) VALUES ('${id}', '${body.name}', '${body.category}', '${body.description}', '${body.date}', 'Pendente', ${body.price}, '${body.image}', '${body.id_creator}', 0)`;
-        pool.query(slct, (err, res) => {
+        const slct = `INSERT INTO Course (id, name, category, description, date, state, price, image, id_creator, rating)
+         VALUES (@id, @name, @category, @description', @date', 'Pendente', @price, @image', @id_creator', 0)`;
+        pool.input('id', sql.VarChar(200), id).input('name', sql.VarChar(50), body.name).input('description', sql.VarChar(200), body.description).input('date', sql.DateTime, body.date).input('price', sql.Float, body.price).input('image', sql.VarChar(50), image).input('id_creator', sql.VarChar(200), body.id_creator).query(slct, (err, res) => {
             if (!err) {
                 resolve(res.recordset);
             } else {
@@ -68,11 +73,12 @@ async function createCurso(id, body) {
 }
 
 async function updateStateCurso(body) {
+    const pool = new sql.Request();
     return new Promise((resolve, reject) => {
 
-        let slct = `UPDATE Course SET [state] = '${body.state}' WHERE [id] = '${body.id}'`;
+        let slct = `UPDATE Course SET [state] = @state WHERE [id] = @id`;
 
-        pool.query(slct, (err, res) => {
+        pool.input('state', sql.VarChar(50), body.state).input('id', sql.VarChar(200), body.id).query(slct, (err, res) => {
             if (!err) {
                 resolve(res);
             } else {
@@ -83,11 +89,12 @@ async function updateStateCurso(body) {
 }
 
 async function updateCurso(body) {
+    const pool = new sql.Request();
     return new Promise((resolve, reject) => {
 
-        slct = `UPDATE Course SET [name] = '${body.name}', [category] = '${body.category}', [description] = '${body.description}', [price] = ${body.price}, [image] = '${body.image}'  WHERE [id] = '${body.id}'`;
+        slct = `UPDATE Course SET [name] = @name, [category] = @category, [description] = @description, [price] = @price, [image] = @image  WHERE [id] = id`;
 
-        pool.query(slct, (err, res) => {
+        pool.input('name', sql.VarChar(50), body.name).input('category', sql.VarChar(50), body.category).input('description', sql.VarChar(200), body.description).input('price', sql.Float, body.price).input('image', sql.VarChar(50), body.image).input('id', sql.VarChar(200), body.id).query(slct, (err, res) => {
             if (!err) {
                 resolve(res);
             } else {
@@ -98,9 +105,10 @@ async function updateCurso(body) {
 }
 
 async function getUserCourses(id) {
+    const pool = new sql.Request();
     return new Promise((resolve, reject) => {
-        const slct = `SELECT c.id as id_course, c.name as course, c.image as image, uc.progress as progress FROM [Course] c LEFT JOIN [User_Course] uc ON c.id = uc.id_course LEFT JOIN [Users] u ON uc.id_user = u.id WHERE u.id = '${id}'`;
-        pool.query(slct, (err, res) => {
+        const slct = `SELECT c.id as id_course, c.name as course, c.image as image, uc.progress as progress FROM [Course] c LEFT JOIN [User_Course] uc ON c.id = uc.id_course LEFT JOIN [Users] u ON uc.id_user = u.id WHERE u.id = @id`;
+        pool.input('id', sql.VarChar(200), id).query(slct, (err, res) => {
             if (!err) {
                 resolve(res.recordset);
             } else {
@@ -111,9 +119,10 @@ async function getUserCourses(id) {
 }
 
 async function isCourseFromUser(idC, idU) {
+    const pool = new sql.Request();
     return new Promise((resolve, reject) => {
-        const slct = `SELECT * FROM [Course] WHERE [id] = '${idC}' AND [id_creator] = '${idU}'`;
-        pool.query(slct, (err, res) => {
+        const slct = `SELECT * FROM [Course] WHERE [id] = @idC' AND [id_creator] = @idU`;
+        pool.input('idC', sql.VarChar(200), idC).input('idU', sql.VarChar(200), idU).query(slct, (err, res) => {
             if (!err) {
                 resolve(res.recordset);
             } else {
@@ -124,9 +133,10 @@ async function isCourseFromUser(idC, idU) {
 }
 
 async function isNameTaken(name) {
+    const pool = new sql.Request();
     return new Promise((resolve, reject) => {
-        const slct = `SELECT * FROM [Course] WHERE [name] = '${name}'`;
-        pool.query(slct, (err, res) => {
+        const slct = `SELECT * FROM [Course] WHERE [name] = @name`;
+        pool.input('name', sql.VarChar(200), name).query(slct, (err, res) => {
             if (!err) {
                 resolve(res.recordset);
             } else {
@@ -137,6 +147,7 @@ async function isNameTaken(name) {
 }
 
 async function getMostRecentCursos() {
+    const pool = new sql.Request();
     return new Promise((resolve, reject) => {
         const slct = `SELECT TOP 6 c.id AS id, c.name AS name, c.category AS category, c.description AS description, c.date AS date, c.price AS price, c.image AS image, c.id_creator AS idCr, u.name AS nameCr, u.image AS imageCr 
             FROM Course c LEFT JOIN Users u on c.id_creator = u.id WHERE c.state = 'Ativo' ORDER BY c.date desc`;
@@ -151,6 +162,7 @@ async function getMostRecentCursos() {
 }
 
 async function getMostSoldCursos() {
+    const pool = new sql.Request();
     return new Promise((resolve, reject) => {
         const slct = `SELECT TOP 6 c.id as id, c.name as name, c.category as category, c.description as deescription, c.date as date, c.state as state, c.price as price, c.image as image, u.id as idCr, u.name as nameCr, u.image as imageCr, count(uc.id) as vendas
         FROM Course c LEFT JOIN User_Course uc on uc.id_course = c.id LEFT JOIN Users u on c.id_creator = u.id
@@ -168,6 +180,7 @@ async function getMostSoldCursos() {
 }
 
 async function getDestaquesCursos(data) {
+    const pool = new sql.Request();
     return new Promise((resolve, reject) => {
         const slct = `SELECT TOP 6 COUNT(uc.id_course) AS pointsCursos, c.id as id, c.name as name, c.category as category, c.description as deescription, c.date as date, c.state as state, c.price as price, c.image as image, u.id as idCr, u.name as nameCr, u.image as imageCr
         FROM User_Course uc 
@@ -175,10 +188,10 @@ async function getDestaquesCursos(data) {
         ON uc.id_course = c.id 
         INNER JOIN Users u 
         ON c.id_creator = u.id
-        WHERE c.state = 'Ativo' AND uc.date_bought > '${data}'
+        WHERE c.state = 'Ativo' AND uc.date_bought > @data
         GROUP BY c.id, c.name, c.category, c.description, c.date, c.state, c.price, c.image, u.id, u.name, u.image
         ORDER BY pointsCursos DESC`;
-        pool.query(slct, (err, res) => {
+        pool.input('data', sql.DateTime, data).query(slct, (err, res) => {
             if (!err) {
                 resolve(res.recordset);
             } else {
@@ -189,6 +202,7 @@ async function getDestaquesCursos(data) {
 }
 
 async function getRecomendedCursos() {
+    const pool = new sql.Request();
     return new Promise((resolve, reject) => {
         const slct = `SELECT TOP 6 c.id as id, c.name as name, c.category as category, c.description as description, c.date as date, c.price as price, c.image as image, c.id_creator as idCr, u.name as nameCr, u.image as imageCr FROM Course c
         LEFT JOIN Users u on c.id_creator = u.id WHERE c.state = 'Ativo' ORDER BY newid()`;
@@ -203,6 +217,7 @@ async function getRecomendedCursos() {
 }
 
 async function getOtherCursos() {
+    const pool = new sql.Request();
     return new Promise((resolve, reject) => {
         const slct = `SELECT TOP 6 c.id as id, c.name as name, c.category as category, c.description as description, c.date as date, c.price as price, c.image as image, c.id_creator as idCr, u.name as nameCr, u.image as imageCr FROM Course c
         LEFT JOIN Users u on c.id_creator = u.id WHERE c.state = 'Ativo' ORDER BY newid()`;
