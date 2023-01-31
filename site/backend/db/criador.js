@@ -30,8 +30,8 @@ async function getAllCriadores() {
 
 async function getCriador(id) {
     return new Promise((resolve, reject) => {
-        const slct = `SELECT * FROM [Users] WHERE [id] = '${id}' AND [type] = 'creator'`;
-        pool.query(slct, (err, res) => {
+        const slct = `SELECT * FROM [Users] WHERE [id] = @id AND [type] = 'creator'`;
+        pool.input('id', sql.VarChar(200), id).query(slct, (err, res) => {
             if (!err) {
                 resolve(res.recordset);
             } else {
@@ -44,8 +44,8 @@ async function getCriador(id) {
 async function createCriador(id, user) {
     return new Promise((resolve, reject) => {
         const insrt = `INSERT INTO [Users] ([id], [username], [password], [type], [name], [email], [description], [image], [state], [price]) 
-        VALUES ('${id}', '${user.username}', '${user.password}', 'creator', '${user.name}', '${user.email}', '${user.description}', '${user.image}', 'Ativo', ${user.price})`;
-        pool.query(insrt, (err, res) => {
+        VALUES (@id, @username, @password, 'creator', @name, @email, @description, @image, 'Ativo', @price)`;
+        pool.input('id', sql.VarChar(200), id).input('username', sql.VarChar(50), user.username).input('password', sql.VarChar(200), user.password).input('name', sql.VarChar(50), user.name).input('email', sql.VarChar(50), user.email).input('description', sql.VarChar(200), user.description).input('image', sql.VarChar(50), user.image).input('price', sql.Float, user.price).query(insrt, (err, res) => {
             if (!err) {
                 resolve(res);
             } else {
@@ -57,8 +57,8 @@ async function createCriador(id, user) {
 
 async function updateCriador(user, id) {
     return new Promise((resolve, reject) => {
-        const updt = `UPDATE [Users] SET [name] = '${user.name}', [description] = '${user.description}', [price] = ${user.price}, [image] = '${user.image}' WHERE id = '${id}' AND [type] = 'creator'`;
-        pool.query(updt, (err, res) => {
+        const updt = `UPDATE [Users] SET [name] = @name, [description] = @description', [price] = @price, [image] = @image WHERE id = @id AND [type] = 'creator'`;
+        pool.input('id', sql.VarChar(200), id).input('name', sql.VarChar(50), user.name).input('description', sql.VarChar(200), user.description).input('price', sql.Float, user.price).input('image', sql.VarChar(50), user.image).input('id', sql.VarChar(200), id).query(updt, (err, res) => {
             if (!err) {
                 resolve(res);
             } else {
@@ -70,8 +70,8 @@ async function updateCriador(user, id) {
 
 async function changeCriadorState(state, id) {
     return new Promise((resolve, reject) => {
-        const updt = `UPDATE [Users] SET [state] = '${state}' WHERE [id] = '${id}' AND [type] = 'creator'`;
-        pool.query(updt, (err, res) => {
+        const updt = `UPDATE [Users] SET [state] = @state WHERE [id] = @id AND [type] = 'creator'`;
+        pool.input('state', sql.VarChar(50), state).input('id', sql.VarChar(200), id).query(updt, (err, res) => {
             if (!err) {
                 resolve(res);
             } else {
@@ -83,8 +83,8 @@ async function changeCriadorState(state, id) {
 
 async function getSubsCriador(id) {
     return new Promise((resolve, reject) => {
-        const slct = `SELECT * FROM [Subscription] WHERE [id_subscribed] = '${id}'`;
-        pool.query(slct, (err, res) => {
+        const slct = `SELECT * FROM [Subscription] WHERE [id_subscribed] = @id`;
+        pool.input('id', sql.VarChar(200), id).query(slct, (err, res) => {
             if (!err) {
                 resolve(res.recordset);
             } else {
