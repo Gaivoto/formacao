@@ -12,9 +12,12 @@
     "bootstrap": "^5.2.3",
     "bootstrap-vue": "^2.23.1",
     "pattern.css": "^1.0.0",
+    "get-video-duration": "^4.1.0",
+    "nano-metadata": "^0.1.2",
     "uuid": "^9.0.0",
     "vue": "^3.2.41",
     "vue-router": "^4.1.6",
+    "vuedraggable": "^4.1.0",
     "vuetify": "^3.0.1"
   },
   "devDependencies": {
