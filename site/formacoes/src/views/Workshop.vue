@@ -1,5 +1,5 @@
 <template>
-    <div class="body">
+    <div class="workshop-wrapper">
         <courseInfo/>
         <div class="fileform">
         <input style="display: none" multiple="multiple" type="file" accept="video/*" @input="onFileSelected" ref="fileInput">
@@ -95,8 +95,10 @@ export default {
 </script>
 
 <style scoped>
-.body {
-    width: 100%;
+.workshop-wrapper {
+        padding: 24px 48px 24px 48px;
+        display: flex;
+        gap: 24px;
 }
 .fileform {
     margin-top: 30px;
