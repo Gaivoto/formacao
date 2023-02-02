@@ -376,9 +376,7 @@ async function updateStateCursoAdm(tokens, id, body) {
                         if (body.state === "Ativo" || body.state === "Inativo" || body.state === "Pendente" || body.state === "Rejeitado") {
 
                             dbCurs.updateStateCurso(body).then(value3 => {
-
-                                //ainda falta dar uma olhadinha em verificacoes aqui, por exemplo quando uma pessoa se inscreveu em um curso mas ja acabou a subscricao ele nao deve mais receber notificacoes, isso vai ser feito aqui mesmo
-                                //aqui vai entrar a notificaçao pro dono do curso e se for tornado ativo as pessoas que seguem aquele criador tambem vao receber aquele curso, isso preciso esperar o andre fazer a funçao
+                                
                                 //notificacao pro criador do curso
                                 let promisesNotif = [];
                                 let promises = [];
@@ -574,21 +572,7 @@ async function getCursosHomePage() {
                         values[a][b].duration = duration/3600;
                     }
                 }
-                
-                /*for(let i = 0; i < values1.length; i++) {
-                    console.log(values1[i]);
-                    for(let j = 0; j < values1[i].length; j++) {
-                        let duration = 0;
-                        let durationInt = 0;
-                        values[i].videos = values1[i][j];
-                        for(k = 0; k < values1.length; k++) {
-                            durationInt = parseInt(values1[i][j][k].duration);
-                            duration = duration + durationInt;
-                        }
-                        values1[i].duration = duration;
-                    }
 
-                }*/
                 cursos.recentes = values[0];
                 cursos.maisVendidos = values[1];
                 cursos.destaques = values[2];
@@ -601,13 +585,6 @@ async function getCursosHomePage() {
                     console.log(error);
                     reject({ code: 400, error: { message: "Algo correu mal com a query." } });
                 });
-
-            
-            /*cursos.recentes = values[0];
-            cursos.maisVendidos = values[1];
-            cursos.destaques = values[2];
-            cursos.recomendados = values[3];
-            cursos.outros = values[4];*/
 
 
         }).catch(error => {
