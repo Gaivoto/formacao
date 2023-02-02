@@ -40,6 +40,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 import NotificationListItem from './NotificationListItem.vue'
 import SearchbarResult from './SearchbarResult.vue'
 
@@ -75,55 +76,8 @@ export default {
     },
     mounted() {
         this.isMounted = true;
-        console.log("MOUNTED")
     }, 
     created() {
-        console.log("CREATED")
-        this.notifications = [
-            {
-                id: 1,
-                image: "bingus",
-                message: "notificação 1",
-                read: true,
-                date: "12/12/2022 13:45"
-            },
-            {
-                id: 2,
-                image: "bingus",
-                message: "notificação 2",
-                read: false,
-                date: "12/12/2022 13:45"
-            },
-            {
-                id: 3,
-                image: "bingus",
-                message: "notificação 3",
-                read: false,
-                date: "12/12/2022 13:45"
-            },
-            {
-                id: 4,
-                image: "bingus",
-                message: "asdf asdfiojo is sdfiojo is qwie dqwd diassdfiojo is qwie dqwd diasqwie dqwd dias iuhdf iqwe ask",
-                read: true,
-                date: "12/12/2022 13:45"
-            },
-            {
-                id: 5,
-                image: "bingus",
-                message: "notificação 3",
-                read: false,
-                date: "12/12/2022 13:45"
-            },
-            {
-                id: 6,
-                image: "bingus",
-                message: "asdf asdfiojo is sdfiojo is qwie dqwd diassdfiojo is qwie dqwd diasqwie dqwd dias iuhdf iqwe ask",
-                read: true,
-                date: "12/12/2022 13:45"
-            }
-        ];
-
         this.usersCourses = [
             {
                 id: 1,
@@ -173,6 +127,35 @@ export default {
                 image: "bingus"
             }
         ];
+
+        axios({
+            method: `get`,
+            url: `${import.meta.env.VITE_HOST}/notifications/user/${this.$store.getters.getUser.id}`,
+            headers: {
+                Authorization: `Bearer ${this.$store.getters.getAccessToken}`,
+                refreshtoken: this.$store.getters.getRefreshToken
+            }
+        })
+        .then(value => {
+            if(value.data.access_token) this.$store.commit('setAccessToken', value.data.access_token);
+            value.data.notifications.forEach(n => this.notifications.push(n));
+        })
+        .catch(error => {
+            if(error.code) console.log(error.response.data);
+            else console.log(error);
+        });
+
+        axios({
+            method: `get`,
+            url: `${import.meta.env.VITE_HOST}/criadores`
+        })
+        .then(value => {
+            value.data.criadores.forEach(c => this.usersCourses.push(c));
+        })
+        .catch(error => {
+            if(error.code) console.log(error.response.data);
+            else console.log(error);
+        });
         
         this.imageUrl = new URL(`../assets/${this.user.image}.jpg`, import.meta.url).href;
     },
@@ -181,7 +164,7 @@ export default {
 			let unread = false;
 
 			this.notifications.forEach(notif => {
-				if(!notif.read) unread = true;
+				if(notif.state == "false") unread = true;
 			});
 
 			return unread;
@@ -202,7 +185,23 @@ export default {
         toggleNotifs() {
             this.$emit("toggleNotifs");
 
-            this.notifications.forEach(n => n.read = true);
+            this.notifications.forEach(n => n.state = true);
+
+            axios({
+                method: `put`,
+                url: `${import.meta.env.VITE_HOST}/notifications/user/${this.$store.getters.getUser.id}`,
+                headers: {
+                    Authorization: `Bearer ${this.$store.getters.getAccessToken}`,
+                    refreshtoken: this.$store.getters.getRefreshToken
+                }
+            })
+            .then(value => {
+                if(value.data.access_token) this.$store.commit('setAccessToken', value.data.access_token);
+            })
+            .catch(error => {
+                if(error.code) console.log(error.response.data);
+                else console.log(error);
+            });
         },
         toggleSearch() {
             console.log("?")

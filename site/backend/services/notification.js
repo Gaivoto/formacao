@@ -1,6 +1,5 @@
 const dbNotif = require('../db/notification.js');
 const utils = require('../utils/index.js');
-//const dbUser = require('../db/user.js')
 
 async function getAllNotifFromUser(tokens, id) {
     return new Promise((resolve, reject) => {

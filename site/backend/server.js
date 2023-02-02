@@ -30,7 +30,7 @@ app.use("/api/admins", rtAdm);
 
 app.use("/api/criadores", rtCria);
 
-app.use("/api/notification", rtNotf);
+app.use("/api/notifications", rtNotf);
 
 app.use("/api/diplomas", rtDipl);
 

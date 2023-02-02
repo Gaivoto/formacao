@@ -16,9 +16,9 @@
                     </div>
                 </div>   
                 <hr>
-                <router-link class="card-creator-div" :to="{ name: 'Perfil do Utilizador', params: { id: 1 } }">
+                <router-link class="card-creator-div" :to="{ name: 'Perfil do Utilizador', params: { id: this.course.idCr } }">
                     <img :src="this.creatorImageUrl">
-                    <p>{{ this.course.creator.name }}</p>
+                    <p>{{ this.course.nameCr }}</p>
                 </router-link>
             </div>
         </div>
@@ -42,7 +42,7 @@ export default {
     },
     created(){
         this.imageUrl = new URL(`../../assets/${this.course.image}.jpg`, import.meta.url).href;
-        this.creatorImageUrl = new URL(`../../assets/${this.course.creator.image}.jpg`, import.meta.url).href;
+        this.creatorImageUrl = new URL(`../../assets/${this.course.imageCr}.jpg`, import.meta.url).href;
     }
 }
 </script>

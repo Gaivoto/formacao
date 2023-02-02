@@ -28,8 +28,6 @@ const store = new Vuex.Store({
     mutations: {
         setUser(state, user){
             state.user = user;
-            console.log("a")
-            console.log(state.user)
         },
         setAccessToken(state, token){
             state.tokens.accessToken = token;

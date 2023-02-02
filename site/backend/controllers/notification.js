@@ -20,5 +20,5 @@ async function updateNotifFromUser(req, res){
 
 module.exports = {
     getAllNotifFromUser: getAllNotifFromUser,
-    updateNotifFromUse: updateNotifFromUser
+    updateNotifFromUser: updateNotifFromUser
 }

@@ -1,10 +1,11 @@
 const serCria = require('../services/criador.js');
 
 async function getAllCriadores(req, res) {
-    serCria.getAllCriadores({ access_token: req.headers['authorization'].split(' ')[1], refresh_token: req.headers.refreshtoken }).then(value => {
+    serCria.getAllCriadores(req.headers).then(value => {
         res.status(value.code).send(value.info);
     })
         .catch(error => {
+            console.log(error)
             res.status(error.code).send(error.error);
         });
 }
