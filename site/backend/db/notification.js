@@ -46,10 +46,10 @@ async function createNotification(notif) {
     return new Promise((resolve, reject) => {
         let insrt = "";
         if (notif.id_video == null) {
-            insrt = `INSERT INTO [Notification] ([id] ,[message] ,[date] ,[id_user] ,[id_course] ,[id_video] ,[state]) VALUES (@id, @message, @date, @idU, @idC, null, 0)`;
+            insrt = `INSERT INTO [Notification] ([id] ,[message] ,[date] ,[id_user] ,[id_course] ,[id_video] ,[state]) VALUES (@id, @message, @date, @idU, @idC, null, 'false')`;
         }
         else {
-            insrt = `INSERT INTO [Notification] ([id] ,[message] ,[date] ,[id_user] ,[id_course] ,[id_video] ,[state]) VALUES (@id, @message, @date, @idU, @idC, @idV, 0)`;
+            insrt = `INSERT INTO [Notification] ([id] ,[message] ,[date] ,[id_user] ,[id_course] ,[id_video] ,[state]) VALUES (@id, @message, @date, @idU, @idC, @idV, 'false')`;
         }
         pool.input('id', sql.VarChar(200), notif.id).input('message', sql.VarChar(200), notif.message).input('date', sql.DateTime, notif.date).input('idU', sql.VarChar(100), notif.id_user).input('idC', sql.VarChar(100), notif.id_course).input('idV', sql.VarChar(100), notif.id_video).query(insrt, (err, res) => {
             if (!err) {

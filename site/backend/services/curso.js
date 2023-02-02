@@ -388,7 +388,12 @@ async function updateStateCursoAdm(tokens, id, body) {
                                 let dias = data.split('/')[0];
                                 let mes = data.split('/')[1];
                                 let ano = data.split('/')[2];
-                                notif.date = mes + '-' + dias + '-' + ano
+                                horas = new Date().getHours();
+                                minutos = new Date().getMinutes();
+                                segundos = new Date().getSeconds();
+                                horario = horas + ':' + minutos + ':' + segundos;
+                                notif.date = mes + '-' + dias + '-' + ano + ' ' + horario;
+                                
 
                                 notif.id_user = value1[0].id_creator;
                                 notif.id_course = id;

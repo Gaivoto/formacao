@@ -211,7 +211,14 @@ async function updateCriador(tokens, id, criador) {
                                 let dias = data.split('/')[0];
                                 let mes = data.split('/')[1];
                                 ano = data.split('/')[2];
-                                dataAtual = mes + '-' + dias + '-' + ano
+
+                                
+                                horas = new Date().getHours();
+                                minutos = new Date().getMinutes();
+                                segundos = new Date().getSeconds();
+                                horario = horas + ':' + minutos + ':' + segundos;
+                                dataAtual = mes + '-' + dias + '-' + ano + ' ' + horario;
+
                                 dbSubs.getSubscribersFromCreator(id).then(value2 => {
                                     if (value2.length == 0) {
                                         info.message = "Criador alterado com sucesso.";
