@@ -237,7 +237,12 @@ async function updateStateVideoAdm(tokens, body) {
                                             dias = data.split('/')[0];
                                             mes = data.split('/')[1];
                                             ano = data.split('/')[2];
-                                            notif.date = mes + '-' + dias + '-' + ano
+
+                                            horas = new Date().getHours();
+                                            minutos = new Date().getMinutes();
+                                            segundos = new Date().getSeconds();
+                                            horario = horas + ':' + minutos + ':' + segundos;
+                                            notif.date = mes + '-' + dias + '-' + ano + ' ' + horario;
 
                                             notif.id_user = value4[0].id_creator;
                                             notif.id_course = body.id_course;
@@ -275,7 +280,11 @@ async function updateStateVideoAdm(tokens, body) {
                                                         dias = data.split('/')[0];
                                                         mes = data.split('/')[1];
                                                         ano = data.split('/')[2];
-                                                        notifUser.date = mes + '-' + dias + '-' + ano
+                                                        horas = new Date().getHours();
+                                                        minutos = new Date().getMinutes();
+                                                        segundos = new Date().getSeconds();
+                                                        horario = horas + ':' + minutos + ':' + segundos;
+                                                        notifUser.date = mes + '-' + dias + '-' + ano + ' ' + horario;
 
                                                         notifUser.id_user = values[1][j].id_user;
                                                         notifUser.id_course = body.id_course;
