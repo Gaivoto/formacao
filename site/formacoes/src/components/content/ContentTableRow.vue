@@ -21,7 +21,7 @@
             <p>{{ this.course.numberOfVideos }}</p>
         </td>
         <td class="column-right">
-            <p>{{ this.course.duration }}</p>
+            <p>{{ Math.floor(this.course.duration) }}h {{ Math.round((this.course.duration - Math.floor(this.course.duration)) * 60) }}min</p>
         </td>
     </tr>
 </template>

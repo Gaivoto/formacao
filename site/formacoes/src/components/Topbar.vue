@@ -71,7 +71,8 @@ export default {
             imageUrl: "",
             notifications: [],
             searchResults: [],
-            usersCourses: []
+            creators: [],
+            courses: []
         }
     },
     mounted() {
@@ -147,10 +148,24 @@ export default {
 
         axios({
             method: `get`,
+            url: `${import.meta.env.VITE_HOST}/cursos`
+        })
+        .then(value => {
+            value.data.courses.forEach(c => this.courses.push(c));
+            this.courses.forEach(c => c.resultType = "Curso");
+        })
+        .catch(error => {
+            if(error.code) console.log(error.response.data);
+            else console.log(error);
+        });
+
+        axios({
+            method: `get`,
             url: `${import.meta.env.VITE_HOST}/criadores`
         })
         .then(value => {
-            value.data.criadores.forEach(c => this.usersCourses.push(c));
+            value.data.criadores.forEach(c => this.creators.push(c));
+            this.creators.forEach(c => c.resultType = "Criador");
         })
         .catch(error => {
             if(error.code) console.log(error.response.data);
@@ -214,9 +229,13 @@ export default {
             this.searchResults = [];
 
             if(filter != ""){
-                this.usersCourses.forEach(i => {
-                    if(i.name.toLowerCase().includes(filter) || i.type.toLowerCase().includes(filter) || (i.category != null && i.category.toLowerCase().startsWith(filter))) this.searchResults.push(i);
-                });    
+                this.creators.forEach(cr => {
+                    if(cr.username.toLowerCase().includes(filter) || cr.name.toLowerCase().includes(filter) || "criador".includes(filter)) this.searchResults.push(cr);
+                });
+
+                this.courses.forEach(co => {
+                    if(co.name.toLowerCase().includes(filter) || co.category.toLowerCase().includes(filter) || "curso".includes(filter)) this.searchResults.push(co);
+                });
             }
         },
         goToSearchItem() {

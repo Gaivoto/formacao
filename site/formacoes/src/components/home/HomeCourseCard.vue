@@ -12,7 +12,7 @@
                     <p>{{ this.course.price }} €</p>
                     <div>
                         <span class="material-icons duration-icon">schedule</span>
-                        <p>{{ this.course.duration }}</p>
+                        <p>{{ Math.floor(this.course.duration) }}h {{ Math.round((this.course.duration - Math.floor(this.course.duration)) * 60) }}min</p>
                     </div>
                 </div>   
                 <hr>

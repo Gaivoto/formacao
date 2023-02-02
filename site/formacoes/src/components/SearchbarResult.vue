@@ -3,7 +3,7 @@
         <img :src="this.imageUrl">
         <div>
             <p>{{ this.item.name }}</p>
-            <p>{{ this.item.type }}</p>
+            <p>{{ this.item.resultType }}</p>
         </div>
     </router-link>
 </template>

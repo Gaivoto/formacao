@@ -119,41 +119,78 @@ async function getAllCursos(headers) {
             
             utils.validateToken(access_token, refresh_token).then(value => {
                 let info = value;
-                dbCurs.getAllCursos().then(value2 => {
+
+                if(info.user.type == 'admin') {
+                    dbCurs.getAllCursosAdm().then(value2 => {
                     
-                    info.courses = value2;
-
-                    info.courses.forEach(cou => {
-                        
-                        promises.push(dbVide.getAllVideosFromCourse(cou.id));
-                    });
-
-                    Promise.all(promises).then(values => {
-                        for (let i = 0; i < info.courses.length; i++) {
-                        let duration = 0;
-                        let durationInt = 0;
-                            info.courses[i].videos = values[i];
+                        info.courses = value2;
+    
+                        info.courses.forEach(cou => {
                             
-                            for(j = 0; j < values[i].length; j++) {
-                                durationInt = parseInt(values[i][j].duration)
-                                duration = duration + durationInt;
+                            promises.push(dbVide.getAllVideosFromCourse(cou.id));
+                        });
+    
+                        Promise.all(promises).then(values => {
+                            for (let i = 0; i < info.courses.length; i++) {
+                            let duration = 0;
+                            let durationInt = 0;
+                                info.courses[i].videos = values[i];
+                                
+                                for(j = 0; j < values[i].length; j++) {
+                                    durationInt = parseInt(values[i][j].duration)
+                                    duration = duration + durationInt;
+                                }
+    
+                                info.courses[i].duration = duration/3600;
                             }
-
-                            //console.log(duration)
-                            info.courses[i].duration = duration/3600;
-                        }
-
-                        resolve({ code: 200, info: info });
+    
+                            resolve({ code: 200, info: info });
+                        })
+                            .catch(error => {
+                                console.log(error);
+                                reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                            });
                     })
                         .catch(error => {
                             console.log(error);
                             reject({ code: 400, error: { message: "Algo correu mal com a query." } });
                         });
-                })
-                    .catch(error => {
-                        console.log(error);
-                        reject({ code: 400, error: { message: "Algo correu mal com a query." } });
-                    });
+                } else {
+                    dbCurs.getAllCursos().then(value2 => {
+                    
+                        info.courses = value2;
+    
+                        info.courses.forEach(cou => {
+                            
+                            promises.push(dbVide.getAllVideosFromCourse(cou.id));
+                        });
+    
+                        Promise.all(promises).then(values => {
+                            for (let i = 0; i < info.courses.length; i++) {
+                            let duration = 0;
+                            let durationInt = 0;
+                                info.courses[i].videos = values[i];
+                                
+                                for(j = 0; j < values[i].length; j++) {
+                                    durationInt = parseInt(values[i][j].duration)
+                                    duration = duration + durationInt;
+                                }
+    
+                                info.courses[i].duration = duration/3600;
+                            }
+    
+                            resolve({ code: 200, info: info });
+                        })
+                            .catch(error => {
+                                console.log(error);
+                                reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                            });
+                    })
+                        .catch(error => {
+                            console.log(error);
+                            reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                        });
+                }
             })
                 .catch(error => {
                     console.log(error);

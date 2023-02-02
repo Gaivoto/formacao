@@ -32,6 +32,20 @@ async function getCurso(id) {
 async function getAllCursos() {
     const pool = new sql.Request();
     return new Promise((resolve, reject) => {
+        const slct = `SELECT * FROM [Course] WHERE [state] = 'Ativo'`;
+        pool.query(slct, (err, res) => {
+            if (!err) {
+                resolve(res.recordset);
+            } else {
+                reject(err.message);
+            }
+        });
+    });
+}
+
+async function getAllCursosAdm() {
+    const pool = new sql.Request();
+    return new Promise((resolve, reject) => {
         const slct = `SELECT * FROM [Course]`;
         pool.query(slct, (err, res) => {
             if (!err) {
@@ -234,6 +248,7 @@ async function getOtherCursos() {
 module.exports = {
     getCurso: getCurso,
     getAllCursos: getAllCursos,
+    getAllCursosAdm: getAllCursosAdm,
     getCursosByCriador: getCursosByCriador,
     createCurso: createCurso,
     updateStateCurso: updateStateCurso,
