@@ -22,7 +22,7 @@
         <div class="topbar-right">
             <router-link class="user-wrapper" :to="{ name: 'Perfil do Utilizador', params: { id: this.$store.getters.getUser.id } }">
                 <div class="topbar-text">
-                    <p>{{ this.$store.getters.getUser.id }}</p>
+                    <p>{{ this.$store.getters.getUser.username }}</p>
                 </div>
                 <div class="image-wrapper">
                     <img id="profile-image" :src="this.imageUrl" />    

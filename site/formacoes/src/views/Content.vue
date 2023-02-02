@@ -2,7 +2,7 @@
     <div class="content-wrapper">
         <div class="table-wrapper">
             <div class="table-content" :class="{ 'invert-colors': this.isTableLengthEven }">
-                <table class="table">
+                <table class="table" ref="table">
                     <tr>
                         <th></th>
                         <th class="column-large">
@@ -76,80 +76,7 @@ export default {
             displayCourses: [],
         }
     },
-    created() {
-        this.courses = [
-            {
-                id: 1,
-                name: "Bingus Amogus",
-                description: "desc",
-                subscriptions: 8123,
-                numberOfVideos: 5,
-                image: "bingus",
-                date: "01/10/2022",
-                duration: "1:21:10",
-            },
-            {
-                id: 2,
-                name: "Bingus Amogus",
-                description: "desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc desc",
-                subscriptions: 123,
-                numberOfVideos: 2,
-                image: "bingus",
-                date: "01/11/2022",
-                duration: "40:23",
-            },
-            {
-                id: 3,
-                name: "Bingus Amogus",
-                description: "desc",
-                subscriptions: 412,
-                numberOfVideos: 4,
-                image: "bingus",
-                date: "01/12/2022",
-                duration: "50:33",
-            },
-            {
-                id: 4,
-                name: "Bingus Amogus",
-                description: "desc",
-                subscriptions: 1234,
-                numberOfVideos: 14,
-                image: "bingus",
-                date: "02/12/2022",
-                duration: "5:32:58",
-            },
-            {
-                id: 5,
-                name: "Bingus Amogus",
-                description: "desc",
-                subscriptions: 0,
-                numberOfVideos: 1,
-                image: "bingus",
-                date: "03/12/2022",
-                duration: "10:31",
-            },
-            {
-                id: 6,
-                name: "Bingus Amogus",
-                description: "desc",
-                subscriptions: 1234,
-                numberOfVideos: 14,
-                image: "bingus",
-                date: "02/12/2022",
-                duration: "5:32:58",
-            },
-            {
-                id: 7,
-                name: "Bingus Amogus",
-                description: "desc",
-                subscriptions: 0,
-                numberOfVideos: 1,
-                image: "bingus",
-                date: "03/12/2022",
-                duration: "10:31",
-            }
-        ];
-        
+    created() {        
         axios({
             method: `get`,
             url: `${import.meta.env.VITE_HOST}/criadores/${this.$store.getters.getUser.id}`,
@@ -161,14 +88,14 @@ export default {
         .then(value => {
             console.log(value.data.criador.cursos[0])
             value.data.criador.cursos.forEach(c => this.courses.push(c));
-            console.log(this.courses)
+            console.log(this.courses);
+
+    this.displayCourses = this.courses.slice(0, this.itemsPerPage);
         })
         .catch(error => {
             if(error.code) console.log(error.response.data);
             else console.log(error);
         });
-
-        this.displayCourses = this.courses.slice(0, this.itemsPerPage);
     },
     computed: {
         isTableLengthEven() {
