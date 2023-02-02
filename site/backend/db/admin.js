@@ -13,9 +13,8 @@ sql.connect(config, function (err) {
     if (err) throw err;
 });
 
-const pool = new sql.Request();
-
 async function getAllAdmins() {
+    const pool = new sql.Request();
     return new Promise((resolve, reject) => {
         const slct = `SELECT * FROM [Users] where [type] = 'admin'`;
         pool.query(slct, (err, res) => {

@@ -60,7 +60,7 @@ async function getAllCursosAdm() {
 async function getCursosByCriador(id) {
     const pool = new sql.Request();
     return new Promise((resolve, reject) => {
-        const slct = `SELECT c.id as id, c.name as name, c.category as category, c.description as description, c.image as image, u.id as idCr, u.name as nameCr, u.image as imageCr FROM [Course] c LEFT JOIN [Users] u ON c.id_creator = u.id WHERE [id_creator] = @id`;
+        const slct = `SELECT c.id as id, c.name as name, c.category as category, c.description as description, c.image as image, c.date as date, u.id as idCr, u.name as nameCr, u.image as imageCr FROM [Course] c LEFT JOIN [Users] u ON c.id_creator = u.id WHERE [id_creator] = @id`;
         pool.input('id', sql.VarChar(200), id).query(slct, (err, res) => {
             if (!err) {
                 resolve(res.recordset);

@@ -132,8 +132,8 @@ async function getAllCursos(headers) {
     
                         Promise.all(promises).then(values => {
                             for (let i = 0; i < info.courses.length; i++) {
-                            let duration = 0;
-                            let durationInt = 0;
+                                let duration = 0;
+                                let durationInt = 0;
                                 info.courses[i].videos = values[i];
                                 
                                 for(j = 0; j < values[i].length; j++) {

@@ -58,6 +58,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 import ContentTableRow from "../components/content/ContentTableRow.vue";
 import Pagination2 from "../components/paginations/Pagination2.vue";
 
@@ -148,6 +149,24 @@ export default {
                 duration: "10:31",
             }
         ];
+        
+        axios({
+            method: `get`,
+            url: `${import.meta.env.VITE_HOST}/criadores/${this.$store.getters.getUser.id}`,
+            headers: {
+                Authorization: `Bearer ${this.$store.getters.getAccessToken}`,
+                refreshtoken: this.$store.getters.getRefreshToken
+            }
+        })
+        .then(value => {
+            console.log(value.data.criador.cursos[0])
+            value.data.criador.cursos.forEach(c => this.courses.push(c));
+            console.log(this.courses)
+        })
+        .catch(error => {
+            if(error.code) console.log(error.response.data);
+            else console.log(error);
+        });
 
         this.displayCourses = this.courses.slice(0, this.itemsPerPage);
     },
