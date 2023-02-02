@@ -301,7 +301,7 @@ async function getCriadoresHomepage() {
 
             creators = creators.slice(0, 10);
 
-            resolve({ code: 200, info: creators });
+            resolve({ code: 200, info: {creators: creators} });
 
         }).catch(error => {
             console.log(error);

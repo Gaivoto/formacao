@@ -43,7 +43,7 @@ export default {
     .item-left {
         display: flex;
         gap: 12px;
-        width: 120px;
+        width: auto;
     }
 
     .item-left img {

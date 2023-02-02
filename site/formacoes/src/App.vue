@@ -1,9 +1,9 @@
 <template>
   <div class="app" v-on:click="closeModals">
-	<Sidebar class="sidebar" v-on:toggleSidebar="toggleSidebar" :class="{ 'd-none': displaySidebarTopbar }"/>
+	<Sidebar class="sidebar" v-show="displaySidebarTopbar" v-on:toggleSidebar="toggleSidebar"/>
 	<div class="full-page">
-		<div class="topbar-wrapper" :class="{ sidebarTopbar: sidebarOpen, 'd-none': displaySidebarTopbar }">
-			<Topbar v-bind:notifsOpen="notifsOpen" v-bind:searchOpen="searchOpen" v-on:toggleNotifs="toggleNotifs" v-on:toggleSearch="toggleSearch" v-on:openSearch="openSearch"/>
+		<div class="topbar-wrapper" v-if="displaySidebarTopbar" :class="{ sidebarTopbar: sidebarOpen }">
+			<Topbar v-if="displaySidebarTopbar" v-bind:notifsOpen="notifsOpen" v-bind:searchOpen="searchOpen" v-on:toggleNotifs="toggleNotifs" v-on:toggleSearch="toggleSearch" v-on:openSearch="openSearch"/>
 		</div>
 		<router-view class="active-page" :class="{ sidebarMainPage: sidebarOpen, spaceLeft: isNotLanding }"/>	
 	</div>
@@ -28,8 +28,8 @@ export default {
 	},
 	computed: {
 		displaySidebarTopbar() {
-			if(this.$route.name == "Landing" || this.$route.name == "Login") return true;
-			return false;
+			if(this.$route.name == "Landing" || this.$route.name == "Login") return false;
+			return true;
 		},
 		isNotLanding() {
 			if(this.$route.name == "Landing") return false;
