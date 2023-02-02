@@ -37,13 +37,18 @@ async function getCurso(headers, id) {
                         promises.push(dbSubs.existsSubscricao(info.user.id, value2[0].id_creator))
                         promises.push(dbComp.existsCompra(info.user.id, id))
                         promises.push(dbVide.getAllVideosFromCourse(id))
-
                         Promise.all(promises).then(values => {
+                            let duration = 0;
+                            let durationInt = 0;
+                            for(let i = 0; i < values[2].length; i++) {
+                                durationInt = parseInt(values[2][i].duration)
+                                duration = duration + durationInt;
+                            }
 
                             if (values[0].length > 0 || values[1].length > 0) {
                                 info.course.access = true;
                             }
-
+                            info.course.duration = duration/3600;
                             info.course.videos = values[2];
                             resolve({ code: 200, info: info });
 
@@ -74,6 +79,13 @@ async function getCurso(headers, id) {
                     }
 
                     dbVide.getAllVideosFromCourse(id).then(value2 => {
+                        let duration = 0;
+                        let durationInt = 0;
+                        for(let i = 0; i < value2.length; i++) {
+                            durationInt = parseInt(value2[i].duration)
+                            duration = duration + durationInt;
+                        }
+                        resp.course.duration = duration/3600;
                         resp.course.videos = value2;
                         resolve({ code: 200, info: resp });
                     })
@@ -93,7 +105,7 @@ async function getCurso(headers, id) {
 
 async function getAllCursos(headers) {
     return new Promise((resolve, reject) => {
-
+        
         let access_token;
         let refresh_token;
         let promises = [];
@@ -104,18 +116,31 @@ async function getAllCursos(headers) {
         }
 
         if (access_token && refresh_token) {
+            
             utils.validateToken(access_token, refresh_token).then(value => {
                 let info = value;
                 dbCurs.getAllCursos().then(value2 => {
+                    
                     info.courses = value2;
 
                     info.courses.forEach(cou => {
+                        
                         promises.push(dbVide.getAllVideosFromCourse(cou.id));
                     });
 
                     Promise.all(promises).then(values => {
                         for (let i = 0; i < info.courses.length; i++) {
+                        let duration = 0;
+                        let durationInt = 0;
                             info.courses[i].videos = values[i];
+                            
+                            for(j = 0; j < values[i].length; j++) {
+                                durationInt = parseInt(values[i][j].duration)
+                                duration = duration + durationInt;
+                            }
+
+                            //console.log(duration)
+                            info.courses[i].duration = duration/3600;
                         }
 
                         resolve({ code: 200, info: info });
@@ -148,7 +173,14 @@ async function getAllCursos(headers) {
 
                 Promise.all(promises).then(values => {
                     for (let i = 0; i < resp.courses.length; i++) {
+                        let duration = 0;
+                        let durationInt = 0;
                         resp.courses[i].videos = values[i];
+                        for(j = 0; j < values[i].length; j++) {
+                            durationInt = parseInt(values[i][j].duration)
+                            duration = duration + durationInt;
+                        }
+                        resp.courses[i].duration = duration/3600;
                     }
 
                     resolve({ code: 200, info: resp });
@@ -344,9 +376,7 @@ async function updateStateCursoAdm(tokens, id, body) {
                         if (body.state === "Ativo" || body.state === "Inativo" || body.state === "Pendente" || body.state === "Rejeitado") {
 
                             dbCurs.updateStateCurso(body).then(value3 => {
-
-                                //ainda falta dar uma olhadinha em verificacoes aqui, por exemplo quando uma pessoa se inscreveu em um curso mas ja acabou a subscricao ele nao deve mais receber notificacoes, isso vai ser feito aqui mesmo
-                                //aqui vai entrar a notificaçao pro dono do curso e se for tornado ativo as pessoas que seguem aquele criador tambem vao receber aquele curso, isso preciso esperar o andre fazer a funçao
+                                
                                 //notificacao pro criador do curso
                                 let promisesNotif = [];
                                 let promises = [];
@@ -482,17 +512,12 @@ async function updateCurso(tokens, id, body) {
 async function getCursosHomePage() {
     return new Promise((resolve, reject) => {
         let currentDate = new Date();
-        console.log(currentDate)
         currentDate.setMonth(currentDate.getMonth() - 3);
-        console.log(currentDate)
         currentDate = currentDate.toLocaleDateString();
-        console.log(currentDate)
         let dias = currentDate.split('/')[0];
         let mes = currentDate.split('/')[1];
         let ano = currentDate.split('/')[2];
         currentDate = mes + '-' + dias + '-' + ano;
-
-        console.log(currentDate)
 
         let cursos = {
             recentes: [],
@@ -503,7 +528,7 @@ async function getCursosHomePage() {
         };
 
         let promises = [];
-
+        
         promises.push(dbCurs.getMostRecentCursos())
         promises.push(dbCurs.getMostSoldCursos())
         promises.push(dbCurs.getDestaquesCursos(currentDate))
@@ -511,14 +536,56 @@ async function getCursosHomePage() {
         promises.push(dbCurs.getOtherCursos())
 
         Promise.all(promises).then(values => {
+            //começa aqui
+            let promisesVideos = [];
 
-            cursos.recentes = values[0];
-            cursos.maisVendidos = values[1];
-            cursos.destaques = values[2];
-            cursos.recomendados = values[3];
-            cursos.outros = values[4];
+            values[0].forEach(cou => {
+                        
+                promisesVideos.push(dbVide.getAllVideosFromCourse(cou.id));
+            });
+            values[1].forEach(cou1 => {
+                        
+                promisesVideos.push(dbVide.getAllVideosFromCourse(cou1.id));
+            });
+            values[2].forEach(cou2 => {
+                        
+                promisesVideos.push(dbVide.getAllVideosFromCourse(cou2.id));
+            });
+            values[3].forEach(cou3 => {
+                        
+                promisesVideos.push(dbVide.getAllVideosFromCourse(cou3.id));
+            });
+            values[4].forEach(cou4 => {
+                        
+                promisesVideos.push(dbVide.getAllVideosFromCourse(cou4.id));
+            });
 
-            resolve({ code: 200, info: cursos });
+            Promise.all(promisesVideos).then(values1 => {
+                for(let a = 0; a < values.length; a++) {
+                    for(let b = 0; b < 6; b++) {
+                        let duration = 0;
+                        let durationInt = 0;
+                        for(k = 0; k < values1[6*a+b].length; k++) {
+                            durationInt = parseInt(values1[6*a+b][k].duration);
+                            duration = duration + durationInt;
+                        }
+                        values[a][b].duration = duration/3600;
+                    }
+                }
+
+                cursos.recentes = values[0];
+                cursos.maisVendidos = values[1];
+                cursos.destaques = values[2];
+                cursos.recomendados = values[3];
+                cursos.outros = values[4];
+                
+                resolve({ code: 200, info: cursos });
+            })
+                .catch(error => {
+                    console.log(error);
+                    reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                });
+
 
         }).catch(error => {
             console.log(error);
@@ -527,6 +594,12 @@ async function getCursosHomePage() {
 
 
     });
+}
+
+async function getDuration(list) {
+    for(let i = 0; i < list.length; i++) {
+        
+    }
 }
 
 module.exports = {

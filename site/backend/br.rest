@@ -72,4 +72,11 @@ content-type: application/json
 }
 
 ###
-GET {{hostname}}api/cursos/2
+GET {{hostname}}api/cursos/
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk4NDEwMzEyLWE0YjQtNGE2YS1iMDQ4LTI3NTJiODIxMGUyMyIsInVzZXJuYW1lIjoiYWRtIiwidHlwZSI6ImFkbWluIiwiaWF0IjoxNjc1MzQyNjg5LCJleHAiOjE2NzUzNTcwODl9.C1gnPy44adYH-ULQ6UnonOcA9zXOZ9HmEJQ1W5dlOe4
+refreshtoken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk4NDEwMzEyLWE0YjQtNGE2YS1iMDQ4LTI3NTJiODIxMGUyMyIsInVzZXJuYW1lIjoiYWRtIiwidHlwZSI6ImFkbWluIiwiaWF0IjoxNjc1MzQyNjg5fQ.OAAB4V8bA7j1Eb0npZJGnCR8T-Vt878xR3uuFdzQKL8
+
+###
+
+GET {{hostname}}api/cursos/home
+
