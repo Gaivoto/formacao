@@ -64,6 +64,7 @@
 </template>
 
 <script>
+import axios from "axios";
 import HomeCourseCard from "../components/home/HomeCourseCard.vue";
 import HomeCreatorItem from "../components/home/HomeCreatorItem.vue";
 import HomeSlideshow from "../components/home/HomeSlideshow.vue";
@@ -607,69 +608,19 @@ export default {
                 }
             }
         ];
-
-        this.creators = [
-            {
-                id: 1,
-                name: "Creator 1",
-                username: "UCreator1",
-                image: "bingus"
-            },
-            {
-                id: 2,
-                name: "Creator 2",
-                username: "UCreator2",
-                image: "bingus"
-            },
-            {
-                id: 3,
-                name: "Creator 3",
-                username: "UCreator3",
-                image: "bingus"
-            },
-            {
-                id: 4,
-                name: "Creator 4",
-                username: "UCreator4",
-                image: "bingus"
-            },
-            {
-                id: 5,
-                name: "Creator 5",
-                username: "UCreator5",
-                image: "bingus"
-            },
-            {
-                id: 6,
-                name: "Creator 6",
-                username: "UCreator6",
-                image: "bingus"
-            },
-            {
-                id: 7,
-                name: "Creator 7",
-                username: "UCreator7",
-                image: "bingus"
-            },
-            {
-                id: 8,
-                name: "Creator 8",
-                username: "UCreator8",
-                image: "bingus"
-            },
-            {
-                id: 9,
-                name: "Creator 9",
-                username: "UCreator9",
-                image: "bingus"
-            },
-            {
-                id: 10,
-                name: "Creator 10",
-                username: "UCreator10",
-                image: "bingus"
-            }
-        ]
+        
+        axios({
+            method: `get`,
+            url: `${import.meta.env.VITE_HOST}/criadores/home`
+        })
+        .then(value => {
+            value.data.creators.forEach(c => this.creators.push(c));
+            this.creators = value.data.creators;
+        })
+        .catch(error => {
+            if(error.code) console.log(error.response.data);
+            else console.log(error);
+        });
     },
     methods: {
         changeDiv(div) {

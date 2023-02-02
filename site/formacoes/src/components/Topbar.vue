@@ -22,7 +22,7 @@
         <div class="topbar-right">
             <router-link class="user-wrapper" :to="{ name: 'Perfil do Utilizador', params: { id: 1 } }">
                 <div class="topbar-text">
-                    <p>{{ this.user.username }}</p>
+                    <p>{{ this.$store.getters.getUser.username }}</p>
                 </div>
                 <div class="image-wrapper">
                     <img id="profile-image" :src="this.imageUrl" />    
@@ -57,12 +57,16 @@ export default {
         searchOpen: {
             type: Boolean,
             required: true
+        },
+        user: {
+            type: Object,
+            required: true
         }
     },
     data() {
         return {
             isMounted: false,
-            user: {},
+            user: this.$store.getters.getUser,
             imageUrl: "",
             notifications: [],
             searchResults: [],
@@ -71,11 +75,10 @@ export default {
     },
     mounted() {
         this.isMounted = true;
+        console.log("MOUNTED")
     }, 
     created() {
-        this.user.username = "Utilizador teste";
-        this.user.image = "bingus";
-
+        console.log("CREATED")
         this.notifications = [
             {
                 id: 1,
@@ -190,6 +193,9 @@ export default {
                 if(this.searchResults.length == 0 && filter != "") return true;
                 return false;    
             }
+        },
+        getUser() {
+            this.user = this.$store.getter.getUser;
         }
     },
     methods: {

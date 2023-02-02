@@ -103,7 +103,7 @@ export default {
           this.$store.commit('setUser', value.data.user);
           this.$store.commit('setRefreshToken', value.data.refresh_token);
           this.$store.commit('setAccessToken', value.data.access_token);
-          this.$router.push({ name: "Home" })
+          this.$router.push({ name: "Home" });
         })
         .catch(error => {
           if(error.code) console.log(error.response.data);
