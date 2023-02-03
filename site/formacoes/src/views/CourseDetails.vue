@@ -2,9 +2,9 @@
     <div class="course-details-wrapper">
         <div class="course-details-content">
             <CourseDetHeader class="course-header" v-bind:course="this.course" />
-            <p>Conteúdo:</p>
-            <div class="vid-container">
-                <VidInfo v-if:="this.compra" v-for="vid in this.videos" :key="vid.id" v-bind:video="vid" v-bind:courseID="this.course.id"/>
+            <p v-if:="this.compra">Conteúdo:</p>
+            <div v-if:="this.compra" class="vid-container">
+                <VidInfo v-for="vid in this.videos" :key="vid.id" v-bind:video="vid" v-bind:courseID="this.course.id"/>
             </div>
         </div>
     </div>
@@ -16,7 +16,7 @@ import CourseDetHeader from "../components/courseDetails/CourseDetHeader.vue";
 import VidInfo from "../components/courseDetails/VidInfo.vue";
 
 export default {
-    //preciso checar se o user tem o curso ou nao para dar display de cenas diferentes
+    //AQUI AINDA FALTA VERIFICAR SE O CRIADOR TA ENTRANDO NUM CURSO Q É DELE
     name: "CourseDetails",
     components: {
         CourseDetHeader,
