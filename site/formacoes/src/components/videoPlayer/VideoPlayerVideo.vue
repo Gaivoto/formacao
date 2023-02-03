@@ -15,7 +15,6 @@ export default {
   },
   computed: {
     videoPath() {
-      console.log(this.video)
       return new URL(`../../assets/${this.video}.mp4`, import.meta.url).href;
     },
   },
