@@ -2,8 +2,8 @@
     <div class="vid" v-on:click="changeVideo">
         <img class="img" :src="this.imageUrl" />
         <div class="text">
-            <p class="videoname">{{ video.name }}</p>
-            <p class="videoduration">{{ video.duration }}</p>
+            <p class="videoname">{{ video.title }}</p>
+            <p class="videoduration">{{ calculatedDuration }}</p>
         </div>
     </div>
 </template>
@@ -29,6 +29,11 @@ export default {
     methods: {
         changeVideo() {
             this.$emit('changeVideo', this.video);
+        }
+    },
+    computed: {
+        calculatedDuration() {
+            return Math.floor(this.video.duration / 60)+':'+Math.floor(this.video.duration % 60);
         }
     }
 }

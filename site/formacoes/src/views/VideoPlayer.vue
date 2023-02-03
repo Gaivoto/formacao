@@ -1,7 +1,7 @@
 <template>
     <div class="videopage-wrapper">
         <div class="video-left">
-            <p class="video-title">{{ this.video.name }}</p>
+            <p class="video-title">{{ this.video.title }}</p>
             <VideoPlayerVideo class="video-player" v-bind:video="this.video.name" />
             <p class="desc-text">Descrição:</p>
             <span class="video-desc">{{ this.video.description }}</span>
@@ -13,6 +13,7 @@
 </template>
 
 <script>
+import axios from "axios";
 import VideoList from "../components/videoPlayer/VideoList.vue";
 import VideoPlayerVideo from "../components/videoPlayer/VideoPlayerVideo.vue";
 
@@ -24,13 +25,8 @@ export default {
     },
     data() {
         return {
-            video: {
-                id: "",
-                image: "",
-                name: "",
-                description: "",
-                duration: "",
-            }
+            video: {},
+            videos: []
         }
     },
     methods: {
@@ -39,111 +35,30 @@ export default {
         }
     },
     created() {
-        this.course = {
-            id: 1,
-            image: "bingus",
-            name: "nameCourse",
-            creatorName: "seuku miyadora",
-            description: "description2",
-            category: "category1",
-            price: "55.80 R$",
-        }
-
-        this.videos = [
-            {
-                id: 1,
-                image: "bingus",
-                name:"Video1",
-                description: "video mostrando uma cria de hamburguer ma cria de hamburndo uma cria de hamburguer ma cria de hamburndo uma cria de hamburguer ma cria de hamburndo uma cria de hamburguer ma cria de hamburndo uma cria de hamburguer ma cria de hamburndo uma cria de hamburguer ma cria de hamburndo uma cria de hamburguer ma cria de hamburndo uma cria de hamburguer ma cria de hamburguma cria de hamburguma cria de hamburguma cria de hamburguma cria de hamburguma cria de hamburguma cria de hamburguma cria de hamburguma cria de hamburguma cria de hamburguma cria de hamburguma cria de hamburguma cria de hamburguma cria de hamburguma cria de hamburguma cria de hamburguselvagem alimentando se pela primeira vez sozinha",
-                duration: "15 min",
-            },
-            {
-                id: 2,
-                image: "bingus",
-                name:"Video2",
-                description: "video mostrando um rapaz meio humano meio notificação tendo uma conversa com a sua mae",
-                duration: "16 min",
-            },
-            {
-                id: 3,
-                image: "bingus",
-                name:"Video3",
-                description: "lindo video mostrando pessoa a fazer criança rir com as suas habilidades magicas",
-                duration: "17 min",
-            },
-            {
-                id: 4,
-                image: "bingus",
-                name:"Video1",
-                description: "video mostrando uma cria de hamburguer selvagem alimentando se pela primeira vez sozinha",
-                duration: "15 min",
-            },
-            {
-                id: 5,
-                image: "bingus",
-                name:"Video2",
-                description: "video mostrando um rapaz meio humano meio notificação tendo uma conversa com a sua mae",
-                duration: "16 min",
-            },
-            {
-                id: 6,
-                image: "bingus",
-                name:"Video3",
-                description: "lindo video mostrando pessoa a fazer criança rir com as suas habilidades magicas",
-                duration: "17 min",
-            },
-            {
-                id: 7,
-                image: "bingus",
-                name:"Video1",
-                description: "video mostrando uma cria de hamburguer selvagem alimentando se pela primeira vez sozinha",
-                duration: "15 min",
-            },
-            {
-                id: 8,
-                image: "bingus",
-                name:"Video2",
-                description:    "video mostrando um rapaz meio humano meio notificação tendo uma conversa com a sua mae",
-                duration: "16 min",
-            },
-            {
-                id: 9,
-                image: "bingus",
-                name:"Video3",
-                description:    "lindo video mostrando pessoa a fazer criança rir com as suas habilidades magicas",
-                duration: "17 min",
-            },
-            {
-                id: 8,
-                image: "bingus",
-                name:"Video2",
-                description:    "video mostrando um rapaz meio humano meio notificação tendo uma conversa com a sua mae",
-                duration: "16 min",
-            },
-            {
-                id: 9,
-                image: "bingus",
-                name:"Video3",
-                description:    "lindo video mostrando pessoa a fazer criança rir com as suas habilidades magicas",
-                duration: "17 min",
-            },
-            {
-                id: 8,
-                image: "bingus",
-                name:"Video2",
-                description:    "video mostrando um rapaz meio humano meio notificação tendo uma conversa com a sua mae",
-                duration: "16 min",
-            },
-            {
-                id: 9,
-                image: "bingus",
-                name:"Video3",
-                description:    "lindo video mostrando pessoa a fazer criança rir com as suas habilidades magicas",
-                duration: "17 min",
+        axios({
+            method: `get`,
+            url: `${import.meta.env.VITE_HOST}/cursos/${this.$route.params.id}`,
+            headers: {
+                Authorization: `Bearer ${this.$store.getters.getAccessToken}`,
+                refreshtoken: this.$store.getters.getRefreshToken
             }
-        ];
-
-        this.video = this.videos[0];
+        })
+        .then(value => {
+            if(value.data.access_token) this.$store.commit('setAccessToken', value.data.access_token);
+            this.videos = value.data.course.videos;
+            for(let i = 0; i < this.videos.length; i++) {
+                if(this.videos[i].id == this.$route.params.idVid) {
+                    this.video = this.videos[i];
+                }
+            }
+        })
+        .catch(error => {
+            if(error.code) console.log(error.response.data);
+            else console.log(error);
+        });
+        
+        
+        
     }
 }
 </script>

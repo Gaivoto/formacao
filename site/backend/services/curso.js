@@ -638,12 +638,6 @@ async function getCursosHomePage() {
     });
 }
 
-async function getDuration(list) {
-    for(let i = 0; i < list.length; i++) {
-        
-    }
-}
-
 module.exports = {
     getCurso: getCurso,
     getAllCursos: getAllCursos,

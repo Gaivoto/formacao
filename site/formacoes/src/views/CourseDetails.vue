@@ -4,74 +4,59 @@
             <CourseDetHeader class="course-header" v-bind:course="this.course" />
             <p>Conteúdo:</p>
             <div class="vid-container">
-                <VidInfo v-for="vid in this.videos" :key="vid.id" v-bind:video="vid" v-bind:courseID="this.course.id"/>
+                <VidInfo v-if:="this.compra" v-for="vid in this.videos" :key="vid.id" v-bind:video="vid" v-bind:courseID="this.course.id"/>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import axios from "axios";
 import CourseDetHeader from "../components/courseDetails/CourseDetHeader.vue";
 import VidInfo from "../components/courseDetails/VidInfo.vue";
 
 export default {
+    //preciso checar se o user tem o curso ou nao para dar display de cenas diferentes
     name: "CourseDetails",
     components: {
         CourseDetHeader,
         VidInfo,
     },
-    created() {
-        this.course = {
-            id: 1,
-            image: "placeholder",
-            name: "teste 1 teste 2 teste 2 teste 2 teste 2teste 2 teste 2 teste 2 teste 2teste 2 teste 2teste 2 teste 2teste 2teste 2teste 2 teste 2 teste 2 teste 2",
-            creatorName: "seuku miyadora",
-            description: `O curso de Python possui 60 aulas, neste curso o aluno aprenderá a linguagem Python. 
-
-Nele é mostrado como desenvolver usando os comandos e a sintaxe Python atualizada seguindo a documentação estipulada pelos criadores da linguagem.
-
-Esta é uma das linguagens que mais crescem no mundo, pois com Python é possível
-desenvolver sistemas, jogos, aplicativos mobile e muito mais.`,
-            category: "category1",
-            price: "55.80 R$",
+    data() {
+        return  {
+        course: {},
+        user: this.$store.getters.getUser,
+        compra: false
         }
-        this.videos = [
-            {
-                id: 1,
-                image: "placeholder",
-                name: "video1 video1 video1video1 video1 video1 video1video1 video1  video1 video1video1video1 video1",
-                description: "description1 description1 description1 description1 description1 description1 description1 description1 dedescription1 description1 description1 description1 dedescription1 description1 description1 description1 dedescription1 description1 description1 description1 dedescription1 description1 description1 description1 dedescription1 description1 description1 description1 dedescription1 description1 description1 description1 dedescription1 description1 description1 description1 dedescription1 description1 description1 description1 dedescription1 description1 description1 description1 dedescription1 description1 description1 description1 dedescription1 description1 description1 description1 dedescription1 description1 description1description1 description1 description1 description1 description1 description1 description1 description1 description1 description1 v description1",
-                duration: "0:15:23",
-            },
-            {
-                id: 2,
-                image: "placeholder",
-                name: "video2",
-                description: "iption1 description1 description1 description1 description1 desiption1 description1 description1 description1 description1 desiption1 description1 description1 description1 description1 desiption1 description1 description1 description1 description1 des",
-                duration: "0:16:12",
-            },
-            {
-                id: 3,
-                image: "placeholder",
-                name: "video3",
-                description: "description3",
-                duration: "0:17:46",
-            },
-            {
-                id: 4,
-                image: "placeholder",
-                name: "video4",
-                description: "description4",
-                duration: "0:18:52",
-            },
-            {
-                id: 5,
-                image: "placeholder",
-                name: "video5",
-                description: "description5",
-                duration: "2:00:00",
+    },
+    created() {
+        axios({
+            method: `get`,
+            url: `${import.meta.env.VITE_HOST}/cursos/${this.$route.params.id}`,
+            headers: {
+                Authorization: `Bearer ${this.$store.getters.getAccessToken}`,
+                refreshtoken: this.$store.getters.getRefreshToken
             }
-        ];
+        })
+        .then(value => {
+            if(value.data.access_token) this.$store.commit('setAccessToken', value.data.access_token);
+            this.course = value.data.course;
+            this.videos = value.data.course.videos;
+            this.compra = value.data.course.access
+            console.log(this.compra)
+        })
+        .catch(error => {
+            if(error.code) console.log(error.response.data);
+            else console.log(error);
+        });
+        
+        
+        
+    },
+    computed: {
+        getUser() {
+            this.user = this.$store.getter.getUser;
+        }
     }
 };
 </script>
