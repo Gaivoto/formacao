@@ -241,14 +241,14 @@ async function getAllUserCursos(tokens, id) {
         utils.validateToken(tokens.access_token, tokens.refresh_token).then(value => {
             let info = value;
             info.courses = [];
-            if (true) {
+            if (info.user.id == id) {
                 let promises = [];
 
                 promises.push(dbComp.getAllComprasByUser(id));
 
                 dbSubs.getAllSubscricoesByUser(id).then(value => {
                     value.forEach(sub => {
-                        promises.push(dbCurs.getCursosByCriador(sub.id_subscribed));
+                        promises.push(dbCurs.getCursosByCriadorForSubbedUser(sub.id_subscribed));
                     });
 
                     Promise.all(promises).then(values => {
@@ -262,31 +262,45 @@ async function getAllUserCursos(tokens, id) {
                         sixmonthsago.setMonth(sixmonthsago.getMonth() - 6);
 
                         values[0].forEach(cur => {
-                            if (cur.dateBought >= sixmonthsago) info.courses.push(cur);
+                            let existe = false;
+
+                            info.courses.forEach(c => {
+                                if(c.id == cur.id) existe = true;
+                            })
+
+                            if (cur.dateBought >= sixmonthsago && !existe) info.courses.push(cur);
                         });
 
                         for (let i = 1; i < values.length; i++) {
-                            values[i].forEach(cur => info.courses.push(cur));
+                            values[i].forEach(cur => {
+                                let existe  = false;
+
+                                info.courses.forEach(c => {
+                                    if(c.id == cur.id) existe = true;
+                                });
+
+                                if (!existe) info.courses.push(cur);
+                            });
                         }
                         resolve({ code: 200, info: info });
                     })
-                        .catch(error => {
-                            console.log(error);
-                            reject({ code: 400, error: { message: "Algo correu mal com a query." } });
-                        });
-                })
                     .catch(error => {
                         console.log(error);
                         reject({ code: 400, error: { message: "Algo correu mal com a query." } });
-                    })
+                    });
+                })
+                .catch(error => {
+                    console.log(error);
+                    reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                })
             } else {
                 reject({ code: 403, error: { message: "Um user pode apenas ver os seus cursos comprados e não os de outros users." } });
             }
         })
-            .catch(error => {
-                console.log(error);
-                reject({ code: 401, error: { message: "Token inválido." } });
-            })
+        .catch(error => {
+            console.log(error);
+            reject({ code: 401, error: { message: "Token inválido." } });
+        })
     });
 }
 

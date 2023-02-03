@@ -33,7 +33,7 @@
             </div>
         </div>
 
-        <div ref="notifList" class="notif-list" :class="{ 'd-none': !notifsOpen }">
+        <div ref="notifList" class="notif-list" :class="{ 'd-none': !notifsOpen && this.notifications.length > 0 }">
             <NotificationListItem v-for="notif in this.notifications" :key="notif.id" v-bind:notification="notif"/>
         </div>
     </div>

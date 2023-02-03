@@ -32,7 +32,7 @@ async function getCurso(id) {
 async function getAllCursos() {
     const pool = new sql.Request();
     return new Promise((resolve, reject) => {
-        const slct = `SELECT * FROM [Course] WHERE [state] = 'Ativo'`;
+        const slct = `SELECT c.id as id, c.name as name, c.description as description, c.state as state, c.category as category, c.image as image, c.date as date, c.price as price, c.rating as rating, u.id as idCr, u.image as imageCr, u.name as nameCr FROM [Course] c LEFT JOIN [Users] u ON c.id_creator = u.id WHERE c.state = 'Ativo'`;
         pool.query(slct, (err, res) => {
             if (!err) {
                 resolve(res.recordset);
@@ -46,7 +46,7 @@ async function getAllCursos() {
 async function getAllCursosAdm() {
     const pool = new sql.Request();
     return new Promise((resolve, reject) => {
-        const slct = `SELECT * FROM [Course]`;
+        const slct = `SELECT c.id as id, c.name as name, c.description as description, c.state as state, c.category as category, c.image as image, c.date as date, c.price as price, c.rating as rating, u.id as idCr, u.image as imageCr, u.name as nameCr FROM [Course] c LEFT JOIN [Users] u ON c.id_creator = u.id`;
         pool.query(slct, (err, res) => {
             if (!err) {
                 resolve(res.recordset);
@@ -60,7 +60,21 @@ async function getAllCursosAdm() {
 async function getCursosByCriador(id) {
     const pool = new sql.Request();
     return new Promise((resolve, reject) => {
-        const slct = `SELECT c.id as id, c.name as name, c.category as category, c.description as description, c.image as image, c.date as date, u.id as idCr, u.name as nameCr, u.image as imageCr FROM [Course] c LEFT JOIN [Users] u ON c.id_creator = u.id WHERE [id_creator] = @id`;
+        const slct = `SELECT c.id as id, c.name as name, c.category as category, c.description as description, c.state as state, c.image as image, c.date as date, u.id as idCr, u.name as nameCr, u.image as imageCr FROM [Course] c LEFT JOIN [Users] u ON c.id_creator = u.id WHERE [id_creator] = @id`;
+        pool.input('id', sql.VarChar(200), id).query(slct, (err, res) => {
+            if (!err) {
+                resolve(res.recordset);
+            } else {
+                reject(err.message);
+            }
+        });
+    });
+}
+
+async function getCursosByCriadorForSubbedUser(id) {
+    const pool = new sql.Request();
+    return new Promise((resolve, reject) => {
+        const slct = `SELECT c.id as id, c.name as name, c.category as category, c.description as description, c.state as state, c.image as image, c.date as date, u.id as idCr, u.name as nameCr, u.image as imageCr FROM [Course] c LEFT JOIN [Users] u ON c.id_creator = u.id WHERE [id_creator] = @id`;
         pool.input('id', sql.VarChar(200), id).query(slct, (err, res) => {
             if (!err) {
                 resolve(res.recordset);
@@ -250,6 +264,7 @@ module.exports = {
     getAllCursos: getAllCursos,
     getAllCursosAdm: getAllCursosAdm,
     getCursosByCriador: getCursosByCriador,
+    getCursosByCriadorForSubbedUser: getCursosByCriadorForSubbedUser,
     createCurso: createCurso,
     updateStateCurso: updateStateCurso,
     updateCurso: updateCurso,

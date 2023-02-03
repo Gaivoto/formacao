@@ -12,7 +12,7 @@
                     <div>
                         <p>{{ this.course.price }} €</p>
                         <div>
-                            <p>{{ Math.floor(this.course.duration) }}h {{ Math.round((this.course.duration - Math.floor(this.course.duration)) * 60) }}min</p>
+                            <p>{{ this.calculatedDuration }}</p>
                             <span class="material-icons">schedule</span>
                         </div>
                     </div>
@@ -29,9 +29,9 @@
                     </div>
                 </div> 
                 <hr>
-                <router-link class="card-creator-div" :to="{ name: 'Perfil do Utilizador', params: { id: 1 } }">
+                <router-link class="card-creator-div" :to="{ name: 'Perfil do Utilizador', params: { id: this.course.idCr } }">
                     <img :src="this.creatorImageUrl">
-                    <p>{{ this.course.creator.name }}</p>
+                    <p>{{ this.course.nameCr }}</p>
                 </router-link>
             </div>
         </div>
@@ -55,7 +55,12 @@ export default {
     },
     created(){
         this.imageUrl = new URL(`../../assets/${this.course.image}.jpg`, import.meta.url).href;
-        this.creatorImageUrl = new URL(`../../assets/${this.course.creator.image}.jpg`, import.meta.url).href;
+        this.creatorImageUrl = new URL(`../../assets/${this.course.imageCr}.jpg`, import.meta.url).href;
+    },
+    computed: {
+        calculatedDuration() {
+            return Math.floor(this.course.duration) + "h " + Math.round((this.course.duration - Math.floor(this.course.duration)) * 60) + "min";
+        }
     }
 }
 </script>

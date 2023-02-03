@@ -21,10 +21,10 @@
                         </th>
                         <th class="column-small column-right">
                             <div>
-                                <p>Inscrições</p>
+                                <p>Estado</p>
                                 <div>
-                                    <span class="material-icons" v-on:click="orderTable('subs-asc')">expand_less</span>
-                                    <span class="material-icons" v-on:click="orderTable('subs-desc')">expand_more</span>
+                                    <span class="material-icons" v-on:click="orderTable('state-asc')">expand_less</span>
+                                    <span class="material-icons" v-on:click="orderTable('state-desc')">expand_more</span>
                                 </div>
                             </div>
                         </th>
@@ -86,11 +86,9 @@ export default {
             }
         })
         .then(value => {
-            console.log(value.data.criador.cursos[0])
             value.data.criador.cursos.forEach(c => this.courses.push(c));
-            console.log(this.courses);
 
-    this.displayCourses = this.courses.slice(0, this.itemsPerPage);
+            this.displayCourses = this.courses.slice(0, this.itemsPerPage);
         })
         .catch(error => {
             if(error.code) console.log(error.response.data);
@@ -108,22 +106,22 @@ export default {
             switch (order) {
                 case "date-asc":
                     this.courses.sort((a, b) =>
-                        new Date(a.date.substring(6) + "-" + a.date.substring(3, 5) + "-" + a.date.substring(0, 2)) < new Date(b.date.substring(6) + "-" + b.date.substring(3, 5) + "-" + b.date.substring(0, 2) ) ? 1 : new Date(b.date.substring(6) + "-" + b.date.substring(3, 5) + "-" + b.date.substring(0, 2)) < new Date( a.date.substring(6) + "-" + a.date.substring(3, 5) + "-" + a.date.substring(0, 2)) ? -1 : 0
+                        a.date.replace("Z", "").replace("T", "").replaceAll(":", "").replaceAll(".", "").replaceAll("-", "") > b.date.replace("Z", "").replace("T", "").replaceAll(":", "").replaceAll(".", "").replaceAll("-", "") ? 1 : b.date.replace("Z", "").replace("T", "").replaceAll(":", "").replaceAll(".", "").replaceAll("-", "") > a.date.replace("Z", "").replace("T", "").replaceAll(":", "").replaceAll(".", "").replaceAll("-", "") ? -1 : 0
                     );
                     break;
                 case "date-desc":
                     this.courses.sort((a, b) =>
-                        new Date(a.date.substring(6) + "-" + a.date.substring(3, 5) + "-" + a.date.substring(0, 2)) > new Date(b.date.substring(6) + "-" + b.date.substring(3, 5) + "-" + b.date.substring(0, 2)) ? 1 : new Date(b.date.substring(6) + "-" + b.date.substring(3, 5) + "-" + b.date.substring(0, 2)) > new Date( a.date.substring(6) + "-" + a.date.substring(3, 5) + "-" + a.date.substring(0, 2)) ? -1 : 0
+                        a.date.replace("Z", "").replace("T", "").replaceAll(":", "").replaceAll(".", "").replaceAll("-", "") < b.date.replace("Z", "").replace("T", "").replaceAll(":", "").replaceAll(".", "").replaceAll("-", "") ? 1 : b.date.replace("Z", "").replace("T", "").replaceAll(":", "").replaceAll(".", "").replaceAll("-", "") < a.date.replace("Z", "").replace("T", "").replaceAll(":", "").replaceAll(".", "").replaceAll("-", "") ? -1 : 0
                     );
                     break;
-                case "subs-asc":
+                case "state-asc":
                     this.courses.sort((a, b) =>
-                        a.subscriptions > b.subscriptions ? 1 : b.subscriptions > a.subscriptions ? -1 : 0
+                        a.state > b.state ? 1 : b.state > a.state ? -1 : 0
                     );
                     break;
-                case "subs-desc":
+                case "state-desc":
                     this.courses.sort((a, b) =>
-                        a.subscriptions < b.subscriptions ? 1 : b.subscriptions < a.subscriptions ? -1 : 0
+                        a.state < b.state ? 1 : b.state < a.state ? -1 : 0
                     );
                     break;
                 case "nvids-asc":
@@ -138,12 +136,12 @@ export default {
                     break;
                 case "duration-asc":
                     this.courses.sort((a, b) =>
-                        parseInt(a.duration.replaceAll(":", "")) > parseInt(b.duration.replaceAll(":", "")) ? 1 : parseInt(b.duration.replaceAll(":", "")) > parseInt(a.duration.replaceAll(":", "")) ? -1 : 0
+                        a.duration > b.duration ? 1 : b.duration > a.duration ? -1 : 0
                     );
                     break;
                 case "duration-desc":
                     this.courses.sort((a, b) =>
-                        parseInt(a.duration.replaceAll(":", "")) < parseInt(b.duration.replaceAll(":", "")) ? 1 : parseInt(b.duration.replaceAll(":", "")) < parseInt(a.duration.replaceAll(":", "")) ? -1 : 0
+                        a.duration < b.duration ? 1 : b.duration < a.duration ? -1 : 0
                     );
                     break;
                 default:

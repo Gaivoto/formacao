@@ -75,35 +75,19 @@
 export default {
     name: 'CoursesListFilter',
     props: {
-        courses: {
+        categories: {
             type: Array,
             required: true
         }
     },
     data() {
         return {
-            categories: [],
             catOpen: false,
             orderOpen: false,
             category: "Todas",
             order: "Mais recente",
             responsiveFilter: false
         }
-    },
-    created() {
-        this.courses.forEach(c => {
-            let exists = false;
-
-            this.categories.forEach(cat => {
-                if (c.category == cat.name) {
-                    exists = true;
-                }
-            });
-
-            if (!exists) {
-                this.categories.push({id: this.categories.length, name: c.category});
-            }
-        });
     },
     mounted(){
         let filter = {
