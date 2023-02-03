@@ -12,10 +12,7 @@
                         <div class="selected" :class="{ open: catOpen }" v-on:click="catOpen=!catOpen; orderOpen=false">{{ this.category }}</div>
                         <div class="items" :class="{ selectHide: !catOpen }">
                             <div v-on:click="selectCat('Todas')">Todas</div>
-                            <div v-on:click="selectCat('cat1')">cat1</div>
-                            <div v-on:click="selectCat('cat2')">cat2</div>
-                            <div v-on:click="selectCat('cat3')">cat3</div>
-                            <div v-on:click="selectCat('cat4')">cat4</div>
+                            <div v-for="category in this.categories" :key="category.id" v-on:click="selectCat(category.name)">{{ category.name }}</div>
                         </div>
                     </div>    
                 </div>
@@ -76,6 +73,12 @@
 <script>
 export default {
     name: 'CoursesListFilter',
+    props: {
+        categories: {
+            type: Array,
+            required: true
+        }
+    },
     data() {
         return {
             catOpen: false,
@@ -112,6 +115,9 @@ export default {
             }
 
             this.$emit("filter", filter);
+        },
+        courses: function() {
+            console.log("???")
         }
     },
     methods: {

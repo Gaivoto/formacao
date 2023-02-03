@@ -5,6 +5,7 @@ const dbCour = require('../db/curso.js');
 const dbUser = require('../db/user.js');
 const dbNotif = require('../db/notification.js');
 const dbSubs = require('../db/subscricao.js');
+const dbVide = require('../db/video.js');
 
 async function getAllCriadores(headers) {
     return new Promise((resolve, reject) => {
@@ -74,25 +75,52 @@ async function getCriador(headers, id) {
                                 access_token: value.access_token
                             }
 
-                            resp.criador.cursos = value3;
+                            let promises = [];
 
-                            resolve({ code: 200, info: resp });
-                        })
+                            value3.forEach(c => {
+                                promises.push(dbVide.getAllVideosFromCourse(c.id));
+                            });
+
+                            Promise.all(promises).then(values => {
+                                for (let i = 0; i < values.length; i++) {
+                                    let duration = 0;
+                                    let durationInt = 0;
+                                    let nVideos = 0;
+                                    
+                                    for(j = 0; j < values[i].length; j++) {
+                                        durationInt = parseInt(values[i][j].duration)
+                                        duration = duration + durationInt;
+                                        nVideos++;
+                                    }
+                                    
+                                    value3[i].duration = duration/3600;
+                                    value3[i].numberOfVideos = nVideos;
+                                }
+
+                                resp.criador.cursos = value3;
+
+                                resolve({ code: 200, info: resp });
+                            })
                             .catch(error => {
                                 console.log(error);
                                 reject({ code: 400, error: { message: "Algo correu mal com a query." } });
                             });
+                        })
+                        .catch(error => {
+                            console.log(error);
+                            reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                        });
                     }
                 })
-                    .catch(error => {
-                        console.log(error);
-                        reject({ code: 400, error: { message: "Algo correu mal com a query." } });
-                    });
-            })
                 .catch(error => {
                     console.log(error);
-                    reject({ code: 401, error: { message: "Token inválido." } })
+                    reject({ code: 400, error: { message: "Algo correu mal com a query." } });
                 });
+            })
+            .catch(error => {
+                console.log(error);
+                reject({ code: 401, error: { message: "Token inválido." } })
+            });
 
         } else {
             dbCria.getCriador(id).then(value => {
@@ -103,18 +131,47 @@ async function getCriador(headers, id) {
                         let criador = value[0];
                         criador.cursos = value2;
 
-                        resolve({ code: 200, info: { criador: value[0] } });
-                    })
+                        let promises = [];
+
+                        value2.forEach(c => {
+                            promises.push(dbVide.getAllVideosFromCourse(c.id));
+                        });
+
+                        Promise.all(promises).then(values => {
+                            for (let i = 0; i < values.length; i++) {
+                                let duration = 0;
+                                let durationInt = 0;
+                                let nVideos = 0;
+                                
+                                for(j = 0; j < values[i].length; j++) {
+                                    durationInt = parseInt(values[i][j].duration)
+                                    duration = duration + durationInt;
+                                    nVideos++;
+                                }
+                                
+                                value2[i].duration = duration/3600;
+                                value2[i].numberOfVideos = nVideos;
+                            }
+
+                            criador.cursos = value2;
+
+                            resolve({ code: 200, info: { criador: criador } });
+                        })
                         .catch(error => {
                             console.log(error);
                             reject({ code: 400, error: { message: "Algo correu mal com a query." } });
                         });
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                    });
                 }
             })
-                .catch(error => {
-                    console.log(error);
-                    reject({ code: 400, error: { message: "Algo correu mal com a query." } });
-                });
+            .catch(error => {
+                console.log(error);
+                reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+            });
         }
     });
 }

@@ -20,7 +20,7 @@
         </div>
 
         <div class="topbar-right">
-            <router-link class="user-wrapper" :to="{ name: 'Perfil do Utilizador', params: { id: 1 } }">
+            <router-link class="user-wrapper" :to="{ name: 'Perfil do Utilizador', params: { id: this.$store.getters.getUser.id } }">
                 <div class="topbar-text">
                     <p>{{ this.$store.getters.getUser.username }}</p>
                 </div>
@@ -33,7 +33,7 @@
             </div>
         </div>
 
-        <div ref="notifList" class="notif-list" :class="{ 'd-none': !notifsOpen }">
+        <div ref="notifList" class="notif-list" :class="{ 'd-none': !notifsOpen && this.notifications.length > 0 }">
             <NotificationListItem v-for="notif in this.notifications" :key="notif.id" v-bind:notification="notif"/>
         </div>
     </div>
@@ -79,56 +79,6 @@ export default {
         this.isMounted = true;
     }, 
     created() {
-        this.usersCourses = [
-            {
-                id: 1,
-                type: 'Curso',
-                name: "Course Course Course v v Course Course 1",
-                image: "bingus",
-                category: "Agricultura"
-            },
-            {
-                id: 2,
-                type: 'Curso',
-                name: "Course 2",
-                image: "bingus",
-                category: "Agricultura"
-            },
-            {
-                id: 3,
-                type: 'Curso',
-                name: "Course 3",
-                image: "bingus",
-                category: "Beleza"
-            },
-            {
-                id: 4,
-                type: 'Curso',
-                name: "Course 4",
-                image: "bingus",
-                category: "Beleza"
-            },
-            {
-                id: 5,
-                type: 'Curso',
-                name: "Course 5",
-                image: "bingus",
-                category: "Sopa"
-            },
-            {
-                id: 1,
-                type: 'Criador',
-                name: "Creator 1",
-                image: "bingus"
-            },
-            {
-                id: 2,
-                type: 'Criador',
-                name: "Creator 2",
-                image: "bingus"
-            }
-        ];
-
         axios({
             method: `get`,
             url: `${import.meta.env.VITE_HOST}/notifications/user/${this.$store.getters.getUser.id}`,

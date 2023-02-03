@@ -12,10 +12,10 @@
             </router-link>
         </td>
         <td>
-            <p>{{ this.course.date }}</p>
+            <p>{{ this.formatedDate }}</p>
         </td>
         <td class="column-right">
-            <p>{{ this.course.subscriptions }}</p>
+            <p>{{ this.course.state }}</p>
         </td>
         <td class="column-right">
             <p>{{ this.course.numberOfVideos }}</p>
@@ -42,6 +42,11 @@ export default {
     },
     created(){
         this.imageUrl = new URL(`../../assets/${this.course.image}.jpg`, import.meta.url).href;
+    },
+    computed: {
+        formatedDate() {
+            return this.course.date.substring(11, 19) + " " + this.course.date.substring(8, 10) + "/" + this.course.date.substring(5, 7) + "/" + this.course.date.substring(0, 4);
+        }
     }
 }
 </script>

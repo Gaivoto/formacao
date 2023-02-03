@@ -13,9 +13,8 @@ sql.connect(config, function (err) {
     if (err) throw err;
 });
 
-const pool = new sql.Request();
-
 async function getAllCriadores() {
+    const pool = new sql.Request();
     return new Promise((resolve, reject) => {
         const slct = `SELECT * FROM [Users] where [type] = 'creator'`;
         pool.query(slct, (err, res) => {
@@ -29,6 +28,7 @@ async function getAllCriadores() {
 }
 
 async function getCriador(id) {
+    const pool = new sql.Request();
     return new Promise((resolve, reject) => {
         const slct = `SELECT * FROM [Users] WHERE [id] = @id AND [type] = 'creator'`;
         pool.input('id', sql.VarChar(200), id).query(slct, (err, res) => {
@@ -42,6 +42,7 @@ async function getCriador(id) {
 }
 
 async function createCriador(id, user) {
+    const pool = new sql.Request();
     return new Promise((resolve, reject) => {
         const insrt = `INSERT INTO [Users] ([id], [username], [password], [type], [name], [email], [description], [image], [state], [price]) 
         VALUES (@id, @username, @password, 'creator', @name, @email, @description, @image, 'Ativo', @price)`;
@@ -56,6 +57,7 @@ async function createCriador(id, user) {
 }
 
 async function updateCriador(user, id) {
+    const pool = new sql.Request();
     return new Promise((resolve, reject) => {
         const updt = `UPDATE [Users] SET [name] = @name, [description] = @description', [price] = @price, [image] = @image WHERE id = @id AND [type] = 'creator'`;
         pool.input('id', sql.VarChar(200), id).input('name', sql.VarChar(50), user.name).input('description', sql.VarChar(200), user.description).input('price', sql.Float, user.price).input('image', sql.VarChar(50), user.image).input('id', sql.VarChar(200), id).query(updt, (err, res) => {
@@ -69,6 +71,7 @@ async function updateCriador(user, id) {
 }
 
 async function changeCriadorState(state, id) {
+    const pool = new sql.Request();
     return new Promise((resolve, reject) => {
         const updt = `UPDATE [Users] SET [state] = @state WHERE [id] = @id AND [type] = 'creator'`;
         pool.input('state', sql.VarChar(50), state).input('id', sql.VarChar(200), id).query(updt, (err, res) => {
@@ -82,6 +85,7 @@ async function changeCriadorState(state, id) {
 }
 
 async function getSubsCriador(id) {
+    const pool = new sql.Request();
     return new Promise((resolve, reject) => {
         const slct = `SELECT * FROM [Subscription] WHERE [id_subscribed] = @id`;
         pool.input('id', sql.VarChar(200), id).query(slct, (err, res) => {
@@ -95,6 +99,7 @@ async function getSubsCriador(id) {
 }
 
 async function getPointsCompra() {
+    const pool = new sql.Request();
     return new Promise((resolve, reject) => {
         const slct = `SELECT u.id AS id, u.username AS username, u.name AS name, u.image AS image, count(uc.id) AS points
         FROM Users u LEFT JOIN Course c on u.id = c.id_creator LEFT JOIN User_Course uc on uc.id_course = c.id
@@ -111,6 +116,7 @@ async function getPointsCompra() {
 }
 
 async function getPointsSubs() {
+    const pool = new sql.Request();
     return new Promise((resolve, reject) => {
         const slct = `SELECT u.id AS id, u.username AS username, u.name AS name, u.image AS image, count(s.id_subscribed) * 3 AS points
         FROM Users u LEFT JOIN Subscription s on u.id = s.id_subscribed

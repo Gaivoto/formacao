@@ -16,11 +16,11 @@
             <span class="material-icons">library_books</span>
             <span class="text">Cursos</span>
         </router-link>
-        <router-link class="button" :to="{ name: 'Conteúdo', params: { id: 1 } }">
+        <router-link class="button" :to="{ name: 'Conteúdo', params: { id: this.$store.getters.getUser.id } }">
             <span class="material-icons">home</span>
             <span class="text">Home</span>
         </router-link>
-        <router-link class="button" :to="{ name: 'Perfil do Utilizador', params: { id: 1 } }">
+        <router-link class="button" :to="{ name: 'Perfil do Utilizador', params: { id: this.$store.getters.getUser.id } }">
             <span class="material-icons">group</span>
             <span class="text">Team</span>
         </router-link>

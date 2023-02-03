@@ -12,7 +12,7 @@
                     <p>{{ this.course.price }} €</p>
                     <div>
                         <span class="material-icons duration-icon">schedule</span>
-                        <p>{{ Math.floor(this.course.duration) }}h {{ Math.round((this.course.duration - Math.floor(this.course.duration)) * 60) }}min</p>
+                        <p>{{ this.calculatedDuration }}</p>
                     </div>
                 </div>   
                 <hr>
@@ -43,6 +43,11 @@ export default {
     created(){
         this.imageUrl = new URL(`../../assets/${this.course.image}.jpg`, import.meta.url).href;
         this.creatorImageUrl = new URL(`../../assets/${this.course.imageCr}.jpg`, import.meta.url).href;
+    },
+    computed: {
+        calculatedDuration() {
+            return Math.floor(this.course.duration) + "h " + Math.round((this.course.duration - Math.floor(this.course.duration)) * 60) + "min";
+        }
     }
 }
 </script>

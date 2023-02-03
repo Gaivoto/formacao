@@ -4,7 +4,7 @@
             <img :src="this.imageUrl">
             <p>{{ this.notification.message }}</p>    
         </div>
-        <p>{{  this.notification.date }}</p>
+        <p>{{ this.formatedDate }}</p>
     </div>
 </template>
 
@@ -25,6 +25,11 @@ export default {
     },
     created(){
         this.imageUrl = new URL(`../assets/${this.notification.image}.jpg`, import.meta.url).href;
+    },
+    computed: {
+        formatedDate() {
+            return this.notification.date.substring(11, 19) + " " + this.notification.date.substring(8, 10) + "/" + this.notification.date.substring(5, 7) + "/" + this.notification.date.substring(0, 4);
+        }
     },
     methods: {
         toggleBack() {
