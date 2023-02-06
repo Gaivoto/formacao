@@ -41,6 +41,10 @@
 			<span class="material-icons">settings</span>
 			<span class="text">Settings</span>
 		</router-link>
+		<router-link v-on:click="logout" class="button" to="Login">
+            <span class="material-icons">logout</span>
+            <span class="text">Logout</span>
+        </router-link>
 	</div>
   </aside>
 </template>
@@ -56,6 +60,11 @@ export default {
 		toggleMenu() {
 			this.is_expanded = !this.is_expanded;
 			this.$emit("toggleSidebar");
+		},
+		logout() {
+			this.$store.commit('setUser', '');
+            this.$store.commit('setRefreshToken', '');
+            this.$store.commit('setAccessToken', '');
 		}
 	}
 }
