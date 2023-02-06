@@ -70,11 +70,11 @@ async function isTitleTaken(title) {
     });
 }
 
-async function updateStateVideo(body) {
+async function updateStateVideo(id, state) {
     const pool = new sql.Request();
     return new Promise((resolve, reject) => {
         let slct = `UPDATE Video SET [state] = @state WHERE [id] = @id`;
-        pool.input('id', sql.VarChar(200), body.id).input('state', sql.VarChar(50), body.state).query(slct, (err, res) => {
+        pool.input('id', sql.VarChar(200), id).input('state', sql.VarChar(50), state).query(slct, (err, res) => {
             if (!err) {
                 resolve(res);
             } else {

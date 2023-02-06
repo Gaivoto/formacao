@@ -426,7 +426,7 @@ async function updateStateCursoAdm(tokens, id, body) {
 
                         if (body.state === "Ativo" || body.state === "Inativo" || body.state === "Pendente" || body.state === "Rejeitado") {
 
-                            dbCurs.updateStateCurso(body).then(value3 => {
+                            dbCurs.updateStateCurso(id, body.state).then(value3 => {
                                 
                                 //notificacao pro criador do curso
                                 let promisesNotif = [];
@@ -470,25 +470,25 @@ async function updateStateCursoAdm(tokens, id, body) {
                                             info.message = "Estado alterado com sucesso.";
                                             resolve({ code: 200, info: info });
                                         })
-                                            .catch(error => {
-                                                console.log(error);
-                                                reject({ code: 400, error: { message: "Erro ao executar a criação das notificações." } })
-                                            })
-                                    })
                                         .catch(error => {
                                             console.log(error);
-                                            reject({ code: 400, error: { message: "Erro ao executar a query da notificação." } })
-                                        });
+                                            reject({ code: 400, error: { message: "Erro ao executar a criação das notificações." } })
+                                        })
+                                    })
+                                    .catch(error => {
+                                        console.log(error);
+                                        reject({ code: 400, error: { message: "Erro ao executar a query da notificação." } })
+                                    });
                                 } else {
                                     info.message = "Estado alterado com sucesso.";
                                     resolve({ code: 200, info: info });
                                 }
 
                             })
-                                .catch(error => {
-                                    console.log(error);
-                                    reject({ code: 400, error: { message: "Algo correu mal com a query." } });
-                                });
+                            .catch(error => {
+                                console.log(error);
+                                reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                            });
 
                         } else {
                             reject({ code: 401, error: { message: "Current state invalid" } });
@@ -496,15 +496,15 @@ async function updateStateCursoAdm(tokens, id, body) {
                     }
                 }
             })
-                .catch(error => {
-                    console.log(error);
-                    reject({ code: 400, error: { message: "Algo correu mal com a query." } });
-                });
-        })
             .catch(error => {
                 console.log(error);
-                reject({ code: 401, error: { message: "Token inválido." } })
+                reject({ code: 400, error: { message: "Algo correu mal com a query." } });
             });
+        })
+        .catch(error => {
+            console.log(error);
+            reject({ code: 401, error: { message: "Token inválido." } })
+        });
     });
 }
 

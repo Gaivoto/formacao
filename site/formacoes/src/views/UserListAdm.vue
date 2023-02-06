@@ -13,6 +13,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 import UserListAdmFilter from '../components/userListAdm/UserListAdmFilter.vue'
 import UserListAdmUserCard from '../components/userListAdm/UserListAdmUserCard.vue'
 import Pagination2 from '../components/paginations/Pagination2.vue'
@@ -30,70 +31,58 @@ export default {
             itemsPerPage: 5,
             users: [],
             usersFiltered: [],
-            usersDisplay: []
+            usersDisplay: [],
+            filterInfo: {}
         }
     },
     created(){
-        this.users = [
-            {
-                id: 1,
-                name: "Bingus Bingus1234123123123",
-                username: "bingoid421",
-                type: "Admin",
-                image: "bingus",
-                state: "Ativo"
-            },
-            {
-                id: 2,
-                name: "Amogus",
-                username: "sussyboy",
-                type: "Criador",
-                image: "bingus",
-                state: "Ativo"
-            },
-            {
-                id: 3,
-                name: "Nome",
-                username: "Username",
-                type: "Criador",
-                image: "bingus",
-                state: "Inativo"
-            },
-            {
-                id: 4,
-                name: "Aatrox",
-                username: "darkinAA",
-                type: "Criador",
-                image: "bingus",
-                state: "Ativo"
-            },
-            {
-                id: 5,
-                name: "Tiago",
-                username: "tiagotiggoa",
-                type: "Utilizador",
-                image: "bingus",
-                state: "Ativo"
-            },
-            {
-                id: 6,
-                name: "Yep",
-                username: "yeppers",
-                type: "Utilizador",
-                image: "bingus",
-                state: "Ativo"
-            },
-            {
-                id: 7,
-                name: "User",
-                username: "elutilizador",
-                type: "Utilizador",
-                image: "bingus",
-                state: "Inativo"
-            },
-        ];
+        let promises = [];
 
-        this.usersDisplay = this.users.slice(0, this.itemsPerPage);
+        promises.push(axios({
+            method: 'get',
+            url: `${import.meta.env.VITE_HOST}/users`,
+            headers: {
+                Authorization: `Bearer ${this.$store.getters.getAccessToken}`,
+                refreshtoken: this.$store.getters.getRefreshToken
+            }
+        }));
+
+        promises.push(axios({
+            method: 'get',
+            url: `${import.meta.env.VITE_HOST}/criadores`,
+            headers: {
+                Authorization: `Bearer ${this.$store.getters.getAccessToken}`,
+                refreshtoken: this.$store.getters.getRefreshToken
+            }
+        }));
+
+        promises.push(axios({
+            method: 'get',
+            url: `${import.meta.env.VITE_HOST}/admins`,
+            headers: {
+                Authorization: `Bearer ${this.$store.getters.getAccessToken}`,
+                refreshtoken: this.$store.getters.getRefreshToken
+            }
+        }));
+        
+        Promise.all(promises).then(values => {
+            values[0].data.users.forEach(u => this.users.push(u));
+            values[1].data.criadores.forEach(c => this.users.push(c));
+            values[2].data.admins.forEach(a => this.users.push(a));
+
+            this.users.forEach(u => {
+                if(u.type == 'user') u.type = "Utilizador"
+                else if(u.type == 'admin') u.type = "Admin"
+                else u.type = "Criador";
+            });
+
+            this.usersFiltered = [...this.users];
+            this.usersDisplay = this.users.slice(0, this.itemsPerPage);
+        })
+        .catch(error => {
+            if(error.code) console.log(error.response.data);
+            else console.log(error);
+        });
     },
     computed: {
         noResults() {
@@ -103,6 +92,7 @@ export default {
     },
     methods: {
         filter(filter) {
+            this.filterInfo = filter;
             this.usersDisplay = [];
             this.usersFiltered = [...this.users];
 
@@ -131,7 +121,26 @@ export default {
                 if(user.id == info.id) user.state = info.state;
             });
 
-            //change user state on db
+            this.filter(this.filterInfo);
+
+            axios({
+                method: 'put',
+                url: `${import.meta.env.VITE_HOST}/users/adm/${info.id}`,
+                headers: {
+                    Authorization: `Bearer ${this.$store.getters.getAccessToken}`,
+                    refreshtoken: this.$store.getters.getRefreshToken
+                },
+                data: {
+                    state: info.state
+                }
+            })
+            .then(value => {
+                if(value.data.access_token) this.$store.commit('setAccessToken', value.data.access_token);
+            })
+            .catch(error => {
+                if(error.code) console.log(error.response.data);
+                else console.log(error);
+            });
         }
     }
 }

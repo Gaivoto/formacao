@@ -169,7 +169,6 @@ export default {
             });
         },
         toggleSearch() {
-            console.log("?")
             this.$emit("toggleSearch");
         },
         filterSearchbar(){
@@ -191,15 +190,16 @@ export default {
         goToSearchItem() {
             let filter = this.$refs.topSearchbar.value.toLowerCase();
 
-            this.usersCourses.forEach(i => {
-                if(i.name.toLowerCase() == filter){
-                    if(i.type == "Curso") {
-                        this.$router.push({ name: 'Curso', params: { id: i.id } });
-                    } else {
-                        this.$router.push({ name: 'Perfil do Utilizador', params: { id: i.id } });
-                    }
-                };
-                this.$emit("toggleSearch");
+            this.creators.forEach(c => {
+                if(c.name.toLowerCase() == filter) {
+                    this.$router.push({ name: 'Perfil do Utilizador', params: { id: i.id } });
+                }
+            });
+
+            this.courses.forEach(c => {
+                if(c.name.toLowerCase() == filter) {
+                    this.$router.push({ name: 'Curso', params: { id: i.id } });
+                }
             });
         }
     }

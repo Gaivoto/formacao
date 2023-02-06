@@ -28,7 +28,7 @@ export default {
     },
     computed: {
         route() {
-           if(this.item.type == "Curso") return "Curso";
+           if(this.item.resultType == "Curso") return "Curso";
            return "Perfil do Utilizador";
         }
     },

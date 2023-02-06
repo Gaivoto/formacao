@@ -32,7 +32,8 @@ export default {
             coursesFiltered: [],
             coursesDisplay: [],
             page: 1,
-            coursesPerPage: 8
+            coursesPerPage: 8,
+            filterInfo: {}
         }
     },
     created() {
@@ -52,6 +53,8 @@ export default {
             }
 
             this.getCategories();
+
+            this.filter(this.filterInfo);
         })
         .catch(error => {
             if(error.code) console.log(error.response.data);
@@ -69,6 +72,7 @@ export default {
     },
     methods: {
         filter(filter) {
+            this.filterInfo = filter;
             this.coursesDisplay = [];
             this.coursesFiltered = [...this.courses];
 
@@ -82,24 +86,16 @@ export default {
 
             switch (filter.order) {
                 case "Mais recente":
-                    this.coursesFiltered.sort((a, b) =>
-                        new Date(a.date.substring(6) + "-" + a.date.substring(3, 5) + "-" + a.date.substring(0, 2)) < new Date(b.date.substring(6) + "-" + b.date.substring(3, 5) + "-" + b.date.substring(0, 2)) ? 1 : new Date(b.date.substring(6) + "-" + b.date.substring(3, 5) + "-" + b.date.substring(0, 2)) < new Date(a.date.substring(6) + "-" + a.date.substring(3, 5) + "-" + a.date.substring(0, 2)) ? -1 : 0
-                    );
+                    this.coursesFiltered.sort((a, b) => new Date(a.date) < new Date(b.date) ? 1 : new Date(b.date) < new Date(a.date) ? -1 : 0);
                     break;
                 case "Mais antigo":
-                    this.coursesFiltered.sort((a, b) =>
-                        new Date( a.date.substring(6) + "-" + a.date.substring(3, 5) + "-" + a.date.substring(0, 2)) > new Date(b.date.substring(6) + "-" + b.date.substring(3, 5) + "-" + b.date.substring(0, 2) ) ? 1 : new Date( b.date.substring(6) + "-" + b.date.substring(3, 5) + "-" + b.date.substring(0, 2)) > new Date(a.date.substring(6) + "-" + a.date.substring(3, 5) + "-" + a.date.substring(0, 2)) ? -1 : 0
-                    );
+                    this.coursesFiltered.sort((a, b) => new Date(a.date) > new Date(b.date) ? 1 : new Date(b.date) > new Date(a.date) ? -1 : 0);
                     break;
                 case "Preço decrescente":
-                    this.coursesFiltered.sort((a, b) =>
-                        a.price < b.price ? 1 : b.price < a.price ? -1 : 0
-                    );
+                    this.coursesFiltered.sort((a, b) => a.price < b.price ? 1 : b.price < a.price ? -1 : 0);
                     break;
                 case "Preço crescente":
-                    this.coursesFiltered.sort((a, b) =>
-                        a.price > b.price ? 1 : b.price > a.price ? -1 : 0
-                    );
+                    this.coursesFiltered.sort((a, b) => a.price > b.price ? 1 : b.price > a.price ? -1 : 0);
                     break;
                 default:
                     break;
