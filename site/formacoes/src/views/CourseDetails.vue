@@ -40,10 +40,16 @@ export default {
         })
         .then(value => {
             if(value.data.access_token) this.$store.commit('setAccessToken', value.data.access_token);
+            if(value.data.course.id_creator == this.$store.getters.getUser.id) {
+                value.data.course.creator = true;
+                value.data.course.access = true;
+            }
+            else {
+                value.data.course.creator = false;
+            }
             this.course = value.data.course;
             this.videos = value.data.course.videos;
             this.compra = value.data.course.access
-            console.log(this.compra)
         })
         .catch(error => {
             if(error.code) console.log(error.response.data);
