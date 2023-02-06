@@ -6,8 +6,11 @@
                 <p>{{ this.course.name }}</p>
                 <p>Criador: {{ this.course.creatorName }}</p>
                 <p>Categoria: {{ this.course.category }}</p>
-                <p>Preço: {{ this.course.price }}</p>
-                <button>COMPRAR</button>
+                <p>Preço: €{{ this.course.price }}</p>
+                <button v-if:="!this.course.access">COMPRAR</button>
+                <router-link v-if:="this.course.creator" :to="{ name: 'Workshop', params: { id: this.course.id } }">
+                    <button>Editar Curso</button> 
+                </router-link>
             </div>
         </div>
         <div class="right-side">

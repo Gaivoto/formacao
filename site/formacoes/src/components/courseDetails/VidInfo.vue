@@ -1,10 +1,10 @@
 <template>
-    <router-link class="vid" :class="{'vidOpen': open}" :to="{ name: 'Vídeo', params: { id: this.courseID } }">
+    <router-link class="vid" :class="{'vidOpen': open}" :to="{ name: 'Vídeo', params: { id: this.courseID, idVid: video.id } }">
         <img :src="this.imageUrl">
         <div class="text">
             <div class="text-left">
-                <p class="vid-title">{{ video.name }}</p>
-                <p>{{ video.duration }}</p>
+                <p class="vid-title">{{ video.title }}</p>
+                <p>{{ this.calculatedDuration }} min</p>
             </div>
             <p>{{ video.description }}</p>
         </div>
@@ -31,6 +31,11 @@ export default {
     },
     created() {
         this.imageUrl = new URL(`../../assets/${this.video.image}.jpg`, import.meta.url).href;
+    },
+    computed: {
+        calculatedDuration() {
+            return Math.floor(this.video.duration / 60)+':'+Math.floor(this.video.duration % 60);
+        }
     }
 }
 </script>

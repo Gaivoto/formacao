@@ -17,7 +17,7 @@ sql.connect(config, function (err) {
 async function getCurso(id) {
     const pool = new sql.Request();
     return new Promise((resolve, reject) => {
-        let slct =  `SELECT * FROM [Course] WHERE [id] = @id`
+        let slct =  `SELECT c.id, c.name, c.category, c.description, c.date, c.state, c.price, c.image, c.id_creator, c.rating, u.name AS creatorName, u.image AS creatorImage FROM [Course] c INNER JOIN Users u ON c.id_creator = u.id WHERE c.id = @id`
         pool.input('id', sql.VarChar(200), id).query(slct, (err, res) => {
             if (!err) {
                 resolve(res.recordset);

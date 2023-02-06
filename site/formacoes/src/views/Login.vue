@@ -20,17 +20,17 @@
             <h2 class="title">Criar Conta</h2>
             <div class="input-field">
               <span class="material-icons">person</span>
-              <input type="text" placeholder="Nome de Utilizador" />
+              <input ref="registerUsername" type="text" placeholder="Nome de Utilizador" />
             </div>
             <div class="input-field">
               <span class="material-icons">mail</span>
-              <input type="email" placeholder="E-mail" />
+              <input ref="registerEmail" type="email" placeholder="E-mail" />
             </div>
             <div class="input-field">
               <span class="material-icons">lock</span>
-              <input type="password" placeholder="Palavra-Passe" />
+              <input ref="registerPassword" type="password" placeholder="Palavra-Passe" />
             </div>
-            <input type="submit" class="btn" value="Registar" />
+            <input v-on:click="register" type="submit" class="btn" value="Registar" />
           </div>
         </div>
       </div>
@@ -111,6 +111,30 @@ export default {
         });
       } else {
         console.log("Password/username vazios.")
+      }
+    },
+    register() {
+      if(this.$refs.registerUsername.value != "" && this.$refs.registerPassword.value != "" && this.$refs.registerEmail.value != "" && this.$refs.registerEmail.value.includes('@')) {
+        axios({
+          method: 'post',
+          url: `${import.meta.env.VITE_HOST}/users/`,
+          data: {
+            username: this.$refs.registerUsername.value,
+            password: this.$refs.registerPassword.value,
+            email: this.$refs.registerEmail,
+            name: "User X",
+            description: "",
+            image: "image/default"
+          }
+        })
+        .then(value => {
+          //falta meter modals depois falando q a conta foi criada e pedindo pra fazer login
+          this.signinbtn();
+        })
+        .catch(error => {
+          if(error.code) console.log(error.response.data);
+          else console.log(error);
+        });
       }
     }
   }
