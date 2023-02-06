@@ -9,18 +9,18 @@
             <span class="material-icons">clear_all</span>
         </button>
     </div>
-
+<!---->
     <h3>Menu</h3>
     <div class="menu">
         <router-link class="button" to="/courses">
             <span class="material-icons">library_books</span>
             <span class="text">Cursos</span>
         </router-link>
-        <router-link class="button" :to="{ name: 'Conteúdo', params: { id: this.$store.getters.getUser.id } }">
+        <router-link class="button" :to="{ name: 'Conteúdo', params: { id: this.getUserId } }">
             <span class="material-icons">home</span>
             <span class="text">Home</span>
         </router-link>
-        <router-link class="button" :to="{ name: 'Perfil do Utilizador', params: { id: this.$store.getters.getUser.id } }">
+        <router-link class="button" :to="{ name: 'Perfil do Utilizador', params: { id: this.getUserId } }">
             <span class="material-icons">group</span>
             <span class="text">Team</span>
         </router-link>
@@ -41,10 +41,10 @@
 			<span class="material-icons">settings</span>
 			<span class="text">Settings</span>
 		</router-link>
-		<router-link v-on:click="logout" class="button" to="Login">
+		<div v-on:click="logout" class="button">
             <span class="material-icons">logout</span>
             <span class="text">Logout</span>
-        </router-link>
+		</div>
 	</div>
   </aside>
 </template>
@@ -56,12 +56,19 @@ export default {
 			is_expanded: false
 		}
 	},
+	computed: {
+        getUserId() {
+            if(this.$store.getters.getUser.id) return this.$store.getters.getUser.id;
+            return 0;
+        }
+	},
 	methods: {
 		toggleMenu() {
 			this.is_expanded = !this.is_expanded;
 			this.$emit("toggleSidebar");
 		},
 		logout() {
+          	this.$router.push({ name: "Login" });
 			this.$store.commit('setUser', '');
             this.$store.commit('setRefreshToken', '');
             this.$store.commit('setAccessToken', '');
@@ -129,6 +136,10 @@ aside {
 		border: none;
 		outline: none;
 		background: none;
+	}
+
+	.button {
+		cursor: pointer;
 	}
 
 	h3, .button .text {
