@@ -9,7 +9,7 @@
             <span class="material-icons">clear_all</span>
         </button>
     </div>
-<!---->
+	
     <h3>Menu</h3>
     <div class="menu">
         <router-link class="button" to="/courses">

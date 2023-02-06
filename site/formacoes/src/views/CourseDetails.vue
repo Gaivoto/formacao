@@ -2,8 +2,8 @@
     <div class="course-details-wrapper">
         <div class="course-details-content">
             <CourseDetHeader class="course-header" v-bind:course="this.course" />
-            <p v-if:="this.compra">Conteúdo:</p>
-            <div v-if:="this.compra" class="vid-container">
+            <p v-if:="this.userHasAccess">Conteúdo:</p>
+            <div v-if:="this.userHasAccess" class="vid-container">
                 <VidInfo v-for="vid in this.videos" :key="vid.id" v-bind:video="vid" v-bind:courseID="this.course.id"/>
             </div>
         </div>
@@ -24,9 +24,8 @@ export default {
     },
     data() {
         return  {
-        course: {},
-        user: this.$store.getters.getUser,
-        compra: false
+            course: {},
+            user: this.$store.getters.getUser
         }
     },
     created() {
@@ -55,13 +54,14 @@ export default {
             if(error.code) console.log(error.response.data);
             else console.log(error);
         });
-        
-        
-        
     },
     computed: {
         getUser() {
             this.user = this.$store.getter.getUser;
+        },
+        userHasAccess() {
+            if(this.course.access || (this.$store.getters.getUser.type && this.$store.getters.getUser.type == 'admin')) return true;
+            return false;
         }
     }
 };

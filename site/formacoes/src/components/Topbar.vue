@@ -18,7 +18,7 @@
                 <SearchbarResult v-for="item in this.searchResults" :key="item.id + item.type" v-bind:item="item" v-on:click="toggleSearch"/>
             </div>  
         </div>
-<!---->
+        
         <div class="topbar-right">
             <router-link class="user-wrapper" :to="{ name: 'Perfil do Utilizador', params: { id: this.getUserId } }">
                 <div class="topbar-text">

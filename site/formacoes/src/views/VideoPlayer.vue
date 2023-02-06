@@ -7,7 +7,7 @@
             <span class="video-desc">{{ this.video.description }}</span>
         </div>
         <div class="list-container">
-            <VideoList v-for="vid in this.videos" :key="vid.id" v-bind:video="vid" v-on:changeVideo="changeVideo"/>
+            <VideoList v-for="vid in this.videos" :key="vid.id" v-bind:video="vid" v-bind:courseID="courseId" v-on:changeVideo="changeVideo"/>
         </div>
     </div>
 </template>
@@ -26,12 +26,17 @@ export default {
     data() {
         return {
             video: {},
-            videos: []
+            videos: [],
+            courseId: ''
         }
     },
     methods: {
-        changeVideo(video) {
-            this.video = video;
+        changeVideo(id) {
+            this.videos.forEach(v => {
+                if(v.id == id) {
+                    this.video = v;
+                }
+            })
         }
     },
     created() {
@@ -46,6 +51,7 @@ export default {
         .then(value => {
             if(value.data.access_token) this.$store.commit('setAccessToken', value.data.access_token);
             this.videos = value.data.course.videos;
+            this.courseId = value.data.course.id;
             for(let i = 0; i < this.videos.length; i++) {
                 if(this.videos[i].id == this.$route.params.idVid) {
                     this.video = this.videos[i];
@@ -56,9 +62,6 @@ export default {
             if(error.code) console.log(error.response.data);
             else console.log(error);
         });
-        
-        
-        
     }
 }
 </script>
