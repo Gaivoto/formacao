@@ -1,5 +1,5 @@
 <template>
-    <div class="pagination-wrapper">
+    <div class="pagination-wrapper" v-if="hasPages">
         <div class="pagination">
             <span class="material-icons" v-on:click="firstPage">first_page</span>
             <span class="material-icons" v-on:click="decreasePage">chevron_left</span>
@@ -51,6 +51,10 @@ export default {
             }
 
             return range;
+        },
+        hasPages() {
+            if(this.numberOfPages > 0) return true;
+            return false;
         }
     },
     methods: {
