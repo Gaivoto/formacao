@@ -242,6 +242,7 @@ authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQiLCJ1c2Vyb
 refreshtoken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQiLCJ1c2VybmFtZSI6ImRyZSIsImlhdCI6MTY3Mzg4NTU4N30.HijvYt9al-GEf8vRy5kFsj4s6oLSb69mpWoiy1j7Jv4
 content-type: application/json
 
-GET {{hostname}}/api/users/1
+###
+GET {{hostname}}/api/users/00bad46a-9020-4798-b566-c83ad8a993b3
 authorization: {{apiKey}}
 refreshtoken: {{refreshKey}}
