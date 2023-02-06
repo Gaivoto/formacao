@@ -8,7 +8,7 @@
                 <p>Categoria: {{ this.course.category }}</p>
                 <p>Preço: €{{ this.course.price }}</p>
                 <button v-if:="!this.course.access">COMPRAR</button>
-                <router-link v-if:="this.course.creator" :to="{ name: 'Workshop', params: { id: this.course.id } }">
+                <router-link v-if:="this.course.creator" :to="{ name: 'Workshop', params: { id: this.getUserId, idCourse: this.course.id } }">
                     <button>Editar Curso</button> 
                 </router-link>
             </div>
@@ -36,6 +36,12 @@ export default {
     },
     created() {
         this.imageUrl = new URL(`../../assets/${this.course.image}.jpg`, import.meta.url).href;
+    },
+    computed: {
+        getUserId() {
+            if(this.$store.getters.getUser.id) return this.$store.getters.getUser.id;
+            return 0;
+        }
     }
 }
 </script>
