@@ -8,21 +8,18 @@
                 <div>
                     <div class="first-left-div">
                         <router-link :to="{ name: 'Curso', params: { id: this.course.id } }"><p>{{ this.course.name }}</p></router-link>
-                        <p>Criador: {{ this.course.creator.name }}</p>
+                        <p>Criador: {{ this.course.nameCr }}</p>
                     </div>
                     <div>
                         <p>Preço: {{ this.course.price }} €</p>
-                        <p>Inscs: {{ this.course.subscriptions }}</p>
+                        <p>Cat: {{ this.course.category }}</p>
                     </div> 
                 </div>
                 <div>
                     <div>
-                        <p>Cat: {{ this.course.category }}</p>
+                        <p>Data: {{ this.formatedDate }}</p>
                         <p>Estado: {{ this.course.state }}</p>
-                    </div>    
-                    <div>
-                        <p>Data: {{ this.course.date }}</p>
-                    </div>   
+                    </div>
                 </div> 
             </div>
             <div class="course-card-right">
@@ -95,6 +92,9 @@ export default {
             });
 
             return pending;
+        },
+        formatedDate() {
+            return this.course.date.substring(8, 10) + "/" + this.course.date.substring(5, 7) + "/" + this.course.date.substring(0, 4) + " " + this.course.date.substring(11, 19);
         }
     },
     methods: {
@@ -146,7 +146,7 @@ export default {
     }
 
     .course-card-left > div > div {
-        width: 160px;
+        width: 200px;
     }
 
     .course-card-left img {
@@ -242,7 +242,6 @@ export default {
         overflow: hidden;
         margin-left: 160px;
         border-radius: 0px 8px 0px 0px;
-        max-height: 500px;
         box-shadow: rgba(20, 14, 49, 0.6) 0px 11px 10px 4px;
         -webkit-transition: max-height 0.5s linear;
         -moz-transition: max-height 0.5s linear;

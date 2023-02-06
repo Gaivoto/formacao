@@ -12,11 +12,7 @@
                         <div class="selected" :class="{ open: catOpen }" v-on:click="catOpen=!catOpen; stateOpen=false; orderOpen=false">{{ this.category }}</div>
                         <div class="items" :class="{ selectHide: !catOpen }">
                             <div v-on:click="selectCat('Todas')">Todas</div>
-                            <div v-on:click="selectCat('cat1')">cat1</div>
-                            <div v-on:click="selectCat('cat10')">cat10</div>
-                            <div v-on:click="selectCat('cat11')">cat11</div>
-                            <div v-on:click="selectCat('cat12')">cat12</div>
-                            <div v-on:click="selectCat('cat13')">cat13</div>
+                            <div v-for="category in this.categories" :key="category.id" v-on:click="selectCat(category.name)">{{ category.name }}</div>
                         </div>
                     </div>    
                 </div>
@@ -40,8 +36,6 @@
                         <div class="items" :class="{ selectHide: !orderOpen }">
                             <div v-on:click="selectOrder('Mais recente')">Mais recente</div>
                             <div v-on:click="selectOrder('Mais antigo')">Mais antigo</div>
-                            <div v-on:click="selectOrder('Inscs. decrescente')">Inscs. decrescente</div>
-                            <div v-on:click="selectOrder('Inscs. crescente')">Inscs. crescente</div>
                             <div v-on:click="selectOrder('Preço decrescente')">Preço decrescente</div>
                             <div v-on:click="selectOrder('Preço crescente')">Preço crescente</div>
                         </div>
@@ -108,6 +102,12 @@
 <script>
 export default {
     name: 'CourseListAdmFilter',
+    props: {
+        categories: {
+            type: Array,
+            required: true
+        }
+    },
     data() {
         return {
             catOpen: false,

@@ -50,7 +50,7 @@ const router = createRouter({
             name: "Conteúdo"
         },
         {
-            path: '/users/:id/workshop',
+            path: '/users/:id/workshop/:idCourse',
             component: Workshop,
             name: "Workshop"
         },

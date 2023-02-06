@@ -3,11 +3,11 @@
         <div class="video-card-left">
             <img :src="this.imageUrl">
             <div>
-                <router-link :to="{ name: 'Vídeo', params: { id: this.courseId } }"><p>{{ this.video.name }}</p></router-link>
+                <router-link :to="{ name: 'Vídeo', params: { id: this.courseId, idVid: this.video.id } }"><p>{{ this.video.title }}</p></router-link>
             </div>
             <div>
                 <p>Estado: {{ this.video.state }}</p>
-                <p>Data: {{ this.video.date }}</p>
+                <p>Data: {{ this.formatedDate }}</p>
             </div>
         </div>
         <div class="video-card-right">
@@ -59,6 +59,9 @@ export default {
         showButton5() {
             if(this.video.state == "Rejeitado") return true;
             return false;
+        },
+        formatedDate() {
+            return this.video.date.substring(8, 10) + "/" + this.video.date.substring(5, 7) + "/" + this.video.date.substring(0, 4) + " " + this.video.date.substring(11, 19);
         }
     },
     methods: {

@@ -18,9 +18,9 @@
                 <SearchbarResult v-for="item in this.searchResults" :key="item.id + item.type" v-bind:item="item" v-on:click="toggleSearch"/>
             </div>  
         </div>
-
+        
         <div class="topbar-right">
-            <router-link class="user-wrapper" :to="{ name: 'Perfil do Utilizador', params: { id: this.$store.getters.getUser.id } }">
+            <router-link class="user-wrapper" :to="{ name: 'Perfil do Utilizador', params: { id: this.getUserId } }">
                 <div class="topbar-text">
                     <p>{{ this.$store.getters.getUser.username }}</p>
                 </div>
@@ -79,22 +79,24 @@ export default {
         this.isMounted = true;
     }, 
     created() {
-        axios({
-            method: `get`,
-            url: `${import.meta.env.VITE_HOST}/notifications/user/${this.$store.getters.getUser.id}`,
-            headers: {
-                Authorization: `Bearer ${this.$store.getters.getAccessToken}`,
-                refreshtoken: this.$store.getters.getRefreshToken
-            }
-        })
-        .then(value => {
-            if(value.data.access_token) this.$store.commit('setAccessToken', value.data.access_token);
-            value.data.notifications.forEach(n => this.notifications.push(n));
-        })
-        .catch(error => {
-            if(error.code) console.log(error.response.data);
-            else console.log(error);
-        });
+        if(this.$store.getters.getUser.id) {
+            axios({
+                method: `get`,
+                url: `${import.meta.env.VITE_HOST}/notifications/user/${this.$store.getters.getUser.id}`,
+                headers: {
+                    Authorization: `Bearer ${this.$store.getters.getAccessToken}`,
+                    refreshtoken: this.$store.getters.getRefreshToken
+                }
+            })
+            .then(value => {
+                if(value.data.access_token) this.$store.commit('setAccessToken', value.data.access_token);
+                value.data.notifications.forEach(n => this.notifications.push(n));
+            })
+            .catch(error => {
+                if(error.code) console.log(error.response.data);
+                else console.log(error);
+            });
+        }
 
         axios({
             method: `get`,
@@ -144,6 +146,10 @@ export default {
         },
         getUser() {
             this.user = this.$store.getter.getUser;
+        },
+        getUserId() {
+            if(this.$store.getters.getUser.id) return this.$store.getters.getUser.id;
+            return 0;
         }
     },
     methods: {
@@ -169,7 +175,6 @@ export default {
             });
         },
         toggleSearch() {
-            console.log("?")
             this.$emit("toggleSearch");
         },
         filterSearchbar(){
@@ -191,15 +196,16 @@ export default {
         goToSearchItem() {
             let filter = this.$refs.topSearchbar.value.toLowerCase();
 
-            this.usersCourses.forEach(i => {
-                if(i.name.toLowerCase() == filter){
-                    if(i.type == "Curso") {
-                        this.$router.push({ name: 'Curso', params: { id: i.id } });
-                    } else {
-                        this.$router.push({ name: 'Perfil do Utilizador', params: { id: i.id } });
-                    }
-                };
-                this.$emit("toggleSearch");
+            this.creators.forEach(c => {
+                if(c.name.toLowerCase() == filter) {
+                    this.$router.push({ name: 'Perfil do Utilizador', params: { id: i.id } });
+                }
+            });
+
+            this.courses.forEach(c => {
+                if(c.name.toLowerCase() == filter) {
+                    this.$router.push({ name: 'Curso', params: { id: i.id } });
+                }
             });
         }
     }

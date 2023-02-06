@@ -18,6 +18,10 @@ export default {
         }
     },
     props: {
+        courseID: {
+            type: String,
+            required: true
+        },
         video: {
             type: Object,
             required: true,
@@ -28,7 +32,8 @@ export default {
     },
     methods: {
         changeVideo() {
-            this.$emit('changeVideo', this.video);
+          	this.$router.push({ name: "Vídeo", params: { id: this.courseID, idVid: this.video.id } });
+            this.$emit('changeVideo', this.video.id)
         }
     },
     computed: {

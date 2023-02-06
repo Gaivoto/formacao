@@ -9,27 +9,61 @@
             <span class="material-icons">clear_all</span>
         </button>
     </div>
-
+	
     <h3>Menu</h3>
-    <div class="menu">
+    <div class="menu" v-if="this.isUserUser">
         <router-link class="button" to="/courses">
-            <span class="material-icons">library_books</span>
+            <span class="material-icons">import_contacts</span>
             <span class="text">Cursos</span>
         </router-link>
-        <router-link class="button" :to="{ name: 'Conteúdo', params: { id: this.$store.getters.getUser.id } }">
-            <span class="material-icons">home</span>
-            <span class="text">Home</span>
+        <router-link class="button" :to="{ name: 'Meus Cursos', params: { id: this.getUserId } }">
+            <span class="material-icons">menu_book</span>
+            <span class="text">Os Meus Cursos</span>
         </router-link>
-        <router-link class="button" :to="{ name: 'Perfil do Utilizador', params: { id: this.$store.getters.getUser.id } }">
-            <span class="material-icons">group</span>
-            <span class="text">Team</span>
+        <router-link class="button" :to="{ name: 'Perfil do Utilizador', params: { id: this.getUserId } }">
+            <span class="material-icons">person</span>
+            <span class="text">Perfil</span>
+        </router-link>
+    </div>
+
+    <div class="menu" v-if="this.isUserCreator">
+        <router-link class="button" to="/courses">
+            <span class="material-icons">import_contacts</span>
+            <span class="text">Cursos</span>
+        </router-link>
+        <router-link class="button" :to="{ name: 'Meus Cursos', params: { id: this.getUserId } }">
+            <span class="material-icons">menu_book</span>
+            <span class="text">Os Meus Cursos</span>
+        </router-link>
+        <router-link class="button" :to="{ name: 'Perfil do Utilizador', params: { id: this.getUserId } }">
+            <span class="material-icons">person</span>
+            <span class="text">Perfil</span>
+        </router-link>
+        <router-link class="button" :to="{ name: 'Workshop', params: { id: this.getUserId, idCourse: 'new' } }">
+            <span class="material-icons">add_circle</span>
+            <span class="text">Workshop</span>
+        </router-link>
+        <router-link class="button" :to="{ name: 'Conteúdo', params: { id: this.getUserId } }">
+            <span class="material-icons">content_paste</span>
+            <span class="text">Conteúdo</span>
+        </router-link>
+        <router-link class="button" :to="{ name: 'Estatísticas', params: { id: this.getUserId } } ">
+            <span class="material-icons">insights</span>
+            <span class="text">Estatísticas</span>
+        </router-link>
+    </div>
+
+    <div class="menu" v-if="this.isUserAdm">
+        <router-link class="button" to="/courses">
+            <span class="material-icons">import_contacts</span>
+            <span class="text">Cursos</span>
         </router-link>
         <router-link class="button" to="/courselist">
-            <span class="material-icons">email</span>
-            <span class="text">Contact Us</span>
+            <span class="material-icons">format_list_bulleted</span>
+            <span class="text">Lista de Cursos</span>
         </router-link>
         <router-link class="button" to="/users">
-            <span class="material-icons">email</span>
+            <span class="material-icons">group</span>
             <span class="text">Lista de Utilizadores</span>
         </router-link>
     </div>
@@ -41,6 +75,10 @@
 			<span class="material-icons">settings</span>
 			<span class="text">Settings</span>
 		</router-link>
+		<div v-on:click="logout" class="button">
+            <span class="material-icons">logout</span>
+            <span class="text">Logout</span>
+		</div>
 	</div>
   </aside>
 </template>
@@ -52,10 +90,34 @@ export default {
 			is_expanded: false
 		}
 	},
+	computed: {
+        getUserId() {
+            if(this.$store.getters.getUser.id) return this.$store.getters.getUser.id;
+            return 0;
+        },
+		isUserUser() {
+			if(this.$store.getters.getUser.type && this.$store.getters.getUser.type == 'user') return true;
+			return false;
+		},
+		isUserAdm() {
+			if(this.$store.getters.getUser.type && this.$store.getters.getUser.type == 'admin') return true;
+			return false;
+		},
+		isUserCreator() {
+			if(this.$store.getters.getUser.type && this.$store.getters.getUser.type == 'creator') return true;
+			return false;
+		}
+	},
 	methods: {
 		toggleMenu() {
 			this.is_expanded = !this.is_expanded;
 			this.$emit("toggleSidebar");
+		},
+		logout() {
+          	this.$router.push({ name: "Login" });
+			this.$store.commit('setUser', '');
+            this.$store.commit('setRefreshToken', '');
+            this.$store.commit('setAccessToken', '');
 		}
 	}
 }
@@ -120,6 +182,10 @@ aside {
 		border: none;
 		outline: none;
 		background: none;
+	}
+
+	.button {
+		cursor: pointer;
 	}
 
 	h3, .button .text {

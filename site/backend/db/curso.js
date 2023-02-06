@@ -100,13 +100,13 @@ async function createCurso(id, body) {
     });
 }
 
-async function updateStateCurso(body) {
+async function updateStateCurso(id, state) {
     const pool = new sql.Request();
     return new Promise((resolve, reject) => {
 
         let slct = `UPDATE Course SET [state] = @state WHERE [id] = @id`;
 
-        pool.input('state', sql.VarChar(50), body.state).input('id', sql.VarChar(200), body.id).query(slct, (err, res) => {
+        pool.input('state', sql.VarChar(50), state).input('id', sql.VarChar(200), id).query(slct, (err, res) => {
             if (!err) {
                 resolve(res);
             } else {

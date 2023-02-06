@@ -1,5 +1,5 @@
 <template>
-    <router-link class="vid" :class="{'vidOpen': open}" :to="{ name: 'Vídeo', params: { id: this.courseID, idVid: video.id } }">
+    <router-link class="vid" :class="{'vidOpen': open}" :to="{ name: 'Vídeo', params: { id: this.courseID, idVid: this.video.id } }">
         <img :src="this.imageUrl">
         <div class="text">
             <div class="text-left">
