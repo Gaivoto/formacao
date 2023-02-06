@@ -1,4 +1,4 @@
-GET http://localhost:3000/api/users/profile/17
+GET http://localhost:3000/api/users/profile/17 
 authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjIiLCJ1c2VybmFtZSI6ImJyIiwidHlwZSI6ImFkbWluIiwiaWF0IjoxNjczOTY5MTEwLCJleHAiOjE2NzM5ODM1MTB9.a0j8jST1PhLGTO9OG9uKbB7W12r_YZdArIxyuyxktAc
 refreshtoken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjIiLCJ1c2VybmFtZSI6ImJyIiwidHlwZSI6ImFkbWluIiwiaWF0IjoxNjczOTY5MTEwfQ.W42wL1Z-XYRRh0AcOERQv19oGgU-S0aCts6p1icfibM
 ###
