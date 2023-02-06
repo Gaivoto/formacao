@@ -3,7 +3,7 @@
         <div class="video-card-left">
             <img :src="this.imageUrl">
             <div>
-                <router-link :to="{ name: 'Vídeo', params: { id: this.courseId } }"><p>{{ this.video.title }}</p></router-link>
+                <router-link :to="{ name: 'Vídeo', params: { id: this.courseId, idVid: this.video.id } }"><p>{{ this.video.title }}</p></router-link>
             </div>
             <div>
                 <p>Estado: {{ this.video.state }}</p>
