@@ -93,6 +93,7 @@ export default {
         .catch(error => {
             if(error.code) {
                 console.log(error.response.data);
+                this.$emit("open-modal", error.response.data.message);
             }
             else console.log(error);
         });
