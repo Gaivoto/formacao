@@ -78,8 +78,10 @@ export default {
         console.log(this.diplomas);
       })
       .catch((error) => {
-        if (error.code) console.log(error.response.data);
-        else console.log(error);
+        if (error.code) {
+          console.log(error.response.data);
+          this.$emit("open-modal", error.response.data.message);
+        } else console.log(error);
       });
   },
   computed: {
@@ -94,7 +96,7 @@ export default {
   },
   methods: {
     alterarDadosUser(info) {
-      if (info.name != "" && info.description != "") {
+      if (info.name != "") {
         axios({
           method: "put",
           url: `${import.meta.env.VITE_HOST}/users/${
@@ -116,9 +118,13 @@ export default {
               this.$store.commit("setAccessToken", value.data.access_token);
           })
           .catch((error) => {
-            if (error.code) console.log(error.response.data);
-            else console.log(error);
+            if (error.code) {
+              console.log(error.response.data);
+              this.$emit("open-modal", error.response.data.message);
+            } else console.log(error);
           });
+      } else {
+        this.$emit("open-modal", "Introduza um nome válido.");
       }
     },
   },

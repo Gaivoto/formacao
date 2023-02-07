@@ -79,7 +79,7 @@ async function updateUser(tokens, id, user) {
         utils.validateToken(tokens.access_token, tokens.refresh_token).then(value => {
             let info = value;
             if (info.user.id == id) {
-                if (user.name == "" || user.image == "" || user.name == null || user.image == null || user.description == null) {
+                if (user.name == "" || user.image == "" || user.name == null || user.image == null) {
                     reject({ code: 400, error: { message: "A alteração não pode ser feita, porque há valores vazios." } });
                 } else {
                     dbUser.updateUser(user, id).then(value => {
