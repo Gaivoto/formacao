@@ -4,7 +4,7 @@ POST {{hostname}}/api/auth/login
 content-type: application/json  
 
 {     
-    "username": "adm",     
+    "username": "bragon",     
     "password": "123" 
 }
 
@@ -36,8 +36,8 @@ refreshtoken: {{refreshKey}}
 content-type: application/json
 
 {
-    "id_user": "10", 
-    "id_course": "1"
+    "id_user": "343970c2-2705-403f-93b8-b68167b059e8", 
+    "id_course": "28"
 }
 
 ### SUBSCRIPTION
@@ -97,14 +97,14 @@ refreshtoken: {{refreshKey}}
 content-type: application/json
 
 {
-    "name": "Curso do Teste 5", 
+    "name": "Curso very expert", 
     "category": "Gaming", 
-    "description": "teste do insert", 
+    "description": "curso mt mt experto com imensa sabedoria", 
     "date": "2023-01-07 00:00:00.000", 
     "state": "Ativo", 
     "price": 15, 
     "image": "./assets/fortnite", 
-    "id_creator": 4 
+    "id_creator": "343970c2-2705-403f-93b8-b68167b059e8"
 }
 
 ###
@@ -227,12 +227,12 @@ POST http://localhost:3000/api/users/
 content-type: application/json
 
 {
-    "username": "adm",
+    "username": "bragon",
     "password": "123",
-    "name": "testeste",
-    "email": "tevez@gmail.com",
-    "description": "jogador argentino nojento",
-    "country": "argentina",
+    "name": "Pedro",
+    "email": "braganca@gmail.com",
+    "description": "professional expert",
+    "country": "portugal",
     "image": "/imagem/tevez"
 
 }
@@ -242,6 +242,7 @@ authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQiLCJ1c2Vyb
 refreshtoken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQiLCJ1c2VybmFtZSI6ImRyZSIsImlhdCI6MTY3Mzg4NTU4N30.HijvYt9al-GEf8vRy5kFsj4s6oLSb69mpWoiy1j7Jv4
 content-type: application/json
 
-GET {{hostname}}/api/users/1
+###
+GET {{hostname}}/api/users/00bad46a-9020-4798-b566-c83ad8a993b3
 authorization: {{apiKey}}
 refreshtoken: {{refreshKey}}

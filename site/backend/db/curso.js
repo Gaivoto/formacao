@@ -17,7 +17,7 @@ sql.connect(config, function (err) {
 async function getCurso(id) {
     const pool = new sql.Request();
     return new Promise((resolve, reject) => {
-        let slct =  `SELECT c.id, c.name, c.category, c.description, c.date, c.state, c.price, c.image, c.id_creator, c.rating, u.name AS creatorName, u.image AS creatorImage FROM [Course] c INNER JOIN Users u ON c.id_creator = u.id WHERE c.id = @id`
+        let slct = `SELECT c.id, c.name, c.category, c.description, c.date, c.state, c.price, c.image, c.id_creator, c.rating, u.name AS creatorName, u.image AS creatorImage FROM [Course] c INNER JOIN Users u ON c.id_creator = u.id WHERE c.id = @id`
         pool.input('id', sql.VarChar(200), id).query(slct, (err, res) => {
             if (!err) {
                 resolve(res.recordset);
@@ -89,8 +89,8 @@ async function createCurso(id, body) {
     const pool = new sql.Request();
     return new Promise((resolve, reject) => {
         const slct = `INSERT INTO Course (id, name, category, description, date, state, price, image, id_creator, rating)
-         VALUES (@id, @name, @category, @description', @date', 'Pendente', @price, @image', @id_creator', 0)`;
-        pool.input('id', sql.VarChar(200), id).input('name', sql.VarChar(50), body.name).input('description', sql.VarChar(200), body.description).input('date', sql.DateTime, body.date).input('price', sql.Float, body.price).input('image', sql.VarChar(50), image).input('id_creator', sql.VarChar(200), body.id_creator).query(slct, (err, res) => {
+         VALUES (@id, @name, @category, @description, @date, 'Pendente', @price, @image, @id_creator, 0)`;
+        pool.input('id', sql.VarChar(200), id).input('name', sql.VarChar(50), body.name).input('category', sql.VarChar(50), body.category).input('description', sql.VarChar(200), body.description).input('date', sql.DateTime, body.date).input('price', sql.Float, body.price).input('image', sql.VarChar(50), body.image).input('id_creator', sql.VarChar(200), body.id_creator).query(slct, (err, res) => {
             if (!err) {
                 resolve(res.recordset);
             } else {
