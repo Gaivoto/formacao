@@ -124,7 +124,7 @@ export default {
         gap: 16px;
     }
 
-    @media (max-width: 1300px) {
+    @media (max-width: 1380px) {
 
         .video-card-right {
             width: 120px;
@@ -148,14 +148,11 @@ export default {
         }
     }
 
-    @media (max-width: 1150px) {
+    @media (max-width: 1250px) {
 
         .video-card-left > div > a > p {
             width: 200px;
         }
-    }
-
-    @media (max-width: 1150px) {
 
         .video-card-left img {
             width: 90px;
@@ -167,7 +164,7 @@ export default {
         }
     }
 
-    @media (max-width: 900px) {
+    @media (max-width: 1000px) {
 
         .video-card-left > div > a > p {
             width: 160px;
@@ -177,9 +174,6 @@ export default {
         .video-card-left {
             gap: 20px;
         }
-    }
-
-    @media (max-width: 850px) {
 
         button {
             width: 90px;

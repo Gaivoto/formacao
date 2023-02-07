@@ -17,8 +17,8 @@
                 </div>
                 <div>
                     <div>
-                        <p>Data: {{ this.formatedDate }}</p>
                         <p>Estado: {{ this.course.state }}</p>
+                        <p>Data: {{ this.formatedDate }}</p>
                     </div>
                 </div> 
             </div>
@@ -281,12 +281,7 @@ export default {
         }
 	}
 
-    @media (max-width: 1300px) {
-
-        .course-card-right {
-            width: 120px;
-        }
-
+    @media (max-width: 1500px) {
         .button-wrapper {
             display: block;
             width: 120px;
@@ -294,6 +289,13 @@ export default {
 
         .button-wrapper button:first-child {
             margin-bottom: 16px;
+        }
+    }
+
+    @media (max-width: 1380px) {
+
+        .course-card-right {
+            width: 120px;
         }
 
         .course-card-left {
@@ -309,7 +311,7 @@ export default {
         }
     }
 
-    @media (max-width: 1150px) {
+    @media (max-width: 1250px) {
         .course-card-left .first-left-div {
             width: 310px;
         }
@@ -319,7 +321,7 @@ export default {
         }
     }
 
-    @media (max-width: 1050px) {
+    @media (max-width: 1100px) {
 
         .course-card-left .first-left-div {
             width: 290px;
@@ -352,7 +354,7 @@ export default {
         }
     }
 
-    @media (max-width: 900px) {
+    @media (max-width: 1000px) {
 
         .course-card-left .first-left-div {
             width: 210px;
@@ -361,9 +363,6 @@ export default {
         .course-card-left .first-left-div p {
             width: 210px;
         }
-    }
-
-    @media (max-width: 850px) {
 
         button {
             width: 90px;
