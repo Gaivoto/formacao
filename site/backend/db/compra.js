@@ -70,10 +70,11 @@ async function existsCompra(idU, idC) {
 }
 
 async function createCompra(id, body, currentDate) {
+    console.log(body)
     const pool = new sql.Request();
     return new Promise((resolve, reject) => {
-        const slct = `INSERT INTO User_Course (id, id_user, id_course, date_bought, progress) VALUES (@id, @idU, @idC, @cD, 0)`;
-        pool.input('id', sql.VarChar(200), id).input('idU', sql.VarChar(200), body.id_user).input('idC', sql.VarChar(200), body.id_course).input('cD', sql.DateTime, currentDate).query(slct, (err, res) => {
+        const slct = `INSERT INTO User_Course (id, id_user, id_course, date_bought, progress, id_subscription) VALUES (@id, @idU, @idC, @cD, 0, @idSub)`;
+        pool.input('id', sql.VarChar(200), id).input('idU', sql.VarChar(200), body.id_user).input('idC', sql.VarChar(200), body.id_course).input('cD', sql.DateTime, currentDate).input('idSub', sql.VarChar(200), body.id_subscription).query(slct, (err, res) => {
             if (!err) {
                 resolve(res.recordset);
             } else {
