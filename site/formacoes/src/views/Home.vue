@@ -113,8 +113,10 @@ export default {
             }
         })
         .catch(error => {
-            if(error.code) console.log(error.response.data);
-            else console.log(error);
+            if(error.code) {
+                this.$emit("open-modal", error.response.data.message);
+                console.log(error.response.data);
+            } else console.log(error);
         });
         
         axios({
@@ -125,8 +127,10 @@ export default {
             value.data.creators.forEach(c => this.creators.push(c));
         })
         .catch(error => {
-            if(error.code) console.log(error.response.data);
-            else console.log(error);
+            if(error.code) {
+                this.$emit("open-modal", error.response.data.message);
+                console.log(error.response.data);
+            } else console.log(error);
         });
     },
     methods: {

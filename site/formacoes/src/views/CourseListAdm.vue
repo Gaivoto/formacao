@@ -56,8 +56,10 @@ export default {
             this.filter(this.filterInfo);
         })
         .catch(error => {
-            if(error.code) console.log(error.response.data);
-            else console.log(error);
+            if(error.code) {
+                this.$emit("open-modal", error.response.data.message);
+                console.log(error.response.data);
+            } else console.log(error);
         });
     },
     computed: {
@@ -146,8 +148,10 @@ export default {
                 this.filter(this.filterInfo);
             })
             .catch(error => {
-                if(error.code) console.log(error.response.data);
-                else console.log(error);
+                if(error.code) {
+                    this.$emit("open-modal", error.response.data.message);
+                    console.log(error.response.data);
+                } else console.log(error);
             });
         },
         changeStateVideo(info) {
@@ -181,8 +185,10 @@ export default {
                 this.filter(this.filterInfo);
             })
             .catch(error => {
-                if(error.code) console.log(error.response.data);
-                else console.log(error);
+                if(error.code) {
+                    this.$emit("open-modal", error.response.data.message);
+                    console.log(error.response.data);
+                } else console.log(error);
             });
         },
         getCategories() {

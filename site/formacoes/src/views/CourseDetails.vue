@@ -16,7 +16,6 @@ import CourseDetHeader from "../components/courseDetails/CourseDetHeader.vue";
 import VidInfo from "../components/courseDetails/VidInfo.vue";
 
 export default {
-    //AQUI AINDA FALTA VERIFICAR SE O CRIADOR TA ENTRANDO NUM CURSO Q É DELE
     name: "CourseDetails",
     components: {
         CourseDetHeader,
@@ -38,12 +37,11 @@ export default {
             }
         })
         .then(value => {
-            if(value.data.access_token) this.$store.commit('setAccessToken', value.data.access_token);
-            if(value.data.course.id_creator == this.$store.getters.getUser.id) {
+            if (value.data.access_token) this.$store.commit('setAccessToken', value.data.access_token);
+            if (value.data.course.id_creator == this.$store.getters.getUser.id) {
                 value.data.course.creator = true;
                 value.data.course.access = true;
-            }
-            else {
+            } else {
                 value.data.course.creator = false;
             }
             this.course = value.data.course;
@@ -51,7 +49,10 @@ export default {
             this.compra = value.data.course.access
         })
         .catch(error => {
-            if(error.code) console.log(error.response.data);
+            if(error.code) {
+                this.$emit("open-modal", error.response.data.message);
+                console.log(error.response.data);
+            }
             else console.log(error);
         });
     },

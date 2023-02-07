@@ -75,7 +75,6 @@ export default {
         this.user = value.data;
         this.courses = value.data.courses;
         this.diplomas = value.data.diplomas;
-        console.log(this.diplomas);
       })
       .catch((error) => {
         if (error.code) console.log(error.response.data);
