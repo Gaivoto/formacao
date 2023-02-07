@@ -137,6 +137,11 @@ export default {
         });
       }
     }
+  },
+  created() {
+    window.addEventListener('keydown', (e) => {
+      if(e.key == 'Enter' && this.state == 'login') this.login();
+    });
   }
 }
 
