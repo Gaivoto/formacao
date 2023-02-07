@@ -107,9 +107,10 @@ export default {
             value.data.outros.forEach(c => this.other.push(c));
             this.slides.push(value.data.outros[0]);
 
-            this.slides.forEach(s => {
-                s.show = false;
-            });
+            for(let i = 0; i < this.slides.length; i++) {
+                this.slides[i].show = false;
+                this.slides[i].id += `-${i}`;
+            }
         })
         .catch(error => {
             if(error.code) console.log(error.response.data);

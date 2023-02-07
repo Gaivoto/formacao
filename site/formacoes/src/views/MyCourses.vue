@@ -46,7 +46,6 @@ export default {
         })
         .then(value => {
             if(value.data.access_token) this.$store.commit('setAccessToken', value.data.access_token);
-            console.log(value.data)
 
             value.data.courses.forEach(c => this.courses.push(c));
 
@@ -141,7 +140,6 @@ export default {
                     this.categories.push({id: this.categories.length, name: c.category});
                 }
             });
-            console.log(this.categories)
         }
     }
 }

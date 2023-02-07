@@ -7,7 +7,7 @@
             <p>{{ this.item.nameCr }}</p>
         </div>
         <div>
-            <router-link :to="{ name: 'Curso', params: { id: this.item.id } }">
+            <router-link :to="{ name: 'Curso', params: { id: this.item.id.substring(0, this.item.id.length - 2) } }">
                 <button>Ver Curso</button>
             </router-link>
         </div>
