@@ -2,8 +2,8 @@
     "rest-client.environmentVariables": {
 
         "$shared": {
-            "apiKey": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjAwYmFkNDZhLTkwMjAtNDc5OC1iNTY2LWM4M2FkOGE5OTNiMyIsInVzZXJuYW1lIjoiYWRtIiwidHlwZSI6InVzZXIiLCJpYXQiOjE2NzU2OTIxODksImV4cCI6MTY3NTcwNjU4OX0.IgfGzPs2c_wcDLxfQ8II-qjGI1Xoz7y5QiFtAnsiMWk",
-            "refreshKey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjAwYmFkNDZhLTkwMjAtNDc5OC1iNTY2LWM4M2FkOGE5OTNiMyIsInVzZXJuYW1lIjoiYWRtIiwidHlwZSI6InVzZXIiLCJpYXQiOjE2NzU2OTIxODl9.sWabqARL3TcL16RZY8_PLLadUrNPc86P_GGqiWXDDVs",
+            "apiKey": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjM0Mzk3MGMyLTI3MDUtNDAzZi05M2I4LWI2ODE2N2IwNTllOCIsInVzZXJuYW1lIjoiYnJhZ29uIiwidHlwZSI6InVzZXIiLCJpYXQiOjE2NzU3ODAwNjAsImV4cCI6MTY3NTc5NDQ2MH0.RlIs8Sk6HLgD1HEmrmx7D67WnQi4DR4at1a8tw2vRe4",
+            "refreshKey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjM0Mzk3MGMyLTI3MDUtNDAzZi05M2I4LWI2ODE2N2IwNTllOCIsInVzZXJuYW1lIjoiYnJhZ29uIiwidHlwZSI6InVzZXIiLCJpYXQiOjE2NzU3ODAwNjB9.nYuuumYA3yiH1o44mrZT9fS9IQp_bnsnWJuT-nh2rrc",
         },
         "Local Env": {
             "hostname": "http://localhost:3000"

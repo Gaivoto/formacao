@@ -4,7 +4,7 @@
       v-bind:user="this.user"
       v-on:alterar-dados="alterarDadosUser"
     />
-    <div class="profile-bottom">
+    <div class="profile-bottom" v-if="!this.isUserAdm">
       <div>
         <router-link :to="{ name: 'Meus Cursos', params: { id: 1 } }"
           >Os meus cursos</router-link
@@ -34,6 +34,7 @@
 </template>
 
 <script>
+import axios from "axios";
 import UserProfileInfo from "../components/profile/UserProfileInfo.vue";
 import UserProfileCourseCard from "../components/profile/UserProfileCourseCard.vue";
 import UserProfileDiplomaCard from "../components/profile/UserProfileDiplomaCard.vue";
@@ -50,8 +51,10 @@ export default {
       user: {
         username: "",
         name: "",
+        email: "",
         description: "",
         image: "",
+        type: "",
       },
       courses: [],
       diplomas: [],
@@ -60,118 +63,63 @@ export default {
   created() {
     axios({
       method: "get",
-      url: `${import.meta.env.VITE_HOST}/users/${this.$route.params.id}`,
+      url: `${import.meta.env.VITE_HOST}/users/${
+        this.$store.getters.getUser.id
+      }`,
       headers: {
         Authorization: `Bearer ${this.$store.getters.getAccessToken}`,
         refreshtoken: this.$store.getters.getRefreshToken,
       },
     })
       .then((value) => {
-        console.log("VALUEEEE", value);
-        this.user.username = value.data.username;
-        this.user.name = value.data.name;
-        this.user.description = value.data.description;
-        this.user.image = value.data.image;
+        this.user = value.data;
         this.courses = value.data.courses;
         this.diplomas = value.data.diplomas;
+        console.log(this.diplomas);
       })
       .catch((error) => {
         if (error.code) console.log(error.response.data);
         else console.log(error);
       });
-
-    /*this.courses = [
-      {
-        id: 1,
-        name: "Course 1Course 1Course 1Course 1Course 1",
-        progress: 32,
-        image: "bingus",
-      },
-      {
-        id: 2,
-        name: "Course 2",
-        progress: 0,
-        image: "bingus",
-      },
-      {
-        id: 3,
-        name: "Course 3",
-        progress: 86,
-        image: "bingus",
-      },
-    ];
-
-    this.diplomas = [
-      {
-        id: 1,
-        name: "Diploma 1Diploma 1Diploma 1Diploma 1Diploma 1",
-        image: "bingus",
-      },
-      {
-        id: 2,
-        name: "Diploma 2",
-        image: "bingus",
-      },
-      {
-        id: 3,
-        name: "Diploma 3",
-        image: "bingus",
-      },
-      {
-        id: 4,
-        name: "Diploma 321",
-        image: "bingus",
-      },
-      {
-        id: 5,
-        name: "Diploma 321",
-        image: "bingus",
-      },
-      {
-        id: 4,
-        name: "Diploma 321",
-        image: "bingus",
-      },
-      {
-        id: 5,
-        name: "Diploma 321",
-        image: "bingus",
-      },
-      {
-        id: 4,
-        name: "Diploma 321",
-        image: "bingus",
-      },
-      {
-        id: 5,
-        name: "Diploma 321",
-        image: "bingus",
-      },
-      {
-        id: 4,
-        name: "Diploma 321",
-        image: "bingus",
-      },
-      {
-        id: 5,
-        name: "Diploma 321",
-        image: "bingus",
-      },
-      {
-        id: 4,
-        name: "Diploma 321",
-        image: "bingus",
-      },
-      {
-        id: 5,
-        name: "Diploma 321",
-        image: "bingus",
-      },
-    ];*/
+  },
+  computed: {
+    isUserAdm() {
+      if (
+        this.$store.getters.getUser.type &&
+        this.$store.getters.getUser.type == "admin"
+      )
+        return true;
+      return false;
+    },
   },
   methods: {
-    alterarDadosUser() {
-      //chamar backend pa alterar dados user
+    alterarDadosUser(info) {
+      if (info.name != "" && info.description != "") {
+        axios({
+          method: "put",
+          url: `${import.meta.env.VITE_HOST}/users/${
+            this.$store.getters.getUser.id
+          }`,
+          headers: {
+            Authorization: `Bearer ${this.$store.getters.getAccessToken}`,
+            refreshtoken: this.$store.getters.getRefreshToken,
+          },
+          data: {
+            name: info.name,
+            description: info.description,
+            image: "../images/etc",
+          },
+        })
+          .then((value) => {
+            //falta meter modals depois falando q a conta foi criada e pedindo pra fazer login
+            if (value.data.access_token)
+              this.$store.commit("setAccessToken", value.data.access_token);
+          })
+          .catch((error) => {
+            if (error.code) console.log(error.response.data);
+            else console.log(error);
+          });
+      }
     },
   },
 };

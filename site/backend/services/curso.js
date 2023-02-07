@@ -40,7 +40,7 @@ async function getCurso(headers, id) {
                         Promise.all(promises).then(values => {
                             let duration = 0;
                             let durationInt = 0;
-                            for(let i = 0; i < values[2].length; i++) {
+                            for (let i = 0; i < values[2].length; i++) {
                                 durationInt = parseInt(values[2][i].duration)
                                 duration = duration + durationInt;
                             }
@@ -48,7 +48,7 @@ async function getCurso(headers, id) {
                             if (values[0].length > 0 || values[1].length > 0) {
                                 info.course.access = true;
                             }
-                            info.course.duration = duration/3600;
+                            info.course.duration = duration / 3600;
                             info.course.videos = values[2];
                             resolve({ code: 200, info: info });
 
@@ -81,11 +81,11 @@ async function getCurso(headers, id) {
                     dbVide.getAllVideosFromCourse(id).then(value2 => {
                         let duration = 0;
                         let durationInt = 0;
-                        for(let i = 0; i < value2.length; i++) {
+                        for (let i = 0; i < value2.length; i++) {
                             durationInt = parseInt(value2[i].duration)
                             duration = duration + durationInt;
                         }
-                        resp.course.duration = duration/3600;
+                        resp.course.duration = duration / 3600;
                         resp.course.videos = value2;
                         resolve({ code: 200, info: resp });
                     })
@@ -105,7 +105,7 @@ async function getCurso(headers, id) {
 
 async function getAllCursos(headers) {
     return new Promise((resolve, reject) => {
-        
+
         let access_token;
         let refresh_token;
         let promises = [];
@@ -116,34 +116,34 @@ async function getAllCursos(headers) {
         }
 
         if (access_token && refresh_token) {
-            
+
             utils.validateToken(access_token, refresh_token).then(value => {
                 let info = value;
 
-                if(info.user.type == 'admin') {
+                if (info.user.type == 'admin') {
                     dbCurs.getAllCursosAdm().then(value2 => {
-                    
+
                         info.courses = value2;
-    
+
                         info.courses.forEach(cou => {
-                            
+
                             promises.push(dbVide.getAllVideosFromCourse(cou.id));
                         });
-    
+
                         Promise.all(promises).then(values => {
                             for (let i = 0; i < info.courses.length; i++) {
                                 let duration = 0;
                                 let durationInt = 0;
                                 info.courses[i].videos = values[i];
-                                
-                                for(j = 0; j < values[i].length; j++) {
+
+                                for (j = 0; j < values[i].length; j++) {
                                     durationInt = parseInt(values[i][j].duration)
                                     duration = duration + durationInt;
                                 }
-    
-                                info.courses[i].duration = duration/3600;
+
+                                info.courses[i].duration = duration / 3600;
                             }
-    
+
                             resolve({ code: 200, info: info });
                         })
                             .catch(error => {
@@ -157,28 +157,28 @@ async function getAllCursos(headers) {
                         });
                 } else {
                     dbCurs.getAllCursos().then(value2 => {
-                    
+
                         info.courses = value2;
-    
+
                         info.courses.forEach(cou => {
-                            
+
                             promises.push(dbVide.getAllVideosFromCourse(cou.id));
                         });
-    
+
                         Promise.all(promises).then(values => {
                             for (let i = 0; i < info.courses.length; i++) {
-                            let duration = 0;
-                            let durationInt = 0;
+                                let duration = 0;
+                                let durationInt = 0;
                                 info.courses[i].videos = values[i];
-                                
-                                for(j = 0; j < values[i].length; j++) {
+
+                                for (j = 0; j < values[i].length; j++) {
                                     durationInt = parseInt(values[i][j].duration)
                                     duration = duration + durationInt;
                                 }
-    
-                                info.courses[i].duration = duration/3600;
+
+                                info.courses[i].duration = duration / 3600;
                             }
-    
+
                             resolve({ code: 200, info: info });
                         })
                             .catch(error => {
@@ -213,11 +213,11 @@ async function getAllCursos(headers) {
                         let duration = 0;
                         let durationInt = 0;
                         resp.courses[i].videos = values[i];
-                        for(j = 0; j < values[i].length; j++) {
+                        for (j = 0; j < values[i].length; j++) {
                             durationInt = parseInt(values[i][j].duration)
                             duration = duration + durationInt;
                         }
-                        resp.courses[i].duration = duration/3600;
+                        resp.courses[i].duration = duration / 3600;
                     }
 
                     resolve({ code: 200, info: resp });
@@ -265,7 +265,7 @@ async function getAllUserCursos(tokens, id) {
                             let existe = false;
 
                             info.courses.forEach(c => {
-                                if(c.id == cur.id) existe = true;
+                                if (c.id == cur.id) existe = true;
                             })
 
                             if (cur.dateBought >= sixmonthsago && !existe) info.courses.push(cur);
@@ -273,10 +273,10 @@ async function getAllUserCursos(tokens, id) {
 
                         for (let i = 1; i < values.length; i++) {
                             values[i].forEach(cur => {
-                                let existe  = false;
+                                let existe = false;
 
                                 info.courses.forEach(c => {
-                                    if(c.id == cur.id) existe = true;
+                                    if (c.id == cur.id) existe = true;
                                 });
 
                                 if (!existe) info.courses.push(cur);
@@ -284,23 +284,23 @@ async function getAllUserCursos(tokens, id) {
                         }
                         resolve({ code: 200, info: info });
                     })
+                        .catch(error => {
+                            console.log(error);
+                            reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                        });
+                })
                     .catch(error => {
                         console.log(error);
                         reject({ code: 400, error: { message: "Algo correu mal com a query." } });
-                    });
-                })
-                .catch(error => {
-                    console.log(error);
-                    reject({ code: 400, error: { message: "Algo correu mal com a query." } });
-                })
+                    })
             } else {
                 reject({ code: 403, error: { message: "Um user pode apenas ver os seus cursos comprados e não os de outros users." } });
             }
         })
-        .catch(error => {
-            console.log(error);
-            reject({ code: 401, error: { message: "Token inválido." } });
-        })
+            .catch(error => {
+                console.log(error);
+                reject({ code: 401, error: { message: "Token inválido." } });
+            })
     });
 }
 
@@ -427,7 +427,7 @@ async function updateStateCursoAdm(tokens, id, body) {
                         if (body.state === "Ativo" || body.state === "Inativo" || body.state === "Pendente" || body.state === "Rejeitado") {
 
                             dbCurs.updateStateCurso(id, body.state).then(value3 => {
-                                
+
                                 //notificacao pro criador do curso
                                 let promisesNotif = [];
                                 let promises = [];
@@ -444,7 +444,7 @@ async function updateStateCursoAdm(tokens, id, body) {
                                 segundos = new Date().getSeconds();
                                 horario = horas + ':' + minutos + ':' + segundos;
                                 notif.date = mes + '-' + dias + '-' + ano + ' ' + horario;
-                                
+
 
                                 notif.id_user = value1[0].id_creator;
                                 notif.id_course = id;
@@ -470,25 +470,25 @@ async function updateStateCursoAdm(tokens, id, body) {
                                             info.message = "Estado alterado com sucesso.";
                                             resolve({ code: 200, info: info });
                                         })
+                                            .catch(error => {
+                                                console.log(error);
+                                                reject({ code: 400, error: { message: "Erro ao executar a criação das notificações." } })
+                                            })
+                                    })
                                         .catch(error => {
                                             console.log(error);
-                                            reject({ code: 400, error: { message: "Erro ao executar a criação das notificações." } })
-                                        })
-                                    })
-                                    .catch(error => {
-                                        console.log(error);
-                                        reject({ code: 400, error: { message: "Erro ao executar a query da notificação." } })
-                                    });
+                                            reject({ code: 400, error: { message: "Erro ao executar a query da notificação." } })
+                                        });
                                 } else {
                                     info.message = "Estado alterado com sucesso.";
                                     resolve({ code: 200, info: info });
                                 }
 
                             })
-                            .catch(error => {
-                                console.log(error);
-                                reject({ code: 400, error: { message: "Algo correu mal com a query." } });
-                            });
+                                .catch(error => {
+                                    console.log(error);
+                                    reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                                });
 
                         } else {
                             reject({ code: 401, error: { message: "Current state invalid" } });
@@ -496,15 +496,15 @@ async function updateStateCursoAdm(tokens, id, body) {
                     }
                 }
             })
+                .catch(error => {
+                    console.log(error);
+                    reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                });
+        })
             .catch(error => {
                 console.log(error);
-                reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                reject({ code: 401, error: { message: "Token inválido." } })
             });
-        })
-        .catch(error => {
-            console.log(error);
-            reject({ code: 401, error: { message: "Token inválido." } })
-        });
     });
 }
 
@@ -584,7 +584,7 @@ async function getCursosHomePage() {
         };
 
         let promises = [];
-        
+
         promises.push(dbCurs.getMostRecentCursos())
         promises.push(dbCurs.getMostSoldCursos())
         promises.push(dbCurs.getDestaquesCursos(currentDate))
@@ -596,36 +596,36 @@ async function getCursosHomePage() {
             let promisesVideos = [];
 
             values[0].forEach(cou => {
-                        
+
                 promisesVideos.push(dbVide.getAllVideosFromCourse(cou.id));
             });
             values[1].forEach(cou1 => {
-                        
+
                 promisesVideos.push(dbVide.getAllVideosFromCourse(cou1.id));
             });
             values[2].forEach(cou2 => {
-                        
+
                 promisesVideos.push(dbVide.getAllVideosFromCourse(cou2.id));
             });
             values[3].forEach(cou3 => {
-                        
+
                 promisesVideos.push(dbVide.getAllVideosFromCourse(cou3.id));
             });
             values[4].forEach(cou4 => {
-                        
+
                 promisesVideos.push(dbVide.getAllVideosFromCourse(cou4.id));
             });
 
             Promise.all(promisesVideos).then(values1 => {
-                for(let a = 0; a < values.length; a++) {
-                    for(let b = 0; b < 6; b++) {
+                for (let a = 0; a < values.length; a++) {
+                    for (let b = 0; b < 6; b++) {
                         let duration = 0;
                         let durationInt = 0;
-                        for(k = 0; k < values1[6*a+b].length; k++) {
-                            durationInt = parseInt(values1[6*a+b][k].duration);
+                        for (k = 0; k < values1[6 * a + b].length; k++) {
+                            durationInt = parseInt(values1[6 * a + b][k].duration);
                             duration = duration + durationInt;
                         }
-                        values[a][b].duration = duration/3600;
+                        values[a][b].duration = duration / 3600;
                     }
                 }
 
@@ -634,7 +634,7 @@ async function getCursosHomePage() {
                 cursos.destaques = values[2];
                 cursos.recomendados = values[3];
                 cursos.outros = values[4];
-                
+
                 resolve({ code: 200, info: cursos });
             })
                 .catch(error => {
