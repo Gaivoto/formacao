@@ -193,7 +193,7 @@ async function createSubscricao(tokens, body) {
     });
 }
 
-async function endSubscricao(tokens, id, body) {
+async function endSubscricao(tokens, id) {
     return new Promise((resolve, reject) => {
         
         utils.validateToken(tokens.access_token, tokens.refresh_token).then(value => {
@@ -210,21 +210,31 @@ async function endSubscricao(tokens, id, body) {
                         reject({ code: 403, error: {message: "Curso não pertence a este user." }});
                     } else {
 
-                        if(body.final_date) {
+                        let data = new Date().toLocaleDateString();
+                        let dias = data.split('/')[0];
+                        let mes = data.split('/')[1];
+                        let ano = data.split('/')[2];
+                        horas = new Date().getHours();
+                        minutos = new Date().getMinutes();
+                        segundos = new Date().getSeconds();
+                        horario = horas + ':' + minutos + ':' + segundos;
+                        let dataAtual = mes + '-' + dias + '-' + ano + ' ' + horario;
 
-                            dbSubs.endSubscricao(body.final_date, id).then(value3 => {
+                        dbSubs.endSubscricao(dataAtual, id).then(value3 => {
+                            dbComp.endCompraAfterSubscriptionEnded(id, dataAtual).then(value4 => {
                                 info.message = "Estado alterado com sucesso.";
                                 resolve({ code: 200, info: info });
                             })
                             .catch(error => {
                                 console.log(error);
                                 reject({ code: 400, error: {message: "Algo correu mal com a query." }});
-                            });
-
-                        } else {
-                            reject({ code: 401, error: {message: "Current state invalid" }});
-                        }
-                    } 
+                            })
+                        })
+                        .catch(error => {
+                            console.log(error);
+                            reject({ code: 400, error: {message: "Algo correu mal com a query." }});
+                        });
+                } 
 
                 }
             })

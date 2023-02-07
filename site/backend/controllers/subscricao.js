@@ -28,7 +28,7 @@ async function createSubscricao(req, res){
 }
 
 async function endSubscricao(req, res){
-    serSubs.endSubscricao({access_token: req.headers['authorization'].split(' ')[1], refresh_token: req.headers.refreshtoken}, req.params.id, req.body).then(value => {
+    serSubs.endSubscricao({access_token: req.headers['authorization'].split(' ')[1], refresh_token: req.headers.refreshtoken}, req.params.id).then(value => {
         res.status(value.code).send(value.info);
     })
     .catch(error => {
