@@ -5,25 +5,30 @@
 		<div class="topbar-wrapper" v-if="displaySidebarTopbar" :class="{ sidebarTopbar: sidebarOpen }">
 			<Topbar v-if="displaySidebarTopbar" v-bind:notifsOpen="notifsOpen" v-bind:searchOpen="searchOpen" v-on:toggleNotifs="toggleNotifs" v-on:toggleSearch="toggleSearch" v-on:openSearch="openSearch"/>
 		</div>
-		<router-view class="active-page" :class="{ sidebarMainPage: sidebarOpen, spaceLeft: isNotLanding }"/>	
+		<router-view class="active-page" :class="{ sidebarMainPage: sidebarOpen, spaceLeft: isNotLanding }" v-on:open-modal="this.openMessageModal"/>	
 	</div>
+	<MessageModal v-if="this.messageModalOpen" v-bind:msg="this.modalMessage" v-on:close-modal="this.closeMessageModal" />
   </div>
 </template>
 
 <script>
 import Topbar from './components/Topbar.vue'
 import Sidebar from './components/Sidebar.vue'
+import MessageModal from './components/MessageModal.vue';
 
 export default {
 	components: {
 		Topbar,
-		Sidebar
+		Sidebar,
+		MessageModal
 	},
 	data() {
 		return {
 			sidebarOpen: false,
 			searchOpen: false,
-			notifsOpen: false
+			notifsOpen: false,
+			messageModalOpen: false,
+			modalMessage: ""
 		}
 	},
 	computed: {
@@ -54,6 +59,13 @@ export default {
 		closeModals() {
 			this.notifsOpen = false;
 			this.searchOpen = false;
+		},
+		openMessageModal(msg) {
+			this.modalMessage = msg;
+			this.messageModalOpen = true;
+		},
+		closeMessageModal() {
+			this.messageModalOpen = false;
 		}
 	} 
 }
@@ -72,7 +84,6 @@ export default {
 		--light: #f1f5f9;
 		--light-alt: #8BACD9;
 		--sidebar-width: 300px;
-		//cock
 		--mobalytics-back: #34345f;
 		--mobalytics-card: #202045;
 		--mobalytics-susge: #181836;

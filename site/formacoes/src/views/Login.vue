@@ -106,15 +106,22 @@ export default {
           this.$router.push({ name: "Home" });
         })
         .catch(error => {
-          if(error.code) console.log(error.response.data);
+          if(error.code) {
+            console.log(error.response.data);
+            this.$emit("open-modal", error.response.data.message);
+          }
           else console.log(error);
         });
       } else {
-        console.log("Password/username vazios.")
+        this.$emit("open-modal", "Password/username vazios.");
       }
     },
     register() {
-      if(this.$refs.registerUsername.value != "" && this.$refs.registerPassword.value != "" && this.$refs.registerEmail.value != "" && this.$refs.registerEmail.value.includes('@')) {
+      if(this.$refs.registerUsername.value == "" || this.$refs.registerPassword.value == "" || this.$refs.registerEmail.value == "") {
+        this.$emit("open-modal", "Preencha todos os campos para efetuar registo.");
+      } else if(!this.$refs.registerEmail.value.includes('@')) {
+        this.$emit("open-modal", "O email deve ser válido.");
+      } else {
         axios({
           method: 'post',
           url: `${import.meta.env.VITE_HOST}/users/`,
@@ -128,11 +135,14 @@ export default {
           }
         })
         .then(value => {
-          //falta meter modals depois falando q a conta foi criada e pedindo pra fazer login
+          this.$emit("open-modal", value.data.message);
           this.signinbtn();
         })
         .catch(error => {
-          if(error.code) console.log(error.response.data);
+          if(error.code) {
+            console.log(error.response.data);
+            this.$emit("open-modal", error.response.data.message);
+          }
           else console.log(error);
         });
       }

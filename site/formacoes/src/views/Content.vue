@@ -91,7 +91,9 @@ export default {
             this.displayCourses = this.courses.slice(0, this.itemsPerPage);
         })
         .catch(error => {
-            if(error.code) console.log(error.response.data);
+            if(error.code) {
+                console.log(error.response.data);
+            }
             else console.log(error);
         });
     },
