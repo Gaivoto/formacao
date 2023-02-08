@@ -263,7 +263,6 @@ async function getAllUserCursos(tokens, id) {
                 dbComp.getAllComprasByUser(id).then(value2 => {
                     value2.forEach(cur => {
                         if(cur.data_sub == null && cur.dateBought >= sixmonthsago) {
-                            console.log(cur)
                             info.courses.push(cur);
                         }
                     })
