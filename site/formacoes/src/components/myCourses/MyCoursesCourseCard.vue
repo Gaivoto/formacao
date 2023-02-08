@@ -10,11 +10,8 @@
                 <p class="card-info-description">{{ this.course.description }}</p>
                 <div class="card-info-div">
                     <div>
-                        <p>{{ this.course.price }} €</p>
-                        <div>
-                            <p>{{ this.calculatedDuration }}</p>
-                            <span class="material-icons">schedule</span>
-                        </div>
+                        <span class="material-icons">schedule</span>
+                        <p>{{ this.calculatedDuration }}</p>
                     </div>
                     <div class="circle-wrap">
                         <div class="circle">
@@ -136,7 +133,7 @@ export default {
         justify-content: space-between;
     }
 
-    .card-info-div > div:first-child > div {
+    .card-info-div > div:first-child {
         display: flex;
         gap: 8px;
     }

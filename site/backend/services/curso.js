@@ -261,12 +261,30 @@ async function getAllUserCursos(tokens, id) {
                 sixmonthsago.setMonth(sixmonthsago.getMonth() - 6);
 
                 dbComp.getAllComprasByUser(id).then(value2 => {
+                    let promises = [];
                     value2.forEach(cur => {
-                        if(cur.data_sub == null && cur.dateBought >= sixmonthsago) {
+                        if((cur.id_subscription != null && cur.data_sub == null) || (cur.id_subscription == null && cur.dateBought >= sixmonthsago)) {
+
+                            promises.push(dbVide.getAllVideosFromCourse(cur.id))
                             info.courses.push(cur);
                         }
                     })
-                    resolve({ code: 200, info: info });
+                    Promise.all(promises).then(values => {
+                        for(let i = 0; i < values.length; i++){
+                            let duration = 0;
+                            let durationInt = 0;
+                            values[i].forEach(c => {
+                                durationInt = parseInt(c.duration);
+                                duration = duration + durationInt;
+                            })
+                            info.courses[i].duration = duration/3600;
+                        }
+                        resolve({ code: 200, info: info });
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                    })
                 })
                 .catch(error => {
                     console.log(error);

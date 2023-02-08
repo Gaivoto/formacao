@@ -23,8 +23,6 @@
                         <div class="items" :class="{ selectHide: !orderOpen }">
                             <div v-on:click="selectOrder('Mais recente')">Mais recente</div>
                             <div v-on:click="selectOrder('Mais antigo')">Mais antigo</div>
-                            <div v-on:click="selectOrder('Preço decrescente')">Preço decrescente</div>
-                            <div v-on:click="selectOrder('Preço crescente')">Preço crescente</div>
                             <div v-on:click="selectOrder('Progresso decrescente')">Progresso decrescente</div>
                             <div v-on:click="selectOrder('Progresso crescente')">Progresso crescente</div>
                         </div>
@@ -59,8 +57,6 @@
                         <div class="items" :class="{ selectHide: !orderOpen }">
                             <div v-on:click="selectOrder('Mais recente')">Mais recente</div>
                             <div v-on:click="selectOrder('Mais antigo')">Mais antigo</div>
-                            <div v-on:click="selectOrder('Preço decrescente')">Preço decrescente</div>
-                            <div v-on:click="selectOrder('Preço crescente')">Preço crescente</div>
                             <div v-on:click="selectOrder('Progresso decrescente')">Progresso decrescente</div>
                             <div v-on:click="selectOrder('Progresso crescente')">Progresso crescente</div>
                         </div>

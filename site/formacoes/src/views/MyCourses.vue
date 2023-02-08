@@ -1,6 +1,6 @@
 <template>
     <div class="courses-wrapper">
-        <MyCoursesFilter v-on:filter="filter" v-bind:courses="this.courses"/>
+        <MyCoursesFilter v-on:filter="filter" v-bind:categories="this.categories"/>
         <div class="row">
             <MyCoursesCourseCard v-for="course in this.coursesDisplay" :key="course.id" v-bind:course="course"/>
             <div class="no-results" :class="{ 'd-none': !noResults }">
@@ -32,7 +32,8 @@ export default {
             coursesFiltered: [],
             coursesDisplay: [],
             page: 1,
-            coursesPerPage: 8
+            coursesPerPage: 8,
+            filterInfo: {}
         }
     },
     created(){
@@ -48,7 +49,7 @@ export default {
             if(value.data.access_token) this.$store.commit('setAccessToken', value.data.access_token);
 
             value.data.courses.forEach(c => this.courses.push(c));
-
+            console.log(value.data.courses);
             this.coursesFiltered = [...this.courses];
 
             for (var i = (this.page - 1) * this.coursesPerPage; i < this.page * this.coursesPerPage; i++) {
@@ -58,6 +59,7 @@ export default {
             }
 
             this.getCategories();
+            this.filter(this.filterInfo);
         })
         .catch(error => {
             if(error.code) {
@@ -77,29 +79,23 @@ export default {
     },
     methods: {
         filter(filter) {
+            this.filterInfo = filter;
             this.coursesDisplay = [];
             this.coursesFiltered = [...this.courses];
 
             if(filter.name) {
-                this.coursesFiltered = this.coursesFiltered.filter(c => c.name.toLowerCase().includes(filter.name) || c.creator.name.toLowerCase().includes(filter.name));
+                this.coursesFiltered = this.coursesFiltered.filter(c => c.name.toLowerCase().includes(filter.name) || c.nameCr.toLowerCase().includes(filter.name));
             }
 
             if(filter.category != "Todas") {
                 this.coursesFiltered = this.coursesFiltered.filter(c => c.category == filter.category);
             }
-
             switch(filter.order) {
                 case "Mais recente":
-                    this.coursesFiltered.sort((a, b) => (new Date(a.date.substring(6) + "-" + a.date.substring(3, 5) + "-" + a.date.substring(0, 2)) < new Date(b.date.substring(6) + "-" + b.date.substring(3, 5) + "-" + b.date.substring(0, 2))) ? 1 : ((new Date(b.date.substring(6) + "-" + b.date.substring(3, 5) + "-" + b.date.substring(0, 2)) < new Date(a.date.substring(6) + "-" + a.date.substring(3, 5) + "-" + a.date.substring(0, 2))) ? -1 : 0));
+                    this.coursesFiltered.sort((a, b) => a.dateBought < b.dateBought ? 1 : b.dateBought < a.dateBought ? -1 : 0);
                     break;
                 case "Mais antigo":
-                    this.coursesFiltered.sort((a, b) => (new Date(a.date.substring(6) + "-" + a.date.substring(3, 5) + "-" + a.date.substring(0, 2)) > new Date(b.date.substring(6) + "-" + b.date.substring(3, 5) + "-" + b.date.substring(0, 2))) ? 1 : ((new Date(b.date.substring(6) + "-" + b.date.substring(3, 5) + "-" + b.date.substring(0, 2)) > new Date(a.date.substring(6) + "-" + a.date.substring(3, 5) + "-" + a.date.substring(0, 2))) ? -1 : 0));
-                    break;
-                case "Preço decrescente":
-                    this.coursesFiltered.sort((a, b) => a.price < b.price ? 1 : (b.price < a.price ? -1 : 0));
-                    break;
-                case "Preço crescente":
-                    this.coursesFiltered.sort((a, b) => (a.price > b.price ? 1 : (b.price > a.price) ? -1 : 0));
+                    this.coursesFiltered.sort((a, b) => a.dateBought > b.dateBought ? 1 : b.dateBought > a.dateBought ? -1 : 0);
                     break;
                 case "Progresso decrescente":
                     this.coursesFiltered.sort((a, b) => a.progress < b.progress ? 1 : (b.progress < a.progress ? -1 : 0));
