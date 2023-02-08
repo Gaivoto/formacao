@@ -44,11 +44,19 @@ async function getCurso(headers, id) {
                                 durationInt = parseInt(values[2][i].duration)
                                 duration = duration + durationInt;
                             }
-
-                            if (values[0].length > 0 || values[1].length > 0) {
-                                info.course.access = true;
+                            //se passar por aqui, da uma olhada na logica desses ifs ate a linha 58 e pensa numa maneira de fazer pfv, funciona tho, só acho q eu meti ifs a mais
+                            if (values[0].length > 0 && values[0][0].final_date == null) {
+                                if(values[1].length > 0 && values[1][0].data_sub == null) {
+                                    info.course.access = true;
+                                }
                             }
-                            info.course.duration = duration / 3600;
+                            else {
+                                console.log(values[0].length)
+                                if(values[1].length > 0 && values[1][0].data_sub == null) {
+                                    info.course.access = true;
+                                }
+                            }
+                            info.course.duration = duration/3600;
                             info.course.videos = values[2];
                             resolve({ code: 200, info: info });
 
@@ -243,56 +251,28 @@ async function getAllUserCursos(tokens, id) {
             info.courses = [];
             if (info.user.id == id) {
                 let promises = [];
+                let currentDate = new Date().toLocaleDateString();
+                let dias = currentDate.split('/')[0];
+                let mes = currentDate.split('/')[1];
+                let ano = currentDate.split('/')[2];
+                currentDate = mes + '-' + dias + '-' + ano;
 
-                promises.push(dbComp.getAllComprasByUser(id));
+                let sixmonthsago = new Date();
+                sixmonthsago.setMonth(sixmonthsago.getMonth() - 6);
 
-                dbSubs.getAllSubscricoesByUser(id).then(value => {
-                    value.forEach(sub => {
-                        promises.push(dbCurs.getCursosByCriadorForSubbedUser(sub.id_subscribed));
-                    });
-
-                    Promise.all(promises).then(values => {
-                        let currentDate = new Date().toLocaleDateString();
-                        let dias = currentDate.split('/')[0];
-                        let mes = currentDate.split('/')[1];
-                        let ano = currentDate.split('/')[2];
-                        currentDate = mes + '-' + dias + '-' + ano;
-
-                        let sixmonthsago = new Date();
-                        sixmonthsago.setMonth(sixmonthsago.getMonth() - 6);
-
-                        values[0].forEach(cur => {
-                            let existe = false;
-
-                            info.courses.forEach(c => {
-                                if (c.id == cur.id) existe = true;
-                            })
-
-                            if (cur.dateBought >= sixmonthsago && !existe) info.courses.push(cur);
-                        });
-
-                        for (let i = 1; i < values.length; i++) {
-                            values[i].forEach(cur => {
-                                let existe = false;
-
-                                info.courses.forEach(c => {
-                                    if (c.id == cur.id) existe = true;
-                                });
-
-                                if (!existe) info.courses.push(cur);
-                            });
+                dbComp.getAllComprasByUser(id).then(value2 => {
+                    value2.forEach(cur => {
+                        if(cur.data_sub == null && cur.dateBought >= sixmonthsago) {
+                            info.courses.push(cur);
                         }
-                        resolve({ code: 200, info: info });
                     })
-                        .catch(error => {
-                            console.log(error);
-                            reject({ code: 400, error: { message: "Algo correu mal com a query." } });
-                        });
+                    resolve({ code: 200, info: info });
                 })
-                    .catch(error => {
-                        console.log(error);
-                        reject({ code: 400, error: { message: "Algo correu mal com a query." } });
-                    })
+                .catch(error => {
+                    console.log(error);
+                    reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                })
+
             } else {
                 reject({ code: 403, error: { message: "Um user pode apenas ver os seus cursos comprados e não os de outros users." } });
             }
@@ -311,43 +291,58 @@ async function createCurso(tokens, body) {
             let id
             let existe
 
-            dbCurs.isNameTaken(body.name).then(value2 => {
+            if(info.user.type != "creator") {
+                reject({ code: 401, error: { message: "Apenas criadores podem criar cursos." } });
+            } else {
+            
+                dbCurs.isNameTaken(body.name).then(value2 => {
 
-                if (value2.length > 0) {
-                    reject({ code: 400, error: { message: "Já existe um curso com este nome." } });
-                } else {
+                    if (value2.length > 0) {
+                        reject({ code: 400, error: { message: "Já existe um curso com este nome." } });
+                    } else {
 
-                    dbCurs.getAllCursos().then(value3 => {
+                        dbCurs.getAllCursos().then(value3 => {
 
-                        do {
-                            id = uuid.v4();
-                            existe = false;
+                            do {
+                                id = uuid.v4();
+                                existe = false;
 
-                            value3.forEach(u => {
-                                if (u.id == id) existe = true;
-                            });
-                        } while (existe)
+                                value3.forEach(u => {
+                                    if (u.id == id) existe = true;
+                                });
+                            } while (existe)
 
-                        dbCurs.createCurso(id, body).then(value => {
-                            info.message = "Curso criado com sucesso.";
-                            resolve({ code: 201, info: info });
+                            let data = new Date().toLocaleDateString();
+                            let dias = data.split('/')[0];
+                            let mes = data.split('/')[1];
+                            let ano = data.split('/')[2];
+                            horas = new Date().getHours();
+                            minutos = new Date().getMinutes();
+                            segundos = new Date().getSeconds();
+                            horario = horas + ':' + minutos + ':' + segundos;
+                            body.date = mes + '-' + dias + '-' + ano + ' ' + horario;
+
+                            dbCurs.createCurso(id, body).then(value => {
+                                info.message = "Curso criado com sucesso.";
+                                resolve({ code: 201, info: info });
+                            })
+                                .catch(error => {
+                                    console.log(error);
+                                    reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                                });
                         })
                             .catch(error => {
                                 console.log(error);
                                 reject({ code: 400, error: { message: "Algo correu mal com a query." } });
                             });
-                    })
-                        .catch(error => {
-                            console.log(error);
-                            reject({ code: 400, error: { message: "Algo correu mal com a query." } });
-                        });
 
-                }
-            })
-                .catch(error => {
-                    console.log(error);
-                    reject({ code: 400, error: { message: "Algo correu mal com a query." } });
-                });
+                    }
+                })
+                    .catch(error => {
+                        console.log(error);
+                        reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                    });
+            }
         })
             .catch(error => {
                 console.log(error);

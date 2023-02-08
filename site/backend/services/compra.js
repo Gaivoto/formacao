@@ -107,11 +107,15 @@ async function createCompra(tokens, body) {
             let existeID
             let existeCompra = false
             let existeSubs = false
-            let currentDate = new Date().toLocaleDateString();
-            let dias = currentDate.split('/')[0];
-            let mes = currentDate.split('/')[1];
-            let ano = currentDate.split('/')[2];
-            currentDate = mes + '-' + dias + '-' + ano
+            let data = new Date().toLocaleDateString();
+            let dias = data.split('/')[0];
+            let mes = data.split('/')[1];
+            let ano = data.split('/')[2];
+            horas = new Date().getHours();
+            minutos = new Date().getMinutes();
+            segundos = new Date().getSeconds();
+            horario = horas + ':' + minutos + ':' + segundos;
+            let currentDate = mes + '-' + dias + '-' + ano + ' ' + horario;
             if (body.id_user !== info.user.id) {
                 reject({ code: 400, error: { message: "Não pode comprar subscrições a outros utilizadores." } });
             } else {

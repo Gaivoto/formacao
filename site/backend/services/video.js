@@ -91,50 +91,64 @@ async function createVideo(tokens, body) {
             let info = value1;
             let id
             let existe
+            if(info.user.type != "creator") {
+                reject({ code: 401, error: { message: "Apenas criadores podem criar cursos." } });
+            } else {
 
-            dbVideo.isTitleTaken(body.title).then(value2 => {
+                dbVideo.isTitleTaken(body.title).then(value2 => {
 
-                if (value2.length > 0) {
-                    reject({ code: 403, error: { message: "Esse nome já está a ser utilizado." } });
-                } else {
+                    if (value2.length > 0) {
+                        reject({ code: 403, error: { message: "Esse nome já está a ser utilizado." } });
+                    } else {
 
-                    dbUser.getAllUsers().then(value3 => {
+                        dbUser.getAllUsers().then(value3 => {
 
-                        do {
-                            id = uuid.v4();
-                            existe = false;
+                            do {
+                                id = uuid.v4();
+                                existe = false;
 
-                            value3.forEach(u => {
-                                if (u.id == id) existe = true;
-                            });
-                        } while (existe)
+                                value3.forEach(u => {
+                                    if (u.id == id) existe = true;
+                                });
+                            } while (existe)
 
-                        dbVideo.createVideo(id, body).then(value => {
-                            info.message = "Vídeo criado com sucesso.";
-                            resolve({ code: 200, info: info });
+                            let data = new Date().toLocaleDateString();
+                            let dias = data.split('/')[0];
+                            let mes = data.split('/')[1];
+                            let ano = data.split('/')[2];
+                            horas = new Date().getHours();
+                            minutos = new Date().getMinutes();
+                            segundos = new Date().getSeconds();
+                            horario = horas + ':' + minutos + ':' + segundos;
+                            body.date = mes + '-' + dias + '-' + ano + ' ' + horario;
+
+                            dbVideo.createVideo(id, body).then(value => {
+                                info.message = "Vídeo criado com sucesso.";
+                                resolve({ code: 200, info: info });
+                            })
+                                .catch(error => {
+                                    console.log(error);
+                                    reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                                });
                         })
                             .catch(error => {
                                 console.log(error);
                                 reject({ code: 400, error: { message: "Algo correu mal com a query." } });
                             });
-                    })
-                        .catch(error => {
-                            console.log(error);
-                            reject({ code: 400, error: { message: "Algo correu mal com a query." } });
-                        });
 
-                }
-            })
+                    }
+                })
                 .catch(error => {
                     console.log(error);
                     reject({ code: 400, error: { message: "Algo correu mal com a query." } });
                 });
+            }
 
         })
-            .catch(error => {
-                console.log(error);
-                reject({ code: 401, error: { message: "Token inválido." } })
-            });
+        .catch(error => {
+            console.log(error);
+            reject({ code: 401, error: { message: "Token inválido." } })
+        });
     });
 }
 
@@ -167,10 +181,10 @@ async function updateStateVideoUser(tokens, body) {
                                             info.message = "Estado alterado com sucesso.";
                                             resolve({ code: 200, info: info });
                                         })
-                                            .catch(error => {
-                                                console.log(error);
-                                                reject({ code: 400, error: { message: "Algo correu mal com a query." } });
-                                            });
+                                        .catch(error => {
+                                            console.log(error);
+                                            reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                                        });
 
                                     } else {
 
@@ -179,27 +193,27 @@ async function updateStateVideoUser(tokens, body) {
                                     }
                                 }
                             })
-                                .catch(error => {
-                                    console.log(error);
-                                    reject({ code: 400, error: { message: "Algo correu mal com a query." } });
-                                });
+                            .catch(error => {
+                                console.log(error);
+                                reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                            });
                         }
                     })
-                        .catch(error => {
-                            console.log(error);
-                            reject({ code: 400, error: { message: "Algo correu mal com a query." } });
-                        });
+                    .catch(error => {
+                        console.log(error);
+                        reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                    });
                 }
             })
-                .catch(error => {
-                    console.log(error);
-                    reject({ code: 400, error: { message: "Algo correu mal com a query." } });
-                });
-        })
             .catch(error => {
                 console.log(error);
-                reject({ code: 401, error: { message: "Token inválido." } })
+                reject({ code: 400, error: { message: "Algo correu mal com a query." } });
             });
+        })
+        .catch(error => {
+            console.log(error);
+            reject({ code: 401, error: { message: "Token inválido." } })
+        });
     });
 }
 
