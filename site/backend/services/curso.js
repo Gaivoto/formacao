@@ -291,43 +291,58 @@ async function createCurso(tokens, body) {
             let id
             let existe
 
-            dbCurs.isNameTaken(body.name).then(value2 => {
+            if(info.user.type != "creator") {
+                reject({ code: 401, error: { message: "Apenas criadores podem criar cursos." } });
+            } else {
+            
+                dbCurs.isNameTaken(body.name).then(value2 => {
 
-                if (value2.length > 0) {
-                    reject({ code: 400, error: { message: "Já existe um curso com este nome." } });
-                } else {
+                    if (value2.length > 0) {
+                        reject({ code: 400, error: { message: "Já existe um curso com este nome." } });
+                    } else {
 
-                    dbCurs.getAllCursos().then(value3 => {
+                        dbCurs.getAllCursos().then(value3 => {
 
-                        do {
-                            id = uuid.v4();
-                            existe = false;
+                            do {
+                                id = uuid.v4();
+                                existe = false;
 
-                            value3.forEach(u => {
-                                if (u.id == id) existe = true;
-                            });
-                        } while (existe)
+                                value3.forEach(u => {
+                                    if (u.id == id) existe = true;
+                                });
+                            } while (existe)
 
-                        dbCurs.createCurso(id, body).then(value => {
-                            info.message = "Curso criado com sucesso.";
-                            resolve({ code: 201, info: info });
+                            let data = new Date().toLocaleDateString();
+                            let dias = data.split('/')[0];
+                            let mes = data.split('/')[1];
+                            let ano = data.split('/')[2];
+                            horas = new Date().getHours();
+                            minutos = new Date().getMinutes();
+                            segundos = new Date().getSeconds();
+                            horario = horas + ':' + minutos + ':' + segundos;
+                            body.date = mes + '-' + dias + '-' + ano + ' ' + horario;
+
+                            dbCurs.createCurso(id, body).then(value => {
+                                info.message = "Curso criado com sucesso.";
+                                resolve({ code: 201, info: info });
+                            })
+                                .catch(error => {
+                                    console.log(error);
+                                    reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                                });
                         })
                             .catch(error => {
                                 console.log(error);
                                 reject({ code: 400, error: { message: "Algo correu mal com a query." } });
                             });
-                    })
-                        .catch(error => {
-                            console.log(error);
-                            reject({ code: 400, error: { message: "Algo correu mal com a query." } });
-                        });
 
-                }
-            })
-                .catch(error => {
-                    console.log(error);
-                    reject({ code: 400, error: { message: "Algo correu mal com a query." } });
-                });
+                    }
+                })
+                    .catch(error => {
+                        console.log(error);
+                        reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                    });
+            }
         })
             .catch(error => {
                 console.log(error);
