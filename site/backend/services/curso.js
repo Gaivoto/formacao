@@ -44,9 +44,17 @@ async function getCurso(headers, id) {
                                 durationInt = parseInt(values[2][i].duration)
                                 duration = duration + durationInt;
                             }
-
-                            if (values[0].length > 0 || values[1].length > 0) {
-                                info.course.access = true;
+                            //se passar por aqui, da uma olhada na logica desses ifs ate a linha 58 e pensa numa maneira de fazer pfv, funciona tho, só acho q eu meti ifs a mais
+                            if (values[0].length > 0 && values[0][0].final_date == null) {
+                                if(values[1].length > 0 && values[1][0].data_sub == null) {
+                                    info.course.access = true;
+                                }
+                            }
+                            else {
+                                console.log(values[0].length)
+                                if(values[1].length > 0 && values[1][0].data_sub == null) {
+                                    info.course.access = true;
+                                }
                             }
                             info.course.duration = duration/3600;
                             info.course.videos = values[2];
@@ -243,56 +251,29 @@ async function getAllUserCursos(tokens, id) {
             info.courses = [];
             if (info.user.id == id) {
                 let promises = [];
+                let currentDate = new Date().toLocaleDateString();
+                let dias = currentDate.split('/')[0];
+                let mes = currentDate.split('/')[1];
+                let ano = currentDate.split('/')[2];
+                currentDate = mes + '-' + dias + '-' + ano;
 
-                promises.push(dbComp.getAllComprasByUser(id));
+                let sixmonthsago = new Date();
+                sixmonthsago.setMonth(sixmonthsago.getMonth() - 6);
 
-                dbSubs.getAllSubscricoesByUser(id).then(value => {
-                    value.forEach(sub => {
-                        promises.push(dbCurs.getCursosByCriadorForSubbedUser(sub.id_subscribed));
-                    });
-
-                    Promise.all(promises).then(values => {
-                        let currentDate = new Date().toLocaleDateString();
-                        let dias = currentDate.split('/')[0];
-                        let mes = currentDate.split('/')[1];
-                        let ano = currentDate.split('/')[2];
-                        currentDate = mes + '-' + dias + '-' + ano;
-
-                        let sixmonthsago = new Date();
-                        sixmonthsago.setMonth(sixmonthsago.getMonth() - 6);
-
-                        values[0].forEach(cur => {
-                            let existe = false;
-
-                            info.courses.forEach(c => {
-                                if(c.id == cur.id) existe = true;
-                            })
-
-                            if (cur.dateBought >= sixmonthsago && !existe) info.courses.push(cur);
-                        });
-
-                        for (let i = 1; i < values.length; i++) {
-                            values[i].forEach(cur => {
-                                let existe  = false;
-
-                                info.courses.forEach(c => {
-                                    if(c.id == cur.id) existe = true;
-                                });
-
-                                if (!existe) info.courses.push(cur);
-                            });
+                dbComp.getAllComprasByUser(id).then(value2 => {
+                    value2.forEach(cur => {
+                        if(cur.data_sub == null && cur.dateBought >= sixmonthsago) {
+                            console.log(cur)
+                            info.courses.push(cur);
                         }
-                        resolve({ code: 200, info: info });
                     })
-                    .catch(error => {
-                        console.log(error);
-                        reject({ code: 400, error: { message: "Algo correu mal com a query." } });
-                    });
+                    resolve({ code: 200, info: info });
                 })
                 .catch(error => {
                     console.log(error);
                     reject({ code: 400, error: { message: "Algo correu mal com a query." } });
                 })
+
             } else {
                 reject({ code: 403, error: { message: "Um user pode apenas ver os seus cursos comprados e não os de outros users." } });
             }
