@@ -3,6 +3,8 @@ const uuid = require('uuid');
 
 const dbSubs = require('../db/subscricao.js');
 const dbUser = require('../db/user.js');
+const dbCurs = require('../db/curso.js');
+const dbComp = require('../db/compra.js');
 
 async function getSubscricao(headers, id) {
     return new Promise((resolve, reject) => {
@@ -98,6 +100,7 @@ async function getAllSubscricoes(headers) {
 }
 
 async function createSubscricao(tokens, body) {
+    
     return new Promise((resolve, reject) => {
         utils.validateToken(tokens.access_token, tokens.refresh_token).then(value1 => {
             let info = value1;
@@ -119,18 +122,50 @@ async function createSubscricao(tokens, body) {
                         } else {
 
                             dbSubs.getAllSubscricoes().then(value4 => {
-        
+                                
                                 do {
-                                    id = uuid.v4();
+                                    idSub = uuid.v4();
                                     existe = false;
                 
                                     value4.forEach(u => {
-                                        if(u.id == id) existe = true;
+                                        if(u.id == idSub) existe = true;
                                     });
                                 } while(existe)
-            
-                                dbSubs.createSubscricao(id, body).then(value => {
-                                    resolve({ code: 201, info: info });
+                                
+                                let data = new Date().toLocaleDateString();
+                                let dias = data.split('/')[0];
+                                let mes = data.split('/')[1];
+                                let ano = data.split('/')[2];
+                                horas = new Date().getHours();
+                                minutos = new Date().getMinutes();
+                                segundos = new Date().getSeconds();
+                                horario = horas + ':' + minutos + ':' + segundos;
+                                let dataAtual = mes + '-' + dias + '-' + ano + ' ' + horario;
+                                body.start_date = dataAtual;
+                                dbSubs.createSubscricao(idSub, body).then(value5 => {
+                                    
+                                    dbCurs.getCursosByCriador(body.id_subscribed).then(value6 =>{
+                                        let promisesCompra = [];
+                                        for(let i = 0; i < value6.length; i++ ) {
+                                            let idCompra = uuid.v4();
+                                            let compraObj = {};
+                                            compraObj.id_user = body.id_subscriber;
+                                            compraObj.id_course = value6[i].id;
+                                            compraObj.id_subscription = idSub;
+                                            promisesCompra.push(dbComp.createCompra(idCompra, compraObj, dataAtual))
+                                        }
+                                        Promise.all(promisesCompra).then(values => {
+                                            resolve({ code: 201, info: info });
+                                        })
+                                        .catch(error => {
+                                            console.log(error);
+                                            reject({ code: 400, error: {message: "Algo correu mal com as promises das compras após subscription." }});
+                                        })
+                                    })
+                                    .catch(error => {
+                                        console.log(error);
+                                        reject({ code: 400, error: {message: "Algo correu mal com a query de buscar cursos do criador." }});
+                                    })
                                 })
                                 .catch(error => {
                                     console.log(error);
@@ -158,7 +193,7 @@ async function createSubscricao(tokens, body) {
     });
 }
 
-async function endSubscricao(tokens, id, body) {
+async function endSubscricao(tokens, id) {
     return new Promise((resolve, reject) => {
         
         utils.validateToken(tokens.access_token, tokens.refresh_token).then(value => {
@@ -175,21 +210,31 @@ async function endSubscricao(tokens, id, body) {
                         reject({ code: 403, error: {message: "Curso não pertence a este user." }});
                     } else {
 
-                        if(body.final_date) {
+                        let data = new Date().toLocaleDateString();
+                        let dias = data.split('/')[0];
+                        let mes = data.split('/')[1];
+                        let ano = data.split('/')[2];
+                        horas = new Date().getHours();
+                        minutos = new Date().getMinutes();
+                        segundos = new Date().getSeconds();
+                        horario = horas + ':' + minutos + ':' + segundos;
+                        let dataAtual = mes + '-' + dias + '-' + ano + ' ' + horario;
 
-                            dbSubs.endSubscricao(body.final_date, id).then(value3 => {
+                        dbSubs.endSubscricao(dataAtual, id).then(value3 => {
+                            dbComp.endCompraAfterSubscriptionEnded(id, dataAtual).then(value4 => {
                                 info.message = "Estado alterado com sucesso.";
                                 resolve({ code: 200, info: info });
                             })
                             .catch(error => {
                                 console.log(error);
                                 reject({ code: 400, error: {message: "Algo correu mal com a query." }});
-                            });
-
-                        } else {
-                            reject({ code: 401, error: {message: "Current state invalid" }});
-                        }
-                    } 
+                            })
+                        })
+                        .catch(error => {
+                            console.log(error);
+                            reject({ code: 400, error: {message: "Algo correu mal com a query." }});
+                        });
+                } 
 
                 }
             })
