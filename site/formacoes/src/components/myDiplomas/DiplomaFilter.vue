@@ -67,35 +67,19 @@
 export default {
     name: "MyDiplomasFilter",
     props: {
-        diplomas: {
+        categories: {
             type: Object,
             required: true
         }
     },
     data() {
         return {
-            categories: [],
             catOpen: false,
             orderOpen: false,
             category: "Todas",
             order: "Mais recente",
             responsiveFilter: false
         }
-    },
-    created() {
-        this.diplomas.forEach(d => {
-            let exists = false;
-
-            this.categories.forEach(cat => {
-                if (d.category == cat.name) {
-                    exists = true;
-                }
-            });
-
-            if (!exists) {
-                this.categories.push({id: this.categories.length, name: d.category});
-            }
-        });
     },
     mounted(){
         let filter = {

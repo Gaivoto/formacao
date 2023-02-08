@@ -11,7 +11,7 @@
                 <span class="material-icons search-icon">search</span>
             </div> 
             <div ref="topSearchbarResults" class="searchbar-results" :class="{ 'd-none': !searchOpen }">
-                <div class="no-results" :class="{ 'd-none': !noResults }">
+                <div class="no-results" v-if="this.noResults">
                     <span class="material-icons search-icon">warning</span>
                     <p>Não existem resultados para a pesquisa.</p>    
                 </div>
@@ -33,7 +33,10 @@
             </div>
         </div>
 
-        <div ref="notifList" class="notif-list" :class="{ 'd-none': !notifsOpen && this.notifications.length > 0 }">
+        <div ref="notifList" class="notif-list" :class="{ 'd-none': !notifsOpen }">
+            <div class="no-notifications" v-if="!this.hasNotifs">
+                <p>Não existem notificações.</p>    
+            </div>
             <NotificationListItem v-for="notif in this.notifications" :key="notif.id" v-bind:notification="notif"/>
         </div>
     </div>
@@ -150,6 +153,9 @@ export default {
         getUserId() {
             if(this.$store.getters.getUser.id) return this.$store.getters.getUser.id;
             return 0;
+        },
+        hasNotifs() {
+            return (this.notifications.length > 0);
         }
     },
     methods: {
@@ -360,6 +366,11 @@ export default {
     .notif-list::-webkit-scrollbar-thumb {
         background: var(--mobalytics-card);
         border-radius: 8px;
+    }
+
+    .notif-list .no-notifications {
+        padding: 24px 16px;
+        text-align: center;
     }
 
     .wrapper {

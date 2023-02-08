@@ -11,8 +11,8 @@
                 <div class="diploma-text">
                     <p class="certificado-text">CERTIFICADO</p>
                     <p class="formacao-text">DE FORMAÇÃO</p>
-                    <p class="data">{{ this.diploma.date }}</p>
-                    <p class="user">{{ this.user }}</p>
+                    <p class="data">{{ this.formatedDate }}</p>
+                    <p class="user">{{ this.user.name }}</p>
                     <p class="curso-text">Completou com sucesso a formação</p>
                     <p class="curso">{{ this.diploma.course }}</p>
                     <p class="formador">{{ this.diploma.creator }}</p>
@@ -29,16 +29,24 @@ export default {
         diploma: {
             type: Object,
             required: true
+        },
+        user: {
+            type: Object,
+            required: true
         }
     },
     data() {
         return {
-            imageUrl: "",
-            user: "Asdfaeif Rkajdfioas"
+            imageUrl: ""
         }
     },
     created() {
         this.imageUrl = new URL(`../../assets/${this.diploma.image}.jpg`, import.meta.url).href;
+    },
+    computed: {
+        formatedDate() {
+            return this.diploma.date.substring(8, 10) + "/" + this.diploma.date.substring(5, 7) + "/" + this.diploma.date.substring(0, 4);
+        }
     }
 };
 </script>
