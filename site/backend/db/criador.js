@@ -16,7 +16,7 @@ sql.connect(config, function (err) {
 async function getAllCriadores() {
     const pool = new sql.Request();
     return new Promise((resolve, reject) => {
-        const slct = `SELECT * FROM [Users] where [type] = 'creator'`;
+        const slct = `SELECT id, username, type, name, email, description, price, image, state FROM [Users] where [type] = 'creator'`;
         pool.query(slct, (err, res) => {
             if (!err) {
                 resolve(res.recordset);
@@ -30,7 +30,7 @@ async function getAllCriadores() {
 async function getCriador(id) {
     const pool = new sql.Request();
     return new Promise((resolve, reject) => {
-        const slct = `SELECT * FROM [Users] WHERE [id] = @id AND [type] = 'creator'`;
+        const slct = `SELECT id, username, type, name, email, description, price, image, state FROM [Users] WHERE [id] = @id AND [type] = 'creator'`;
         pool.input('id', sql.VarChar(200), id).query(slct, (err, res) => {
             if (!err) {
                 resolve(res.recordset);

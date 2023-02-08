@@ -20,7 +20,7 @@
         </div>
         
         <div class="topbar-right">
-            <router-link class="user-wrapper" :to="{ name: 'Perfil do Utilizador', params: { id: this.getUserId } }">
+            <router-link class="user-wrapper" :to="{ name: 'Perfil do Utilizador', params: { id: this.getUserId } }" :key="this.getUserId">
                 <div class="topbar-text">
                     <p>{{ this.$store.getters.getUser.username }}</p>
                 </div>

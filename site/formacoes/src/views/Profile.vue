@@ -1,18 +1,24 @@
 <template>
     <div class="profile-wrapper">
         <UserProfileInfo v-bind:user="this.user" v-on:alterar-dados="alterarDadosUser" />
-        <div class="profile-bottom" v-if="!this.isUserAdm">
-            <div>
-                <router-link :to="{ name: 'Meus Cursos', params: { id: 1 } }">Os meus cursos</router-link>
+        <div class="profile-bottom" v-if="!this.isUserAdm && this.userHasItems && this.ownProfile">
+            <div v-if="this.userHasCourses">
+                <router-link :to="{ name: 'Meus Cursos', params: { id: this.getUserId } }" class="profile-bottom-title">Os meus cursos</router-link>
                 <div class="profile-list">
                     <UserProfileCourseCard v-for="course in this.courses" :key="course.id" v-bind:course="course" />
                 </div>
             </div>
-            <div>
-                <router-link :to="{ name: 'Meus Diplomas', params: { id: 1 } }">Os meus diplomas</router-link>
+            <div v-if="this.userHasDiplomas">
+                <router-link :to="{ name: 'Meus Diplomas', params: { id: this.getUserId } }" class="profile-bottom-title">Os meus diplomas</router-link>
                 <div class="profile-list last-list">
                     <UserProfileDiplomaCard v-for="diploma in this.diplomas" :key="diploma.id" v-bind:diploma="diploma" />
                 </div>
+            </div>
+        </div>
+        <div class="profile-bottom creator-courses" v-if="!this.ownProfile">
+            <p class="profile-bottom-title">Cursos do criador</p>
+            <div class="row creator-list">
+                <CreatorProfileCourseCard v-for="course in this.courses" :key="course.id" v-bind:course="course" class="col-2" />
             </div>
         </div>
     </div>
@@ -23,6 +29,7 @@ import axios from "axios";
 import UserProfileInfo from "../components/profile/UserProfileInfo.vue";
 import UserProfileCourseCard from "../components/profile/UserProfileCourseCard.vue";
 import UserProfileDiplomaCard from "../components/profile/UserProfileDiplomaCard.vue";
+import CreatorProfileCourseCard from "../components/profile/CreatorProfileCourseCard.vue";
 
 export default {
     name: "Profile",
@@ -30,6 +37,7 @@ export default {
         UserProfileInfo,
         UserProfileCourseCard,
         UserProfileDiplomaCard,
+        CreatorProfileCourseCard
     },
     data() {
         return {
@@ -46,31 +54,132 @@ export default {
         };
     },
     created() {
-        axios({
-            method: "get",
-            url: `${import.meta.env.VITE_HOST}/users/${this.$store.getters.getUser.id}`,
-            headers: {
-                Authorization: `Bearer ${this.$store.getters.getAccessToken}`,
-                refreshtoken: this.$store.getters.getRefreshToken,
-            },
-        })
-        .then((value) => {
-            this.user = value.data;
-            this.courses = value.data.courses;
-            this.diplomas = value.data.diplomas;
-        })
-        .catch((error) => {
-            if (error.code) {
-                console.log(error.response.data);
-                this.$emit("open-modal", error.response.data.message);
-            } else console.log(error);
-        });
+        if(this.$route.params.id == this.$store.getters.getUser.id) {
+            axios({
+                method: "get",
+                url: `${import.meta.env.VITE_HOST}/users/${this.$store.getters.getUser.id}`,
+                headers: {
+                    Authorization: `Bearer ${this.$store.getters.getAccessToken}`,
+                    refreshtoken: this.$store.getters.getRefreshToken,
+                },
+            })
+            .then((value) => {
+                if(value.data.access_token) this.$store.commit('setAccessToken', value.data.access_token);
+                this.user = value.data;
+                value.data.courses.forEach(c => this.courses.push(c));
+                value.data.diplomas.forEach(d => this.diplomas.push(d));
+            })
+            .catch((error) => {
+                if (error.code) {
+                    console.log(error.response.data);
+                    this.$emit("open-modal", error.response.data.message);
+                } else console.log(error);
+            });
+        } else {
+            let request = {
+                method: 'get',
+                url: `${import.meta.env.VITE_HOST}/criadores/${this.$route.params.id}`
+            }
+
+            if(this.$store.getters.getUser.id != "") {
+                request.headers = {
+                    Authorization: `Bearer ${this.$store.getters.getAccessToken}`,
+                    refreshtoken: this.$store.getters.getRefreshToken,
+                }
+            }
+
+            axios(request)
+            .then(value => {
+                if(value.data.access_token) this.$store.commit('setAccessToken', value.data.access_token);
+                this.user = value.data.criador;
+                value.data.criador.cursos.forEach(c => this.courses.push(c));
+            })
+            .catch(error => {
+                if (error.code) {
+                    console.log(error.response.data);
+                    this.$emit("open-modal", error.response.data.message);
+                } else console.log(error);
+            });
+        }
+    },
+    beforeRouteUpdate(to, from){
+        this.user = {};
+        this.courses = [];
+        this.diplomas = [];
+
+        if(to.params.id == this.$store.getters.getUser.id) {
+            axios({
+                method: "get",
+                url: `${import.meta.env.VITE_HOST}/users/${this.$store.getters.getUser.id}`,
+                headers: {
+                    Authorization: `Bearer ${this.$store.getters.getAccessToken}`,
+                    refreshtoken: this.$store.getters.getRefreshToken,
+                },
+            })
+            .then((value) => {
+                if(value.data.access_token) this.$store.commit('setAccessToken', value.data.access_token);
+                this.user = value.data;
+                console.log(value.data.criador)
+                value.data.courses.forEach(c => this.courses.push(c));
+                value.data.diplomas.forEach(d => this.diplomas.push(d));
+            })
+            .catch((error) => {
+                if (error.code) {
+                    console.log(error.response.data);
+                    this.$emit("open-modal", error.response.data.message);
+                } else console.log(error);
+            });
+        } else {
+            let request = {
+                method: 'get',
+                url: `${import.meta.env.VITE_HOST}/criadores/${to.params.id}`
+            }
+
+            if(this.$store.getters.getUser.id != "") {
+                request.headers = {
+                    Authorization: `Bearer ${this.$store.getters.getAccessToken}`,
+                    refreshtoken: this.$store.getters.getRefreshToken,
+                }
+            }
+
+            axios(request)
+            .then(value => {
+                if(value.data.access_token) this.$store.commit('setAccessToken', value.data.access_token);
+                this.user = value.data.criador;
+                console.log(value.data)
+                value.data.criador.cursos.forEach(c => this.courses.push(c));
+            })
+            .catch(error => {
+                if (error.code) {
+                    console.log(error.response.data);
+                    this.$emit("open-modal", error.response.data.message);
+                } else console.log(error);
+            });
+        }
     },
     computed: {
+        getUserId() {
+            if(this.$store.getters.getUser.id) return this.$store.getters.getUser.id;
+            return 0;
+        },
         isUserAdm() {
             if (this.$store.getters.getUser.type && this.$store.getters.getUser.type == "admin") return true;
             return false;
         },
+        userHasItems() {
+            return (this.userHasCourses || this.userHasDiplomas);
+        },
+        userHasCourses() {
+            if(this.courses.length > 0) return true;
+            return false;
+        },
+        userHasDiplomas() {
+            if(this.diplomas.length > 0) return true;
+            return false;
+        },
+        ownProfile() {
+            return (this.$route.params.id == this.$store.getters.getUser.id);
+        }
     },
     methods: {
         alterarDadosUser(info) {
@@ -100,8 +209,8 @@ export default {
             } else {
                 this.$emit("open-modal", "Introduza um nome válido.");
             }
-        },
-    },
+        }
+    }
 };
 </script>
 
@@ -117,7 +226,7 @@ export default {
         box-shadow: rgba(20, 14, 49, 0.6) 0px 2px 10px 4px;
     }
 
-    .profile-bottom > div > a {
+    .profile-bottom .profile-bottom-title {
         color: var(--primary);
         font-size: 20px;
         margin-left: 24px;
@@ -143,6 +252,26 @@ export default {
     }
 
     .profile-list::-webkit-scrollbar-thumb {
+        background: var(--mobalytics-back);
+        border-radius: 8px;
+    }
+
+    .row {
+        margin: 0px;
+        padding: 0px 8px;
+    }
+
+    .creator-list {
+        max-height: 580px;
+        overflow-y: scroll;
+    }
+
+    .creator-list::-webkit-scrollbar {
+        width: 10px;
+        background: var(--mobalytics-card);
+    }
+
+    .creator-list::-webkit-scrollbar-thumb {
         background: var(--mobalytics-back);
         border-radius: 8px;
     }

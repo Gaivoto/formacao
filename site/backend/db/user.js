@@ -16,7 +16,7 @@ sql.connect(config, function (err) {
 async function getAllUsers() {
     const pool = new sql.Request();
     return new Promise((resolve, reject) => {
-        const slct = `SELECT * FROM [Users] where [type] = 'user'`;
+        const slct = `SELECT id, username, type, name, email, description, image, state FROM [Users] where [type] = 'user'`;
         pool.query(slct, (err, res) => {
             if (!err) {
                 resolve(res.recordset);
@@ -31,7 +31,7 @@ async function getAllUsers() {
 async function getUser(id) {
     const pool = new sql.Request();
     return new Promise((resolve, reject) => {
-        const slct = `SELECT * FROM [Users] WHERE [id] = @id`;
+        const slct = `SELECT id, username, type, name, email, description, price, image, state FROM [Users] WHERE [id] = @id`;
         pool.input('id', sql.VarChar(200), id).query(slct, (err, res) => {
             if (!err) {
                 resolve(res.recordset);

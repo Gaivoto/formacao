@@ -1,5 +1,5 @@
 <template>
-    <router-link :to="{ name: this.route, params: { id: this.item.id } }" class="result-wrapper" v-on:mouseenter="toggleBack" v-on:mouseleave="toggleBack" :class="{ resultBack: showBack }">
+    <router-link :to="{ name: this.route, params: { id: this.item.id } }" :key="this.item.id" class="result-wrapper" v-on:mouseenter="toggleBack" v-on:mouseleave="toggleBack" :class="{ resultBack: showBack }">
         <img :src="this.imageUrl">
         <div>
             <p>{{ this.item.name }}</p>

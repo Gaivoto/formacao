@@ -2,10 +2,6 @@
     <router-link :to="{ name: 'Curso', params: { id: this.course.id_course } }" class="user-profile-course-card">
         <img :src="this.imageUrl" />
         <p>{{ this.course.course }}</p>
-        <div>
-            <progress class="prog" id="progress" :value="this.course.progress" max="100"></progress>
-            <p>{{ this.course.progress }} %</p>
-        </div>
     </router-link>
 </template>
 
@@ -32,10 +28,9 @@ export default {
 <style scoped>
     .user-profile-course-card {
         border-radius: 8px;
-        padding: 16px;
         text-align: center;
-        height: 220px;
-        min-width: 196px;
+        margin-left: 28px;
+        margin-bottom: 40px;
     }
 
     img {
@@ -59,28 +54,6 @@ export default {
 
     .user-profile-course-card div {
         text-align: center;
-    }
-
-    .prog {
-        height: 12px;
-        width: 75%;
-        margin: 0px;
-        border-radius: 8px;
-        background: var(--light);
-        box-shadow: rgba(20, 14, 49, 0.6) 6px 6px 6px 2px;
-    }
-
-    .prog::-moz-progress-bar {
-        background: var(--primary);
-    }
-
-    .prog::-webkit-progress-bar {
-        background: transparent;
-    }
-
-    .prog::-webkit-progress-value {
-        background: var(--primary);
-        border-radius: 8px;
     }
 
     @media (max-width: 1050px) {
