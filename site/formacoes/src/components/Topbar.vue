@@ -35,6 +35,7 @@
 
         <div ref="notifList" class="notif-list" :class="{ 'd-none': !notifsOpen }">
             <div class="no-notifications" v-if="!this.hasNotifs">
+                <span class="material-icons search-icon">notifications_off</span>
                 <p>Não existem notificações.</p>    
             </div>
             <NotificationListItem v-for="notif in this.notifications" :key="notif.id" v-bind:notification="notif"/>
@@ -370,7 +371,10 @@ export default {
 
     .notif-list .no-notifications {
         padding: 24px 16px;
-        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 16px;
     }
 
     .wrapper {
