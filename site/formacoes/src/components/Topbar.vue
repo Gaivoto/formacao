@@ -97,8 +97,10 @@ export default {
                 value.data.notifications.forEach(n => this.notifications.push(n));
             })
             .catch(error => {
-                if(error.code) console.log(error.response.data);
-                else console.log(error);
+                if (error.code) {
+                    console.log(error.response.data);
+                    this.$emit("open-modal", error.response.data.message);
+                } else console.log(error);
             });
         }
 
@@ -111,8 +113,10 @@ export default {
             this.courses.forEach(c => c.resultType = "Curso");
         })
         .catch(error => {
-            if(error.code) console.log(error.response.data);
-            else console.log(error);
+            if (error.code) {
+                console.log(error.response.data);
+                this.$emit("open-modal", error.response.data.message);
+            } else console.log(error);
         });
 
         axios({
@@ -124,8 +128,10 @@ export default {
             this.creators.forEach(c => c.resultType = "Criador");
         })
         .catch(error => {
-            if(error.code) console.log(error.response.data);
-            else console.log(error);
+            if (error.code) {
+                console.log(error.response.data);
+                this.$emit("open-modal", error.response.data.message);
+            } else console.log(error);
         });
         
         this.imageUrl = new URL(`../assets/${this.user.image}.jpg`, import.meta.url).href;
