@@ -9,7 +9,7 @@
                         <p>Nome: </p><p>{{ this.user.name }}</p>
                     </div>
                 </div>
-                <div>
+                <div class="tipEst">
                     <p>Tipo: {{ this.user.type }}</p>
                     <p>Estado: {{ this.user.state }}</p>
                 </div>    
@@ -87,11 +87,14 @@ export default {
 
     .user-card-left p:first-child {
         margin-bottom: 28px;
+        text-overflow: ellipsis;
+        overflow: hidden;
     }
 
     .user-card-left > .first-left-div {
         width: 260px;
     }
+    
 
     .user-card-left > .first-left-div > div {
         display: flex;
@@ -126,6 +129,24 @@ export default {
         border: none;
         border-radius: 8px;
         box-shadow: rgba(20, 14, 49, 0.6) 6px 6px 4px 4px;
+    }
+
+    @media (max-width: 1300px) {
+        .user-card-left {
+            width: 600px;
+        }
+    }
+
+    @media (max-width: 1300px) {
+        .user-card-left {
+            width: 500px;
+        }
+    }
+
+    @media (max-width: 1160px) {
+        .user-card-left {
+            gap: 40px;
+        }
     }
 
     @media (max-width: 1100px) {

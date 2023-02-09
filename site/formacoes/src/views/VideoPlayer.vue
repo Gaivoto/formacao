@@ -160,16 +160,13 @@ export default {
   .video-left .video-desc {
     -webkit-line-clamp: 6;
   }
-}
-
-@media (max-width: 1250px) {
   .list-container {
     min-width: 300px;
     width: 300px;
   }
 }
 
-@media (max-width: 1150px) {
+@media (max-width: 1250px) {
   .videopage-wrapper {
     display: block;
     height: fit-content;
@@ -181,7 +178,9 @@ export default {
   }
 
   .video-left .video-player {
-    max-height: 60vh;
+    height: 55vh;
+    max-height: 55vh;
+    
   }
 
   .list-container {
@@ -192,23 +191,23 @@ export default {
   }
 }
 
-@media (max-width: 800px) {
-  .videopage-wrapper {
-    padding: 24px;
-  }
-
-  .video-left {
-    padding: 20px;
-  }
-}
-
-@media (max-width: 700px) {
+@media (max-width: 1024px) {
   .video-left .video-player {
     height: 50vh;
   }
 
   .video-left .video-desc {
     -webkit-line-clamp: 10;
+  }
+}
+
+@media (max-width: 800px) {
+  .videopage-wrapper {
+    padding: 24px 16px 0px 16px;
+  }
+
+  .video-left {
+    padding: 20px;
   }
 }
 

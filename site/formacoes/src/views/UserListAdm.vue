@@ -206,6 +206,8 @@ export default {
   font-size: 40px;
 }
 
+
+
 @media (max-width: 1000px) {
   .user-list-wrapper {
     padding: 24px 24px 0px 24px;

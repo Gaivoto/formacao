@@ -146,7 +146,7 @@ export default {
 		margin: 0;
 	}
 
-	@media (max-width: 2024px) {
+	@media (max-width: 1024px) {
 		.sidebarTopbar {
 			padding-left: 72px !important;
 		}

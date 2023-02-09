@@ -7,7 +7,7 @@
             </div>
             <div class="filter-div">
                 <div>
-                    <p>Tipo de Utilizador:</p>
+                    <p>Tipo de User:</p>
                     <div class="custom-select">
                         <div class="selected" :class="{ open: typeOpen }" v-on:click="typeOpen=!typeOpen; stateOpen=false">{{ this.type }}</div>
                         <div class="items" :class="{ selectHide: !typeOpen }">
@@ -357,13 +357,23 @@ export default {
         display: none;
     }
 
-    @media (max-width: 1450px) {
+    @media (max-width: 1590px) {
         .searchbar input {
             width: 200px;
         }
 
         .custom-select {
             width: 180px;
+        }
+	}
+
+    @media (max-width: 1370px) {
+        .searchbar input {
+            width: 150px;
+        }
+
+        .custom-select {
+            width: 130px;
         }
 	}
 
