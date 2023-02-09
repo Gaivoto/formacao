@@ -102,7 +102,7 @@ async function getAllIDs() {
 async function changeUserState(state, id) {
     const pool = new sql.Request();
     return new Promise((resolve, reject) => {
-        const updt = `UPDATE [Users] SET [state] = @state WHERE [id] = @id AND [type] = 'user'`;
+        const updt = `UPDATE [Users] SET [state] = @state WHERE [id] = @id`;
         pool.input('id', sql.VarChar(200), id).input('state', sql.VarChar(50), state).query(updt, (err, res) => {
             if (!err) {
                 resolve(res);
