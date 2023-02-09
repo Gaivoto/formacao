@@ -5,7 +5,7 @@
             <div ref="profileInfoArea" class="profile-info-area" :class="{ 'd-none': this.editMode }">
                 <p>{{ this.user.username }}</p>
                 <p>{{ this.user.name }}</p>
-                <p>{{ this.user.email }}</p>
+                <p v-if:="ownProfile">{{ this.user.email }}</p>
                 <p>{{ this.user.description }}</p>
             </div>
             <div ref="profileEditingArea" class="profile-edit-area" :class="{ 'd-none': !this.editMode }" v-if="this.ownProfile">
