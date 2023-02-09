@@ -279,9 +279,7 @@ export default {
         .course-card-left > div:last-child > div:first-child {
             padding-top: 52px;
         }
-	}
 
-    @media (max-width: 1500px) {
         .button-wrapper {
             display: block;
             width: 120px;
@@ -290,9 +288,6 @@ export default {
         .button-wrapper button:first-child {
             margin-bottom: 16px;
         }
-    }
-
-    @media (max-width: 1380px) {
 
         .course-card-right {
             width: 120px;
@@ -309,9 +304,9 @@ export default {
         .course-card-left .first-left-div p {
             width: 390px;
         }
-    }
+	}
 
-    @media (max-width: 1250px) {
+    @media (max-width: 1450px) {
         .course-card-left .first-left-div {
             width: 310px;
         }
@@ -321,7 +316,7 @@ export default {
         }
     }
 
-    @media (max-width: 1100px) {
+    @media (max-width: 1350px) {
 
         .course-card-left .first-left-div {
             width: 290px;
@@ -354,7 +349,7 @@ export default {
         }
     }
 
-    @media (max-width: 1000px) {
+    @media (max-width: 1250px) {
 
         .course-card-left .first-left-div {
             width: 210px;
@@ -364,10 +359,16 @@ export default {
             width: 210px;
         }
 
-        button {
-            width: 90px;
+        .video-card {
+            gap: 20px;
         }
 
+        .course-card-left > div:last-child > div {
+            width: 140px;
+        }
+    }
+
+    @media (max-width: 1150px) {
         .course-card-right {
             width: 90px;
         }
@@ -376,12 +377,8 @@ export default {
             width: 90px;
         }
 
-        .video-card {
-            gap: 20px;
-        }
-
-        .course-card-left > div:last-child > div {
-            width: 140px;
+        button {
+            width: 90px;
         }
     }
 </style>

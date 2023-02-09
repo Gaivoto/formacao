@@ -107,7 +107,7 @@ export default {
         border-radius: 8px;
     }
 
-    @media (max-width: 1200px) {
+    @media (max-width: 1400px) {
         .vid-container {
             height: 600px;
         }

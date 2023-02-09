@@ -92,7 +92,7 @@ const router = createRouter({
         {
             path: '/users',
             component: UserListAdm,
-            name: "Lista de Utilizadores"
+            name: "Lista de Users"
         }
     ]
 })

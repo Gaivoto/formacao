@@ -5,7 +5,7 @@
 		<div class="topbar-wrapper" v-if="displaySidebarTopbar" :class="{ sidebarTopbar: sidebarOpen }">
 			<Topbar v-if="displaySidebarTopbar" v-bind:notifsOpen="notifsOpen" v-bind:searchOpen="searchOpen" v-on:toggleNotifs="toggleNotifs" v-on:toggleSearch="toggleSearch" v-on:openSearch="openSearch"/>
 		</div>
-		<router-view class="active-page" :class="{ sidebarMainPage: sidebarOpen, spaceLeft: isNotLanding }" v-on:open-modal="this.openMessageModal"/>	
+		<router-view class="active-page" :class="{ sidebarMainPage: sidebarOpen, spaceLeft: isNotLanding }" v-bind:sidebar="this.sidebarOpen" v-on:open-modal="this.openMessageModal"/>	
 	</div>
 	<MessageModal v-if="this.messageModalOpen" v-bind:msg="this.modalMessage" v-on:close-modal="this.closeMessageModal" />
   </div>
@@ -44,7 +44,6 @@ export default {
 	methods: {
 		toggleSidebar() {
 			this.sidebarOpen = !this.sidebarOpen;
-			this.$emit("toggleSidebar");
 		},
 		toggleNotifs() {
 			this.notifsOpen = !this.notifsOpen;
@@ -146,7 +145,7 @@ export default {
 		margin: 0;
 	}
 
-	@media (max-width: 2024px) {
+	@media (max-width: 1024px) {
 		.sidebarTopbar {
 			padding-left: 72px !important;
 		}

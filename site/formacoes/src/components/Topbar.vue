@@ -435,19 +435,25 @@ export default {
         object-fit: cover;
     }
 
-    @media (max-width: 1450px) {
+    @media (max-width: 1500px) {
 		.topbar-text .logo  {
 			display: none;
 		}	
 	}
 
-    @media (max-width: 1200px) {
+    @media (max-width: 1350px) {
 		.user-wrapper .topbar-text {
 			display: none;
 		}	
 	}
 
-    @media (max-width: 1050px) {
+    @media (max-width: 1350px) {
+		.searchbar input {
+			width: 300px;
+		}	
+	}
+
+    @media (max-width: 1150px) {
 		.wrapper .topbar-text {
 			display: none;
 		}	

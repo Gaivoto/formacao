@@ -2,7 +2,7 @@
     <div class="courses-wrapper">
         <CoursesListFilter v-on:filter="filter" v-bind:categories="this.categories" />
         <div class="row">
-            <CoursesListCourseCard v-for="course in this.coursesDisplay" :key="course.id" v-bind:course="course"/>
+            <CoursesListCourseCard v-for="course in this.coursesDisplay" :key="course.id" v-bind:course="course" v-bind:sidebar="this.sidebar"/>
             <div class="no-results" :class="{ 'd-none': !noResults }">
                 <span class="material-icons search-icon">warning</span>
                 <p>Não existem resultados para a pesquisa.</p>    
@@ -24,6 +24,12 @@ export default {
         CoursesListFilter,
         CoursesListCourseCard,
         Pagination
+    },
+    props: {
+        sidebar: {
+            type: Boolean,
+            required: true
+        }
     },
     data() {
         return {
