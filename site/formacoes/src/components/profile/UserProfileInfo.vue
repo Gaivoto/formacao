@@ -122,11 +122,6 @@ export default {
         box-shadow: rgba(20, 14, 49, 0.6) 0px 2px 10px 4px;
     }
 
-    .profile-edit-area {
-        display: flex;
-        gap: 24px;
-    }
-
     .profile-edit-area p {
         margin-bottom: 4px;
         color: var(--light);
@@ -225,9 +220,9 @@ export default {
     }
 
     .custom-select .items::-webkit-scrollbar {
-    width: 10px;
-    background: var(--mobalytics-card);
-    border-radius: 8px;
+        width: 10px;
+        background: var(--mobalytics-card);
+        border-radius: 8px;
     }
 
     .custom-select .items::-webkit-scrollbar-thumb {
@@ -248,7 +243,7 @@ export default {
         display: none;
     }
 
-    @media (max-width: 1500px) {
+    @media (max-width: 1650px) {
         .user-profile-info {
             width: 70%;
         }
@@ -258,25 +253,19 @@ export default {
         }
     }
 
-    @media (max-width: 1300px) {
-        .user-profile-info.edit-mode .profile-edit-area {
-            display: block;
-        }
-    }
-
-    @media (max-width: 1250px) {
+    @media (max-width: 1500px) {
         .user-profile-info {
             width: 80%;
         }
     }
 
-    @media (max-width: 1150px) {
+    @media (max-width: 1350px) {
         .user-profile-info {
             width: 90%;
         }
     }
 
-    @media (max-width: 1100px) {
+    @media (max-width: 1300px) {
         .user-profile-info.edit-mode > div {
             display: block;
         }
@@ -294,7 +283,7 @@ export default {
         }
     }
 
-    @media (max-width: 1050px) {
+    @media (max-width: 1250px) {
         .user-profile-info {
             width: 100%;
         }

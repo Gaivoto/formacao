@@ -210,14 +210,14 @@ export default {
             let filter = this.$refs.topSearchbar.value.toLowerCase();
 
             this.creators.forEach(c => {
-                if(c.name.toLowerCase() == filter) {
-                    this.$router.push({ name: 'Perfil do Utilizador', params: { id: i.id } });
+                if(c.name.toLowerCase() == filter || c.username.toLowerCase() == filter) {
+                    this.$router.push({ name: 'Perfil do Utilizador', params: { id: c.id } });
                 }
             });
 
             this.courses.forEach(c => {
                 if(c.name.toLowerCase() == filter) {
-                    this.$router.push({ name: 'Curso', params: { id: i.id } });
+                    this.$router.push({ name: 'Curso', params: { id: c.id } });
                 }
             });
         }

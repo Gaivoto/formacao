@@ -1,5 +1,5 @@
 <template>
-    <div class="diploma-card-container col-12 col-md-6 col-xl-3">
+    <div class="diploma-card-container col-12 col-md-6" :class="{ 'col-xl-3': !this.sidebar, 'col-xl-4': this.sidebar }">
         <div class="diploma-wrapper">
             <div class="diploma-card">
                 <img class="logo" src="../../assets/logo3.png">
@@ -32,6 +32,10 @@ export default {
         },
         user: {
             type: Object,
+            required: true
+        },
+        sidebar: {
+            type: Boolean,
             required: true
         }
     },

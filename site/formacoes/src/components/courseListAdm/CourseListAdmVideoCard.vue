@@ -97,6 +97,8 @@ export default {
 
     .video-card-left p {
         color: var(--light);
+        text-overflow: ellipsis;
+        overflow: hidden;
     }
 
     .video-card-left > div > a > p {

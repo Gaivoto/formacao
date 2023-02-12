@@ -360,7 +360,7 @@ export default {
         display: none;
     }
 
-    @media (max-width: 1450px) {
+    @media (max-width: 1650px) {
         .searchbar input {
             width: 200px;
         }
@@ -370,7 +370,7 @@ export default {
         }
     }
 
-    @media (max-width: 1200px) {
+    @media (max-width: 1450px) {
         .filter-div > div {
             display: block;
             margin-left: 16px;
@@ -386,11 +386,7 @@ export default {
         }
     }
 
-    @media (max-width: 950px) {
-        .searchbar input {
-            width: 160px;
-        }
-
+    @media (max-width: 1200px) {
         .filter-div {
             display: none !important;
         }

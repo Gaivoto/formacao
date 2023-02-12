@@ -1,5 +1,5 @@
 <template>
-    <div class="pagination-wrapper" v-if="hasPages">
+    <div class="pagination-wrapper" v-if="this.hasPages">
         <div class="pagination">
             <span class="material-icons" v-on:click="firstPage">first_page</span>
             <span class="material-icons" v-on:click="decreasePage">chevron_left</span>

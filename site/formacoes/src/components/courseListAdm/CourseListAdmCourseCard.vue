@@ -158,6 +158,8 @@ export default {
 
     .course-card-left p {
         color: var(--light);
+        text-overflow: ellipsis;
+        overflow: hidden;
     }
 
     .course-card-left .first-left-div {
