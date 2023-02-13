@@ -88,30 +88,27 @@ async function getCriador(headers, id) {
                             Promise.all(promises).then(values => {
                                 if(values[0].length == 0) {
                                     resp.criador.id_subscription = null;
-                                }
-                                else {
-
+                                } else {
+                                    resp.criador.id_subscription = null;
                                     values[0].forEach(s => {
                                         if(s.start_date != null && s.final_date == null) {
                                             resp.criador.id_subscription = s.id;
                                         }
                                     });
-
                                 }
-
-                                for (let i = 0; i < values[1].length; i++) {
+                                for (let i = 1; i < values.length; i++) {
                                     let duration = 0;
                                     let durationInt = 0;
                                     let nVideos = 0;
                                     
-                                    for(j = 0; j < values[1][i].length; j++) {
+                                    for(j = 0; j < values[i].length; j++) {
                                         durationInt = parseInt(values[i][j].duration)
                                         duration = duration + durationInt;
                                         nVideos++;
                                     }
                                     
-                                    value3[i].duration = duration/3600;
-                                    value3[i].numberOfVideos = nVideos;
+                                    value3[i - 1].duration = duration/3600;
+                                    value3[i - 1].numberOfVideos = nVideos;
                                 }
 
                                 resp.criador.cursos = value3;
