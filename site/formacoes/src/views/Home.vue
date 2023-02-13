@@ -103,15 +103,15 @@ export default {
         })
         .then(value => {
             value.data.recomendados.forEach(c => this.recommended.push(c));
-            this.slides.push(value.data.recomendados[0]);
+            this.slides.push({...value.data.recomendados[0]});
             value.data.destaques.forEach(c => this.hottest.push(c));
-            this.slides.push(value.data.destaques[0]);
+            this.slides.push({...value.data.destaques[0]});
             value.data.maisVendidos.forEach(c => this.mostSold.push(c));
-            this.slides.push(value.data.maisVendidos[0]);
+            this.slides.push({...value.data.maisVendidos[0]});
             value.data.recentes.forEach(c => this.recent.push(c));
-            this.slides.push(value.data.recentes[0]);
+            this.slides.push({...value.data.recentes[0]});
             value.data.outros.forEach(c => this.other.push(c));
-            this.slides.push(value.data.outros[0]);
+            this.slides.push({...value.data.outros[0]});
 
             for(let i = 0; i < this.slides.length; i++) {
                 this.slides[i].show = false;
