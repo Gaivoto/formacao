@@ -37,30 +37,36 @@ export default {
         }
     },
     created(){
-        axios({
-            method: 'get',
-            url: `${import.meta.env.VITE_HOST}/cursos`,
-            headers: {
-                Authorization: `Bearer ${this.$store.getters.getAccessToken}`,
-                refreshtoken: this.$store.getters.getRefreshToken
-            }
-        })
-        .then(value => {
-            value.data.courses.forEach(c => this.courses.push(c));
+        if(!this.$store.getters.getUser.id) {
+            this.$router.push({ name: "Login" });
+        } else if(this.$store.getters.getUser.type != "admin") {
+            this.$router.push({ name: "Home"});
+        } else {
+            axios({
+                method: 'get',
+                url: `${import.meta.env.VITE_HOST}/cursos`,
+                headers: {
+                    Authorization: `Bearer ${this.$store.getters.getAccessToken}`,
+                    refreshtoken: this.$store.getters.getRefreshToken
+                }
+            })
+            .then(value => {
+                value.data.courses.forEach(c => this.courses.push(c));
 
-            this.coursesFiltered = [...this.courses];
-            this.coursesDisplay = this.courses.slice(0, this.itemsPerPage);
+                this.coursesFiltered = [...this.courses];
+                this.coursesDisplay = this.courses.slice(0, this.itemsPerPage);
 
-            this.getCategories();
+                this.getCategories();
 
-            this.filter(this.filterInfo);
-        })
-        .catch(error => {
-            if(error.code) {
-                this.$emit("open-modal", error.response.data.message);
-                console.log(error.response.data);
-            } else console.log(error);
-        });
+                this.filter(this.filterInfo);
+            })
+            .catch(error => {
+                if(error.code) {
+                    this.$emit("open-modal", error.response.data.message);
+                    console.log(error.response.data);
+                } else console.log(error);
+            });
+        }
     },
     computed: {
         noResults() {

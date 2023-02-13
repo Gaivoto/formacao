@@ -36,62 +36,68 @@ export default {
         }
     },
     created() {
-        let promises = [];
+        if(!this.$store.getters.getUser.id) {
+            this.$router.push({ name: "Login" });
+        } else if(this.$store.getters.getUser.type != "admin") {
+            this.$router.push({ name: "Home"});
+        } else {
+            let promises = [];
 
-        promises.push(
-            axios({
-                method: "get",
-                url: `${import.meta.env.VITE_HOST}/users`,
-                headers: {
-                    Authorization: `Bearer ${this.$store.getters.getAccessToken}`,
-                    refreshtoken: this.$store.getters.getRefreshToken,
-                },
+            promises.push(
+                axios({
+                    method: "get",
+                    url: `${import.meta.env.VITE_HOST}/users`,
+                    headers: {
+                        Authorization: `Bearer ${this.$store.getters.getAccessToken}`,
+                        refreshtoken: this.$store.getters.getRefreshToken,
+                    },
+                })
+            );
+
+            promises.push(
+                axios({
+                    method: "get",
+                    url: `${import.meta.env.VITE_HOST}/criadores`,
+                    headers: {
+                        Authorization: `Bearer ${this.$store.getters.getAccessToken}`,
+                        refreshtoken: this.$store.getters.getRefreshToken,
+                    },
+                })
+            );
+
+            promises.push(
+                axios({
+                    method: "get",
+                    url: `${import.meta.env.VITE_HOST}/admins`,
+                    headers: {
+                        Authorization: `Bearer ${this.$store.getters.getAccessToken}`,
+                        refreshtoken: this.$store.getters.getRefreshToken,
+                    },
+                })
+            );
+
+            Promise.all(promises)
+            .then((values) => {
+                values[0].data.users.forEach((u) => this.users.push(u));
+                values[1].data.criadores.forEach((c) => this.users.push(c));
+                values[2].data.admins.forEach((a) => this.users.push(a));
+
+                this.users.forEach((u) => {
+                    if (u.type == "user") u.type = "Utilizador";
+                    else if (u.type == "admin") u.type = "Admin";
+                    else u.type = "Criador";
+                });
+
+                this.usersFiltered = [...this.users];
+                this.usersDisplay = this.users.slice(0, this.itemsPerPage);
             })
-        );
-
-        promises.push(
-            axios({
-                method: "get",
-                url: `${import.meta.env.VITE_HOST}/criadores`,
-                headers: {
-                    Authorization: `Bearer ${this.$store.getters.getAccessToken}`,
-                    refreshtoken: this.$store.getters.getRefreshToken,
-                },
-            })
-        );
-
-        promises.push(
-            axios({
-                method: "get",
-                url: `${import.meta.env.VITE_HOST}/admins`,
-                headers: {
-                    Authorization: `Bearer ${this.$store.getters.getAccessToken}`,
-                    refreshtoken: this.$store.getters.getRefreshToken,
-                },
-            })
-        );
-
-        Promise.all(promises)
-        .then((values) => {
-            values[0].data.users.forEach((u) => this.users.push(u));
-            values[1].data.criadores.forEach((c) => this.users.push(c));
-            values[2].data.admins.forEach((a) => this.users.push(a));
-
-            this.users.forEach((u) => {
-                if (u.type == "user") u.type = "Utilizador";
-                else if (u.type == "admin") u.type = "Admin";
-                else u.type = "Criador";
+            .catch((error) => {
+                if (error.code) {
+                    console.log(error.response.data);
+                    this.$emit("open-modal", error.response.data.message);
+                } else console.log(error);
             });
-
-            this.usersFiltered = [...this.users];
-            this.usersDisplay = this.users.slice(0, this.itemsPerPage);
-        })
-        .catch((error) => {
-            if (error.code) {
-                console.log(error.response.data);
-                this.$emit("open-modal", error.response.data.message);
-            } else console.log(error);
-        });
+        }
     },
     computed: {
         noResults() {

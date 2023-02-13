@@ -115,7 +115,7 @@ export default {
 		},
 		logout() {
           	this.$router.push({ name: "Login" });
-			this.$store.commit('setUser', '');
+			this.$store.commit('setUser', {});
             this.$store.commit('setRefreshToken', '');
             this.$store.commit('setAccessToken', '');
 		}

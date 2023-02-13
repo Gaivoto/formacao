@@ -44,54 +44,60 @@ export default {
         }
     },
     created() {
-        axios({
-            method: 'get',
-            url: `${import.meta.env.VITE_HOST}/diplomas/${this.$store.getters.getUser.id}`,
-            headers: {
-                Authorization: `Bearer ${this.$store.getters.getAccessToken}`,
-                refreshtoken: this.$store.getters.getRefreshToken,
-            }
-        })
-        .then(value => {
-            if(value.data.access_token) this.$store.commit('setAccessToken', value.data.access_token);
-            value.data.diplomas.forEach(d => this.diplomas.push(d));
-
-            this.diplomasFiltered = [...this.diplomas];
-
-            for (var i = (this.page - 1) * this.diplomasPerPage; i < this.page * this.diplomasPerPage; i++) {
-                if (this.diplomasFiltered[i]) {
-                    this.diplomasDisplay.push(this.diplomasFiltered[i]);
+        if(!this.$store.getters.getUser.id) {
+            this.$router.push({ name: "Login" });
+        } else if(this.$store.getters.getUser.type == 'admin' || this.$store.getters.getUser.id != this.$route.params.id) {
+            this.$router.push({ name: "Home" });
+        } else {
+            axios({
+                method: 'get',
+                url: `${import.meta.env.VITE_HOST}/diplomas/${this.$store.getters.getUser.id}`,
+                headers: {
+                    Authorization: `Bearer ${this.$store.getters.getAccessToken}`,
+                    refreshtoken: this.$store.getters.getRefreshToken,
                 }
-            }
+            })
+            .then(value => {
+                if(value.data.access_token) this.$store.commit('setAccessToken', value.data.access_token);
+                value.data.diplomas.forEach(d => this.diplomas.push(d));
 
-            this.getCategories();
+                this.diplomasFiltered = [...this.diplomas];
 
-            this.filter(this.filterInfo);
-        })
-        .catch((error) => {
-            if (error.code) {
-                console.log(error.response.data);
-                this.$emit("open-modal", error.response.data.message);
-            } else console.log(error);
-        });
+                for (var i = (this.page - 1) * this.diplomasPerPage; i < this.page * this.diplomasPerPage; i++) {
+                    if (this.diplomasFiltered[i]) {
+                        this.diplomasDisplay.push(this.diplomasFiltered[i]);
+                    }
+                }
 
-        axios({
-            method: "get",
-            url: `${import.meta.env.VITE_HOST}/users/${this.$store.getters.getUser.id}`,
-            headers: {
-                Authorization: `Bearer ${this.$store.getters.getAccessToken}`,
-                refreshtoken: this.$store.getters.getRefreshToken,
-            },
-        })
-        .then((value) => {
-            this.user = value.data;
-        })
-        .catch((error) => {
-            if (error.code) {
-                console.log(error.response.data);
-                this.$emit("open-modal", error.response.data.message);
-            } else console.log(error);
-        });
+                this.getCategories();
+
+                this.filter(this.filterInfo);
+            })
+            .catch((error) => {
+                if (error.code) {
+                    console.log(error.response.data);
+                    this.$emit("open-modal", error.response.data.message);
+                } else console.log(error);
+            });
+
+            axios({
+                method: "get",
+                url: `${import.meta.env.VITE_HOST}/users/${this.$store.getters.getUser.id}`,
+                headers: {
+                    Authorization: `Bearer ${this.$store.getters.getAccessToken}`,
+                    refreshtoken: this.$store.getters.getRefreshToken,
+                },
+            })
+            .then((value) => {
+                this.user = value.data;
+            })
+            .catch((error) => {
+                if (error.code) {
+                    console.log(error.response.data);
+                    this.$emit("open-modal", error.response.data.message);
+                } else console.log(error);
+            });
+        }
     },
     computed: {
         numberOfPages() {

@@ -6,7 +6,7 @@
                 <router-link :to="{ name: 'Meus Cursos', params: { id: this.getUserId } }" class="profile-bottom-title">Os meus cursos</router-link>
                 <div class="profile-list">
                     <UserProfileCourseCard v-for="course in this.courses" :key="course.id" v-bind:course="course" />
-                    <div class="no-items">
+                    <div class="no-items" v-if="!this.userHasCourses">
                         <span class="material-icons">info</span>
                         <p>Ainda não comprou nenhum curso. Assim que comprar cursos, estes aparecerão aqui.</p>
                     </div>
@@ -16,7 +16,7 @@
                 <router-link :to="{ name: 'Meus Diplomas', params: { id: this.getUserId } }" class="profile-bottom-title">Os meus diplomas</router-link>
                 <div class="profile-list last-list">
                     <UserProfileDiplomaCard v-for="diploma in this.diplomas" :key="diploma.id" v-bind:diploma="diploma" />
-                    <div class="no-items">
+                    <div class="no-items" v-if="!this.userHasDiplomas">
                         <span class="material-icons">info</span>
                         <p>Ainda não completou nenhum curso. Assim que completar um curso, o diploma correspondente aparecerá aqui.</p>
                     </div>
@@ -27,7 +27,7 @@
             <p class="profile-bottom-title">Cursos do criador</p>
             <div class="row creator-list">
                 <CreatorProfileCourseCard v-for="course in this.courses" :key="course.id" v-bind:course="course" class="col-2" />
-                <div class="no-items" v-if="this.courses.length == 0">
+                <div class="no-items" v-if="!this.userHasCourses">
                     <span class="material-icons">construction</span>
                     <p>Este criador ainda está a trabalhar em cursos para publicar. No futuro, quando este criador criar um curso, este aparecerá aqui.</p>
                 </div>
@@ -104,13 +104,16 @@ export default {
             .then(value => {
                 if(value.data.access_token) this.$store.commit('setAccessToken', value.data.access_token);
                 this.user = value.data.criador;
-                console.log(value.data.criador)
                 value.data.criador.cursos.forEach(c => this.courses.push(c));     
             })
             .catch(error => {
                 if (error.code) {
                     console.log(error.response.data);
-                    this.$emit("open-modal", error.response.data.message);
+                    if(error.response.data.message == "Este criador não existe.") {
+                        this.$router.push({ name: "Home" });
+                    } else {
+                        this.$emit("open-modal", error.response.data.message);
+                    }
                 } else console.log(error);
             });
         }

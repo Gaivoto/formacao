@@ -43,36 +43,42 @@ export default {
         }
     },
     created(){
-        axios({
-            method: 'get',
-            url: `${import.meta.env.VITE_HOST}/cursos/user/${this.$store.getters.getUser.id}`,
-            headers: {
-                Authorization: `Bearer ${this.$store.getters.getAccessToken}`,
-                refreshtoken: this.$store.getters.getRefreshToken
-            }
-        })
-        .then(value => {
-            if(value.data.access_token) this.$store.commit('setAccessToken', value.data.access_token);
-
-            value.data.courses.forEach(c => this.courses.push(c));
-            
-            this.coursesFiltered = [...this.courses];
-
-            for (var i = (this.page - 1) * this.coursesPerPage; i < this.page * this.coursesPerPage; i++) {
-                if (this.coursesFiltered[i]) {
-                    this.coursesDisplay.push(this.coursesFiltered[i]);
+        if(!this.$store.getters.getUser.id) {
+            this.$router.push({ name: "Login" });
+        } else if(this.$store.getters.getUser.type == 'admin' || this.$store.getters.getUser.id != this.$route.params.id) {
+            this.$router.push({ name: "Home" });
+        } else {
+            axios({
+                method: 'get',
+                url: `${import.meta.env.VITE_HOST}/cursos/user/${this.$store.getters.getUser.id}`,
+                headers: {
+                    Authorization: `Bearer ${this.$store.getters.getAccessToken}`,
+                    refreshtoken: this.$store.getters.getRefreshToken
                 }
-            }
+            })
+            .then(value => {
+                if(value.data.access_token) this.$store.commit('setAccessToken', value.data.access_token);
 
-            this.getCategories();
-            this.filter(this.filterInfo);
-        })
-        .catch(error => {
-            if(error.code) {
-                this.$emit("open-modal", error.response.data.message);
-                console.log(error.response.data);
-            } else console.log(error);
-        });
+                value.data.courses.forEach(c => this.courses.push(c));
+                
+                this.coursesFiltered = [...this.courses];
+
+                for (var i = (this.page - 1) * this.coursesPerPage; i < this.page * this.coursesPerPage; i++) {
+                    if (this.coursesFiltered[i]) {
+                        this.coursesDisplay.push(this.coursesFiltered[i]);
+                    }
+                }
+
+                this.getCategories();
+                this.filter(this.filterInfo);
+            })
+            .catch(error => {
+                if(error.code) {
+                    this.$emit("open-modal", error.response.data.message);
+                    console.log(error.response.data);
+                } else console.log(error);
+            });
+        }
     },
     computed: {
         numberOfPages() {
