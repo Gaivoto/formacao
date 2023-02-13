@@ -77,26 +77,32 @@ export default {
         }
     },
     created() {        
-        axios({
-            method: `get`,
-            url: `${import.meta.env.VITE_HOST}/criadores/${this.$store.getters.getUser.id}`,
-            headers: {
-                Authorization: `Bearer ${this.$store.getters.getAccessToken}`,
-                refreshtoken: this.$store.getters.getRefreshToken
-            }
-        })
-        .then(value => {
-            value.data.criador.cursos.forEach(c => this.courses.push(c));
+        if(!this.$store.getters.getUser.id) {
+            this.$router.push({ name: "Login" });
+        } else if(this.$store.getters.getUser.type != 'creator' || this.$store.getters.getUser.id != this.$route.params.id) {
+            this.$router.push({ name: "Home" });
+        } else {
+            axios({
+                method: `get`,
+                url: `${import.meta.env.VITE_HOST}/criadores/${this.$store.getters.getUser.id}`,
+                headers: {
+                    Authorization: `Bearer ${this.$store.getters.getAccessToken}`,
+                    refreshtoken: this.$store.getters.getRefreshToken
+                }
+            })
+            .then(value => {
+                value.data.criador.cursos.forEach(c => this.courses.push(c));
 
-            this.displayCourses = this.courses.slice(0, this.itemsPerPage);
-        })
-        .catch(error => {
-            if(error.code) {
-                console.log(error.response.data);
-                this.$emit("open-modal", error.response.data.message);
-            }
-            else console.log(error);
-        });
+                this.displayCourses = this.courses.slice(0, this.itemsPerPage);
+            })
+            .catch(error => {
+                if(error.code) {
+                    console.log(error.response.data);
+                    this.$emit("open-modal", error.response.data.message);
+                }
+                else console.log(error);
+            });    
+        }
     },
     computed: {
         isTableLengthEven() {
