@@ -44,7 +44,6 @@ async function getCurso(headers, id) {
                                 durationInt = parseInt(values[2][i].duration)
                                 duration = duration + durationInt;
                             }
-                            //se passar por aqui, da uma olhada na logica desses ifs ate a linha 58 e pensa numa maneira de fazer pfv, funciona tho, só acho q eu meti ifs a mais
                             if (values[0].length > 0 && values[0][0].final_date == null) {
                                 if(values[1].length > 0 && values[1][0].data_sub == null) {
                                     info.course.access = true;
