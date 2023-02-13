@@ -23,7 +23,7 @@ async function getVideo(headers, id) {
             let info = value1;
             dbVideo.getVideo(id).then(value2 => {
                 if (value2.length <= 0) {
-                    reject({ code: 404, error: { message: "Curso não existe." } });
+                    reject({ code: 404, error: { message: "Video não existe." } });
                 } else {
                     info.video = value2;
                     resolve({ code: 200, info: info });

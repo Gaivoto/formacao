@@ -40,30 +40,48 @@ export default {
         },
     },
     created() {
-        axios({
-            method: `get`,
-            url: `${import.meta.env.VITE_HOST}/cursos/${this.$route.params.id}`,
-            headers: {
-                Authorization: `Bearer ${this.$store.getters.getAccessToken}`,
-                refreshtoken: this.$store.getters.getRefreshToken,
-            },
-        })
-        .then((value) => {
-            if (value.data.access_token) this.$store.commit("setAccessToken", value.data.access_token);
-            this.videos = value.data.course.videos;
-            this.courseId = value.data.course.id;
-            for (let i = 0; i < this.videos.length; i++) {
-                if (this.videos[i].id == this.$route.params.idVid) {
-                    this.video = this.videos[i];
+        if(!this.$store.getters.getUser.id) {
+            this.$router.push({ name: "Login" });
+        } else {
+            axios({
+                method: `get`,
+                url: `${import.meta.env.VITE_HOST}/cursos/${this.$route.params.id}`,
+                headers: {
+                    Authorization: `Bearer ${this.$store.getters.getAccessToken}`,
+                    refreshtoken: this.$store.getters.getRefreshToken,
+                },
+            })
+            .then((value) => {
+                if (value.data.access_token) this.$store.commit("setAccessToken", value.data.access_token);
+                if(!value.data.course.access) {
+                    this.$router.push({ name: "Home" });
+                } else {
+                    let existe = false;
+                    this.videos = value.data.course.videos;
+                    this.courseId = value.data.course.id;
+                    for (let i = 0; i < this.videos.length; i++) {
+                        if (this.videos[i].id == this.$route.params.idVid) {
+                            existe = true;
+                            this.video = this.videos[i];
+                        }
+                    }
+                    if(!existe) {
+                        this.$router.push({ name: "Home" });
+                    }
                 }
-            }
-        })
-        .catch((error) => {
-            if (error.code) {
-                console.log(error.response.data);
-                this.$emit("open-modal", error.response.data.message);
-            } else console.log(error);
-        });
+            })
+            .catch((error) => {
+                if (error.code) {
+                    console.log(error.response.data);
+                    if(error.response.data.message == "Curso não existe.") {
+                        this.$router.push({ name: "Home" });
+                    } else {
+                        this.$emit("open-modal", error.response.data.message);
+                    }
+                } else console.log(error);
+            });
+
+        }
     },
 };
 </script>
