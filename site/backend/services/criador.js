@@ -386,7 +386,6 @@ async function getCriadoresHomepage() {
         promises.push(dbCria.getPointsSubs())
 
         Promise.all(promises).then(values => {
-
             creators = values[0]
 
             values[1].forEach(val => {

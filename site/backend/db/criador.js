@@ -103,7 +103,7 @@ async function getPointsCompra() {
     return new Promise((resolve, reject) => {
         const slct = `SELECT u.id AS id, u.username AS username, u.name AS name, u.image AS image, count(uc.id) AS points
         FROM Users u LEFT JOIN Course c on u.id = c.id_creator LEFT JOIN User_Course uc on uc.id_course = c.id
-        WHERE u.state = 'Ativo'
+        WHERE u.state = 'Ativo' AND u.type = 'creator'
         GROUP BY u.id, u.username, u.name, u.image, u.type`;
         pool.query(slct, (err, res) => {
             if (!err) {
@@ -118,9 +118,9 @@ async function getPointsCompra() {
 async function getPointsSubs() {
     const pool = new sql.Request();
     return new Promise((resolve, reject) => {
-        const slct = `SELECT u.id AS id, u.username AS username, u.name AS name, u.image AS image, count(s.id_subscribed) * 3 AS points
+        const slct = `SELECT u.id AS id, u.username AS username, u.name AS name, u.image AS image, u.type AS type, count(s.id_subscribed) * 3 AS points
         FROM Users u LEFT JOIN Subscription s on u.id = s.id_subscribed
-        WHERE state = 'Ativo' AND s.final_date is null
+        WHERE state = 'Ativo' AND s.final_date is null AND u.type = 'creator'
         GROUP BY u.id, u.username, u.name, u.image, u.type`;
         pool.query(slct, (err, res) => {
             if (!err) {
