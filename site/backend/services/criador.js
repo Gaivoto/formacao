@@ -66,6 +66,7 @@ async function getCriador(headers, id) {
             utils.validateToken(access_token, refresh_token).then(value => {
 
                 dbCria.getCriador(id).then(value2 => {
+
                     if (value2.length == 0) {
                         reject({ code: 404, error: { message: "Este criador não existe." } });
                     } else {
@@ -77,17 +78,33 @@ async function getCriador(headers, id) {
 
                             let promises = [];
 
+                            //verificar subscription
+                            promises.push(dbSubs.existsSubscricao(value.user.id, id));
+
                             value3.forEach(c => {
                                 promises.push(dbVide.getAllVideosFromCourse(c.id));
                             });
 
                             Promise.all(promises).then(values => {
-                                for (let i = 0; i < values.length; i++) {
+                                if(values[0].length == 0) {
+                                    resp.criador.id_subscription = null;
+                                }
+                                else {
+
+                                    values[0].forEach(s => {
+                                        if(s.start_date != null && s.final_date == null) {
+                                            resp.criador.id_subscription = s.id;
+                                        }
+                                    });
+
+                                }
+
+                                for (let i = 0; i < values[1].length; i++) {
                                     let duration = 0;
                                     let durationInt = 0;
                                     let nVideos = 0;
                                     
-                                    for(j = 0; j < values[i].length; j++) {
+                                    for(j = 0; j < values[1][i].length; j++) {
                                         durationInt = parseInt(values[i][j].duration)
                                         duration = duration + durationInt;
                                         nVideos++;

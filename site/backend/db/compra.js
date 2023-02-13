@@ -70,7 +70,6 @@ async function existsCompra(idU, idC) {
 }
 
 async function createCompra(id, body, currentDate) {
-    console.log(body)
     const pool = new sql.Request();
     return new Promise((resolve, reject) => {
         const slct = `INSERT INTO User_Course (id, id_user, id_course, date_bought, progress, id_subscription, data_sub) VALUES (@id, @idU, @idC, @cD, 0, @idSub, null)`;

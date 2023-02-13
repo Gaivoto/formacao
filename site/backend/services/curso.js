@@ -51,7 +51,6 @@ async function getCurso(headers, id) {
                                 }
                             }
                             else {
-                                console.log(values[0].length)
                                 if(values[1].length > 0 && values[1][0].data_sub == null) {
                                     info.course.access = true;
                                 }

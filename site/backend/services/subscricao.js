@@ -100,7 +100,6 @@ async function getAllSubscricoes(headers) {
 }
 
 async function createSubscricao(tokens, body) {
-    
     return new Promise((resolve, reject) => {
         utils.validateToken(tokens.access_token, tokens.refresh_token).then(value1 => {
             let info = value1;
@@ -143,14 +142,13 @@ async function createSubscricao(tokens, body) {
                                 let dataAtual = mes + '-' + dias + '-' + ano + ' ' + horario;
                                 body.start_date = dataAtual;
                                 dbSubs.createSubscricao(idSub, body).then(value5 => {
-                                    
                                     dbCurs.getCursosByCriador(body.id_subscribed).then(value6 =>{
                                         let promisesCompra = [];
                                         for(let i = 0; i < value6.length; i++ ) {
                                             let idCompra = uuid.v4();
                                             let compraObj = {};
                                             compraObj.id_user = body.id_subscriber;
-                                            compraObj.id_course = value6[i].id;
+                                            compraObj.id_course = value6[i].id_course;
                                             compraObj.id_subscription = idSub;
                                             promisesCompra.push(dbComp.createCompra(idCompra, compraObj, dataAtual))
                                         }

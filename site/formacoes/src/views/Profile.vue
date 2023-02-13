@@ -1,6 +1,6 @@
 <template>
     <div class="profile-wrapper">
-        <UserProfileInfo v-bind:user="this.user" v-on:alterar-dados="alterarDadosUser" />
+        <UserProfileInfo v-bind:user="this.user" v-on:alterar-dados="alterarDadosUser" v-on:createSubscription="createSubscriptionUser" v-on:endSubscription="endSubscription" />
         <div class="profile-bottom" v-if="!this.isUserAdm && this.ownProfile">
             <div>
                 <router-link :to="{ name: 'Meus Cursos', params: { id: this.getUserId } }" class="profile-bottom-title">Os meus cursos</router-link>
@@ -27,7 +27,7 @@
             <p class="profile-bottom-title">Cursos do criador</p>
             <div class="row creator-list">
                 <CreatorProfileCourseCard v-for="course in this.courses" :key="course.id" v-bind:course="course" class="col-2" />
-                <div class="no-items">
+                <div class="no-items" v-if="this.courses.length == 0">
                     <span class="material-icons">construction</span>
                     <p>Este criador ainda está a trabalhar em cursos para publicar. No futuro, quando este criador criar um curso, este aparecerá aqui.</p>
                 </div>
@@ -104,7 +104,8 @@ export default {
             .then(value => {
                 if(value.data.access_token) this.$store.commit('setAccessToken', value.data.access_token);
                 this.user = value.data.criador;
-                value.data.criador.cursos.forEach(c => this.courses.push(c));
+                console.log(value.data.criador)
+                value.data.criador.cursos.forEach(c => this.courses.push(c));     
             })
             .catch(error => {
                 if (error.code) {
@@ -131,7 +132,6 @@ export default {
             .then((value) => {
                 if(value.data.access_token) this.$store.commit('setAccessToken', value.data.access_token);
                 this.user = value.data;
-                console.log(value.data.criador)
                 value.data.courses.forEach(c => this.courses.push(c));
                 value.data.diplomas.forEach(d => this.diplomas.push(d));
             })
@@ -218,6 +218,50 @@ export default {
             } else {
                 this.$emit("open-modal", "Introduza um nome válido.");
             }
+        },
+        createSubscriptionUser(info) {
+            axios({
+                method: "post",
+                url: `${import.meta.env.VITE_HOST}/subscricoes/`,
+                headers: {
+                    Authorization: `Bearer ${this.$store.getters.getAccessToken}`,
+                    refreshtoken: this.$store.getters.getRefreshToken,
+                },
+                data: {
+                    id_subscriber: info.id_subscriber,
+                    id_subscribed: info.id_subscribed
+                },
+            })
+            .then((value) => {
+                if (value.data.access_token) this.$store.commit("setAccessToken", value.data.access_token);
+                this.$emit("open-modal", "Subscrição criada");
+            })
+            .catch((error) => {
+                if (error.code) {
+                    console.log(error.response.data);
+                    this.$emit("open-modal", error.response.data.message);
+                } else console.log(error);
+            });
+        },
+        endSubscription() {
+            axios({
+                method: "delete",
+                url: `${import.meta.env.VITE_HOST}/subscricoes/${this.user.id_subscription}`,
+                headers: {
+                    Authorization: `Bearer ${this.$store.getters.getAccessToken}`,
+                    refreshtoken: this.$store.getters.getRefreshToken,
+                },
+            })
+            .then((value) => {
+                if(value.data.access_token) this.$store.commit('setAccessToken', value.data.access_token);
+                this.$emit("open-modal", "Subscrição cancelada");
+            })
+            .catch((error) => {
+                if (error.code) {
+                    console.log(error.response.data);
+                    this.$emit("open-modal", error.response.data.message);
+                } else console.log(error);
+            });
         }
     }
 };

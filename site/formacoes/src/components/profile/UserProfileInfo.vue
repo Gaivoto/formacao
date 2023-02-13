@@ -7,6 +7,8 @@
                 <p>{{ this.user.name }}</p>
                 <p v-if:="ownProfile">{{ this.user.email }}</p>
                 <p>{{ this.user.description }}</p>
+                <button v-if:="!this.user.id_subscription && !ownProfile" v-on:click="createSubscription">Subscrever</button>
+                <button v-if:="this.user.id_subscription && !ownProfile" v-on:click="endSubscription">Terminar subscrição</button>
             </div>
             <div ref="profileEditingArea" class="profile-edit-area" :class="{ 'd-none': !this.editMode }" v-if="this.ownProfile">
                 <div>
@@ -60,6 +62,16 @@ export default {
 
             this.editMode = false;
             this.$emit("alterar-dados", info);
+        },
+        createSubscription() {
+            let info = {
+                id_subscriber: this.$store.getters.getUser.id,
+                id_subscribed: this.user.id,
+            };
+            this.$emit("createSubscription", info);
+        },
+        endSubscription() {
+            this.$emit("endSubscription")
         }
     }
 };

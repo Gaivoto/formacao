@@ -4,6 +4,7 @@ const utils = require('../utils/index.js');
 const dbUser = require('../db/user.js');
 const dbCour = require('../db/curso.js');
 const dbDipl = require('../db/diploma.js');
+const dbSubs = require('../db/subscricao.js');
 
 async function getUser(tokens, id) {
     return new Promise((resolve, reject) => {
@@ -12,7 +13,7 @@ async function getUser(tokens, id) {
 
             if (info.user.id == id) {
                 dbUser.getUser(id).then(value2 => {
-
+                    
                     if (value2.length == 0) {
                         reject({ code: 404, error: { message: "Este utilizador não existe." } });
                     } else {
