@@ -1,5 +1,5 @@
 <template>
-    <div class="course-card-container col-12 col-md-6 col-xl-3" :class="{ shake: this.hoverImg }">
+    <div class="course-card-container col-12 col-md-6" :class="{ shake: this.hoverImg, 'col-xl-3': !this.sidebar, 'col-xl-4': this.sidebar }">
         <div class="course-card">
             <router-link :to="{ name: 'Curso', params: { id: this.course.id } }">
                 <img :src="this.imageUrl">
@@ -41,6 +41,10 @@ export default {
     props: {
         course: {
             type: Object,
+            required: true
+        },
+        sidebar: {
+            type: Boolean,
             required: true
         }
     },

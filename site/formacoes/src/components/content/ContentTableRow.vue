@@ -1,12 +1,12 @@
 <template>
     <tr class="table-row">
         <td class="image-cell">
-            <router-link :to="{ name: 'Curso', params: { id: this.course.id } }">
+            <router-link :to="{ name: 'Curso', params: { id: this.course.id_course } }">
                 <img :src="this.imageUrl">
             </router-link>
         </td>
         <td>
-            <router-link :to="{ name: 'Curso', params: { id: this.course.id } }">
+            <router-link :to="{ name: 'Curso', params: { id: this.course.id_course } }">
                 <p class="course-name">{{ this.course.name }}</p>
                 <p>{{ this.course.description }}</p>
             </router-link>

@@ -2,7 +2,7 @@
     <div class="diplomas-wrapper">
         <DiplomaFilter v-bind:categories="this.categories" v-on:filter="filter" />
         <div class="row">
-            <DiplomaCard v-for="diploma in this.diplomasDisplay" :key="diploma.id" v-bind:diploma="diploma" v-bind:user="this.user"/>
+            <DiplomaCard v-for="diploma in this.diplomasDisplay" :key="diploma.id" v-bind:diploma="diploma" v-bind:user="this.user" v-bind:sidebar="this.sidebar"/>
             <div class="no-results" :class="{ 'd-none': !noResults }">
                 <span class="material-icons search-icon">warning</span>
                 <p>Não existem resultados para a pesquisa.</p>    
@@ -25,6 +25,12 @@ export default {
         DiplomaFilter,
         Pagination
     },
+    props: {
+        sidebar: {
+            type: Boolean,
+            required: true
+        }
+    },  
     data() {
         return {
             diplomas: [],

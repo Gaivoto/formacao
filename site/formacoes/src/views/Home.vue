@@ -20,27 +20,27 @@
                 </div>
                 <div ref="recommended" class="home-row-wrapper">
                     <div class="row">
-                        <HomeCourseCard v-for="course in this.recommended" :key="course.id" v-bind:course="course"/>
+                        <HomeCourseCard v-for="course in this.recommended" :key="course.id" v-bind:course="course" v-bind:sidebar="this.sidebar"/>
                     </div>
                 </div>
                 <div ref="hottest" class="home-row-wrapper d-none">
                     <div class="row">
-                        <HomeCourseCard v-for="course in this.hottest" :key="course.id" v-bind:course="course"/>
+                        <HomeCourseCard v-for="course in this.hottest" :key="course.id" v-bind:course="course" v-bind:sidebar="this.sidebar"/>
                     </div>
                 </div>
                 <div ref="sold" class="home-row-wrapper d-none">
                     <div class="row">
-                        <HomeCourseCard v-for="course in this.mostSold" :key="course.id" v-bind:course="course"/>
+                        <HomeCourseCard v-for="course in this.mostSold" :key="course.id" v-bind:course="course" v-bind:sidebar="this.sidebar"/>
                     </div>
                 </div>
                 <div ref="recent" class="home-row-wrapper d-none">
                     <div class="row">
-                        <HomeCourseCard v-for="course in this.recent" :key="course.id" v-bind:course="course"/>
+                        <HomeCourseCard v-for="course in this.recent" :key="course.id" v-bind:course="course" v-bind:sidebar="this.sidebar"/>
                     </div>
                 </div>
                 <div ref="other" class="home-row-wrapper d-none">
                     <div class="row">
-                        <HomeCourseCard v-for="course in this.other" :key="course.id" v-bind:course="course"/>
+                        <HomeCourseCard v-for="course in this.other" :key="course.id" v-bind:course="course" v-bind:sidebar="this.sidebar"/>
                     </div>
                 </div>
             </div>
@@ -75,6 +75,12 @@ export default {
         HomeCourseCard,
         HomeCreatorItem,
         HomeSlideshow
+    },
+    props: {
+        sidebar: {
+            type: Boolean,
+            required: true
+        }
     },
     data() {
         return {
@@ -356,14 +362,14 @@ export default {
         }
     }
 
-    @media (max-width: 1300px) {
+    @media (max-width: 1400px) {
         .home-right {
             width: 350px;
             min-width: 350px;
         }
     }
 
-    @media (max-width: 1050px) {
+    @media (max-width: 1350px) {
         .home-wrapper {
             display: block;
         }
@@ -374,12 +380,54 @@ export default {
 
         .home-right {
             width: 100%;
+            display: flex;
+            gap: 32px;
+        }
+
+        .home-right .home-creators {
+            min-width: 350px;
+        }
+
+        .home-right .home-graph {
+            height: 500px;
+        }
+    }
+
+    @media (max-width: 1000px) {
+        .home-right {
+            display: block;
+        }
+
+        .home-right .home-graph {
+            height: 400px;
         }
     }
 
     @media (max-width: 800px) {
         .home-wrapper {
             padding: 24px 16px 0px 16px;
+        }
+    }
+
+    @media (max-width: 500px) {
+        .home-courses .courses-header {
+            display: block;
+        }
+
+        .home-courses .courses-header > p {
+            margin-bottom: 18px;
+        }
+
+        .home-right, .home-right .home-creators {
+            min-width: 250px;
+        }
+
+        .home-creators > div:first-child > p:not(:first-child) {
+            display: none;
+        }
+
+        .home-creators {
+            height: 600px;
         }
     }
 </style>

@@ -378,6 +378,16 @@ export default {
 	}
 
     @media (max-width: 1200px) {
+        .searchbar input {
+            width: 150px;
+        }
+
+        .custom-select {
+            width: 130px;
+        }
+	}
+
+    @media (max-width: 1450px) {
         .filter-div > div {
             display: block;
             margin-left: 16px;
@@ -393,7 +403,7 @@ export default {
         }
 	}
 
-    @media (max-width: 950px) {
+    @media (max-width: 1200px) {
         .searchbar input {
             width: 160px;
         }

@@ -423,7 +423,7 @@ export default {
         }
     }
 
-    @media (max-width: 1500px) {
+    @media (max-width: 1800px) {
         .filter-div > div {
             display: block;
             margin-left: 16px;
@@ -439,7 +439,7 @@ export default {
         }
     }
 
-    @media (max-width: 1150px) {
+    @media (max-width: 1400px) {
         .filter-div {
             display: none !important;
         }
@@ -454,44 +454,4 @@ export default {
             padding: 0px;
         }
     }
-
-    @media (max-width: 850px) {
-        .searchbar input {
-            width: 160px;
-        }
-    }
-
-    @media (max-width: 600px) {
-        .responsive-filter-btn button {
-            width: 120px;
-            padding-left: 16px;
-        }
-    }
-
-    @media (max-width: 600px) {
-        .responsive-filter-btn button {
-            width: 55px;
-            padding-left: 16px;
-        }
-
-        .responsive-filter-btn p {
-            display: none;
-        }
-    }
-
-    @media (max-width: 500px) {
-        .searchbar input {
-            width: 120px;
-        }
-    }
-
-    @media (max-width: 480px) {
-        .responsive-filter {
-            width: 100%;
-        }
-
-        .responsive-filter-filters .custom-select {
-            width: 100%;
-        }
-	}
 </style>

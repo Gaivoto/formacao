@@ -97,13 +97,7 @@ export default {
         }
     }
 
-    @media (max-width: 1250px) {
-        .text > p {
-            max-width: 400px;
-        }
-    }
-
-    @media (max-width: 1150px) {
+    @media (max-width: 1350px) {
         .vid .text {
             display: block;
             padding: 0px;
@@ -116,6 +110,12 @@ export default {
 
         .text > p {
             max-width: 100%;
+        }
+    }
+
+    @media (max-width: 1250px) {
+        .text > p {
+            max-width: 400px;
         }
     }
 

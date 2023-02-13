@@ -2,7 +2,7 @@
     <div class="courses-wrapper">
         <MyCoursesFilter v-on:filter="filter" v-bind:categories="this.categories"/>
         <div class="row">
-            <MyCoursesCourseCard v-for="course in this.coursesDisplay" :key="course.id" v-bind:course="course"/>
+            <MyCoursesCourseCard v-for="course in this.coursesDisplay" :key="course.id" v-bind:course="course" v-bind:sidebar="this.sidebar"/>
             <div class="no-results" :class="{ 'd-none': !noResults }">
                 <span class="material-icons search-icon">warning</span>
                 <p>Não existem resultados para a pesquisa.</p>    
@@ -24,6 +24,12 @@ export default {
         MyCoursesFilter,
         MyCoursesCourseCard,
         Pagination
+    },
+    props: {
+        sidebar: {
+            type: Boolean,
+            required: true
+        }
     },
     data(){
         return {
@@ -49,7 +55,7 @@ export default {
             if(value.data.access_token) this.$store.commit('setAccessToken', value.data.access_token);
 
             value.data.courses.forEach(c => this.courses.push(c));
-            console.log(value.data.courses);
+            
             this.coursesFiltered = [...this.courses];
 
             for (var i = (this.page - 1) * this.coursesPerPage; i < this.page * this.coursesPerPage; i++) {

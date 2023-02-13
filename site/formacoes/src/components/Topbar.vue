@@ -97,8 +97,10 @@ export default {
                 value.data.notifications.forEach(n => this.notifications.push(n));
             })
             .catch(error => {
-                if(error.code) console.log(error.response.data);
-                else console.log(error);
+                if (error.code) {
+                    console.log(error.response.data);
+                    this.$emit("open-modal", error.response.data.message);
+                } else console.log(error);
             });
         }
 
@@ -111,8 +113,10 @@ export default {
             this.courses.forEach(c => c.resultType = "Curso");
         })
         .catch(error => {
-            if(error.code) console.log(error.response.data);
-            else console.log(error);
+            if (error.code) {
+                console.log(error.response.data);
+                this.$emit("open-modal", error.response.data.message);
+            } else console.log(error);
         });
 
         axios({
@@ -124,8 +128,10 @@ export default {
             this.creators.forEach(c => c.resultType = "Criador");
         })
         .catch(error => {
-            if(error.code) console.log(error.response.data);
-            else console.log(error);
+            if (error.code) {
+                console.log(error.response.data);
+                this.$emit("open-modal", error.response.data.message);
+            } else console.log(error);
         });
         
         this.imageUrl = new URL(`../assets/${this.user.image}.jpg`, import.meta.url).href;
@@ -204,14 +210,14 @@ export default {
             let filter = this.$refs.topSearchbar.value.toLowerCase();
 
             this.creators.forEach(c => {
-                if(c.name.toLowerCase() == filter) {
-                    this.$router.push({ name: 'Perfil do Utilizador', params: { id: i.id } });
+                if(c.name.toLowerCase() == filter || c.username.toLowerCase() == filter) {
+                    this.$router.push({ name: 'Perfil do Utilizador', params: { id: c.id } });
                 }
             });
 
             this.courses.forEach(c => {
                 if(c.name.toLowerCase() == filter) {
-                    this.$router.push({ name: 'Curso', params: { id: i.id } });
+                    this.$router.push({ name: 'Curso', params: { id: c.id } });
                 }
             });
         }
@@ -429,19 +435,25 @@ export default {
         object-fit: cover;
     }
 
-    @media (max-width: 1450px) {
+    @media (max-width: 1500px) {
 		.topbar-text .logo  {
 			display: none;
 		}	
 	}
 
-    @media (max-width: 1200px) {
+    @media (max-width: 1350px) {
 		.user-wrapper .topbar-text {
 			display: none;
 		}	
 	}
 
-    @media (max-width: 1050px) {
+    @media (max-width: 1350px) {
+		.searchbar input {
+			width: 300px;
+		}	
+	}
+
+    @media (max-width: 1150px) {
 		.wrapper .topbar-text {
 			display: none;
 		}	

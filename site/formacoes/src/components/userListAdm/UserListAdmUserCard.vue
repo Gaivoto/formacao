@@ -83,6 +83,8 @@ export default {
 
     .user-card-left p {
         color: var(--light);
+        text-overflow: ellipsis;
+        overflow: hidden;
     }
 
     .user-card-left p:first-child {
@@ -111,14 +113,14 @@ export default {
 
     .user-card-left > .first-left-div p:last-child {
         white-space: nowrap;
-        text-overflow: ellipsis;
-        overflow: hidden;
     }
 
     .user-card-left > .first-left-div > p:first-child {
         color: var(--primary);
         font-size: 24px;
         margin-bottom: 20px;
+        text-overflow: ellipsis;
+        overflow: hidden;
     }
 
     button {
@@ -149,19 +151,37 @@ export default {
         }
     }
 
+    @media (max-width: 1300px) {
+        .user-card-left {
+            width: 600px;
+        }
+    }
+
+    @media (max-width: 1300px) {
+        .user-card-left {
+            width: 500px;
+        }
+    }
+
     @media (max-width: 1100px) {
+        .user-card-left {
+            gap: 40px;
+        }
+    }
+
+    @media (max-width: 1350px) {
         .user-card-left {
             gap: 40px;
         }
 	}
 
-    @media (max-width: 1000px) {
+    @media (max-width: 1250px) {
         .user-card-left > .first-left-div {
             width: 200px;
         }
 	}
 
-    @media (max-width: 900px) {
+    @media (max-width: 1150px) {
         .user-card-left > .first-left-div {
             width: 200px;
         }
@@ -185,13 +205,13 @@ export default {
         }
 	}
 
-    @media (max-width: 850px) {
+    @media (max-width: 1100px) {
         .user-card-left {
             gap: 20px;
         }
 	}
 
-    @media (max-width: 800px) {
+    @media (max-width: 1050px) {
         .user-card-left > .first-left-div {
             width: 140px;
         }

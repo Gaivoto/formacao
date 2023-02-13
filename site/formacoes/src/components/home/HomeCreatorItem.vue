@@ -76,4 +76,10 @@ export default {
         border: none;
         border-radius: 16px;
     }
+
+    @media (max-width: 500px) {
+        .item-left img {
+            display: none;
+        }
+    }
 </style>
