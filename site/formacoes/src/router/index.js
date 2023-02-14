@@ -15,6 +15,7 @@ import Settings from '../views/Settings.vue'
 import UserListAdm from '../views/UserListAdm.vue'
 import VideoPlayer from '../views/VideoPlayer.vue'
 import Workshop from '../views/Workshop.vue'
+import NotFound from '../views/NotFound.vue'
 
 const router = createRouter({
     history: createWebHistory(),
@@ -23,6 +24,11 @@ const router = createRouter({
             path: '/',
             component: Landing,
             name: "Landing"
+        },
+        {
+            path:'/:pathMatch(.*)*',
+            component: NotFound,
+            name: "NotFound"
         },
         {
             path: '/home',
