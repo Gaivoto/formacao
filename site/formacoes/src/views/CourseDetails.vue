@@ -1,10 +1,10 @@
 <template>
     <div class="course-details-wrapper">
         <div class="course-details-content">
-            <CourseDetHeader class="course-header" v-bind:course="this.course" />
-            <p v-if:="this.userHasAccess">Conteúdo:</p>
-            <div v-if:="this.userHasAccess" class="vid-container">
-                <VidInfo v-for="vid in this.videos" :key="vid.id" v-bind:video="vid" v-bind:courseID="this.course.id"/>
+            <CourseDetHeader class="course-header" v-bind:course="this.course" v-bind:creator="this.creator" v-bind:compra="this.compra" />
+            <p>Conteúdo:</p>
+            <div class="vid-container">
+                <VidInfo v-for="vid in this.videos" :key="vid.id" v-bind:video="vid" v-bind:courseID="this.course.id" v-bind:clickable="this.creator || this.access"/>
             </div>
         </div>
     </div>
@@ -24,44 +24,53 @@ export default {
     data() {
         return  {
             course: {},
-            user: this.$store.getters.getUser
+            videos: [],
+            creator: false,
+            access: false,
+            compra: false
         }
     },
     created() {
-        axios({
+        let request = {
             method: `get`,
-            url: `${import.meta.env.VITE_HOST}/cursos/${this.$route.params.id}`,
-            headers: {
+            url: `${import.meta.env.VITE_HOST}/cursos/${this.$route.params.id}`
+        }
+
+        if(this.$store.getters.getUser.id != "") {
+            request.headers = {
                 Authorization: `Bearer ${this.$store.getters.getAccessToken}`,
                 refreshtoken: this.$store.getters.getRefreshToken
             }
-        })
+        }
+
+        axios(request)
         .then(value => {
             if (value.data.access_token) this.$store.commit('setAccessToken', value.data.access_token);
-            if (value.data.course.id_creator == this.$store.getters.getUser.id) {
-                value.data.course.creator = true;
-                value.data.course.access = true;
-            } else {
-                value.data.course.creator = false;
-            }
+            if (value.data.course.id_creator == this.$store.getters.getUser.id) this.creator = true;
+
             this.course = value.data.course;
             this.videos = value.data.course.videos;
-            this.compra = value.data.course.access
+            this.access = value.data.course.access;
+
+            if(this.$store.getters.getUser.type && this.$store.getters.getUser.type != 'admin' && !this.creator && !this.access) this.compra = true;
         })
         .catch(error => {
-            if(error.code) {
-                this.$emit("open-modal", error.response.data.message);
+            if (error.code) {
                 console.log(error.response.data);
-            }
-            else console.log(error);
+                if(error.response.data.message == "Curso não existe.") {
+                    this.$router.push({ name: "Home" });
+                } else {
+                    this.$emit("open-modal", error.response.data.message);
+                }
+            } else console.log(error);
         });
     },
+    beforeRouteLeave(to, from){
+        if(to.name == "Vídeo" && !this.access && !this.creator && this.$store.getters.getUser.type != 'admin') return false;
+    },
     computed: {
-        getUser() {
-            this.user = this.$store.getter.getUser;
-        },
         userHasAccess() {
-            if(this.course.access || (this.$store.getters.getUser.type && this.$store.getters.getUser.type == 'admin')) return true;
+            if(this.access || this.creator || (this.$store.getters.getUser.type && this.$store.getters.getUser.type == 'admin')) return true;
             return false;
         }
     }
@@ -94,6 +103,8 @@ export default {
         overflow-x: hidden;
         overflow-y: scroll;
         height: 440px;
+        position: relative;
+        transform: scale(1);
     }
 
     .vid-container::-webkit-scrollbar {
@@ -105,6 +116,15 @@ export default {
     .vid-container::-webkit-scrollbar-thumb {
         background: var(--mobalytics-susge);
         border-radius: 8px;
+    }
+
+    .no-access {
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        height: 100%;   
+        background-color: red;
     }
 
     @media (max-width: 1400px) {

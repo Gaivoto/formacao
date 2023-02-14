@@ -7,8 +7,8 @@
                 <p>Criador: {{ this.course.creatorName }}</p>
                 <p>Categoria: {{ this.course.category }}</p>
                 <p>Preço: €{{ this.course.price }}</p>
-                <button v-if:="!this.course.access">COMPRAR</button>
-                <router-link v-if:="this.course.creator" :to="{ name: 'Workshop', params: { id: this.getUserId, idCourse: this.course.id } }">
+                <button v-if:="this.compra">COMPRAR</button>
+                <router-link v-if:="this.creator" :to="{ name: 'Workshop', params: { id: this.getUserId, idCourse: this.course.id } }">
                     <button>Editar Curso</button> 
                 </router-link>
             </div>
@@ -27,6 +27,14 @@ export default {
         course: {
             type: Object,
             required: true,
+        },
+        creator: {
+            type: Boolean,
+            required: true
+        },
+        compra: {
+            type: Boolean,
+            required: true
         }
     },
     data() {

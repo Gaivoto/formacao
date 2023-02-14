@@ -1,5 +1,5 @@
 <template>
-    <router-link class="vid" :class="{'vidOpen': open}" :to="{ name: 'Vídeo', params: { id: this.courseID, idVid: this.video.id } }">
+    <router-link class="vid" :class="{ 'clickable': this.clickable }" :to="{ name: 'Vídeo', params: { id: this.courseID, idVid: this.video.id } }">
         <img :src="this.imageUrl">
         <div class="text">
             <div class="text-left">
@@ -27,6 +27,10 @@ export default {
         courseID: {
             type: Number,
             required: true
+        },
+        clickable: {
+            type: Boolean,
+            required: true
         }
     },
     created() {
@@ -46,9 +50,14 @@ export default {
         display: flex;
         gap: 24px;
         background-color: var(--mobalytics-back);
+        cursor: default;
     }
 
-    .vid:hover {
+    .vid.clickable {
+        cursor: pointer;
+    }
+
+    .vid.clickable:hover {
         background-color: var(--mobalytics-susge);
     }
 
