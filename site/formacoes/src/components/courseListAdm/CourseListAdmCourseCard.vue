@@ -2,12 +2,12 @@
     <div class="course-card-container">
         <div class="course-card" :class="{ 'videos-open': this.videosOpen }">
             <div class="course-card-left">
-                <router-link :to="{ name: 'Curso', params: { id: this.course.id } }">
+                <router-link :to="Tr.i18nRoute({ name: 'Curso', params: { id: this.course.id, locale: Tr.guessDefaultLocale() } })">
                     <img :src="this.imageUrl">
                 </router-link>
                 <div>
                     <div class="first-left-div">
-                        <router-link :to="{ name: 'Curso', params: { id: this.course.id } }"><p>{{ this.course.name }}</p></router-link>
+                        <router-link :to="Tr.i18nRoute({ name: 'Curso', params: { id: this.course.id, locale: Tr.guessDefaultLocale() } })"><p>{{ this.course.name }}</p></router-link>
                         <p>Criador: {{ this.course.nameCr }}</p>
                     </div>
                     <div>
@@ -46,6 +46,7 @@
 
 <script>
 import CourseListAdmVideoCard from './CourseListAdmVideoCard.vue'
+import Tr from '@/i18n/translation.js'
 
 export default {
     name: 'CourseListAdmCourseCard',
@@ -63,6 +64,9 @@ export default {
             imageUrl: "",
             videosOpen: false
         }
+    },
+    setup() {
+        return { Tr };
     },
     created(){
         this.imageUrl = new URL(`../../assets/${this.course.image}.jpg`, import.meta.url).href;

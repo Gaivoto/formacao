@@ -1,5 +1,5 @@
 <template>
-    <router-link class="vid" :class="{ 'clickable': this.clickable }" :to="{ name: 'Vídeo', params: { id: this.courseID, idVid: this.video.id } }">
+    <router-link class="vid" :class="{ 'clickable': this.clickable }" :to="Tr.i18nRoute({ name: 'Vídeo', params: { id: this.courseID, idVid: this.video.id, locale: Tr.guessDefaultLocale() } })">    
         <img :src="this.imageUrl">
         <div class="text">
             <div class="text-left">
@@ -12,12 +12,15 @@
 </template>
 
 <script>
-
+import Tr from '@/i18n/translation.js'
 export default {
     data: () => {
         return {
             imageUrl: ""
         }
+    },
+    setup() {
+        return { Tr };
     },
     props: {
         video: {

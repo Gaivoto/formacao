@@ -8,7 +8,7 @@
                 <p>Categoria: {{ this.course.category }}</p>
                 <p>Preço: €{{ this.course.price }}</p>
                 <button v-if:="this.compra">COMPRAR</button>
-                <router-link v-if:="this.creator" :to="{ name: 'Workshop', params: { id: this.getUserId, idCourse: this.course.id } }">
+                <router-link v-if:="this.creator" :to="Tr.i18nRoute({ name: 'Workshop', params: { id: this.getUserId, idCourse: this.course.id, locale: Tr.guessDefaultLocale() } })">
                     <button>Editar Curso</button> 
                 </router-link>
             </div>
@@ -21,6 +21,7 @@
 </template>
 
 <script>
+import Tr from '@/i18n/translation.js'
 export default {
     name: "CourseDetHeader",
     props: {
@@ -41,6 +42,9 @@ export default {
         return {
             imageUrl: ""
         }
+    },
+    setup() {
+        return { Tr };
     },
     created() {
         this.imageUrl = new URL(`../../assets/${this.course.image}.jpg`, import.meta.url).href;

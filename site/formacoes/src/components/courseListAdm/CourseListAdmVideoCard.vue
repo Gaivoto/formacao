@@ -3,7 +3,7 @@
         <div class="video-card-left">
             <img :src="this.imageUrl">
             <div>
-                <router-link :to="{ name: 'Vídeo', params: { id: this.courseId, idVid: this.video.id } }"><p>{{ this.video.title }}</p></router-link>
+                <router-link :to="Tr.i18nRoute({ name: 'Vídeo', params: { id: this.courseId, idVid: this.video.id, locale: Tr.guessDefaultLocale() } })"><p>{{ this.video.title }}</p></router-link>
             </div>
             <div>
                 <p>Estado: {{ this.video.state }}</p>
@@ -23,6 +23,8 @@
 </template>
 
 <script>
+import Tr from '@/i18n/translation.js'
+
 export default {
     name: 'CourseListAdmVideoCard',
     props: {
@@ -39,6 +41,9 @@ export default {
         return {
             imageUrl: ""
         }
+    },
+    setup() {
+        return { Tr };
     },
     created(){
         this.imageUrl = new URL(`../../assets/${this.video.image}.jpg`, import.meta.url).href;
