@@ -14,6 +14,7 @@
 import axios from "axios";
 import CourseDetHeader from "../components/courseDetails/CourseDetHeader.vue";
 import VidInfo from "../components/courseDetails/VidInfo.vue";
+import Tr from '@/i18n/translation.js';
 
 export default {
     name: "CourseDetails",
@@ -29,6 +30,9 @@ export default {
             access: false,
             compra: false
         }
+    },
+    setup() {
+        return { Tr };
     },
     created() {
         let request = {
@@ -58,7 +62,7 @@ export default {
             if (error.code) {
                 console.log(error.response.data);
                 if(error.response.data.message == "Curso não existe.") {
-                    this.$router.push({ name: "Home" });
+                    this.$router.push({ name: "Home", params: { locale: Tr.guessDefaultLocale() } });
                 } else {
                     this.$emit("open-modal", error.response.data.message);
                 }

@@ -180,7 +180,6 @@ export default {
     }
 
     .course-card-right {
-        display: flex;
         align-items: center;
         gap: 40px;
     }
@@ -196,8 +195,7 @@ export default {
     }
 
     .button-wrapper {
-        display: flex;
-        gap: 16px;
+        display: block;
     }
 
     .pending-div {
@@ -268,7 +266,7 @@ export default {
         transition: 0.5s;
     }
 
-    @media (max-width: 1650px) {
+    @media (max-width: 1750px) {
 
         .course-card {
             padding-top: 24px;
@@ -283,7 +281,6 @@ export default {
         }
 
         .button-wrapper {
-            display: block;
             width: 120px;
         }
 

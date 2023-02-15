@@ -16,6 +16,7 @@
 import axios from "axios";
 import VideoList from "../components/videoPlayer/VideoList.vue";
 import VideoPlayerVideo from "../components/videoPlayer/VideoPlayerVideo.vue";
+import Tr from '@/i18n/translation.js';
 
 export default {
     name: "VideoPlayer",
@@ -30,18 +31,12 @@ export default {
             courseId: "",
         };
     },
-    methods: {
-        changeVideo(id) {
-            this.videos.forEach((v) => {
-                if (v.id == id) {
-                    this.video = v;
-                }
-            });
-        },
+    setup() {
+        return { Tr };
     },
     created() {
         if(!this.$store.getters.getUser.id) {
-            this.$router.push({ name: "Login" });
+            this.$router.push({ name: "Login", params: { locale: Tr.guessDefaultLocale() } });
         } else {
             axios({
                 method: `get`,
@@ -54,7 +49,7 @@ export default {
             .then((value) => {
                 if (value.data.access_token) this.$store.commit("setAccessToken", value.data.access_token);
                 if(!value.data.course.access) {
-                    this.$router.push({ name: "Home" });
+                    this.$router.push({ name: "Home", params: { locale: Tr.guessDefaultLocale() } });
                 } else {
                     let existe = false;
                     this.videos = value.data.course.videos;
@@ -66,7 +61,7 @@ export default {
                         }
                     }
                     if(!existe) {
-                        this.$router.push({ name: "Home" });
+                        this.$router.push({ name: "Home", params: { locale: Tr.guessDefaultLocale() } });
                     }
                 }
             })
@@ -74,7 +69,7 @@ export default {
                 if (error.code) {
                     console.log(error.response.data);
                     if(error.response.data.message == "Curso não existe.") {
-                        this.$router.push({ name: "Home" });
+                        this.$router.push({ name: "Home", params: { locale: Tr.guessDefaultLocale() } });
                     } else {
                         this.$emit("open-modal", error.response.data.message);
                     }
@@ -83,6 +78,15 @@ export default {
 
         }
     },
+    methods: {
+        changeVideo(id) {
+            this.videos.forEach((v) => {
+                if (v.id == id) {
+                    this.video = v;
+                }
+            });
+        },
+    }
 };
 </script>
 

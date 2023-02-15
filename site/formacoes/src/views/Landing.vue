@@ -20,6 +20,7 @@ import LandingPageSocials from '../components/landingPage/LandingPageSocials.vue
 import LandingPageGetStarted from '../components/landingPage/LandingPageGetStarted.vue';
 import LandingPageMainSection from '../components/landingPage/LandingPageMainSection.vue';
 import LanguageSwitcher from '../components/LanguageSwitcher.vue';
+import Tr from '@/i18n/translation.js';
 
 export default {
     name: "LandingPage",
@@ -51,9 +52,12 @@ export default {
             ]
         }
     },
+    setup() {
+        return { Tr };
+    },
     created() {
         if(this.$store.getters.getUser.id) {
-            this.$router.push({ name: "Home" });
+            this.$router.push({ name: "Home", params: { locale: Tr.guessDefaultLocale() } });
         } else {
             
         }

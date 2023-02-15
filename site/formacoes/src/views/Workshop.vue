@@ -17,11 +17,13 @@
 </template>
 
 <script scoped>
-import nanoMetadata from 'nano-metadata'
-import courseInfo from '../components/workshop/courseinfo.vue'
-import UploadedVideoCard from '../components/workshop/UploadedVideoCard.vue'
+import nanoMetadata from 'nano-metadata';
+import courseInfo from '../components/workshop/courseinfo.vue';
+import UploadedVideoCard from '../components/workshop/UploadedVideoCard.vue';
 import draggable from 'vuedraggable';
-import { v4 } from 'uuid'
+import { v4 } from 'uuid';
+import Tr from '@/i18n/translation.js';
+
 export default {
     name: 'Workshop',
     components: {
@@ -36,11 +38,14 @@ export default {
             existe: false,
         }
     },
+    setup() {
+        return { Tr };
+    },
     created () {
         if(!this.$store.getters.getUser.id) {
-            this.$router.push({ name: "Login" });
+            this.$router.push({ name: "Login", params: { locale: Tr.guessDefaultLocale() } });
         } else if(this.$store.getters.getUser.type != 'creator' || this.$store.getters.getUser.id != this.$route.params.id) {
-            this.$router.push({ name: "Home" });
+            this.$router.push({ name: "Home", params: { locale: Tr.guessDefaultLocale() } });
         } else {
             //o request vai aqui
         }

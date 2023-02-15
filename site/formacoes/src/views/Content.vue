@@ -61,6 +61,7 @@
 import axios from 'axios';
 import ContentTableRow from "../components/content/ContentTableRow.vue";
 import Pagination2 from "../components/paginations/Pagination2.vue";
+import Tr from '@/i18n/translation.js';
 
 export default {
     name: "Content",
@@ -75,6 +76,9 @@ export default {
             courses: [],
             displayCourses: [],
         }
+    },
+    setup() {
+        return { Tr };
     },
     created() {
         if(!this.$store.getters.getUser.id) {

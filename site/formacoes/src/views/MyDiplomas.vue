@@ -17,6 +17,7 @@ import axios from "axios";
 import DiplomaCard from "../components/myDiplomas/DiplomaCard.vue";
 import DiplomaFilter from "../components/myDiplomas/DiplomaFilter.vue";
 import Pagination from "../components/paginations/Pagination.vue";
+import Tr from '@/i18n/translation.js';
 
 export default {
     name: "MyDiplomas",
@@ -43,11 +44,14 @@ export default {
             user: {}
         }
     },
+    setup() {
+        return { Tr };
+    },
     created() {
         if(!this.$store.getters.getUser.id) {
-            this.$router.push({ name: "Login" });
+            this.$router.push({ name: "Login", params: { locale: Tr.guessDefaultLocale() } });
         } else if(this.$store.getters.getUser.type == 'admin' || this.$store.getters.getUser.id != this.$route.params.id) {
-            this.$router.push({ name: "Home" });
+            this.$router.push({ name: "Home", params: { locale: Tr.guessDefaultLocale() } });
         } else {
             axios({
                 method: 'get',

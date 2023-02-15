@@ -17,6 +17,7 @@ import axios from 'axios';
 import MyCoursesFilter from '../components/myCourses/MyCoursesFilter.vue'
 import MyCoursesCourseCard from '../components/myCourses/MyCoursesCourseCard.vue'
 import Pagination from '../components/paginations/Pagination.vue'
+import Tr from '@/i18n/translation.js'
 
 export default {
     name: 'Courses',
@@ -42,11 +43,14 @@ export default {
             filterInfo: {}
         }
     },
+    setup() {
+        return { Tr };
+    },
     created(){
         if(!this.$store.getters.getUser.id) {
-            this.$router.push({ name: "Login" });
+            this.$router.push({ name: "Login", params: { locale: Tr.guessDefaultLocale() } });
         } else if(this.$store.getters.getUser.type == 'admin' || this.$store.getters.getUser.id != this.$route.params.id) {
-            this.$router.push({ name: "Home" });
+            this.$router.push({ name: "Home", params: { locale: Tr.guessDefaultLocale() } });
         } else {
             axios({
                 method: 'get',

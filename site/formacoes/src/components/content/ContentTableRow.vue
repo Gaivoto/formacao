@@ -7,7 +7,7 @@
         </td>
         <td>
             <router-link :to="{ name: 'Curso', params: { id: this.course.id_course } }">
-                <p class="course-name">{{ this.course.name }}</p>
+                <p class="course-name">{{ this.course.course }}</p>
                 <p>{{ this.course.description }}</p>
             </router-link>
         </td>

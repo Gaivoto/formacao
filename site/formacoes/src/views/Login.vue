@@ -67,6 +67,7 @@
 
 <script>
 import axios from 'axios';
+import Tr from '@/i18n/translation.js';
 
 export default {
     name: "Login",
@@ -75,9 +76,12 @@ export default {
             state: "login"
         }
     },
+    setup() {
+        return { Tr };
+    },
     created() {
         if(this.$store.getters.getUser.id) {
-            this.$router.push({ name: "Home" });
+            this.$router.push({ name: "Home", params: { locale: Tr.guessDefaultLocale() } });
         } else {
             window.addEventListener('keydown', (e) => {
                 if(e.key == 'Enter' && this.state == 'login') this.login();
@@ -113,7 +117,7 @@ export default {
                     this.$store.commit('setUser', value.data.user);
                     this.$store.commit('setRefreshToken', value.data.refresh_token);
                     this.$store.commit('setAccessToken', value.data.access_token);
-                    this.$router.push({ name: "Home" });
+                    this.$router.push({ name: "Home", params: { locale: Tr.guessDefaultLocale() } });
                 })
                 .catch(error => {
                     if(error.code) {

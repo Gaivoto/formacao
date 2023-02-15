@@ -20,7 +20,7 @@
         </div>
         
         <div class="topbar-right">
-            <router-link class="user-wrapper" :to="{ name: 'Perfil do Utilizador', params: { id: this.getUserId } }" :key="this.getUserId">
+            <router-link class="user-wrapper" :to="Tr.i18nRoute({ name: 'Perfil do Utilizador', params: { id: this.getUserId } })" :key="this.getUserId">
                 <div class="topbar-text">
                     <p>{{ this.$store.getters.getUser.username }}</p>
                 </div>
@@ -45,8 +45,9 @@
 
 <script>
 import axios from 'axios';
-import NotificationListItem from './NotificationListItem.vue'
-import SearchbarResult from './SearchbarResult.vue'
+import NotificationListItem from './NotificationListItem.vue';
+import SearchbarResult from './SearchbarResult.vue';
+import Tr from '@/i18n/translation.js';
 
 export default {
     name: "Topbar",
@@ -78,6 +79,9 @@ export default {
             creators: [],
             courses: []
         }
+    },
+    setup() {
+        return { Tr };
     },
     mounted() {
         this.isMounted = true;
@@ -211,13 +215,13 @@ export default {
 
             this.creators.forEach(c => {
                 if(c.name.toLowerCase() == filter || c.username.toLowerCase() == filter) {
-                    this.$router.push({ name: 'Perfil do Utilizador', params: { id: c.id } });
+                    this.$router.push({ name: 'Perfil do Utilizador', params: { id: c.id, locale: Tr.guessDefaultLocale() } });
                 }
             });
 
             this.courses.forEach(c => {
                 if(c.name.toLowerCase() == filter) {
-                    this.$router.push({ name: 'Curso', params: { id: c.id } });
+                    this.$router.push({ name: 'Curso', params: { id: c.id, locale: "?" } });
                 }
             });
         }

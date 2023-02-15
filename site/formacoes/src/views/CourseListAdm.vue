@@ -17,6 +17,7 @@ import axios from 'axios'
 import CourseListAdmFilter from '../components/courseListAdm/CourseListAdmFilter.vue'
 import CourseListAdmCourseCard from '../components/courseListAdm/CourseListAdmCourseCard.vue'
 import Pagination2 from '../components/paginations/Pagination2.vue'
+import Tr from '@/i18n/translation.js'
 
 export default {
     name: 'CourseListAdm',
@@ -36,11 +37,14 @@ export default {
             filterInfo: {}
         }
     },
+    setup() {
+        return { Tr };
+    },
     created(){
         if(!this.$store.getters.getUser.id) {
-            this.$router.push({ name: "Login" });
+            this.$router.push({ name: "Login", params: { locale: Tr.guessDefaultLocale() } });
         } else if(this.$store.getters.getUser.type != "admin") {
-            this.$router.push({ name: "Home"});
+            this.$router.push({ name: "Home", params: { locale: Tr.guessDefaultLocale() } });
         } else {
             axios({
                 method: 'get',

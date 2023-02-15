@@ -30,14 +30,10 @@ export default {
         async switchLanguage(newLocale) {
             this.localeOpen = false;
 
-            Tr.switchLanguage(newLocale)
-                .then(value => {
-                    this.currentLocale = Tr.guessDefaultLocale();
-                })
-                .catch(error => {
-                    console.log(error);
-                });
+            Tr.switchLanguage(newLocale);
 
+            this.currentLocale = Tr.guessDefaultLocale();
+                
             try {
                 await this.$router.replace({ params: { locale: newLocale } })
             } catch(e) {

@@ -3,7 +3,7 @@
         <UserProfileInfo v-bind:user="this.user" v-on:alterar-dados="alterarDadosUser" v-on:createSubscription="createSubscriptionUser" v-on:endSubscription="endSubscription" />
         <div class="profile-bottom" v-if="!this.isUserAdm && this.ownProfile">
             <div>
-                <router-link :to="{ name: 'Meus Cursos', params: { id: this.getUserId } }" class="profile-bottom-title">Os meus cursos</router-link>
+                <router-link :to="Tr.i18nRoute({ name: 'Meus Cursos', params: { id: this.getUserId } })" class="profile-bottom-title">Os meus cursos</router-link>
                 <div class="profile-list">
                     <UserProfileCourseCard v-for="course in this.courses" :key="course.id" v-bind:course="course" />
                     <div class="no-items" v-if="!this.userHasCourses">
@@ -13,7 +13,7 @@
                 </div>
             </div>
             <div>
-                <router-link :to="{ name: 'Meus Diplomas', params: { id: this.getUserId } }" class="profile-bottom-title">Os meus diplomas</router-link>
+                <router-link :to="Tr.i18nRoute({ name: 'Meus Diplomas', params: { id: this.getUserId } })" class="profile-bottom-title">Os meus diplomas</router-link>
                 <div class="profile-list last-list">
                     <UserProfileDiplomaCard v-for="diploma in this.diplomas" :key="diploma.id" v-bind:diploma="diploma" />
                     <div class="no-items" v-if="!this.userHasDiplomas">
@@ -42,6 +42,7 @@ import UserProfileInfo from "../components/profile/UserProfileInfo.vue";
 import UserProfileCourseCard from "../components/profile/UserProfileCourseCard.vue";
 import UserProfileDiplomaCard from "../components/profile/UserProfileDiplomaCard.vue";
 import CreatorProfileCourseCard from "../components/profile/CreatorProfileCourseCard.vue";
+import Tr from '@/i18n/translation.js';
 
 export default {
     name: "Profile",
@@ -64,6 +65,9 @@ export default {
             courses: [],
             diplomas: [],
         };
+    },
+    setup() {
+        return { Tr };
     },
     created() {
         if(this.$route.params.id == this.$store.getters.getUser.id) {
@@ -110,7 +114,7 @@ export default {
                 if (error.code) {
                     console.log(error.response.data);
                     if(error.response.data.message == "Este criador não existe.") {
-                        this.$router.push({ name: "Home" });
+                        this.$router.push({ name: "Home", params: { locale: Tr.guessDefaultLocale() } });
                     } else {
                         this.$emit("open-modal", error.response.data.message);
                     }
