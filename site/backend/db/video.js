@@ -30,7 +30,7 @@ async function getVideo(id) {
 async function getAllVideosFromCourse(id) {
     const pool = new sql.Request();
     return new Promise((resolve, reject) => {
-        const slct = `SELECT * FROM [Video] WHERE [id_course] = @id`;
+        const slct = `SELECT * FROM [Video] WHERE [id_course] = @id ORDER BY [position] ASC`;
         pool.input('id', sql.VarChar(200), id).query(slct, (err, res) => {
             if (!err) {
                 resolve(res.recordset);
