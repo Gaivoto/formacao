@@ -413,7 +413,7 @@ export default {
         display: none;
     }
 
-    @media (max-width: 1850px) {
+    @media (max-width: 1950px) {
         .searchbar input {
             width: 200px;
         }

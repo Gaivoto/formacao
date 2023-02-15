@@ -1,13 +1,13 @@
 <template>
     <tr class="table-row">
         <td class="image-cell">
-            <router-link :to="{ name: 'Curso', params: { id: this.course.id_course } }">
+            <router-link :to="Tr.i18nRoute({ name: 'Curso', params: { id: this.course.id_course, locale: Tr.guessDefaultLocale() } })">
                 <img :src="this.imageUrl">
             </router-link>
         </td>
         <td>
-            <router-link :to="{ name: 'Curso', params: { id: this.course.id_course } }">
-                <p class="course-name">{{ this.course.name }}</p>
+            <router-link :to="Tr.i18nRoute({ name: 'Curso', params: { id: this.course.id_course, locale: Tr.guessDefaultLocale() } })">
+                <p class="course-name">{{ this.course.course }}</p>
                 <p>{{ this.course.description }}</p>
             </router-link>
         </td>
@@ -27,6 +27,8 @@
 </template>
 
 <script>
+import Tr from '@/i18n/translation.js'
+
 export default {
     name: 'ContentTableRow',
     props: {
@@ -39,6 +41,9 @@ export default {
         return {
             imageUrl: ""
         }
+    },
+    setup() {
+        return { Tr };
     },
     created(){
         this.imageUrl = new URL(`../../assets/${this.course.image}.jpg`, import.meta.url).href;
