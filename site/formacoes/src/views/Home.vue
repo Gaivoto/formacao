@@ -1,6 +1,7 @@
 <template>
     <div class="home-wrapper">
         <div class="home-left">
+            <p>{{ $t("page.teste") }}</p>
             <div class="home-scroller">
                 <HomeSlideshow v-bind:slides="this.slides" />
             </div>

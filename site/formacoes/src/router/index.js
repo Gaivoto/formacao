@@ -1,4 +1,5 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory, RouterView } from 'vue-router'
+import Tr from '@/i18n/translation.js'
 
 import Analytics from '../views/Analytics.vue'
 import Content from '../views/Content.vue'
@@ -21,84 +22,91 @@ const router = createRouter({
     history: createWebHistory(),
     routes: [
         {
-            path: '/',
-            component: Landing,
-            name: "Landing"
-        },
-        {
-            path:'/:pathMatch(.*)*',
-            component: NotFound,
-            name: "NotFound"
-        },
-        {
-            path: '/home',
-            component: Home,
-            name: "Home"
-        },
-        {
-            path: '/courses/:id',
-            component: CourseDetails,
-            name: "Curso"
-        },
-        {
-            path: '/courselist',
-            component: CourseListAdm,
-            name: "Lista de Cursos"
-        },
-        {
-            path: '/courses',
-            component: Courses,
-            name: "Cursos"
-        },
-        {
-            path: '/users/:id/content',
-            component: Content,
-            name: "Conteúdo"
-        },
-        {
-            path: '/users/:id/workshop/:idCourse',
-            component: Workshop,
-            name: "Workshop"
-        },
-        {
-            path: '/users/:id/analytics',
-            component: Analytics,
-            name: "Estatísticas"
-        },
-        {
-            path: '/login',
-            component: Login,
-            name: "Login"
-        },
-        {
-            path: '/users/:id',
-            component: Profile,
-            name: "Perfil do Utilizador"
-        },
-        {
-            path: '/users/:id/courses',
-            component: MyCourses,
-            name: "Meus Cursos"
-        },
-        {
-            path: '/users/:id/diplomas',
-            component: MyDiplomas,
-            name: "Meus Diplomas"
-        },
-        {
-            path: '/settings',
-            component: Settings,
-            name: "Preferências"
-        },
-        {
-            path: '/courses/:id/videos/:idVid',
-            component: VideoPlayer,
-            name: "Vídeo"
-        },
-        {
-            path: '/users',
-            component: UserListAdm,
-            name: "Lista de Users"
+            path: '/:locale?',
+            component: RouterView,
+            beforeEnter: Tr.routeMiddleware,
+            children: [
+                {
+                    path: '',
+                    component: Landing,
+                    name: "Landing"
+                },
+                {
+                    path:':pathMatch(.*)*',
+                    component: NotFound,
+                    name: "NotFound"
+                },
+                {
+                    path: 'home',
+                    component: Home,
+                    name: "Home"
+                },
+                {
+                    path: 'courses/:id',
+                    component: CourseDetails,
+                    name: "Curso"
+                },
+                {
+                    path: 'courselist',
+                    component: CourseListAdm,
+                    name: "Lista de Cursos"
+                },
+                {
+                    path: 'courses',
+                    component: Courses,
+                    name: "Cursos"
+                },
+                {
+                    path: 'users/:id/content',
+                    component: Content,
+                    name: "Conteúdo"
+                },
+                {
+                    path: 'users/:id/workshop/:idCourse',
+                    component: Workshop,
+                    name: "Workshop"
+                },
+                {
+                    path: 'users/:id/analytics',
+                    component: Analytics,
+                    name: "Estatísticas"
+                },
+                {
+                    path: 'login',
+                    component: Login,
+                    name: "Login"
+                },
+                {
+                    path: 'users/:id',
+                    component: Profile,
+                    name: "Perfil do Utilizador"
+                },
+                {
+                    path: 'users/:id/courses',
+                    component: MyCourses,
+                    name: "Meus Cursos"
+                },
+                {
+                    path: 'users/:id/diplomas',
+                    component: MyDiplomas,
+                    name: "Meus Diplomas"
+                },
+                {
+                    path: 'settings',
+                    component: Settings,
+                    name: "Preferências"
+                },
+                {
+                    path: 'courses/:id/videos/:idVid',
+                    component: VideoPlayer,
+                    name: "Vídeo"
+                },
+                {
+                    path: 'users',
+                    component: UserListAdm,
+                    name: "Lista de Users"
+                }
+            ]
         }
     ]
 })

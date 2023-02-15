@@ -12,7 +12,8 @@ const store = new Vuex.Store({
         tokens: {
             accessToken: "",
             refreshToken: ""
-        }
+        },
+        locale: "pt"
     },
     getters: {
         getUser(state){
@@ -23,6 +24,9 @@ const store = new Vuex.Store({
         },
         getRefreshToken(state) {
             return state.tokens.refreshToken;
+        },
+        getLocale(state) {
+            return state.locale;
         }
     },
     mutations: {
@@ -34,6 +38,9 @@ const store = new Vuex.Store({
         },
         setRefreshToken(state, token){
             state.tokens.refreshToken = token;
+        },
+        setLocale(state, locale) {
+            state.locale = locale;
         }
     },
     plugins: [vuexLocal.plugin]

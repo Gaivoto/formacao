@@ -12,57 +12,57 @@
 	
     <h3>Menu</h3>
     <div class="menu" v-if="this.isUserUser">
-        <router-link class="button" to="/courses">
+        <router-link class="button" :to="Tr.i18nRoute({ name: 'Cursos' })">
             <span class="material-icons">import_contacts</span>
             <span class="text">Cursos</span>
         </router-link>
-        <router-link class="button" :to="{ name: 'Meus Cursos', params: { id: this.getUserId } }">
+        <router-link class="button" :to="Tr.i18nRoute({ name: 'Meus Cursos', params: { id: this.getUserId } })">
             <span class="material-icons">menu_book</span>
             <span class="text">Os Meus Cursos</span>
         </router-link>
-        <router-link class="button" :to="{ name: 'Perfil do Utilizador', params: { id: this.getUserId } }">
+        <router-link class="button" :to="Tr.i18nRoute({ name: 'Perfil do Utilizador', params: { id: this.getUserId } })">
             <span class="material-icons">person</span>
             <span class="text">Perfil</span>
         </router-link>
     </div>
 
     <div class="menu" v-if="this.isUserCreator">
-        <router-link class="button" to="/courses">
+        <router-link class="button" :to="Tr.i18nRoute({ name: 'Cursos' })">
             <span class="material-icons">import_contacts</span>
             <span class="text">Cursos</span>
         </router-link>
-        <router-link class="button" :to="{ name: 'Meus Cursos', params: { id: this.getUserId } }">
+        <router-link class="button" :to="Tr.i18nRoute({ name: 'Meus Cursos', params: { id: this.getUserId } })">
             <span class="material-icons">menu_book</span>
             <span class="text">Os Meus Cursos</span>
         </router-link>
-        <router-link class="button" :to="{ name: 'Perfil do Utilizador', params: { id: this.getUserId } }">
+        <router-link class="button" :to="Tr.i18nRoute({ name: 'Perfil do Utilizador', params: { id: this.getUserId } })">
             <span class="material-icons">person</span>
             <span class="text">Perfil</span>
         </router-link>
-        <router-link class="button" :to="{ name: 'Workshop', params: { id: this.getUserId, idCourse: 'new' } }">
+        <router-link class="button" :to="Tr.i18nRoute({ name: 'Workshop', params: { id: this.getUserId, idCourse: 'new' } })">
             <span class="material-icons">add_circle</span>
             <span class="text">Workshop</span>
         </router-link>
-        <router-link class="button" :to="{ name: 'Conteúdo', params: { id: this.getUserId } }">
+        <router-link class="button" :to="Tr.i18nRoute({ name: 'Conteúdo', params: { id: this.getUserId } })">
             <span class="material-icons">content_paste</span>
             <span class="text">Conteúdo</span>
         </router-link>
-        <router-link class="button" :to="{ name: 'Estatísticas', params: { id: this.getUserId } } ">
+        <router-link class="button" :to="Tr.i18nRoute({ name: 'Estatísticas', params: { id: this.getUserId } })">
             <span class="material-icons">insights</span>
             <span class="text">Estatísticas</span>
         </router-link>
     </div>
 
     <div class="menu" v-if="this.isUserAdm">
-        <router-link class="button" to="/courses">
+        <router-link class="button" :to="Tr.i18nRoute({ name: 'Cursos' })">
             <span class="material-icons">import_contacts</span>
             <span class="text">Cursos</span>
         </router-link>
-        <router-link class="button" to="/courselist">
+        <router-link class="button" :to="Tr.i18nRoute({ name: 'Lista de Cursos' })">
             <span class="material-icons">format_list_bulleted</span>
             <span class="text">Lista de Cursos</span>
         </router-link>
-        <router-link class="button" to="/users">
+        <router-link class="button" :to="Tr.i18nRoute({ name: 'Lista de Users'})">
             <span class="material-icons">group</span>
             <span class="text">Lista de Utilizadores</span>
         </router-link>
@@ -71,7 +71,7 @@
     <div class="flex"></div>
 		 
 	<div class="menu">
-		<router-link to="/settings" class="button">
+		<router-link :to="Tr.i18nRoute({ name: 'Preferências' })" class="button">
 			<span class="material-icons">settings</span>
 			<span class="text">Settings</span>
 		</router-link>
@@ -84,11 +84,16 @@
 </template>
 
 <script>
+import Tr from '@/i18n/translation.js';
+
 export default {
 	data() {
 		return {
 			is_expanded: false
 		}
+	},
+	setup() {
+		return { Tr };
 	},
 	computed: {
         getUserId() {
