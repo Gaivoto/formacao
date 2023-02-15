@@ -3,6 +3,8 @@
     <div class="landing-page-wrapper">
         <TopbarLandingPage/>
         <div class="info-blocks-wrapper">
+            <h1>{{ $t("page.teste") }}</h1>
+            <LanguageSwitcher></LanguageSwitcher>
             <LandingPageMainSection />
             <LandingPageInfoBlock v-for="ib in this.infoBlocks" :key="ib.id" class="landing-blocks" v-bind:info="ib" />
             <LandingPageSocials />
@@ -17,6 +19,7 @@ import LandingPageInfoBlock from '../components/landingPage/LandingPageInfoBlock
 import LandingPageSocials from '../components/landingPage/LandingPageSocials.vue';
 import LandingPageGetStarted from '../components/landingPage/LandingPageGetStarted.vue';
 import LandingPageMainSection from '../components/landingPage/LandingPageMainSection.vue';
+import LanguageSwitcher from '../components/LanguageSwitcher.vue';
 
 export default {
     name: "LandingPage",
@@ -25,7 +28,8 @@ export default {
         LandingPageInfoBlock,
         LandingPageSocials,
         LandingPageGetStarted,
-        LandingPageMainSection
+        LandingPageMainSection,
+        LanguageSwitcher
     },
     data() { 
         return {

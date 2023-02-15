@@ -1,4 +1,9 @@
 {
+    
+    "locale": {
+        "pt": "Portuguese",
+        "en": "English"
+    },
     "page": {
         "teste": "teste1",
         "bruh": "teste2"
