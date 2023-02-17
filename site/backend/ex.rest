@@ -1,0 +1,248 @@
+
+
+POST {{hostname}}/api/auth/login
+content-type: application/json  
+
+{     
+    "username": "bragon",     
+    "password": "123" 
+}
+
+### TESTE
+
+GET {{hostname}}/api/criadores/home
+
+###
+
+GET {{hostname}}/api/cursos/home
+
+### COMPRA
+
+GET {{hostname}}/api/compras/1
+authorization: {{apiKey}}
+refreshtoken: {{refreshKey}}
+
+###
+
+GET {{hostname}}/api/compras/
+authorization: {{apiKey}}
+refreshtoken: {{refreshKey}}
+
+###
+
+POST {{hostname}}/api/compras/
+authorization: {{apiKey}}
+refreshtoken: {{refreshKey}}
+content-type: application/json
+
+{
+    "id_user": "343970c2-2705-403f-93b8-b68167b059e8", 
+    "id_course": "28"
+}
+
+### SUBSCRIPTION
+
+GET {{hostname}}/api/subscricoes/1
+authorization: {{apiKey}}
+refreshtoken: {{refreshKey}}
+
+###
+
+GET {{hostname}}/api/subscricoes/
+authorization: {{apiKey}}
+refreshtoken: {{refreshKey}}
+
+###
+
+POST {{hostname}}/api/subscricoes/
+authorization: {{apiKey}}
+refreshtoken: {{refreshKey}}
+content-type: application/json
+
+{
+    "id_subscriber": "10", 
+    "id_subscribed": "15", 
+    "start_date": "2022-01-25 00:00:00.000"
+}
+
+###
+
+DELETE {{hostname}}/api/subscricoes/e1de0915-fcf1-406f-81eb-b0050ec01ed8
+authorization: {{apiKey}}
+refreshtoken: {{refreshKey}}
+content-type: application/json
+
+{
+    "final_date": "2023-07-07 00:00:00.000"
+}
+
+### CURSOS
+
+GET {{hostname}}/api/cursos/1
+authorization: {{apiKey}}
+refreshtoken: {{refreshKey}}
+
+###
+
+GET {{hostname}}/api/cursos/
+authorization: {{apiKey}}
+refreshtoken: {{refreshKey}}
+content-type: application/json
+
+###
+
+POST {{hostname}}/api/cursos/
+authorization: {{apiKey}}
+refreshtoken: {{refreshKey}}
+content-type: application/json
+
+{
+    "name": "Curso very expert", 
+    "category": "Gaming", 
+    "description": "curso mt mt experto com imensa sabedoria", 
+    "date": "2023-01-07 00:00:00.000", 
+    "state": "Ativo", 
+    "price": 15, 
+    "image": "./assets/fortnite", 
+    "id_creator": "343970c2-2705-403f-93b8-b68167b059e8"
+}
+
+###
+
+PUT {{hostname}}/api/cursos/user/0236fe39-c92b-4b60-bf20-b3fa6586d558
+authorization: {{apiKey}}
+refreshtoken: {{refreshKey}}
+content-type: application/json
+
+{
+    "id": "0236fe39-c92b-4b60-bf20-b3fa6586d558", 
+    "state": "Inativo"
+}
+
+###
+
+PUT {{hostname}}/api/cursos/adm/0236fe39-c92b-4b60-bf20-b3fa6586d558
+authorization: {{apiKey}}
+refreshtoken: {{refreshKey}}
+content-type: application/json
+
+{
+    "id": "0236fe39-c92b-4b60-bf20-b3fa6586d558", 
+    "state": "Inativo"
+}
+
+###
+
+PUT {{hostname}}/api/cursos/edit/
+authorization: {{apiKey}}
+refreshtoken: {{refreshKey}}
+content-type: application/json
+
+{
+    "id": "0236fe39-c92b-4b60-bf20-b3fa6586d558", 
+    "name": "a",
+    "category": "b",
+    "description": "c",
+    "price": 999,
+    "image": "./assets/d"
+}
+
+
+
+### VIDEOS
+
+GET {{hostname}}/api/videos/1
+authorization: {{apiKey}}
+refreshtoken: {{refreshKey}}
+
+###
+
+GET {{hostname}}/api/videos/
+authorization: {{apiKey}}
+refreshtoken: {{refreshKey}}
+content-type: application/json
+
+###
+
+POST {{hostname}}/api/videos/
+authorization: {{apiKey}}
+refreshtoken: {{refreshKey}}
+content-type: application/json
+
+{
+    "title": "Video teste 1", 
+    "video": "../assets/videos/teste1", 
+    "duration": 500, 
+    "image": "./assets/thumbnails/teste1", 
+    "description": "im blue da ba di da ba dai", 
+    "date": "2023-01-07 00:00:00.000", 
+    "id_course": "0236fe39-c92b-4b60-bf20-b3fa6586d558",
+    "position": 1
+}
+
+###
+
+PUT {{hostname}}/api/videos/
+authorization: {{apiKey}}
+refreshtoken: {{refreshKey}}
+content-type: application/json
+
+{
+    "username": "adm",
+    "password": "123"
+}
+
+###
+
+GET http://localhost:3000/api/users/
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk4NDEwMzEyLWE0YjQtNGE2YS1iMDQ4LTI3NTJiODIxMGUyMyIsInVzZXJuYW1lIjoiYWRtIiwidHlwZSI6ImFkbWluIiwiaWF0IjoxNjc0NTc1NDY5LCJleHAiOjE2NzQ1ODk4Njl9._IMrjIiHFbBSJk_J0mP2zvJA9d-TwWQTWD2l_dDqz6I
+refreshtoken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk4NDEwMzEyLWE0YjQtNGE2YS1iMDQ4LTI3NTJiODIxMGUyMyIsInVzZXJuYW1lIjoiYWRtIiwidHlwZSI6ImFkbWluIiwiaWF0IjoxNjc0NTc1NDY5fQ.hXKUuPyEJvbEQREpM-WccNMuH_0iXMLBMQdaXGYGKZw
+
+###
+DELETE http://localhost:3000/api/auth/logout/
+refreshtoken: {{refreshKey}}
+
+###
+GET http://localhost:3000/api/users/17
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk4NDEwMzEyLWE0YjQtNGE2YS1iMDQ4LTI3NTJiODIxMGUyMyIsInVzZXJuYW1lIjoiYWRtIiwidHlwZSI6ImFkbWluIiwiaWF0IjoxNjc0NTc1NDY5LCJleHAiOjE2NzQ1ODk4Njl9._IMrjIiHFbBSJk_J0mP2zvJA9d-TwWQTWD2l_dDqz6I
+refreshtoken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk4NDEwMzEyLWE0YjQtNGE2YS1iMDQ4LTI3NTJiODIxMGUyMyIsInVzZXJuYW1lIjoiYWRtIiwidHlwZSI6ImFkbWluIiwiaWF0IjoxNjc0NTc1NDY5fQ.hXKUuPyEJvbEQREpM-WccNMuH_0iXMLBMQdaXGYGKZw
+
+###
+PUT http://localhost:3000/api/users/
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImY0OThiYWQwLTk3ZTUtNDAzNC1iYWE1LWU1MGQyN2I2YWU2MiIsInVzZXJuYW1lIjoicm9iZXJ0b2NhcmxvczEyMzQ1IiwidHlwZSI6InVzZXIiLCJpYXQiOjE2NzQ1NjY4MDksImV4cCI6MTY3NDU4MTIwOX0.utJbwHrF9U803lH5Bq3yvQL3TQV9NtS2O4YXetYXiF8
+refreshtoken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImY0OThiYWQwLTk3ZTUtNDAzNC1iYWE1LWU1MGQyN2I2YWU2MiIsInVzZXJuYW1lIjoicm9iZXJ0b2NhcmxvczEyMzQ1IiwidHlwZSI6InVzZXIiLCJpYXQiOjE2NzQ1NjY4MDl9.ZUdVcL04WBRmKQKbJFcLw9VGquVTxptZ1HLT4G3CBNY
+content-type: application/json
+
+{
+    "name": "andrezito",
+    "description": "calvo",
+    "price": null,
+    "image": "testeimagemandre",
+    "type": "user"
+}
+
+
+###
+POST http://localhost:3000/api/users/
+content-type: application/json
+
+{
+    "username": "bragon",
+    "password": "123",
+    "name": "Pedro",
+    "email": "braganca@gmail.com",
+    "description": "professional expert",
+    "country": "portugal",
+    "image": "/imagem/tevez"
+
+}
+###
+PUT http://localhost:3000/api/users/changeUserState
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQiLCJ1c2VybmFtZSI6ImRyZSIsImlhdCI6MTY3Mzg4NTU4NywiZXhwIjoxNjczODk2Mzg3fQ.1Rya_VnwKVAoxUp3_cIr88N4dCz7NpBXvB4_cnXPlmY
+refreshtoken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQiLCJ1c2VybmFtZSI6ImRyZSIsImlhdCI6MTY3Mzg4NTU4N30.HijvYt9al-GEf8vRy5kFsj4s6oLSb69mpWoiy1j7Jv4
+content-type: application/json
+
+###
+GET {{hostname}}/api/users/00bad46a-9020-4798-b566-c83ad8a993b3
+authorization: {{apiKey}}
+refreshtoken: {{refreshKey}}

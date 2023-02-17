@@ -1,8 +1,8 @@
 <template>
     <div class="diplomas-wrapper">
-        <DiplomaFilter v-bind:diplomas="this.diplomas" v-on:filter="filter" />
+        <DiplomaFilter v-bind:categories="this.categories" v-on:filter="filter" />
         <div class="row">
-            <DiplomaCard v-for="diploma in this.diplomasDisplay" :key="diploma.id" v-bind:diploma="diploma"/>
+            <DiplomaCard v-for="diploma in this.diplomasDisplay" :key="diploma.id" v-bind:diploma="diploma" v-bind:user="this.user" v-bind:sidebar="this.sidebar"/>
             <div class="no-results" :class="{ 'd-none': !noResults }">
                 <span class="material-icons search-icon">warning</span>
                 <p>Não existem resultados para a pesquisa.</p>    
@@ -13,9 +13,11 @@
 </template>
 
 <script>
+import axios from "axios";
 import DiplomaCard from "../components/myDiplomas/DiplomaCard.vue";
 import DiplomaFilter from "../components/myDiplomas/DiplomaFilter.vue";
 import Pagination from "../components/paginations/Pagination.vue";
+import Tr from '@/i18n/translation.js';
 
 export default {
     name: "MyDiplomas",
@@ -24,88 +26,94 @@ export default {
         DiplomaFilter,
         Pagination
     },
+    props: {
+        sidebar: {
+            type: Boolean,
+            required: true
+        }
+    },  
     data() {
         return {
             diplomas: [],
             diplomasFiltered: [],
             diplomasDisplay: [],
+            categories: [],
             page: 1,
-            diplomasPerPage: 6
+            diplomasPerPage: 6,
+            filterInfo: {},
+            user: {}
         }
     },
+    setup() {
+        return { Tr };
+    },
     created() {
-        this.diplomas = [
-            {
-                id: 1,
-                category: 'cat1',
-                date: "15-09-2022",
-                creator: "Criador 1",
-                course: "Course 1"
-            },
-            {
-                id: 2,
-                category: 'cat2',
-                date: "11-02-2021",
-                creator: "Criador 1",
-                course: "Course 2"
-            },
-            {
-                id: 3,
-                category: 'cat2',
-                date: "17-07-2022",
-                creator: "Criador 1",
-                course: "Course 3"
-            },
-            {
-                id: 4,
-                category: 'cat14',
-                date: "05-12-2022",
-                creator: "Criador 1",
-                course: "Course 4"
-            },
-            {
-                id: 5,
-                category: 'cat1',
-                date: "28-01-2022",
-                creator: "Criador 1",
-                course: "Course 5"
-            },
-            {
-                id: 6,
-                category: 'cat1',
-                date: "22-08-2022",
-                creator: "Criador 1",
-                course: "Course 6"
-            },
-            {
-                id: 7,
-                category: 'cat1',
-                date: "27-09-2022",
-                creator: "Criador 1",
-                course: "Course 7"
-            },
-            {
-                id: 8,
-                category: 'cat1',
-                date: "12-11-2022",
-                creator: "Criador 1",
-                course: "Course 8"
-            },
-            {
-                id: 9,
-                category: 'cat1',
-                date: "04-05-2022",
-                creator: "Criador 1",
-                course: "Course 9"
-            },
-            {
-                id: 10,
-                category: 'cat1',
-                date: "16-10-2020",
-                creator: "Criador 1",
-                course: "Course 10"
-            },
-        ]
+        if(!this.$store.getters.getUser.id) {
+            this.$router.push({ name: "Login", params: { locale: Tr.guessDefaultLocale() } });
+        } else if(this.$store.getters.getUser.type == 'admin' || this.$store.getters.getUser.id != this.$route.params.id) {
+            this.$router.push({ name: "Home", params: { locale: Tr.guessDefaultLocale() } });
+        } else {
+            axios({
+                method: 'get',
+                url: `${import.meta.env.VITE_HOST}/diplomas/${this.$store.getters.getUser.id}`,
+                headers: {
+                    Authorization: `Bearer ${this.$store.getters.getAccessToken}`,
+                    refreshtoken: this.$store.getters.getRefreshToken,
+                }
+            })
+            .then(value => {
+                if(value.data.access_token) this.$store.commit('setAccessToken', value.data.access_token);
+                value.data.diplomas.forEach(d => this.diplomas.push(d));
+
+                this.diplomasFiltered = [...this.diplomas];
+
+                for (var i = (this.page - 1) * this.diplomasPerPage; i < this.page * this.diplomasPerPage; i++) {
+                    if (this.diplomasFiltered[i]) {
+                        this.diplomasDisplay.push(this.diplomasFiltered[i]);
+                    }
+                }
+
+                this.getCategories();
+
+                this.filter(this.filterInfo);
+            })
+            .catch((error) => {
+                if (error.code) {
+                    console.log(error.response.data);
+                    if(error.code == 401) {
+			            this.$store.commit('resetUser');
+                        this.$emit("open-modal", "Sessão expirou. Faça login novamente.");
+                        this.$router.push({ name: "Login", params: { locale: Tr.guessDefaultLocale() } });
+                    } else {
+                        this.$emit("open-modal", error.response.data.message);
+                    }
+                } else console.log(error);
+            });
+
+            axios({
+                method: "get",
+                url: `${import.meta.env.VITE_HOST}/users/${this.$store.getters.getUser.id}`,
+                headers: {
+                    Authorization: `Bearer ${this.$store.getters.getAccessToken}`,
+                    refreshtoken: this.$store.getters.getRefreshToken,
+                },
+            })
+            .then((value) => {
+                this.user = value.data;
+            })
+            .catch((error) => {
+                if (error.code) {
+                    console.log(error.response.data);
+                    if(error.code == 401) {
+			            this.$store.commit('resetUser');
+                        this.$emit("open-modal", "Sessão expirou. Faça login novamente.");
+                        this.$router.push({ name: "Login", params: { locale: Tr.guessDefaultLocale() } });
+                    } else {
+                        this.$emit("open-modal", error.response.data.message);
+                    }
+                } else console.log(error);
+            });
+        }
     },
     computed: {
         numberOfPages() {
@@ -118,11 +126,12 @@ export default {
     },
     methods: {
         filter(filter) {
+            this.filterInfo = filter;
             this.diplomasDisplay = [];
             this.diplomasFiltered = [...this.diplomas];
 
             if(filter.name) {
-                this.diplomasFiltered = this.diplomasFiltered.filter(d => d.course.toLowerCase().includes(filter.name));
+                this.diplomasFiltered = this.diplomasFiltered.filter(d => d.course.toLowerCase().includes(filter.name) || d.creator.toLowerCase().includes(filter.name));
             }
 
             if(filter.category != "Todas") {
@@ -131,10 +140,10 @@ export default {
 
             switch (filter.order) {
                 case "Mais recente":
-                    this.diplomasFiltered.sort((a, b) => (new Date(a.date.substring(6) + "-" + a.date.substring(3, 5) + "-" + a.date.substring(0, 2)) < new Date(b.date.substring(6) + "-" + b.date.substring(3, 5) + "-" + b.date.substring(0, 2))) ? 1 : ((new Date(b.date.substring(6) + "-" + b.date.substring(3, 5) + "-" + b.date.substring(0, 2)) < new Date(a.date.substring(6) + "-" + a.date.substring(3, 5) + "-" + a.date.substring(0, 2))) ? -1 : 0));
+                    this.diplomasFiltered.sort((a, b) => a.date < b.date ? 1 : b.date < a.date ? -1 : 0);
                     break;
                 case "Mais antigo":
-                    this.diplomasFiltered.sort((a, b) => (new Date(a.date.substring(6) + "-" + a.date.substring(3, 5) + "-" + a.date.substring(0, 2)) > new Date(b.date.substring(6) + "-" + b.date.substring(3, 5) + "-" + b.date.substring(0, 2))) ? 1 : ((new Date(b.date.substring(6) + "-" + b.date.substring(3, 5) + "-" + b.date.substring(0, 2)) > new Date(a.date.substring(6) + "-" + a.date.substring(3, 5) + "-" + a.date.substring(0, 2))) ? -1 : 0));
+                    this.diplomasFiltered.sort((a, b) => a.date > b.date ? 1 : b.date > a.date ? -1 : 0);
                     break;
                 default:
                     break;
@@ -156,6 +165,21 @@ export default {
                     this.diplomasDisplay.push(this.diplomasFiltered[i]);
                 }
             }
+        },
+        getCategories() {
+            this.diplomas.forEach(d => {
+                let exists = false;
+
+                this.categories.forEach(cat => {
+                    if (d.category == cat.name) {
+                        exists = true;
+                    }
+                });
+
+                if (!exists) {
+                    this.categories.push({id: this.categories.length, name: d.category});
+                }
+            });
         }
     }
 

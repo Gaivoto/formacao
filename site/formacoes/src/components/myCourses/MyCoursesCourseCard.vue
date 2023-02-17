@@ -1,20 +1,17 @@
 <template>
-    <div class="course-card-container col-12 col-md-6 col-xl-3" :class="{ shake: this.hoverImg }">
+    <div class="course-card-container col-12 col-md-6" :class="{ shake: this.hoverImg, 'col-xl-3': !this.sidebar, 'col-xl-4': this.sidebar }">
         <div class="course-card">
-            <router-link :to="{ name: 'Curso', params: { id: this.course.id } }">
+            <router-link :to="Tr.i18nRoute({ name: 'Curso', params: { id: this.course.id, locale: Tr.guessDefaultLocale() } })">
                 <img :src="this.imageUrl">
             </router-link>
             <div class="card-info">
-                <router-link :to="{ name: 'Curso', params: { id: this.course.id } }"><p class="card-info-title">{{ this.course.name }}</p></router-link>
+                <router-link :to="Tr.i18nRoute({ name: 'Curso', params: { id: this.course.id, locale: Tr.guessDefaultLocale() } })"><p class="card-info-title">{{ this.course.name }}</p></router-link>
                 <p class="card-info-category">{{ this.course.category }}</p>
                 <p class="card-info-description">{{ this.course.description }}</p>
                 <div class="card-info-div">
                     <div>
-                        <p>{{ this.course.price }} €</p>
-                        <div>
-                            <p>{{ this.course.duration }}</p>
-                            <span class="material-icons">schedule</span>
-                        </div>
+                        <span class="material-icons">schedule</span>
+                        <p>{{ this.calculatedDuration }}</p>
                     </div>
                     <div class="circle-wrap">
                         <div class="circle">
@@ -29,9 +26,9 @@
                     </div>
                 </div> 
                 <hr>
-                <router-link class="card-creator-div" :to="{ name: 'Perfil do Utilizador', params: { id: 1 } }">
+                <router-link class="card-creator-div" :to="Tr.i18nRoute({ name: 'Perfil do Utilizador', params: { id: this.course.idCr, locale: Tr.guessDefaultLocale() } })">
                     <img :src="this.creatorImageUrl">
-                    <p>{{ this.course.creator.name }}</p>
+                    <p>{{ this.course.nameCr }}</p>
                 </router-link>
             </div>
         </div>
@@ -39,11 +36,16 @@
 </template>
 
 <script>
+import Tr from '@/i18n/translation.js'
 export default {
     name: 'MyCoursesCourseCard',
     props: {
         course: {
             type: Object,
+            required: true
+        },
+        sidebar: {
+            type: Boolean,
             required: true
         }
     },
@@ -53,9 +55,17 @@ export default {
             creatorImageUrl: ""
         }
     },
+    setup() {
+        return { Tr };
+    },
     created(){
         this.imageUrl = new URL(`../../assets/${this.course.image}.jpg`, import.meta.url).href;
-        this.creatorImageUrl = new URL(`../../assets/${this.course.creator.image}.jpg`, import.meta.url).href;
+        this.creatorImageUrl = new URL(`../../assets/${this.course.imageCr}.jpg`, import.meta.url).href;
+    },
+    computed: {
+        calculatedDuration() {
+            return Math.floor(this.course.duration) + "h " + Math.round((this.course.duration - Math.floor(this.course.duration)) * 60) + "min";
+        }
     }
 }
 </script>
@@ -131,7 +141,7 @@ export default {
         justify-content: space-between;
     }
 
-    .card-info-div > div:first-child > div {
+    .card-info-div > div:first-child {
         display: flex;
         gap: 8px;
     }

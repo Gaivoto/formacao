@@ -1,8 +1,8 @@
 <template>
     <div class="courses-wrapper">
-        <CoursesListFilter v-on:filter="filter" />
+        <CoursesListFilter v-on:filter="filter" v-bind:categories="this.categories" />
         <div class="row">
-            <CoursesListCourseCard v-for="course in this.coursesDisplay" :key="course.id" v-bind:course="course"/>
+            <CoursesListCourseCard v-for="course in this.coursesDisplay" :key="course.id" v-bind:course="course" v-bind:sidebar="this.sidebar"/>
             <div class="no-results" :class="{ 'd-none': !noResults }">
                 <span class="material-icons search-icon">warning</span>
                 <p>Não existem resultados para a pesquisa.</p>    
@@ -13,6 +13,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 import CoursesListFilter from "../components/courses/CoursesListFilter.vue";
 import CoursesListCourseCard from "../components/courses/CoursesListCourseCard.vue";
 import Pagination from "../components/paginations/Pagination.vue";
@@ -24,186 +25,49 @@ export default {
         CoursesListCourseCard,
         Pagination
     },
+    props: {
+        sidebar: {
+            type: Boolean,
+            required: true
+        }
+    },
     data() {
         return {
             courses: [],
+            categories: [],
             coursesFiltered: [],
             coursesDisplay: [],
             page: 1,
-            coursesPerPage: 8
+            coursesPerPage: 8,
+            filterInfo: {}
         }
     },
     created() {
-        this.courses = [
-            {
-                id: 1,
-                name: "Course 1",
-                description: "desc 1 amongus",
-                image: "bingus",
-                price: 20,
-                category: "cat1",
-                date: "05-12-2022",
-                duration: "23h 12min",
-                creator: {
-                    image: "bingus",
-                    name: "Criador 1"
-                }
-            },
-            {
-                id: 2,
-                name: "Course 2",
-                description: "desc 2 amongus",
-                image: "bingus",
-                price: 12,
-                category: "cat1",
-                date: "05-11-2022",
-                duration: "23h 12min",
-                creator: {
-                    image: "bingus",
-                    name: "Criador 1"
-                }
-            },
-            {
-                id: 3,
-                name: "Course 3",
-                description: "desc 3 amongus",
-                image: "bingus",
-                price: 50,
-                category: "cat1",
-                date: "05-10-2022",
-                duration: "23h 12min",
-                creator: {
-                    image: "bingus",
-                    name: "Criador 1"
-                }
-            },
-            {
-                id: 4,
-                name: "Course 4",
-                description: "desc 4 amongus",
-                image: "bingus",
-                price: 80,
-                category: "cat1",
-                date: "05-09-2022",
-                duration: "23h 12min",
-                creator: {
-                    image: "bingus",
-                    name: "Criador 1"
-                }
-            },
-            {
-                id: 5,
-                name: "Course 5",
-                description: "desc 5 amongus",
-                image: "bingus",
-                price: 5,
-                category: "cat1",
-                date: "05-08-2022",
-                duration: "23h 12min",
-                creator: {
-                    image: "bingus",
-                    name: "Criador 1"
-                }
-            },
-            {
-                id: 6,
-                name: "Course 6",
-                description: "desc 6 amongus",
-                image: "bingus",
-                price: 25,
-                category: "cat1",
-                date: "05-07-2022",
-                duration: "23h 12min",
-                creator: {
-                    image: "bingus",
-                    name: "Criador 1"
-                }
-            },
-            {
-                id: 7,
-                name: "Course 7",
-                description: "desc 7 amongus",
-                image: "bingus",
-                price: 20,
-                category: "cat1",
-                date: "05-06-2022",
-                duration: "23h 12min",
-                creator: {
-                    image: "bingus",
-                    name: "Criador 1"
-                }
-            },
-            {
-                id: 8,
-                name: "Course 8",
-                description: "desc 8 amongus",
-                image: "bingus",
-                price: 10,
-                category: "cat1",
-                date: "05-05-2022",
-                duration: "23h 12min",
-                creator: {
-                    image: "bingus",
-                    name: "Criador 1"
-                }
-            },
-            {
-                id: 9,
-                name: "Course 9",
-                description: "desc 9 amongus",
-                image: "bingus",
-                price: 35,
-                category: "cat1",
-                date: "05-04-2022",
-                duration: "23h 12min",
-                creator: {
-                    image: "bingus",
-                    name: "Criador 1"
-                }
-            },
-            {
-                id: 10,
-                name: "Course 10",
-                description: "desc 10 amongus",
-                image: "bingus",
-                price: 15,
-                category: "cat1",
-                date: "05-03-2022",
-                duration: "23h 12min",
-                creator: {
-                    image: "bingus",
-                    name: "Criador 1"
-                }
-            },
-            {
-                id: 11,
-                name: "Course 11",
-                description: "desc 11 amongus",
-                image: "bingus",
-                price: 2,
-                category: "cat1",
-                date: "05-01-2022",
-                duration: "23h 12min",
-                creator: {
-                    image: "bingus",
-                    name: "Criador 1"
-                }
-            },
-            {
-                id: 12,
-                name: "Course 12",
-                description: "desc 12 amongus",
-                image: "bingus",
-                price: 120,
-                category: "cat1",
-                date: "05-02-2022",
-                duration: "23h 12min",
-                creator: {
-                    image: "bingus",
-                    name: "Criador 1"
+        axios({
+            method: 'get',
+            url: `${import.meta.env.VITE_HOST}/cursos`
+        })
+        .then(value => {
+            value.data.courses.forEach(c => this.courses.push(c));
+
+            this.coursesFiltered = [...this.courses];
+
+            for (var i = (this.page - 1) * this.coursesPerPage; i < this.page * this.coursesPerPage; i++) {
+                if (this.coursesFiltered[i]) {
+                    this.coursesDisplay.push(this.coursesFiltered[i]);
                 }
             }
-        ];
+
+            this.getCategories();
+
+            this.filter(this.filterInfo);
+        })
+        .catch(error => {
+            if(error.code) {
+                this.$emit("open-modal", error.response.data.message);
+                console.log(error.response.data);
+            } else console.log(error);
+        });
     },
     computed: {
         numberOfPages() {
@@ -216,11 +80,12 @@ export default {
     },
     methods: {
         filter(filter) {
+            this.filterInfo = filter;
             this.coursesDisplay = [];
             this.coursesFiltered = [...this.courses];
 
             if(filter.name) {
-                this.coursesFiltered = this.coursesFiltered.filter(c => c.name.toLowerCase().includes(filter.name) || c.creator.name.toLowerCase().includes(filter.name));
+                this.coursesFiltered = this.coursesFiltered.filter(c => c.name.toLowerCase().includes(filter.name) || c.nameCr.toLowerCase().includes(filter.name));
             }
 
             if(filter.category != "Todas") {
@@ -229,24 +94,16 @@ export default {
 
             switch (filter.order) {
                 case "Mais recente":
-                    this.coursesFiltered.sort((a, b) =>
-                        new Date(a.date.substring(6) + "-" + a.date.substring(3, 5) + "-" + a.date.substring(0, 2)) < new Date(b.date.substring(6) + "-" + b.date.substring(3, 5) + "-" + b.date.substring(0, 2)) ? 1 : new Date(b.date.substring(6) + "-" + b.date.substring(3, 5) + "-" + b.date.substring(0, 2)) < new Date(a.date.substring(6) + "-" + a.date.substring(3, 5) + "-" + a.date.substring(0, 2)) ? -1 : 0
-                    );
+                    this.coursesFiltered.sort((a, b) => new Date(a.date) < new Date(b.date) ? 1 : new Date(b.date) < new Date(a.date) ? -1 : 0);
                     break;
                 case "Mais antigo":
-                    this.coursesFiltered.sort((a, b) =>
-                        new Date( a.date.substring(6) + "-" + a.date.substring(3, 5) + "-" + a.date.substring(0, 2)) > new Date(b.date.substring(6) + "-" + b.date.substring(3, 5) + "-" + b.date.substring(0, 2) ) ? 1 : new Date( b.date.substring(6) + "-" + b.date.substring(3, 5) + "-" + b.date.substring(0, 2)) > new Date(a.date.substring(6) + "-" + a.date.substring(3, 5) + "-" + a.date.substring(0, 2)) ? -1 : 0
-                    );
+                    this.coursesFiltered.sort((a, b) => new Date(a.date) > new Date(b.date) ? 1 : new Date(b.date) > new Date(a.date) ? -1 : 0);
                     break;
                 case "Preço decrescente":
-                    this.coursesFiltered.sort((a, b) =>
-                        a.price < b.price ? 1 : b.price < a.price ? -1 : 0
-                    );
+                    this.coursesFiltered.sort((a, b) => a.price < b.price ? 1 : b.price < a.price ? -1 : 0);
                     break;
                 case "Preço crescente":
-                    this.coursesFiltered.sort((a, b) =>
-                        a.price > b.price ? 1 : b.price > a.price ? -1 : 0
-                    );
+                    this.coursesFiltered.sort((a, b) => a.price > b.price ? 1 : b.price > a.price ? -1 : 0);
                     break;
                 default:
                     break;
@@ -268,6 +125,21 @@ export default {
                     this.coursesDisplay.push(this.coursesFiltered[i]);
                 }
             }
+        },
+        getCategories() {
+            this.courses.forEach(c => {
+                let exists = false;
+
+                this.categories.forEach(cat => {
+                    if (c.category == cat.name) {
+                        exists = true;
+                    }
+                });
+
+                if (!exists) {
+                    this.categories.push({id: this.categories.length, name: c.category});
+                }
+            });
         }
     }
 };
@@ -298,6 +170,12 @@ export default {
     .no-results p {
         color: var(--light);
         font-size: 40px;
+    }
+
+    @media (max-width: 900px) {
+        .row {
+            padding: 0px;
+        }
     }
 
     @media (max-width: 800px) {

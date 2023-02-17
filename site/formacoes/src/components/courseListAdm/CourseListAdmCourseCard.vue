@@ -2,27 +2,24 @@
     <div class="course-card-container">
         <div class="course-card" :class="{ 'videos-open': this.videosOpen }">
             <div class="course-card-left">
-                <router-link :to="{ name: 'Curso', params: { id: this.course.id } }">
+                <router-link :to="Tr.i18nRoute({ name: 'Curso', params: { id: this.course.id, locale: Tr.guessDefaultLocale() } })">
                     <img :src="this.imageUrl">
                 </router-link>
                 <div>
                     <div class="first-left-div">
-                        <router-link :to="{ name: 'Curso', params: { id: this.course.id } }"><p>{{ this.course.name }}</p></router-link>
-                        <p>Criador: {{ this.course.creator.name }}</p>
+                        <router-link :to="Tr.i18nRoute({ name: 'Curso', params: { id: this.course.id, locale: Tr.guessDefaultLocale() } })"><p>{{ this.course.name }}</p></router-link>
+                        <p>Criador: {{ this.course.nameCr }}</p>
                     </div>
                     <div>
                         <p>Preço: {{ this.course.price }} €</p>
-                        <p>Inscs: {{ this.course.subscriptions }}</p>
+                        <p>Cat: {{ this.course.category }}</p>
                     </div> 
                 </div>
                 <div>
                     <div>
-                        <p>Cat: {{ this.course.category }}</p>
                         <p>Estado: {{ this.course.state }}</p>
-                    </div>    
-                    <div>
-                        <p>Data: {{ this.course.date }}</p>
-                    </div>   
+                        <p>Data: {{ this.formatedDate }}</p>
+                    </div>
                 </div> 
             </div>
             <div class="course-card-right">
@@ -49,6 +46,7 @@
 
 <script>
 import CourseListAdmVideoCard from './CourseListAdmVideoCard.vue'
+import Tr from '@/i18n/translation.js'
 
 export default {
     name: 'CourseListAdmCourseCard',
@@ -66,6 +64,9 @@ export default {
             imageUrl: "",
             videosOpen: false
         }
+    },
+    setup() {
+        return { Tr };
     },
     created(){
         this.imageUrl = new URL(`../../assets/${this.course.image}.jpg`, import.meta.url).href;
@@ -95,6 +96,9 @@ export default {
             });
 
             return pending;
+        },
+        formatedDate() {
+            return this.course.date.substring(8, 10) + "/" + this.course.date.substring(5, 7) + "/" + this.course.date.substring(0, 4) + " " + this.course.date.substring(11, 19);
         }
     },
     methods: {
@@ -146,7 +150,7 @@ export default {
     }
 
     .course-card-left > div > div {
-        width: 160px;
+        width: 200px;
     }
 
     .course-card-left img {
@@ -158,6 +162,8 @@ export default {
 
     .course-card-left p {
         color: var(--light);
+        text-overflow: ellipsis;
+        overflow: hidden;
     }
 
     .course-card-left .first-left-div {
@@ -178,7 +184,6 @@ export default {
     }
 
     .course-card-right {
-        display: flex;
         align-items: center;
         gap: 40px;
     }
@@ -194,8 +199,7 @@ export default {
     }
 
     .button-wrapper {
-        display: flex;
-        gap: 16px;
+        display: block;
     }
 
     .pending-div {
@@ -242,7 +246,6 @@ export default {
         overflow: hidden;
         margin-left: 160px;
         border-radius: 0px 8px 0px 0px;
-        max-height: 500px;
         box-shadow: rgba(20, 14, 49, 0.6) 0px 11px 10px 4px;
         -webkit-transition: max-height 0.5s linear;
         -moz-transition: max-height 0.5s linear;
@@ -267,34 +270,33 @@ export default {
         transition: 0.5s;
     }
 
-    @media (max-width: 1650px) {
+    @media (max-width: 1950px) {
+        .button-wrapper {
+            width: 120px;
+        }
+
+        .course-card-right {
+            width: 120px;
+        }
+
+        .button-wrapper button:first-child {
+            margin-bottom: 16px;
+        }
+    }
+
+    @media (max-width: 1750px) {
 
         .course-card {
             padding-top: 24px;
             padding-bottom: 24px;
         }
+
         .course-card-left > div {
             display: block;
         }
 
         .course-card-left > div:last-child > div:first-child {
             padding-top: 52px;
-        }
-	}
-
-    @media (max-width: 1300px) {
-
-        .course-card-right {
-            width: 120px;
-        }
-
-        .button-wrapper {
-            display: block;
-            width: 120px;
-        }
-
-        .button-wrapper button:first-child {
-            margin-bottom: 16px;
         }
 
         .course-card-left {
@@ -308,9 +310,9 @@ export default {
         .course-card-left .first-left-div p {
             width: 390px;
         }
-    }
+	}
 
-    @media (max-width: 1150px) {
+    @media (max-width: 1450px) {
         .course-card-left .first-left-div {
             width: 310px;
         }
@@ -320,7 +322,7 @@ export default {
         }
     }
 
-    @media (max-width: 1050px) {
+    @media (max-width: 1350px) {
 
         .course-card-left .first-left-div {
             width: 290px;
@@ -353,7 +355,7 @@ export default {
         }
     }
 
-    @media (max-width: 900px) {
+    @media (max-width: 1250px) {
 
         .course-card-left .first-left-div {
             width: 210px;
@@ -362,14 +364,17 @@ export default {
         .course-card-left .first-left-div p {
             width: 210px;
         }
-    }
 
-    @media (max-width: 850px) {
-
-        button {
-            width: 90px;
+        .video-card {
+            gap: 20px;
         }
 
+        .course-card-left > div:last-child > div {
+            width: 140px;
+        }
+    }
+
+    @media (max-width: 1150px) {
         .course-card-right {
             width: 90px;
         }
@@ -378,12 +383,8 @@ export default {
             width: 90px;
         }
 
-        .video-card {
-            gap: 20px;
-        }
-
-        .course-card-left > div:last-child > div {
-            width: 140px;
+        button {
+            width: 90px;
         }
     }
 </style>

@@ -6,8 +6,11 @@
                 <p>{{ this.course.name }}</p>
                 <p>Criador: {{ this.course.creatorName }}</p>
                 <p>Categoria: {{ this.course.category }}</p>
-                <p>Preço: {{ this.course.price }}</p>
-                <button>COMPRAR</button>
+                <p>Preço: €{{ this.course.price }}</p>
+                <button v-if:="this.compra">COMPRAR</button>
+                <router-link v-if:="this.creator" :to="Tr.i18nRoute({ name: 'Workshop', params: { id: this.getUserId, idCourse: this.course.id, locale: Tr.guessDefaultLocale() } })">
+                    <button>Editar Curso</button> 
+                </router-link>
             </div>
         </div>
         <div class="right-side">
@@ -18,12 +21,21 @@
 </template>
 
 <script>
+import Tr from '@/i18n/translation.js'
 export default {
     name: "CourseDetHeader",
     props: {
         course: {
             type: Object,
             required: true,
+        },
+        creator: {
+            type: Boolean,
+            required: true
+        },
+        compra: {
+            type: Boolean,
+            required: true
         }
     },
     data() {
@@ -31,8 +43,17 @@ export default {
             imageUrl: ""
         }
     },
+    setup() {
+        return { Tr };
+    },
     created() {
         this.imageUrl = new URL(`../../assets/${this.course.image}.jpg`, import.meta.url).href;
+    },
+    computed: {
+        getUserId() {
+            if(this.$store.getters.getUser.id) return this.$store.getters.getUser.id;
+            return 0;
+        }
     }
 }
 </script>
@@ -100,7 +121,7 @@ export default {
         white-space: pre-wrap;
     }
 
-    @media (max-width: 1200px) {
+    @media (max-width: 1400px) {
         .header-wrapper {
             display: block;
         }

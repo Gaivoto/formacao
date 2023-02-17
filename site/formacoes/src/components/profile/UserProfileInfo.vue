@@ -1,55 +1,80 @@
 <template>
     <div ref="userProfileTop" class="user-profile-info" :class="{ 'edit-mode': this.editMode }">
         <div>
-            <img class="profile-image" :src="this.imageUrl">
+            <img class="profile-image" :src="this.imageUrl" />
             <div ref="profileInfoArea" class="profile-info-area" :class="{ 'd-none': this.editMode }">
                 <p>{{ this.user.username }}</p>
                 <p>{{ this.user.name }}</p>
+                <p v-if:="ownProfile">{{ this.user.email }}</p>
                 <p>{{ this.user.description }}</p>
+                <button v-if:="!this.user.id_subscription && !ownProfile" v-on:click="createSubscription">Subscrever</button>
+                <button v-if:="this.user.id_subscription && !ownProfile" v-on:click="endSubscription">Terminar subscrição</button>
             </div>
-            <div ref="profileEditingArea" class="profile-edit-area" :class="{ 'd-none': !this.editMode }">
+            <div ref="profileEditingArea" class="profile-edit-area" :class="{ 'd-none': !this.editMode }" v-if="this.ownProfile">
                 <div>
                     <div>
-                        <p>Username</p>
-                        <input type="text" name="username" id="username" v-model="this.user.username" autocomplete="off">
-                    </div>
-                    <div>
                         <p>Nome</p>
-                        <input type="text" name="name" id="name" v-model="this.user.name" autocomplete="off">
+                        <input ref="nameInput" type="text" name="name" id="name" v-model="this.user.name" autocomplete="off"/>
                     </div>
                 </div>
                 <div>
                     <div>
                         <p>Descrição</p>
-                        <textarea name="description" id="description" v-model="this.user.description"></textarea>
+                        <textarea ref="descriptionInput" name="description" id="description" v-model="this.user.description"></textarea>
                     </div>
                 </div>
             </div>
         </div>
-        <button ref="editProfileButton" v-on:click="this.editMode=true" :class="{ 'd-none': this.editMode }">EDITAR</button>
-        <button ref="saveProfileButton" v-on:click="this.editMode=false" :class="{ 'd-none': !this.editMode }">GUARDAR</button>
+        <button ref="editProfileButton" v-on:click="this.editMode = true" :class="{ 'd-none': this.editMode }" v-if="this.ownProfile">EDITAR</button>
+        <button ref="saveProfileButton" v-on:click="commitUserChanges" :class="{ 'd-none': !this.editMode }" v-if="this.ownProfile">GUARDAR</button>
     </div>
 </template>
 
 <script>
 export default {
-    name: 'UserProfileInfo',
+    name: "UserProfileInfo",
     props: {
         user: {
             type: Object,
-            required: true
-        }
+            required: true,
+        },
     },
-    data(){
+    data() {
         return {
             imageUrl: "",
-            editMode: false
+            editMode: false,
+        };
+    },
+    created() {
+        this.imageUrl = new URL(`../../assets/${this.user.image}.jpg`, import.meta.url).href;
+    },
+    computed: {
+        ownProfile() {
+            return (this.$route.params.id == this.$store.getters.getUser.id);
         }
     },
-    created(){
-        this.imageUrl = new URL(`../../assets/${this.user.image}.jpg`, import.meta.url).href;
+    methods: {
+        commitUserChanges() {
+            let info = {
+                name: this.$refs.nameInput.value,
+                description: this.$refs.descriptionInput.value,
+            };
+
+            this.editMode = false;
+            this.$emit("alterar-dados", info);
+        },
+        createSubscription() {
+            let info = {
+                id_subscriber: this.$store.getters.getUser.id,
+                id_subscribed: this.user.id,
+            };
+            this.$emit("createSubscription", info);
+        },
+        endSubscription() {
+            this.$emit("endSubscription")
+        }
     }
-}
+};
 </script>
 
 <style scoped>
@@ -109,11 +134,6 @@ export default {
         box-shadow: rgba(20, 14, 49, 0.6) 0px 2px 10px 4px;
     }
 
-    .profile-edit-area {
-        display: flex;
-        gap: 24px;
-    }
-
     .profile-edit-area p {
         margin-bottom: 4px;
         color: var(--light);
@@ -164,7 +184,7 @@ export default {
 
     /* 
 
-        SELECT
+    SELECT
 
     */
 
@@ -235,7 +255,7 @@ export default {
         display: none;
     }
 
-    @media (max-width: 1500px) {
+    @media (max-width: 1650px) {
         .user-profile-info {
             width: 70%;
         }
@@ -243,27 +263,21 @@ export default {
         .user-profile-info.edit-mode textarea {
             width: 400px;
         }
-	}
+    }
 
-    @media (max-width: 1300px) {
-        .user-profile-info.edit-mode .profile-edit-area {
-            display: block;
-        }
-	}
-
-    @media (max-width: 1250px) {
+    @media (max-width: 1500px) {
         .user-profile-info {
             width: 80%;
         }
-	}
+    }
 
-    @media (max-width: 1150px) {
+    @media (max-width: 1350px) {
         .user-profile-info {
             width: 90%;
         }
-	}
+    }
 
-    @media (max-width: 1100px) {
+    @media (max-width: 1300px) {
         .user-profile-info.edit-mode > div {
             display: block;
         }
@@ -279,9 +293,9 @@ export default {
         .user-profile-info.edit-mode button {
             margin-bottom: 8px;
         }
-	}
+    }
 
-    @media (max-width: 1050px) {
+    @media (max-width: 1250px) {
         .user-profile-info {
             width: 100%;
         }
@@ -296,7 +310,7 @@ export default {
         .profile-info-area p:last-child {
             width: 240px;
         }
-	}
+    }
 
     @media (max-width: 750px) {
         .user-profile-info > div {
@@ -306,7 +320,7 @@ export default {
         .profile-image {
             margin-bottom: 32px;
         }
-	}
+    }
 
     @media (max-width: 750px) {
         .user-profile-info.edit-mode {
@@ -316,23 +330,23 @@ export default {
         .user-profile-info.edit-mode textarea {
             margin-bottom: 24px;
         }
-	}
+    }
 
     @media (max-width: 575px) {
         .user-profile-info.edit-mode textarea {
             width: 100%;
         }
-	}
+    }
 
     @media (max-width: 550px) {
         .user-profile-info {
             display: block;
         }
-	}
+    }
 
     @media (max-width: 500px) {
         .profile-info-area p:last-child {
             width: 200px;
         }
-	}
+    }
 </style>

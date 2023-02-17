@@ -1,6 +1,6 @@
 <template>
   <aside :class="{ isExpanded: is_expanded }" >
-    <router-link class="logo" to="/home">
+    <router-link class="logo" :to="Tr.i18nRoute({ name: 'Home' })">
         <img src="../assets/vue.svg" alt="Vue">
 	</router-link>
 
@@ -9,27 +9,61 @@
             <span class="material-icons">clear_all</span>
         </button>
     </div>
-
-    <h3>Menu</h3>
-    <div class="menu">
-        <router-link class="button" to="/courses">
-            <span class="material-icons">library_books</span>
+	
+    <h3 v-if="this.isUserLogged">Menu</h3>
+    <div class="menu" v-if="this.isUserUser">
+        <router-link class="button" :to="Tr.i18nRoute({ name: 'Cursos' })">
+            <span class="material-icons">import_contacts</span>
             <span class="text">Cursos</span>
         </router-link>
-        <router-link class="button" :to="{ name: 'Conteúdo', params: { id: 1 } }">
-            <span class="material-icons">home</span>
-            <span class="text">Home</span>
+        <router-link class="button" :to="Tr.i18nRoute({ name: 'Meus Cursos', params: { id: this.getUserId } })">
+            <span class="material-icons">menu_book</span>
+            <span class="text">Os Meus Cursos</span>
         </router-link>
-        <router-link class="button" :to="{ name: 'Perfil do Utilizador', params: { id: 1 } }">
+        <router-link class="button" :to="Tr.i18nRoute({ name: 'Perfil do Utilizador', params: { id: this.getUserId } })">
+            <span class="material-icons">person</span>
+            <span class="text">Perfil</span>
+        </router-link>
+    </div>
+
+    <div class="menu" v-if="this.isUserCreator">
+        <router-link class="button" :to="Tr.i18nRoute({ name: 'Cursos' })">
+            <span class="material-icons">import_contacts</span>
+            <span class="text">Cursos</span>
+        </router-link>
+        <router-link class="button" :to="Tr.i18nRoute({ name: 'Meus Cursos', params: { id: this.getUserId } })">
+            <span class="material-icons">menu_book</span>
+            <span class="text">Os Meus Cursos</span>
+        </router-link>
+        <router-link class="button" :to="Tr.i18nRoute({ name: 'Perfil do Utilizador', params: { id: this.getUserId } })">
+            <span class="material-icons">person</span>
+            <span class="text">Perfil</span>
+        </router-link>
+        <router-link class="button" :to="Tr.i18nRoute({ name: 'Workshop', params: { id: this.getUserId, idCourse: 'new' } })">
+            <span class="material-icons">add_circle</span>
+            <span class="text">Workshop</span>
+        </router-link>
+        <router-link class="button" :to="Tr.i18nRoute({ name: 'Conteúdo', params: { id: this.getUserId } })">
+            <span class="material-icons">content_paste</span>
+            <span class="text">Conteúdo</span>
+        </router-link>
+        <router-link class="button" :to="Tr.i18nRoute({ name: 'Estatísticas', params: { id: this.getUserId } })">
+            <span class="material-icons">insights</span>
+            <span class="text">Estatísticas</span>
+        </router-link>
+    </div>
+
+    <div class="menu" v-if="this.isUserAdm">
+        <router-link class="button" :to="Tr.i18nRoute({ name: 'Cursos' })">
+            <span class="material-icons">import_contacts</span>
+            <span class="text">Cursos</span>
+        </router-link>
+        <router-link class="button" :to="Tr.i18nRoute({ name: 'Lista de Cursos' })">
+            <span class="material-icons">format_list_bulleted</span>
+            <span class="text">Lista de Cursos</span>
+        </router-link>
+        <router-link class="button" :to="Tr.i18nRoute({ name: 'Lista de Users'})">
             <span class="material-icons">group</span>
-            <span class="text">Team</span>
-        </router-link>
-        <router-link class="button" to="/courselist">
-            <span class="material-icons">email</span>
-            <span class="text">Contact Us</span>
-        </router-link>
-        <router-link class="button" to="/users">
-            <span class="material-icons">email</span>
             <span class="text">Lista de Utilizadores</span>
         </router-link>
     </div>
@@ -37,25 +71,60 @@
     <div class="flex"></div>
 		 
 	<div class="menu">
-		<router-link to="/settings" class="button">
+		<router-link :to="Tr.i18nRoute({ name: 'Preferências' })" class="button">
 			<span class="material-icons">settings</span>
 			<span class="text">Settings</span>
 		</router-link>
+		<div v-on:click="logout" class="button">
+            <span class="material-icons">logout</span>
+            <span class="text">Logout</span>
+		</div>
 	</div>
   </aside>
 </template>
 
 <script>
+import Tr from '@/i18n/translation.js';
+
 export default {
 	data() {
 		return {
 			is_expanded: false
 		}
 	},
+	setup() {
+		return { Tr };
+	},
+	computed: {
+        getUserId() {
+            if(this.$store.getters.getUser.id) return this.$store.getters.getUser.id;
+            return 0;
+        },
+		isUserUser() {
+			if(this.$store.getters.getUser.type && this.$store.getters.getUser.type == 'user') return true;
+			return false;
+		},
+		isUserAdm() {
+			if(this.$store.getters.getUser.type && this.$store.getters.getUser.type == 'admin') return true;
+			return false;
+		},
+		isUserCreator() {
+			if(this.$store.getters.getUser.type && this.$store.getters.getUser.type == 'creator') return true;
+			return false;
+		},
+        isUserLogged() {
+            if(this.$store.getters.getUser.id) return true;
+            return false;
+        }
+	},
 	methods: {
 		toggleMenu() {
 			this.is_expanded = !this.is_expanded;
 			this.$emit("toggleSidebar");
+		},
+		logout() {
+            this.$router.push({ name: "Login", params: { locale: Tr.guessDefaultLocale() } });
+			this.$store.commit('resetUser');
 		}
 	}
 }
@@ -120,6 +189,10 @@ aside {
 		border: none;
 		outline: none;
 		background: none;
+	}
+
+	.button {
+		cursor: pointer;
 	}
 
 	h3, .button .text {

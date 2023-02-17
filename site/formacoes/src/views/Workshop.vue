@@ -1,5 +1,5 @@
 <template>
-    <div class="body">
+    <div class="workshop-wrapper">
         <courseInfo/>
         <div class="fileform">
         <input style="display: none" multiple="multiple" type="file" accept="video/*" @input="onFileSelected" ref="fileInput">
@@ -17,11 +17,13 @@
 </template>
 
 <script scoped>
-import nanoMetadata from 'nano-metadata'
-import courseInfo from '../components/workshop/courseinfo.vue'
-import UploadedVideoCard from '../components/workshop/UploadedVideoCard.vue'
+import nanoMetadata from 'nano-metadata';
+import courseInfo from '../components/workshop/courseinfo.vue';
+import UploadedVideoCard from '../components/workshop/UploadedVideoCard.vue';
 import draggable from 'vuedraggable';
-import { v4 } from 'uuid'
+import { v4 } from 'uuid';
+import Tr from '@/i18n/translation.js';
+
 export default {
     name: 'Workshop',
     components: {
@@ -34,6 +36,18 @@ export default {
             selectedFile: null,
             videoSrc: [],
             existe: false,
+        }
+    },
+    setup() {
+        return { Tr };
+    },
+    created () {
+        if(!this.$store.getters.getUser.id) {
+            this.$router.push({ name: "Login", params: { locale: Tr.guessDefaultLocale() } });
+        } else if(this.$store.getters.getUser.type != 'creator' || this.$store.getters.getUser.id != this.$route.params.id) {
+            this.$router.push({ name: "Home", params: { locale: Tr.guessDefaultLocale() } });
+        } else {
+            //o request vai aqui
         }
     },
     methods: {
@@ -95,8 +109,10 @@ export default {
 </script>
 
 <style scoped>
-.body {
-    width: 100%;
+.workshop-wrapper {
+        padding: 24px 48px 24px 48px;
+        display: flex;
+        gap: 24px;
 }
 .fileform {
     margin-top: 30px;

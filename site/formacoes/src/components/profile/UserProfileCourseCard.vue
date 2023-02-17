@@ -1,32 +1,37 @@
 <template>
-    <router-link :to="{ name: 'Curso', params: { id: this.course.id } }" class="user-profile-course-card">
-        <img :src="this.imageUrl">
-        <p>{{ this.course.name }}</p>
+    <router-link :to="Tr.i18nRoute({ name: 'Curso', params: { id: this.course.id_course,  locale: Tr.guessDefaultLocale() } })" class="user-profile-course-card">
+        <img :src="this.imageUrl" />
+        <p>{{ this.course.course }}</p>
         <div>
             <progress class="prog" id="progress" :value="this.course.progress" max="100"></progress>
             <p>{{ this.course.progress }} %</p>
-        </div>    
+        </div>
     </router-link>
 </template>
 
 <script>
+import Tr from '@/i18n/translation.js'
 export default {
-    name: 'UserProfileCourseCard',
+    name: "UserProfileCourseCard",
     props: {
         course: {
             type: Object,
-            required: true
-        }
+            required: true,
+        },
     },
-    data(){
+    data() {
         return {
-            imageUrl: ""
+            imageUrl: "",
         }
     },
-    created(){
+    setup() {
+        return { Tr };
+    },
+    created() {
         this.imageUrl = new URL(`../../assets/${this.course.image}.jpg`, import.meta.url).href;
     }
-}
+    
+};
 </script>
 
 <style scoped>
@@ -84,10 +89,9 @@ export default {
     }
 
     @media (max-width: 1050px) {
-        
         .user-profile-course-card {
             padding: 16px 0px;
             min-width: 164px;
         }
-	}
+    }
 </style>

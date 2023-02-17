@@ -2,13 +2,14 @@
     <div class="vid" v-on:click="changeVideo">
         <img class="img" :src="this.imageUrl" />
         <div class="text">
-            <p class="videoname">{{ video.name }}</p>
-            <p class="videoduration">{{ video.duration }}</p>
+            <p class="videoname">{{ video.title }}</p>
+            <p class="videoduration">{{ calculatedDuration }}</p>
         </div>
     </div>
 </template>
 
 <script>
+import Tr from '@/i18n/translation.js'
 export default {
     name: "VideoList",
     data() {
@@ -18,6 +19,10 @@ export default {
         }
     },
     props: {
+        courseID: {
+            type: String,
+            required: true
+        },
         video: {
             type: Object,
             required: true,
@@ -26,9 +31,18 @@ export default {
     created() {
         this.imageUrl = new URL(`../../assets/${this.video.image}.jpg`,import.meta.url).href;
     },
+    setup() {
+        return { Tr };
+    },
     methods: {
         changeVideo() {
-            this.$emit('changeVideo', this.video);
+          	this.$router.push({ name: "Vídeo", params: { id: this.courseID, idVid: this.video.id, locale: Tr.guessDefaultLocale() } });
+            this.$emit('changeVideo', this.video.id)
+        }
+    },
+    computed: {
+        calculatedDuration() {
+            return Math.floor(this.video.duration / 60)+':'+Math.floor(this.video.duration % 60);
         }
     }
 }

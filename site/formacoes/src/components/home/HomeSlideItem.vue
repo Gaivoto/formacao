@@ -4,15 +4,18 @@
         <p class="title">{{ this.item.name }}</p>
         <div>
             <img :src="this.creatorImageUrl">
-            <p>{{ this.item.creator.name }}</p>
+            <p>{{ this.item.nameCr }}</p>
         </div>
         <div>
-            <button>Ver Curso</button>
+            <router-link :to="Tr.i18nRoute({ name: 'Curso', params: { id: this.item.id.substring(0, this.item.id.length - 2), locale: Tr.guessDefaultLocale() } })">
+                <button>{{ $t("home.viewCourse") }}</button>
+            </router-link>
         </div>
     </div>
 </template>
 
 <script>
+import Tr from '@/i18n/translation.js'
 export default {
     name: "HomeSlideItem",
     props: {
@@ -27,9 +30,12 @@ export default {
             creatorImageUrl: ""
         }
     },
+    setup() {
+        return { Tr };
+    },
     created() {
-        this.imageUrl = new URL(`../../assets/placeholder.jpg`, import.meta.url).href;
-        this.creatorImageUrl = new URL(`../../assets/${this.item.creator.image}.jpg`, import.meta.url).href;
+        this.imageUrl = new URL(`../../assets/${this.item.image}.jpg`, import.meta.url).href;
+        this.creatorImageUrl = new URL(`../../assets/${this.item.imageCr}.jpg`, import.meta.url).href;
     }
 }
 </script>

@@ -25,11 +25,20 @@ export default {
     },
     data() {
         return {
-            currentSlide: 0
+            currentSlide: 0,
+            loaded: false
         }
     },
-    mounted() {
-        setTimeout(this.scrollSlides, 5000);
+    watch: {
+        slides: {
+            handler() {
+                if(!this.loaded) {
+                    this.scrollSlides();
+                    this.loaded = true;
+                }
+            },
+            deep: true
+        }
     },
     methods: {
         scrollSlides() {

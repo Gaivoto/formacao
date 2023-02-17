@@ -1,7 +1,10 @@
 <template>
     <div class="wrapper">
-        <div class="topbar-text">
-            <p class="page-name logo">Formações Johnson - </p>
+        <div class="topbar-text" :class="{ 'topbar-text-logged': this.isUserLogged, 'topbar-text-not-logged': !this.isUserLogged }">
+            <router-link :to="Tr.i18nRoute({ name: 'Home' })">
+                <p class="logo">Guide Line</p>
+            </router-link>
+            <p class="hifen"> - </p>
             <p class="page-name"> {{ this.$route.name }}</p>
         </div>
 
@@ -11,18 +14,18 @@
                 <span class="material-icons search-icon">search</span>
             </div> 
             <div ref="topSearchbarResults" class="searchbar-results" :class="{ 'd-none': !searchOpen }">
-                <div class="no-results" :class="{ 'd-none': !noResults }">
+                <div class="no-results" v-if="this.noResults">
                     <span class="material-icons search-icon">warning</span>
                     <p>Não existem resultados para a pesquisa.</p>    
                 </div>
                 <SearchbarResult v-for="item in this.searchResults" :key="item.id + item.type" v-bind:item="item" v-on:click="toggleSearch"/>
             </div>  
         </div>
-
-        <div class="topbar-right">
-            <router-link class="user-wrapper" :to="{ name: 'Perfil do Utilizador', params: { id: 1 } }">
-                <div class="topbar-text">
-                    <p>{{ this.user.username }}</p>
+        
+        <div class="topbar-right" v-if="this.isUserLogged">
+            <router-link class="user-wrapper" :to="Tr.i18nRoute({ name: 'Perfil do Utilizador', params: { id: this.getUserId } })" :key="this.getUserId">
+                <div class="username">
+                    <p>{{ this.$store.getters.getUser.username }}</p>
                 </div>
                 <div class="image-wrapper">
                     <img id="profile-image" :src="this.imageUrl" />    
@@ -33,15 +36,30 @@
             </div>
         </div>
 
+        <div class="topbar-right" v-if="!this.isUserLogged">
+            <router-link class="topbar-btn" :to="Tr.i18nRoute({ name: 'Cursos', params: { locale: Tr.guessDefaultLocale() } })">
+                <p class="text">Cursos</p>
+            </router-link>
+            <router-link class="topbar-btn" :to="Tr.i18nRoute({ name: 'Login', params: { locale: Tr.guessDefaultLocale() } })">
+                <p class="text">Login</p>
+            </router-link>
+        </div>
+
         <div ref="notifList" class="notif-list" :class="{ 'd-none': !notifsOpen }">
+            <div class="no-notifications" v-if="!this.hasNotifs">
+                <span class="material-icons search-icon">notifications_off</span>
+                <p>Não existem notificações.</p>    
+            </div>
             <NotificationListItem v-for="notif in this.notifications" :key="notif.id" v-bind:notification="notif"/>
         </div>
     </div>
 </template>
 
 <script>
-import NotificationListItem from './NotificationListItem.vue'
-import SearchbarResult from './SearchbarResult.vue'
+import axios from 'axios';
+import NotificationListItem from './NotificationListItem.vue';
+import SearchbarResult from './SearchbarResult.vue';
+import Tr from '@/i18n/translation.js';
 
 export default {
     name: "Topbar",
@@ -57,119 +75,86 @@ export default {
         searchOpen: {
             type: Boolean,
             required: true
+        },
+        user: {
+            type: Object,
+            required: true
         }
     },
     data() {
         return {
             isMounted: false,
-            user: {},
+            user: this.$store.getters.getUser,
             imageUrl: "",
             notifications: [],
             searchResults: [],
-            usersCourses: []
+            creators: [],
+            courses: []
         }
+    },
+    setup() {
+        return { Tr };
     },
     mounted() {
         this.isMounted = true;
     }, 
     created() {
-        this.user.username = "Amogus Sus";
-        this.user.image = "bingus";
+        if(this.$store.getters.getUser.id) {
+            axios({
+                method: `get`,
+                url: `${import.meta.env.VITE_HOST}/notifications/user/${this.$store.getters.getUser.id}`,
+                headers: {
+                    Authorization: `Bearer ${this.$store.getters.getAccessToken}`,
+                    refreshtoken: this.$store.getters.getRefreshToken
+                }
+            })
+            .then(value => {
+                if(value.data.access_token) this.$store.commit('setAccessToken', value.data.access_token);
+                value.data.notifications.forEach(n => this.notifications.push(n));
+            })
+            .catch(error => {
+                if (error.code) {
+                    console.log(error.response.data);
+                    if(error.response.status == 401) {
+			            this.$store.commit('resetUser');
+                        this.$emit("open-modal", "Sessão expirou. Faça login novamente.");
+                        this.$router.push({ name: "Login", params: { locale: Tr.guessDefaultLocale() } });
+                    } else {
+                        this.$emit("open-modal", error.response.data.message);
+                    }
+                } else console.log(error);
+            });
+        }
 
-        this.notifications = [
-            {
-                id: 1,
-                image: "bingus",
-                message: "notificação 1",
-                read: true,
-                date: "12/12/2022 13:45"
-            },
-            {
-                id: 2,
-                image: "bingus",
-                message: "notificação 2",
-                read: false,
-                date: "12/12/2022 13:45"
-            },
-            {
-                id: 3,
-                image: "bingus",
-                message: "notificação 3",
-                read: false,
-                date: "12/12/2022 13:45"
-            },
-            {
-                id: 4,
-                image: "bingus",
-                message: "asdf asdfiojo is sdfiojo is qwie dqwd diassdfiojo is qwie dqwd diasqwie dqwd dias iuhdf iqwe ask",
-                read: true,
-                date: "12/12/2022 13:45"
-            },
-            {
-                id: 5,
-                image: "bingus",
-                message: "notificação 3",
-                read: false,
-                date: "12/12/2022 13:45"
-            },
-            {
-                id: 6,
-                image: "bingus",
-                message: "asdf asdfiojo is sdfiojo is qwie dqwd diassdfiojo is qwie dqwd diasqwie dqwd dias iuhdf iqwe ask",
-                read: true,
-                date: "12/12/2022 13:45"
-            }
-        ];
+        axios({
+            method: `get`,
+            url: `${import.meta.env.VITE_HOST}/cursos`
+        })
+        .then(value => {
+            value.data.courses.forEach(c => this.courses.push(c));
+            this.courses.forEach(c => c.resultType = "Curso");
+        })
+        .catch(error => {
+            if (error.code) {
+                console.log(error.response.data);
+                this.$emit("open-modal", error.response.data.message);
+            } else console.log(error);
+        });
 
-        this.usersCourses = [
-            {
-                id: 1,
-                type: 'Curso',
-                name: "Course Course Course v v Course Course 1",
-                image: "bingus",
-                category: "Agricultura"
-            },
-            {
-                id: 2,
-                type: 'Curso',
-                name: "Course 2",
-                image: "bingus",
-                category: "Agricultura"
-            },
-            {
-                id: 3,
-                type: 'Curso',
-                name: "Course 3",
-                image: "bingus",
-                category: "Beleza"
-            },
-            {
-                id: 4,
-                type: 'Curso',
-                name: "Course 4",
-                image: "bingus",
-                category: "Beleza"
-            },
-            {
-                id: 5,
-                type: 'Curso',
-                name: "Course 5",
-                image: "bingus",
-                category: "Sopa"
-            },
-            {
-                id: 1,
-                type: 'Criador',
-                name: "Creator 1",
-                image: "bingus"
-            },
-            {
-                id: 2,
-                type: 'Criador',
-                name: "Creator 2",
-                image: "bingus"
-            }
-        ];
+        axios({
+            method: `get`,
+            url: `${import.meta.env.VITE_HOST}/criadores`
+        })
+        .then(value => {
+            value.data.criadores.forEach(c => this.creators.push(c));
+            this.creators.forEach(c => c.resultType = "Criador");
+        })
+        .catch(error => {
+            if (error.code) {
+                console.log(error.response.data);
+                this.$emit("open-modal", error.response.data.message);
+            } else console.log(error);
+        });
         
         this.imageUrl = new URL(`../assets/${this.user.image}.jpg`, import.meta.url).href;
     },
@@ -178,7 +163,7 @@ export default {
 			let unread = false;
 
 			this.notifications.forEach(notif => {
-				if(!notif.read) unread = true;
+				if(notif.state == "false") unread = true;
 			});
 
 			return unread;
@@ -190,16 +175,53 @@ export default {
                 if(this.searchResults.length == 0 && filter != "") return true;
                 return false;    
             }
+        },
+        getUser() {
+            this.user = this.$store.getter.getUser;
+        },
+        getUserId() {
+            if(this.$store.getters.getUser.id) return this.$store.getters.getUser.id;
+            return 0;
+        },
+        hasNotifs() {
+            return (this.notifications.length > 0);
+        },
+        isUserLogged() {
+            if(this.$store.getters.getUser.id) return true;
+            return false;
         }
     },
     methods: {
         toggleNotifs() {
             this.$emit("toggleNotifs");
 
-            this.notifications.forEach(n => n.read = true);
+            this.notifications.forEach(n => n.state = true);
+
+            axios({
+                method: `put`,
+                url: `${import.meta.env.VITE_HOST}/notifications/user/${this.$store.getters.getUser.id}`,
+                headers: {
+                    Authorization: `Bearer ${this.$store.getters.getAccessToken}`,
+                    refreshtoken: this.$store.getters.getRefreshToken
+                }
+            })
+            .then(value => {
+                if(value.data.access_token) this.$store.commit('setAccessToken', value.data.access_token);
+            })
+            .catch(error => {
+                if (error.code) {
+                    console.log(error.response.data);
+                    if(error.response.status == 401) {
+			            this.$store.commit('resetUser');
+                        this.$emit("open-modal", "Sessão expirou. Faça login novamente.");
+                        this.$router.push({ name: "Login", params: { locale: Tr.guessDefaultLocale() } });
+                    } else {
+                        this.$emit("open-modal", error.response.data.message);
+                    }
+                } else console.log(error);
+            });
         },
         toggleSearch() {
-            console.log("?")
             this.$emit("toggleSearch");
         },
         filterSearchbar(){
@@ -209,23 +231,28 @@ export default {
             this.searchResults = [];
 
             if(filter != ""){
-                this.usersCourses.forEach(i => {
-                    if(i.name.toLowerCase().includes(filter) || i.type.toLowerCase().includes(filter) || (i.category != null && i.category.toLowerCase().startsWith(filter))) this.searchResults.push(i);
-                });    
+                this.creators.forEach(cr => {
+                    if(cr.username.toLowerCase().includes(filter) || cr.name.toLowerCase().includes(filter) || "criador".includes(filter)) this.searchResults.push(cr);
+                });
+
+                this.courses.forEach(co => {
+                    if(co.name.toLowerCase().includes(filter) || co.category.toLowerCase().includes(filter) || "curso".includes(filter)) this.searchResults.push(co);
+                });
             }
         },
         goToSearchItem() {
             let filter = this.$refs.topSearchbar.value.toLowerCase();
 
-            this.usersCourses.forEach(i => {
-                if(i.name.toLowerCase() == filter){
-                    if(i.type == "Curso") {
-                        this.$router.push({ name: 'Curso', params: { id: i.id } });
-                    } else {
-                        this.$router.push({ name: 'Perfil do Utilizador', params: { id: i.id } });
-                    }
-                };
-                this.$emit("toggleSearch");
+            this.creators.forEach(c => {
+                if(c.name.toLowerCase() == filter || c.username.toLowerCase() == filter) {
+                    this.$router.push({ name: 'Perfil do Utilizador', params: { id: c.id, locale: Tr.guessDefaultLocale() } });
+                }
+            });
+
+            this.courses.forEach(c => {
+                if(c.name.toLowerCase() == filter) {
+                    this.$router.push({ name: 'Curso', params: { id: c.id, locale: "?" } });
+                }
             });
         }
     }
@@ -238,7 +265,7 @@ export default {
         gap: 6px;
     }
 
-    .page-name {
+    .topbar-text p {
         color: var(--primary) !important;
         font-size: 24px;
         font-weight: 500;
@@ -370,7 +397,6 @@ export default {
         overflow-x: hidden;
     }
     
-
     .notif-list::-webkit-scrollbar {
         width: 10px;
         background: var(--mobalytics-back);
@@ -380,6 +406,14 @@ export default {
     .notif-list::-webkit-scrollbar-thumb {
         background: var(--mobalytics-card);
         border-radius: 8px;
+    }
+
+    .notif-list .no-notifications {
+        padding: 24px 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 16px;
     }
 
     .wrapper {
@@ -434,27 +468,46 @@ export default {
         object-fit: cover;
     }
 
-    @media (max-width: 1450px) {
-		.topbar-text .logo  {
+    .topbar-btn p {
+        font-size: 22px;
+        color: var(--primary);
+    }
+
+    @media (max-width: 1500px) {
+		.topbar-text-logged .logo  {
+			display: none;
+		}	
+
+        .topbar-text .hifen {
+            display: none;
+        }
+
+        .topbar-text-not-logged .page-name {
+            display: none;
+        }
+	}
+
+    @media (max-width: 1350px) {
+		.user-wrapper .username {
 			display: none;
 		}	
 	}
 
-    @media (max-width: 1200px) {
-		.user-wrapper .topbar-text {
-			display: none;
+    @media (max-width: 1350px) {
+		.searchbar input {
+			width: 300px;
 		}	
 	}
 
-    @media (max-width: 1050px) {
-		.wrapper .topbar-text {
+    @media (max-width: 1150px) {
+		.wrapper .topbar-text-logged {
 			display: none;
 		}	
 	}
 
     @media (max-width: 800px) {
 		.searchbar input {
-			width: 300px;
+			width: 250px;
 		}	
 
         .notif-list {
@@ -462,11 +515,17 @@ export default {
         }
 	}
 
-    @media (max-width: 700px) {
+    @media (max-width: 750px) {
 		.searchbar input {
 			width: 200px;
 		}	
 	}
+
+    @media (max-width: 700px) {
+        .topbar-right .topbar-btn:first-child {
+            display: none;
+        }
+    }
 
     @media (max-width: 600px) {
         .searchbar input {
@@ -485,6 +544,12 @@ export default {
 			display: none;
 		}	
 	}
+
+    @media (max-width: 550px) {
+        .wrapper .topbar-text-not-logged {
+			display: none;
+		}	
+    }
 
     @media (max-width: 500px) {
 		.notif-list {

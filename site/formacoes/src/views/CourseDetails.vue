@@ -1,18 +1,20 @@
 <template>
     <div class="course-details-wrapper">
         <div class="course-details-content">
-            <CourseDetHeader class="course-header" v-bind:course="this.course" />
+            <CourseDetHeader class="course-header" v-bind:course="this.course" v-bind:creator="this.creator" v-bind:compra="this.compra" />
             <p>Conteúdo:</p>
             <div class="vid-container">
-                <VidInfo v-for="vid in this.videos" :key="vid.id" v-bind:video="vid" v-bind:courseID="this.course.id"/>
+                <VidInfo v-for="vid in this.videos" :key="vid.id" v-bind:video="vid" v-bind:courseID="this.course.id" v-bind:clickable="this.creator || this.access"/>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import axios from "axios";
 import CourseDetHeader from "../components/courseDetails/CourseDetHeader.vue";
 import VidInfo from "../components/courseDetails/VidInfo.vue";
+import Tr from '@/i18n/translation.js';
 
 export default {
     name: "CourseDetails",
@@ -20,58 +22,111 @@ export default {
         CourseDetHeader,
         VidInfo,
     },
-    created() {
-        this.course = {
-            id: 1,
-            image: "placeholder",
-            name: "teste 1 teste 2 teste 2 teste 2 teste 2teste 2 teste 2 teste 2 teste 2teste 2 teste 2teste 2 teste 2teste 2teste 2teste 2 teste 2 teste 2 teste 2",
-            creatorName: "seuku miyadora",
-            description: `O curso de Python possui 60 aulas, neste curso o aluno aprenderá a linguagem Python. 
-
-Nele é mostrado como desenvolver usando os comandos e a sintaxe Python atualizada seguindo a documentação estipulada pelos criadores da linguagem.
-
-Esta é uma das linguagens que mais crescem no mundo, pois com Python é possível
-desenvolver sistemas, jogos, aplicativos mobile e muito mais.`,
-            category: "category1",
-            price: "55.80 R$",
+    data() {
+        return  {
+            course: {},
+            videos: [],
+            creator: false,
+            access: false,
+            compra: false
         }
-        this.videos = [
-            {
-                id: 1,
-                image: "placeholder",
-                name: "video1 video1 video1video1 video1 video1 video1video1 video1  video1 video1video1video1 video1",
-                description: "description1 description1 description1 description1 description1 description1 description1 description1 dedescription1 description1 description1 description1 dedescription1 description1 description1 description1 dedescription1 description1 description1 description1 dedescription1 description1 description1 description1 dedescription1 description1 description1 description1 dedescription1 description1 description1 description1 dedescription1 description1 description1 description1 dedescription1 description1 description1 description1 dedescription1 description1 description1 description1 dedescription1 description1 description1 description1 dedescription1 description1 description1 description1 dedescription1 description1 description1description1 description1 description1 description1 description1 description1 description1 description1 description1 description1 v description1",
-                duration: "0:15:23",
-            },
-            {
-                id: 2,
-                image: "placeholder",
-                name: "video2",
-                description: "iption1 description1 description1 description1 description1 desiption1 description1 description1 description1 description1 desiption1 description1 description1 description1 description1 desiption1 description1 description1 description1 description1 des",
-                duration: "0:16:12",
-            },
-            {
-                id: 3,
-                image: "placeholder",
-                name: "video3",
-                description: "description3",
-                duration: "0:17:46",
-            },
-            {
-                id: 4,
-                image: "placeholder",
-                name: "video4",
-                description: "description4",
-                duration: "0:18:52",
-            },
-            {
-                id: 5,
-                image: "placeholder",
-                name: "video5",
-                description: "description5",
-                duration: "2:00:00",
+    },
+    setup() {
+        return { Tr };
+    },
+    created() {
+        let request = {
+            method: `get`,
+            url: `${import.meta.env.VITE_HOST}/cursos/${this.$route.params.id}`
+        }
+
+        if(this.$store.getters.getUser.id != "") {
+            request.headers = {
+                Authorization: `Bearer ${this.$store.getters.getAccessToken}`,
+                refreshtoken: this.$store.getters.getRefreshToken
             }
-        ];
+        }
+
+        axios(request)
+        .then(value => {
+            if (value.data.access_token) this.$store.commit('setAccessToken', value.data.access_token);
+            if (value.data.course.id_creator == this.$store.getters.getUser.id) this.creator = true;
+
+            this.course = value.data.course;
+            this.videos = value.data.course.videos;
+            this.access = value.data.course.access;
+
+            if(this.$store.getters.getUser.type && this.$store.getters.getUser.type != 'admin' && !this.creator && !this.access) this.compra = true;
+        })
+        .catch(error => {
+            if (error.code) {
+                console.log(error.response.data);
+                if(error.response.data.message == "Curso não existe.") {
+                    this.$router.push({ name: "Home", params: { locale: Tr.guessDefaultLocale() } });
+                } else {
+                    if(error.response.status == 401) {
+			            this.$store.commit('resetUser');
+                        this.$emit("open-modal", "Sessão expirou. Faça login novamente.");
+                        this.$router.push({ name: "Login", params: { locale: Tr.guessDefaultLocale() } });
+                    } else {
+                        this.$emit("open-modal", error.response.data.message);
+                    }
+                }
+            } else console.log(error);
+        });
+    },
+    beforeRouteUpdate(to, from) {
+        this.creator = false;
+        this.compra = false;
+
+        let request = {
+            method: `get`,
+            url: `${import.meta.env.VITE_HOST}/cursos/${to.params.id}`
+        }
+
+        if(this.$store.getters.getUser.id != "") {
+            request.headers = {
+                Authorization: `Bearer ${this.$store.getters.getAccessToken}`,
+                refreshtoken: this.$store.getters.getRefreshToken
+            }
+        }
+
+        axios(request)
+        .then(value => {
+            if (value.data.access_token) this.$store.commit('setAccessToken', value.data.access_token);
+            if (value.data.course.id_creator == this.$store.getters.getUser.id) this.creator = true;
+
+            this.course = value.data.course;
+            this.videos = value.data.course.videos;
+            this.access = value.data.course.access;
+
+            if(this.$store.getters.getUser.type && this.$store.getters.getUser.type != 'admin' && !this.creator && !this.access) this.compra = true;
+        })
+        .catch(error => {
+            if (error.code) {
+                console.log(error.response.data);
+                if(error.response.data.message == "Curso não existe.") {
+                    this.$router.push({ name: "Home", params: { locale: Tr.guessDefaultLocale() } });
+                } else {
+                    if(error.response.status == 401) {
+			            this.$store.commit('resetUser');
+                        this.$emit("open-modal", "Sessão expirou. Faça login novamente.");
+                        this.$router.push({ name: "Login", params: { locale: Tr.guessDefaultLocale() } });
+                    } else {
+                        this.$emit("open-modal", error.response.data.message);
+                    }
+                }
+            } else console.log(error);
+        });
+    },
+    beforeRouteLeave(to, from){
+        if(to.name == "Vídeo" && !this.access && !this.creator && this.$store.getters.getUser.type != 'admin') return false;
+    },
+    computed: {
+        userHasAccess() {
+            if(this.access || this.creator || (this.$store.getters.getUser.type && this.$store.getters.getUser.type == 'admin')) return true;
+            return false;
+        }
     }
 };
 </script>
@@ -102,6 +157,8 @@ desenvolver sistemas, jogos, aplicativos mobile e muito mais.`,
         overflow-x: hidden;
         overflow-y: scroll;
         height: 440px;
+        position: relative;
+        transform: scale(1);
     }
 
     .vid-container::-webkit-scrollbar {
@@ -115,7 +172,16 @@ desenvolver sistemas, jogos, aplicativos mobile e muito mais.`,
         border-radius: 8px;
     }
 
-    @media (max-width: 1200px) {
+    .no-access {
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        height: 100%;   
+        background-color: red;
+    }
+
+    @media (max-width: 1400px) {
         .vid-container {
             height: 600px;
         }

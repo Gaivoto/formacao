@@ -8,10 +8,10 @@
             <div class="right-side">
                 <p class="text">Acerca de nós</p>
                 <p class="text">Como começar</p>
-                <router-link class="topbar-btn" to="/courses">
+                <router-link class="topbar-btn" :to="Tr.i18nRoute({ name: 'Cursos', params: { locale: Tr.guessDefaultLocale() } })">
                     <p class="text">Cursos</p>
                 </router-link>
-                <router-link class="topbar-btn" to="/login">
+                <router-link class="topbar-btn" :to="Tr.i18nRoute({ name: 'Login', params: { locale: Tr.guessDefaultLocale() } })">
                     <p class="text">Login</p>
                 </router-link>
             </div>
@@ -21,8 +21,12 @@
 </template>
 
 <script>
+import Tr from '@/i18n/translation.js'
 export default {
     name: "TopbarLandingPage",
+    setup() {
+        return { Tr };
+    },
 }
 </script>
 

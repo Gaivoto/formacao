@@ -1,10 +1,10 @@
 <template>
-    <router-link class="vid" :class="{'vidOpen': open}" :to="{ name: 'Vídeo', params: { id: this.courseID } }">
+    <router-link class="vid" :class="{ 'clickable': this.clickable }" :to="Tr.i18nRoute({ name: 'Vídeo', params: { id: this.courseID, idVid: this.video.id, locale: Tr.guessDefaultLocale() } })">    
         <img :src="this.imageUrl">
         <div class="text">
             <div class="text-left">
-                <p class="vid-title">{{ video.name }}</p>
-                <p>{{ video.duration }}</p>
+                <p class="vid-title">{{ video.title }}</p>
+                <p>{{ this.calculatedDuration }} min</p>
             </div>
             <p>{{ video.description }}</p>
         </div>
@@ -12,12 +12,15 @@
 </template>
 
 <script>
-
+import Tr from '@/i18n/translation.js'
 export default {
     data: () => {
         return {
             imageUrl: ""
         }
+    },
+    setup() {
+        return { Tr };
     },
     props: {
         video: {
@@ -27,10 +30,19 @@ export default {
         courseID: {
             type: Number,
             required: true
+        },
+        clickable: {
+            type: Boolean,
+            required: true
         }
     },
     created() {
         this.imageUrl = new URL(`../../assets/${this.video.image}.jpg`, import.meta.url).href;
+    },
+    computed: {
+        calculatedDuration() {
+            return Math.floor(this.video.duration / 60)+':'+Math.floor(this.video.duration % 60);
+        }
     }
 }
 </script>
@@ -41,9 +53,14 @@ export default {
         display: flex;
         gap: 24px;
         background-color: var(--mobalytics-back);
+        cursor: default;
     }
 
-    .vid:hover {
+    .vid.clickable {
+        cursor: pointer;
+    }
+
+    .vid.clickable:hover {
         background-color: var(--mobalytics-susge);
     }
 
@@ -92,13 +109,7 @@ export default {
         }
     }
 
-    @media (max-width: 1250px) {
-        .text > p {
-            max-width: 400px;
-        }
-    }
-
-    @media (max-width: 1150px) {
+    @media (max-width: 1350px) {
         .vid .text {
             display: block;
             padding: 0px;
@@ -111,6 +122,12 @@ export default {
 
         .text > p {
             max-width: 100%;
+        }
+    }
+
+    @media (max-width: 1250px) {
+        .text > p {
+            max-width: 400px;
         }
     }
 

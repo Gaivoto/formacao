@@ -1,5 +1,5 @@
 <template>
-    <div class="course-card-container col-12 col-md-6 col-xl-3" :class="{ shake: this.hoverImg }">
+    <div class="course-card-container col-12 col-md-6" :class="{ shake: this.hoverImg, 'col-xl-4': this.sidebar, 'col-xl-3': !this.sidebar }">
         <div class="course-card">
             <router-link :to="{ name: 'Curso', params: { id: this.course.id } }">
                 <img :src="this.imageUrl">
@@ -12,13 +12,13 @@
                     <p>{{ this.course.price }} €</p>
                     <div>
                         <span class="material-icons duration-icon">schedule</span>
-                        <p>{{ this.course.duration }}</p>
+                        <p>{{ this.calculatedDuration }}</p>
                     </div>
                 </div>   
                 <hr>
-                <router-link class="card-creator-div" :to="{ name: 'Perfil do Utilizador', params: { id: 1 } }">
+                <router-link class="card-creator-div" :to="{ name: 'Perfil do Utilizador', params: { id: this.course.idCr } }">
                     <img :src="this.creatorImageUrl">
-                    <p>{{ this.course.creator.name }}</p>
+                    <p>{{ this.course.nameCr }}</p>
                 </router-link>
             </div>
         </div>
@@ -32,6 +32,10 @@ export default {
         course: {
             type: Object,
             required: true
+        },
+        sidebar: {
+            type: Boolean,
+            required: true
         }
     },
     data(){
@@ -42,7 +46,12 @@ export default {
     },
     created(){
         this.imageUrl = new URL(`../../assets/${this.course.image}.jpg`, import.meta.url).href;
-        this.creatorImageUrl = new URL(`../../assets/${this.course.creator.image}.jpg`, import.meta.url).href;
+        this.creatorImageUrl = new URL(`../../assets/${this.course.imageCr}.jpg`, import.meta.url).href;
+    },
+    computed: {
+        calculatedDuration() {
+            return Math.floor(this.course.duration) + "h " + Math.round((this.course.duration - Math.floor(this.course.duration)) * 60) + "min";
+        }
     }
 }
 </script>

@@ -3,11 +3,11 @@
         <div class="video-card-left">
             <img :src="this.imageUrl">
             <div>
-                <router-link :to="{ name: 'Vídeo', params: { id: this.courseId } }"><p>{{ this.video.name }}</p></router-link>
+                <router-link :to="Tr.i18nRoute({ name: 'Vídeo', params: { id: this.courseId, idVid: this.video.id, locale: Tr.guessDefaultLocale() } })"><p>{{ this.video.title }}</p></router-link>
             </div>
             <div>
                 <p>Estado: {{ this.video.state }}</p>
-                <p>Data: {{ this.video.date }}</p>
+                <p>Data: {{ this.formatedDate }}</p>
             </div>
         </div>
         <div class="video-card-right">
@@ -23,6 +23,8 @@
 </template>
 
 <script>
+import Tr from '@/i18n/translation.js'
+
 export default {
     name: 'CourseListAdmVideoCard',
     props: {
@@ -39,6 +41,9 @@ export default {
         return {
             imageUrl: ""
         }
+    },
+    setup() {
+        return { Tr };
     },
     created(){
         this.imageUrl = new URL(`../../assets/${this.video.image}.jpg`, import.meta.url).href;
@@ -59,6 +64,9 @@ export default {
         showButton5() {
             if(this.video.state == "Rejeitado") return true;
             return false;
+        },
+        formatedDate() {
+            return this.video.date.substring(8, 10) + "/" + this.video.date.substring(5, 7) + "/" + this.video.date.substring(0, 4) + " " + this.video.date.substring(11, 19);
         }
     },
     methods: {
@@ -94,6 +102,8 @@ export default {
 
     .video-card-left p {
         color: var(--light);
+        text-overflow: ellipsis;
+        overflow: hidden;
     }
 
     .video-card-left > div > a > p {
@@ -121,7 +131,7 @@ export default {
         gap: 16px;
     }
 
-    @media (max-width: 1300px) {
+    @media (max-width: 1650px) {
 
         .video-card-right {
             width: 120px;
@@ -145,14 +155,11 @@ export default {
         }
     }
 
-    @media (max-width: 1150px) {
+    @media (max-width: 1450px) {
 
         .video-card-left > div > a > p {
             width: 200px;
         }
-    }
-
-    @media (max-width: 1150px) {
 
         .video-card-left img {
             width: 90px;
@@ -164,7 +171,7 @@ export default {
         }
     }
 
-    @media (max-width: 900px) {
+    @media (max-width: 1250px) {
 
         .video-card-left > div > a > p {
             width: 160px;
@@ -174,14 +181,13 @@ export default {
         .video-card-left {
             gap: 20px;
         }
+
+        .video-card-left > div:last-child {
+            min-width: 120px;
+        }
     }
 
-    @media (max-width: 850px) {
-
-        button {
-            width: 90px;
-        }
-
+    @media (max-width: 1150px) {
         .video-card-right {
             width: 90px;
         }
@@ -190,8 +196,8 @@ export default {
             width: 90px;
         }
 
-        .video-card-left > div:last-child {
-            min-width: 120px;
+        button {
+            width: 90px;
         }
     }
 </style>

@@ -6,41 +6,41 @@
             </div>
             <div class="home-courses">
                 <div class="courses-header">
-                    <p>Cursos</p>
+                    <p>{{ $t("home.courses") }}</p>
                     <div class="custom-select">
                         <div class="selected" :class="{ open: typeOpen }" v-on:click="typeOpen=!typeOpen">{{ this.type }}</div>
                         <div class="items" :class="{ selectHide: !typeOpen }">
-                            <div v-on:click="changeDiv('Recomendados')">Recomendados</div>
-                            <div v-on:click="changeDiv('Destaques')">Destaques</div>
-                            <div v-on:click="changeDiv('Mais Vendidos')">Mais Vendidos</div>
-                            <div v-on:click="changeDiv('Novidades')">Novidades</div>
-                            <div v-on:click="changeDiv('Outros')">Outros</div>
+                            <div v-on:click="changeDiv($t('home.recommended'))">{{ $t("home.recommended") }}</div>
+                            <div v-on:click="changeDiv($t('home.trending'))">{{ $t("home.trending") }}</div>
+                            <div v-on:click="changeDiv($t('home.bestSellers'))">{{ $t("home.bestSellers") }}</div>
+                            <div v-on:click="changeDiv($t('home.recentlyAdded'))">{{ $t("home.recentlyAdded") }}</div>
+                            <div v-on:click="changeDiv($t('home.others'))">{{ $t("home.others") }}</div>
                         </div>
                     </div>   
                 </div>
                 <div ref="recommended" class="home-row-wrapper">
                     <div class="row">
-                        <HomeCourseCard v-for="course in this.recommended" :key="course.id" v-bind:course="course"/>
+                        <HomeCourseCard v-for="course in this.recommended" :key="course.id" v-bind:course="course" v-bind:sidebar="this.sidebar"/>
                     </div>
                 </div>
                 <div ref="hottest" class="home-row-wrapper d-none">
                     <div class="row">
-                        <HomeCourseCard v-for="course in this.hottest" :key="course.id" v-bind:course="course"/>
+                        <HomeCourseCard v-for="course in this.hottest" :key="course.id" v-bind:course="course" v-bind:sidebar="this.sidebar"/>
                     </div>
                 </div>
                 <div ref="sold" class="home-row-wrapper d-none">
                     <div class="row">
-                        <HomeCourseCard v-for="course in this.mostSold" :key="course.id" v-bind:course="course"/>
+                        <HomeCourseCard v-for="course in this.mostSold" :key="course.id" v-bind:course="course" v-bind:sidebar="this.sidebar"/>
                     </div>
                 </div>
                 <div ref="recent" class="home-row-wrapper d-none">
                     <div class="row">
-                        <HomeCourseCard v-for="course in this.recent" :key="course.id" v-bind:course="course"/>
+                        <HomeCourseCard v-for="course in this.recent" :key="course.id" v-bind:course="course" v-bind:sidebar="this.sidebar"/>
                     </div>
                 </div>
                 <div ref="other" class="home-row-wrapper d-none">
                     <div class="row">
-                        <HomeCourseCard v-for="course in this.other" :key="course.id" v-bind:course="course"/>
+                        <HomeCourseCard v-for="course in this.other" :key="course.id" v-bind:course="course" v-bind:sidebar="this.sidebar"/>
                     </div>
                 </div>
             </div>
@@ -51,9 +51,9 @@
             </div>
             <div class="home-creators" :class="{ 'right-expanded': this.rightOpen }">
                 <div>
-                    <p>Maiores Criadores</p>
-                    <p :class="{ 'd-none': this.rightOpen }" v-on:click="rightOpen=true">Ver Mais</p>
-                    <p :class="{ 'd-none': !this.rightOpen }" v-on:click="rightOpen=false">Ver Menos</p>
+                    <p>{{ $t("home.bestSellingCreators") }}</p>
+                    <p :class="{ 'd-none': this.rightOpen }" v-on:click="rightOpen=true">{{ $t("home.viewMore") }}</p>
+                    <p :class="{ 'd-none': !this.rightOpen }" v-on:click="rightOpen=false">{{ $t("home.viewLess") }}</p>
                 </div>
                 <div>
                     <HomeCreatorItem v-for="creator in this.creators" :key="creator" v-bind:creator="creator" />
@@ -64,9 +64,12 @@
 </template>
 
 <script>
+import axios from "axios";
 import HomeCourseCard from "../components/home/HomeCourseCard.vue";
 import HomeCreatorItem from "../components/home/HomeCreatorItem.vue";
 import HomeSlideshow from "../components/home/HomeSlideshow.vue";
+import Tr from '@/i18n/translation.js'
+import { useI18n } from 'vue-i18n'
 
 export default {
     name: "Home",
@@ -74,6 +77,12 @@ export default {
         HomeCourseCard,
         HomeCreatorItem,
         HomeSlideshow
+    },
+    props: {
+        sidebar: {
+            type: Boolean,
+            required: true
+        }
     },
     data() {
         return {
@@ -85,591 +94,58 @@ export default {
             other: [],
             creators: [],
             typeOpen: false,
-            type: "Recomendados",
+            type: "",
             rightOpen: false
         }
     },
     created() {
-        this.slides = [
-            {
-                id: 1,
-                name: "Course Course Course Course Course Course Course 1",
-                description: "desc 1 amongus desc 1 amongus desc 1 amongus desc 1 amongusdesc 1 amongusdesc 1 amongus",
-                image: "bingus",
-                price: 20,
-                category: "cat1",
-                date: "05-12-2022",
-                duration: "23h 12min",
-                creator: {
-                    image: "bingus",
-                    name: "Criador 1"
-                },
-                tag: "Recomendado para si",
-                show: true
-            },
-            {
-                id: 10,
-                name: "Course 10",
-                description: "desc 10 amongus",
-                image: "bingus",
-                price: 15,
-                category: "cat1",
-                date: "05-03-2022",
-                duration: "23h 12min",
-                creator: {
-                    image: "bingus",
-                    name: "Criador 1"
-                },
-                tag: "Em Destaque",
-                show: false
-            },
-            {
-                id: 2,
-                name: "Course 2",
-                description: "desc 2 amongus",
-                image: "bingus",
-                price: 12,
-                category: "cat1",
-                date: "05-11-2022",
-                duration: "23h 12min",
-                creator: {
-                    image: "bingus",
-                    name: "Criador 1"
-                },
-                tag: "Mais Vendido",
-                show: false
-            },
-            {
-                id: 3,
-                name: "Course 3",
-                description: "desc 3 amongus",
-                image: "bingus",
-                price: 50,
-                category: "cat1",
-                date: "05-10-2022",
-                duration: "23h 12min",
-                creator: {
-                    image: "bingus",
-                    name: "Criador 1"
-                },
-                tag: "Novidade",
-                show: false
-            },
-            {
-                id: 4,
-                name: "Course 4",
-                description: "desc 4 amongus",
-                image: "bingus",
-                price: 80,
-                category: "cat1",
-                date: "05-09-2022",
-                duration: "23h 12min",
-                creator: {
-                    image: "bingus",
-                    name: "Criador 1"
-                },
-                tag: "Mais Recomendações",
-                show: false
-            }
-        ];
+        this.type = this.t("home.recommended")
+        axios({
+            method: `get`,
+            url: `${import.meta.env.VITE_HOST}/cursos/home`
+        })
+        .then(value => {
+            value.data.recomendados.forEach(c => this.recommended.push(c));
+            this.slides.push({...value.data.recomendados[0]});
+            value.data.destaques.forEach(c => this.hottest.push(c));
+            this.slides.push({...value.data.destaques[0]});
+            value.data.maisVendidos.forEach(c => this.mostSold.push(c));
+            this.slides.push({...value.data.maisVendidos[0]});
+            value.data.recentes.forEach(c => this.recent.push(c));
+            this.slides.push({...value.data.recentes[0]});
+            value.data.outros.forEach(c => this.other.push(c));
+            this.slides.push({...value.data.outros[0]});
 
-        this.recommended = [
-            {
-                id: 1,
-                name: "Course Course Course Course Course Course Course 1",
-                description: "desc 1 amongus desc 1 amongus desc 1 amongus desc 1 amongusdesc 1 amongusdesc 1 amongus",
-                image: "bingus",
-                price: 20,
-                category: "cat1",
-                date: "05-12-2022",
-                duration: "23h 12min",
-                creator: {
-                    image: "bingus",
-                    name: "Criador 1"
-                }
-            },
-            {
-                id: 9,
-                name: "Course 9",
-                description: "desc 9 amongus",
-                image: "bingus",
-                price: 35,
-                category: "cat1",
-                date: "05-04-2022",
-                duration: "23h 12min",
-                creator: {
-                    image: "bingus",
-                    name: "Criador 1"
-                }
-            },
-            {
-                id: 10,
-                name: "Course 10",
-                description: "desc 10 amongus",
-                image: "bingus",
-                price: 15,
-                category: "cat1",
-                date: "05-03-2022",
-                duration: "23h 12min",
-                creator: {
-                    image: "bingus",
-                    name: "Criador 1"
-                }
-            },
-            {
-                id: 2,
-                name: "Course 2",
-                description: "desc 2 amongus",
-                image: "bingus",
-                price: 12,
-                category: "cat1",
-                date: "05-11-2022",
-                duration: "23h 12min",
-                creator: {
-                    image: "bingus",
-                    name: "Criador 1"
-                }
-            },
-            {
-                id: 3,
-                name: "Course 3",
-                description: "desc 3 amongus",
-                image: "bingus",
-                price: 50,
-                category: "cat1",
-                date: "05-10-2022",
-                duration: "23h 12min",
-                creator: {
-                    image: "bingus",
-                    name: "Criador 1"
-                }
-            },
-            {
-                id: 4,
-                name: "Course 4",
-                description: "desc 4 amongus",
-                image: "bingus",
-                price: 80,
-                category: "cat1",
-                date: "05-09-2022",
-                duration: "23h 12min",
-                creator: {
-                    image: "bingus",
-                    name: "Criador 1"
-                }
+            for(let i = 0; i < this.slides.length; i++) {
+                this.slides[i].show = false;
+                this.slides[i].id += `-${i}`;
             }
-        ];
+        })
+        .catch(error => {
+            if(error.code) {
+                this.$emit("open-modal", error.response.data.message);
+                console.log(error.response.data);
+            } else console.log(error);
+        });
+        
+        axios({
+            method: `get`,
+            url: `${import.meta.env.VITE_HOST}/criadores/home`
+        })
+        .then(value => {
+            value.data.creators.forEach(c => this.creators.push(c));
+        })
+        .catch(error => {
+            if(error.code) {
+                this.$emit("open-modal", error.response.data.message);
+                console.log(error.response.data);
+            } else console.log(error);
+        });
+    },
+    setup() {
+        const { t } = useI18n()
 
-        this.hottest = [
-            {
-                id: 6,
-                name: "Course 6",
-                description: "desc 6 amongus",
-                image: "bingus",
-                price: 25,
-                category: "cat1",
-                date: "05-07-2022",
-                duration: "23h 12min",
-                creator: {
-                    image: "bingus",
-                    name: "Criador 1"
-                }
-            },
-            {
-                id: 9,
-                name: "Course 9",
-                description: "desc 9 amongus",
-                image: "bingus",
-                price: 35,
-                category: "cat1",
-                date: "05-04-2022",
-                duration: "23h 12min",
-                creator: {
-                    image: "bingus",
-                    name: "Criador 1"
-                }
-            },
-            {
-                id: 10,
-                name: "Course 10",
-                description: "desc 10 amongus",
-                image: "bingus",
-                price: 15,
-                category: "cat1",
-                date: "05-03-2022",
-                duration: "23h 12min",
-                creator: {
-                    image: "bingus",
-                    name: "Criador 1"
-                }
-            },
-            {
-                id: 7,
-                name: "Course 7",
-                description: "desc 7 amongus",
-                image: "bingus",
-                price: 20,
-                category: "cat1",
-                date: "05-06-2022",
-                duration: "23h 12min",
-                creator: {
-                    image: "bingus",
-                    name: "Criador 1"
-                }
-            },
-            {
-                id: 8,
-                name: "Course 8",
-                description: "desc 8 amongus",
-                image: "bingus",
-                price: 10,
-                category: "cat1",
-                date: "05-05-2022",
-                duration: "23h 12min",
-                creator: {
-                    image: "bingus",
-                    name: "Criador 1"
-                }
-            },
-            {
-                id: 9,
-                name: "Course 9",
-                description: "desc 9 amongus",
-                image: "bingus",
-                price: 35,
-                category: "cat1",
-                date: "05-04-2022",
-                duration: "23h 12min",
-                creator: {
-                    image: "bingus",
-                    name: "Criador 1"
-                }
-            }
-        ];
-
-        this.mostSold = [
-            {
-                id: 3,
-                name: "Course 3",
-                description: "desc 3 amongus",
-                image: "bingus",
-                price: 50,
-                category: "cat1",
-                date: "05-10-2022",
-                duration: "23h 12min",
-                creator: {
-                    image: "bingus",
-                    name: "Criador 1"
-                }
-            },
-            {
-                id: 4,
-                name: "Course 4",
-                description: "desc 4 amongus",
-                image: "bingus",
-                price: 80,
-                category: "cat1",
-                date: "05-09-2022",
-                duration: "23h 12min",
-                creator: {
-                    image: "bingus",
-                    name: "Criador 1"
-                }
-            },
-            {
-                id: 9,
-                name: "Course 9",
-                description: "desc 9 amongus",
-                image: "bingus",
-                price: 35,
-                category: "cat1",
-                date: "05-04-2022",
-                duration: "23h 12min",
-                creator: {
-                    image: "bingus",
-                    name: "Criador 1"
-                }
-            },
-            {
-                id: 10,
-                name: "Course 10",
-                description: "desc 10 amongus",
-                image: "bingus",
-                price: 15,
-                category: "cat1",
-                date: "05-03-2022",
-                duration: "23h 12min",
-                creator: {
-                    image: "bingus",
-                    name: "Criador 1"
-                }
-            },
-            {
-                id: 6,
-                name: "Course 6",
-                description: "desc 6 amongus",
-                image: "bingus",
-                price: 25,
-                category: "cat1",
-                date: "05-07-2022",
-                duration: "23h 12min",
-                creator: {
-                    image: "bingus",
-                    name: "Criador 1"
-                }
-            },
-            {
-                id: 7,
-                name: "Course 7",
-                description: "desc 7 amongus",
-                image: "bingus",
-                price: 20,
-                category: "cat1",
-                date: "05-06-2022",
-                duration: "23h 12min",
-                creator: {
-                    image: "bingus",
-                    name: "Criador 1"
-                }
-            }
-        ];
-
-        this.recent = [
-            {
-                id: 9,
-                name: "Course 9",
-                description: "desc 9 amongus",
-                image: "bingus",
-                price: 35,
-                category: "cat1",
-                date: "05-04-2022",
-                duration: "23h 12min",
-                creator: {
-                    image: "bingus",
-                    name: "Criador 1"
-                }
-            },
-            {
-                id: 10,
-                name: "Course 10",
-                description: "desc 10 amongus",
-                image: "bingus",
-                price: 15,
-                category: "cat1",
-                date: "05-03-2022",
-                duration: "23h 12min",
-                creator: {
-                    image: "bingus",
-                    name: "Criador 1"
-                }
-            },
-            {
-                id: 9,
-                name: "Course 9",
-                description: "desc 9 amongus",
-                image: "bingus",
-                price: 35,
-                category: "cat1",
-                date: "05-04-2022",
-                duration: "23h 12min",
-                creator: {
-                    image: "bingus",
-                    name: "Criador 1"
-                }
-            },
-            {
-                id: 10,
-                name: "Course 10",
-                description: "desc 10 amongus",
-                image: "bingus",
-                price: 15,
-                category: "cat1",
-                date: "05-03-2022",
-                duration: "23h 12min",
-                creator: {
-                    image: "bingus",
-                    name: "Criador 1"
-                }
-            },
-            {
-                id: 11,
-                name: "Course 11",
-                description: "desc 11 amongus",
-                image: "bingus",
-                price: 2,
-                category: "cat1",
-                date: "05-01-2022",
-                duration: "23h 12min",
-                creator: {
-                    image: "bingus",
-                    name: "Criador 1"
-                }
-            },
-            {
-                id: 12,
-                name: "Course 12",
-                description: "desc 12 amongus",
-                image: "bingus",
-                price: 120,
-                category: "cat1",
-                date: "05-02-2022",
-                duration: "23h 12min",
-                creator: {
-                    image: "bingus",
-                    name: "Criador 1"
-                }
-            }
-        ];
-
-        this.other = [
-            {
-                id: 9,
-                name: "Course 9",
-                description: "desc 9 amongus",
-                image: "bingus",
-                price: 35,
-                category: "cat1",
-                date: "05-04-2022",
-                duration: "23h 12min",
-                creator: {
-                    image: "bingus",
-                    name: "Criador 1"
-                }
-            },
-            {
-                id: 10,
-                name: "Course 10",
-                description: "desc 10 amongus",
-                image: "bingus",
-                price: 15,
-                category: "cat1",
-                date: "05-03-2022",
-                duration: "23h 12min",
-                creator: {
-                    image: "bingus",
-                    name: "Criador 1"
-                }
-            },
-            {
-                id: 9,
-                name: "Course 9",
-                description: "desc 9 amongus",
-                image: "bingus",
-                price: 35,
-                category: "cat1",
-                date: "05-04-2022",
-                duration: "23h 12min",
-                creator: {
-                    image: "bingus",
-                    name: "Criador 1"
-                }
-            },
-            {
-                id: 10,
-                name: "Course 10",
-                description: "desc 10 amongus",
-                image: "bingus",
-                price: 15,
-                category: "cat1",
-                date: "05-03-2022",
-                duration: "23h 12min",
-                creator: {
-                    image: "bingus",
-                    name: "Criador 1"
-                }
-            },
-            {
-                id: 11,
-                name: "Course 11",
-                description: "desc 11 amongus",
-                image: "bingus",
-                price: 2,
-                category: "cat1",
-                date: "05-01-2022",
-                duration: "23h 12min",
-                creator: {
-                    image: "bingus",
-                    name: "Criador 1"
-                }
-            },
-            {
-                id: 12,
-                name: "Course 12",
-                description: "desc 12 amongus",
-                image: "bingus",
-                price: 120,
-                category: "cat1",
-                date: "05-02-2022",
-                duration: "23h 12min",
-                creator: {
-                    image: "bingus",
-                    name: "Criador 1"
-                }
-            }
-        ];
-
-        this.creators = [
-            {
-                id: 1,
-                name: "Creator 1",
-                username: "UCreator1",
-                image: "bingus"
-            },
-            {
-                id: 2,
-                name: "Creator 2",
-                username: "UCreator2",
-                image: "bingus"
-            },
-            {
-                id: 3,
-                name: "Creator 3",
-                username: "UCreator3",
-                image: "bingus"
-            },
-            {
-                id: 4,
-                name: "Creator 4",
-                username: "UCreator4",
-                image: "bingus"
-            },
-            {
-                id: 5,
-                name: "Creator 5",
-                username: "UCreator5",
-                image: "bingus"
-            },
-            {
-                id: 6,
-                name: "Creator 6",
-                username: "UCreator6",
-                image: "bingus"
-            },
-            {
-                id: 7,
-                name: "Creator 7",
-                username: "UCreator7",
-                image: "bingus"
-            },
-            {
-                id: 8,
-                name: "Creator 8",
-                username: "UCreator8",
-                image: "bingus"
-            },
-            {
-                id: 9,
-                name: "Creator 9",
-                username: "UCreator9",
-                image: "bingus"
-            },
-            {
-                id: 10,
-                name: "Creator 10",
-                username: "UCreator10",
-                image: "bingus"
-            }
-        ]
+        return { Tr, t };
     },
     methods: {
         changeDiv(div) {
@@ -683,19 +159,19 @@ export default {
             this.$refs.other.classList.add('d-none');
 
             switch(div) {
-                case 'Recomendados':
+                case this.$t("home.recommended"):
                     this.$refs.recommended.classList.remove("d-none");
                     break;
-                case 'Destaques':
+                case this.$t("home.trending"):
                     this.$refs.hottest.classList.remove("d-none");
                     break;
-                case 'Mais Vendidos':
+                case this.$t("home.bestSellers"):
                     this.$refs.sold.classList.remove("d-none");
                     break;
-                case 'Novidades':
+                case this.$t("home.recentlyAdded"):
                     this.$refs.recent.classList.remove("d-none");
                     break;
-                case 'Outros':
+                case this.$t("home.others"):
                     this.$refs.other.classList.remove("d-none");
                 default:
                     break;
@@ -894,14 +370,14 @@ export default {
         }
     }
 
-    @media (max-width: 1300px) {
+    @media (max-width: 1400px) {
         .home-right {
             width: 350px;
             min-width: 350px;
         }
     }
 
-    @media (max-width: 1050px) {
+    @media (max-width: 1350px) {
         .home-wrapper {
             display: block;
         }
@@ -912,12 +388,54 @@ export default {
 
         .home-right {
             width: 100%;
+            display: flex;
+            gap: 32px;
+        }
+
+        .home-right .home-creators {
+            min-width: 350px;
+        }
+
+        .home-right .home-graph {
+            height: 500px;
+        }
+    }
+
+    @media (max-width: 1000px) {
+        .home-right {
+            display: block;
+        }
+
+        .home-right .home-graph {
+            height: 400px;
         }
     }
 
     @media (max-width: 800px) {
         .home-wrapper {
             padding: 24px 16px 0px 16px;
+        }
+    }
+
+    @media (max-width: 500px) {
+        .home-courses .courses-header {
+            display: block;
+        }
+
+        .home-courses .courses-header > p {
+            margin-bottom: 18px;
+        }
+
+        .home-right, .home-right .home-creators {
+            min-width: 250px;
+        }
+
+        .home-creators > div:first-child > p:not(:first-child) {
+            display: none;
+        }
+
+        .home-creators {
+            height: 600px;
         }
     }
 </style>

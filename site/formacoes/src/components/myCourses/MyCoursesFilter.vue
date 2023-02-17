@@ -23,8 +23,6 @@
                         <div class="items" :class="{ selectHide: !orderOpen }">
                             <div v-on:click="selectOrder('Mais recente')">Mais recente</div>
                             <div v-on:click="selectOrder('Mais antigo')">Mais antigo</div>
-                            <div v-on:click="selectOrder('Preço decrescente')">Preço decrescente</div>
-                            <div v-on:click="selectOrder('Preço crescente')">Preço crescente</div>
                             <div v-on:click="selectOrder('Progresso decrescente')">Progresso decrescente</div>
                             <div v-on:click="selectOrder('Progresso crescente')">Progresso crescente</div>
                         </div>
@@ -59,8 +57,6 @@
                         <div class="items" :class="{ selectHide: !orderOpen }">
                             <div v-on:click="selectOrder('Mais recente')">Mais recente</div>
                             <div v-on:click="selectOrder('Mais antigo')">Mais antigo</div>
-                            <div v-on:click="selectOrder('Preço decrescente')">Preço decrescente</div>
-                            <div v-on:click="selectOrder('Preço crescente')">Preço crescente</div>
                             <div v-on:click="selectOrder('Progresso decrescente')">Progresso decrescente</div>
                             <div v-on:click="selectOrder('Progresso crescente')">Progresso crescente</div>
                         </div>
@@ -75,35 +71,19 @@
 export default {
     name: 'CoursesListFilter',
     props: {
-        courses: {
+        categories: {
             type: Array,
             required: true
         }
     },
     data() {
         return {
-            categories: [],
             catOpen: false,
             orderOpen: false,
             category: "Todas",
             order: "Mais recente",
             responsiveFilter: false
         }
-    },
-    created() {
-        this.courses.forEach(c => {
-            let exists = false;
-
-            this.categories.forEach(cat => {
-                if (c.category == cat.name) {
-                    exists = true;
-                }
-            });
-
-            if (!exists) {
-                this.categories.push({id: this.categories.length, name: c.category});
-            }
-        });
     },
     mounted(){
         let filter = {
@@ -380,7 +360,7 @@ export default {
         display: none;
     }
 
-    @media (max-width: 1450px) {
+    @media (max-width: 1650px) {
         .searchbar input {
             width: 200px;
         }
@@ -390,7 +370,7 @@ export default {
         }
     }
 
-    @media (max-width: 1200px) {
+    @media (max-width: 1450px) {
         .filter-div > div {
             display: block;
             margin-left: 16px;
@@ -406,11 +386,7 @@ export default {
         }
     }
 
-    @media (max-width: 950px) {
-        .searchbar input {
-            width: 160px;
-        }
-
+    @media (max-width: 1200px) {
         .filter-div {
             display: none !important;
         }

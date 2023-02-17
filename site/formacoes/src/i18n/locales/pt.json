@@ -1,0 +1,39 @@
+{
+    "locale": {
+        "pt": "Português",
+        "en": "Inglês"
+    },
+    "page": {
+        "teste": "sus",
+        "bruh": "amongus"
+    },
+    "topbar": {
+        "search": "Pesquisar"
+    },
+    "home": {
+        "courses": "Cursos",
+        "viewCourse": "Ver Curso",
+        "viewCreator":"Ver",
+        "viewMore": "Ver Mais",
+        "viewLess": "Ver Menos",
+        "recommended": "Recomendado",
+        "trending": "Destaques",
+        "recentlyAdded": "Novidades",
+        "bestSellers": "Mais Vendidos",
+        "others": "Outros",
+        "bestSellingCreators": "Maiores Criadores"
+    },
+    "content": {
+        "name": "Nome",
+        "date": "Data",
+        "state": "Estado",
+        "nVids": "Nº de Vídeos",
+        "duration": "Duração"
+    },
+    "states": {
+        "active": "Ativo",
+        "inactive": "Inativo",
+        "pending": "Pendente",
+        "rejected": "Rejeitado"
+    }
+}
