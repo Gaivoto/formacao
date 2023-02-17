@@ -1,6 +1,6 @@
 <template>
   <aside :class="{ isExpanded: is_expanded }" >
-    <router-link class="logo" to="/home">
+    <router-link class="logo" :to="Tr.i18nRoute({ name: 'Home' })">
         <img src="../assets/vue.svg" alt="Vue">
 	</router-link>
 

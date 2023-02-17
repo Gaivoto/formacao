@@ -1,7 +1,10 @@
 <template>
     <div class="wrapper">
-        <div class="topbar-text">
-            <p class="page-name logo">Guide Line - </p>
+        <div class="topbar-text" :class="{ 'topbar-text-logged': this.isUserLogged, 'topbar-text-not-logged': !this.isUserLogged }">
+            <router-link :to="Tr.i18nRoute({ name: 'Home' })">
+                <p class="logo">Guide Line</p>
+            </router-link>
+            <p class="hifen"> - </p>
             <p class="page-name"> {{ this.$route.name }}</p>
         </div>
 
@@ -21,7 +24,7 @@
         
         <div class="topbar-right" v-if="this.isUserLogged">
             <router-link class="user-wrapper" :to="Tr.i18nRoute({ name: 'Perfil do Utilizador', params: { id: this.getUserId } })" :key="this.getUserId">
-                <div class="topbar-text">
+                <div class="username">
                     <p>{{ this.$store.getters.getUser.username }}</p>
                 </div>
                 <div class="image-wrapper">
@@ -33,7 +36,10 @@
             </div>
         </div>
 
-        <div>
+        <div class="topbar-right" v-if="!this.isUserLogged">
+            <router-link class="topbar-btn" :to="Tr.i18nRoute({ name: 'Cursos', params: { locale: Tr.guessDefaultLocale() } })">
+                <p class="text">Cursos</p>
+            </router-link>
             <router-link class="topbar-btn" :to="Tr.i18nRoute({ name: 'Login', params: { locale: Tr.guessDefaultLocale() } })">
                 <p class="text">Login</p>
             </router-link>
@@ -259,7 +265,7 @@ export default {
         gap: 6px;
     }
 
-    .page-name {
+    .topbar-text p {
         color: var(--primary) !important;
         font-size: 24px;
         font-weight: 500;
@@ -391,7 +397,6 @@ export default {
         overflow-x: hidden;
     }
     
-
     .notif-list::-webkit-scrollbar {
         width: 10px;
         background: var(--mobalytics-back);
@@ -469,13 +474,21 @@ export default {
     }
 
     @media (max-width: 1500px) {
-		.topbar-text .logo  {
+		.topbar-text-logged .logo  {
 			display: none;
 		}	
+
+        .topbar-text .hifen {
+            display: none;
+        }
+
+        .topbar-text-not-logged .page-name {
+            display: none;
+        }
 	}
 
     @media (max-width: 1350px) {
-		.user-wrapper .topbar-text {
+		.user-wrapper .username {
 			display: none;
 		}	
 	}
@@ -487,14 +500,14 @@ export default {
 	}
 
     @media (max-width: 1150px) {
-		.wrapper .topbar-text {
+		.wrapper .topbar-text-logged {
 			display: none;
 		}	
 	}
 
     @media (max-width: 800px) {
 		.searchbar input {
-			width: 300px;
+			width: 250px;
 		}	
 
         .notif-list {
@@ -502,11 +515,17 @@ export default {
         }
 	}
 
-    @media (max-width: 700px) {
+    @media (max-width: 750px) {
 		.searchbar input {
 			width: 200px;
 		}	
 	}
+
+    @media (max-width: 700px) {
+        .topbar-right .topbar-btn:first-child {
+            display: none;
+        }
+    }
 
     @media (max-width: 600px) {
         .searchbar input {
@@ -525,6 +544,12 @@ export default {
 			display: none;
 		}	
 	}
+
+    @media (max-width: 550px) {
+        .wrapper .topbar-text-not-logged {
+			display: none;
+		}	
+    }
 
     @media (max-width: 500px) {
 		.notif-list {

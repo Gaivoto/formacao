@@ -1,11 +1,11 @@
 <template>
-  <div class="app" v-on:click="closeModals">
-	<Sidebar class="sidebar" v-show="displaySidebarTopbar" v-on:toggleSidebar="toggleSidebar"/>
+  <div class="app" v-on:click="this.closeModals">
+	<Sidebar class="sidebar" v-if="this.displaySidebarTopbar && this.isUserLogged" v-on:toggleSidebar="this.toggleSidebar"/>
 	<div class="full-page">
-		<div class="topbar-wrapper" v-if="displaySidebarTopbar" :class="{ sidebarTopbar: sidebarOpen }">
-			<Topbar v-if="displaySidebarTopbar" v-bind:notifsOpen="notifsOpen" v-bind:searchOpen="searchOpen" v-on:toggleNotifs="toggleNotifs" v-on:toggleSearch="toggleSearch" v-on:openSearch="openSearch"/>
+		<div class="topbar-wrapper" v-if="this.displaySidebarTopbar" :class="{ topbarSpaceOpenSidebar: this.sidebarOpen, topbarSpaceNoSidebar: !this.isUserLogged }">
+			<Topbar v-if="this.displaySidebarTopbar" v-bind:notifsOpen="this.notifsOpen" v-bind:searchOpen="this.searchOpen" v-on:toggleNotifs="this.toggleNotifs" v-on:toggleSearch="this.toggleSearch" v-on:openSearch="this.openSearch"/>
 		</div>
-		<router-view class="active-page" :class="{ sidebarMainPage: sidebarOpen, spaceLeft: isNotLanding }" v-bind:sidebar="this.sidebarOpen" v-on:open-modal="this.openMessageModal"/>	
+		<router-view class="active-page" :class="{ mainpageSpaceOpenSidebar: this.sidebarOpen, mainpageSpaceClosedSidebar: !this.isLanding && this.isUserLogged }" v-bind:sidebar="this.sidebarOpen" v-on:open-modal="this.openMessageModal"/>	
 	</div>
 	<MessageModal v-if="this.messageModalOpen" v-bind:msg="this.modalMessage" v-on:close-modal="this.closeMessageModal" />
   </div>
@@ -36,9 +36,13 @@ export default {
 			if(this.$route.name == "Landing" || this.$route.name == "Login") return false;
 			return true;
 		},
-		isNotLanding() {
-			if(this.$route.name == "Landing") return false;
-			return true; 
+		isLanding() {
+			if(this.$route.name == "Landing") return true;
+			return false; 
+		},
+		isUserLogged() {
+			if(this.$store.getters.getUser.id) return true;
+			return false;
 		}
 	},
 	methods: {
@@ -117,6 +121,14 @@ export default {
 		background: var(--mobalytics-back);
 	}
 
+	.topbar-wrapper > * {
+		min-height: 64px;
+	}
+
+	.topbarSpaceNoSidebar {
+		padding-left: 40px;
+	}
+
 	.full-page {
 		width: 100%;
 	}
@@ -126,16 +138,16 @@ export default {
 		transition: 0.3s ease-in-out;
 	}
 
-	.spaceLeft {
+	.mainpageSpaceClosedSidebar {
 		margin-left: 64px;
 	}
 
-	.sidebarTopbar {
+	.topbarSpaceOpenSidebar {
 		padding-left: 340px !important;
 		transition: 0.3s ease-in-out;
 	}
 
-	.sidebarMainPage {
+	.mainpageSpaceOpenSidebar {
 		margin-left: 300px;
 		transition: 0.3s ease-in-out;
 	}
@@ -146,11 +158,11 @@ export default {
 	}
 
 	@media (max-width: 1024px) {
-		.sidebarTopbar {
+		.topbarSpaceOpenSidebar {
 			padding-left: 72px !important;
 		}
 
-		.sidebarMainPage {
+		.mainpageSpaceOpenSidebar {
 			margin-left: 0px;
 		}	
 	}
@@ -176,11 +188,19 @@ export default {
 		.topbar-wrapper {
 			padding: 16px 16px 8px 80px;
 		}
+
+		.topbarSpaceNoSidebar {
+			padding-left: 16px;
+		}
 	}
 
 	@media (max-width: 600px) {
 		.topbar-wrapper {
 			padding: 16px 8px 8px 72px;
+		}
+
+		.topbarSpaceNoSidebar {
+			padding-left: 8px;
 		}
 	}
 </style>
