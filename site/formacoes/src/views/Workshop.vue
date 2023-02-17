@@ -1,18 +1,28 @@
 <template>
     <div class="workshop-wrapper">
-        <courseInfo/>
-        <div class="fileform">
-        <input style="display: none" multiple="multiple" type="file" accept="video/*" @input="onFileSelected" ref="fileInput">
-        <button @click="$refs.fileInput.click()">Escolher Videos</button>
+        <div class="form-wrapper">
+            <div class="form">
+                <div class="header">
+                <H3>Carregar Cursos</H3>
+                </div>
+                <courseInfo/>
+                <div class="carregar-p">
+                <p>Carregar videos</p>
+                </div>
+                <div class="fileform">
+                <input style="display: none" multiple="multiple" type="file" accept="video/*" @input="onFileSelected" ref="fileInput">
+                <button class="carregarVideos" @click="$refs.fileInput.click()"><span class="material-icons"> file_upload </span></button>
+                <button class="enviar" @click="Enviar">Enviar</button>
+                </div>
+            </div>
+            <div class="videos-wrapper" v-if ="fileSelected" >
+                <draggable handle=".handle" v-model="videoSrc" :animation="300" ghost-class="hidden-ghost">
+                    <template #item="{element: video}">
+                        <UploadedVideoCard @remover="removerVideo" :videoSrc="video" :key="video.id"/>
+                    </template>
+                </draggable>
+            </div>
         </div>
-        <div v-if ="fileSelected" >
-            <draggable handle=".handle" v-model="videoSrc" :animation="300" ghost-class="hidden-ghost">
-                <template #item="{element: video}">
-                    <UploadedVideoCard @remover="removerVideo" :videoSrc="video" :key="video.id"/>
-                </template>
-            </draggable>
-        </div>
-        <button @click="Enviar">Enviar</button>
     </div>
 </template>
 
@@ -96,14 +106,69 @@ export default {
 
 <style scoped>
 .workshop-wrapper {
-        padding: 24px 48px 24px 48px;
-        display: flex;
-        gap: 24px;
+    padding: 24px 48px 24px 48px;
+    gap: 24px;  
+}
+
+.carregar-p{
+color: var(--light);
+}
+.form-wrapper {
+    padding: 24px 24px 0px 24px;
+    background-color: var(--mobalytics-susge);
+    border-radius: 8px;
+    box-shadow: rgba(20, 14, 49, 0.6) 0px 2px 10px 2px;
+}
+.form {
+    padding: 24px 326px 0px 326px;
 }
 .fileform {
-    margin-top: 30px;
+    margin-top: 20px;
+    padding-bottom: 16px;
+    display: flex;
+    justify-content: space-between;
 }
 .hidden-ghost {
     opacity: 0;
+ }
+
+ .header{
+    color: var(--primary);
+    display: flex;
+    justify-content: center;
+    margin: 20px;
+ }
+
+ .carregarVideos{
+    background: var(--mobalytics-back);
+    border-radius: 8px;
+    color: var(--light);
+    padding-left: 1.8em;
+    padding-right: 1.8em;
+    padding-top: 4px;
+    padding-bottom: 0px;
+    cursor: pointer;
+    box-shadow: #140e3199 0px 2px 10px 4px;
+    border: 2px solid #08051699;
+    font-size: 16px;
+    height: 36px;
+ }
+ .carregarVideos > span {
+    color: var(--primary);
+ }
+
+ .videos-wrapper{
+    padding: 8px;
+ }
+
+ .enviar {
+    background: var(--mobalytics-back);
+    color: var(--light);
+    height: 36px;
+    min-width: 120px;
+    border: none;
+    border-radius: 8px;
+    box-shadow: rgba(20, 14, 49, 0.6) 6px 6px 4px 4px;
+    margin-bottom: 20px;
  }
 </style>
