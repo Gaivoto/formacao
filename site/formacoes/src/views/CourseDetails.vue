@@ -64,7 +64,57 @@ export default {
                 if(error.response.data.message == "Curso não existe.") {
                     this.$router.push({ name: "Home", params: { locale: Tr.guessDefaultLocale() } });
                 } else {
-                    this.$emit("open-modal", error.response.data.message);
+                    if(error.response.status == 401) {
+			            this.$store.commit('resetUser');
+                        this.$emit("open-modal", "Sessão expirou. Faça login novamente.");
+                        this.$router.push({ name: "Login", params: { locale: Tr.guessDefaultLocale() } });
+                    } else {
+                        this.$emit("open-modal", error.response.data.message);
+                    }
+                }
+            } else console.log(error);
+        });
+    },
+    beforeRouteUpdate(to, from) {
+        this.creator = false;
+        this.compra = false;
+
+        let request = {
+            method: `get`,
+            url: `${import.meta.env.VITE_HOST}/cursos/${to.params.id}`
+        }
+
+        if(this.$store.getters.getUser.id != "") {
+            request.headers = {
+                Authorization: `Bearer ${this.$store.getters.getAccessToken}`,
+                refreshtoken: this.$store.getters.getRefreshToken
+            }
+        }
+
+        axios(request)
+        .then(value => {
+            if (value.data.access_token) this.$store.commit('setAccessToken', value.data.access_token);
+            if (value.data.course.id_creator == this.$store.getters.getUser.id) this.creator = true;
+
+            this.course = value.data.course;
+            this.videos = value.data.course.videos;
+            this.access = value.data.course.access;
+
+            if(this.$store.getters.getUser.type && this.$store.getters.getUser.type != 'admin' && !this.creator && !this.access) this.compra = true;
+        })
+        .catch(error => {
+            if (error.code) {
+                console.log(error.response.data);
+                if(error.response.data.message == "Curso não existe.") {
+                    this.$router.push({ name: "Home", params: { locale: Tr.guessDefaultLocale() } });
+                } else {
+                    if(error.response.status == 401) {
+			            this.$store.commit('resetUser');
+                        this.$emit("open-modal", "Sessão expirou. Faça login novamente.");
+                        this.$router.push({ name: "Login", params: { locale: Tr.guessDefaultLocale() } });
+                    } else {
+                        this.$emit("open-modal", error.response.data.message);
+                    }
                 }
             } else console.log(error);
         });

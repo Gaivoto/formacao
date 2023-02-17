@@ -119,10 +119,8 @@ export default {
 			this.$emit("toggleSidebar");
 		},
 		logout() {
-          	this.$router.push({ name: "Login" });
-			this.$store.commit('setUser', {});
-            this.$store.commit('setRefreshToken', '');
-            this.$store.commit('setAccessToken', '');
+            this.$router.push({ name: "Login", params: { locale: Tr.guessDefaultLocale() } });
+			this.$store.commit('resetUser');
 		}
 	}
 }

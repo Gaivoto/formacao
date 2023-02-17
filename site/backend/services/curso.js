@@ -310,7 +310,7 @@ async function createCurso(tokens, body) {
             let existe
 
             if(info.user.type != "creator") {
-                reject({ code: 401, error: { message: "Apenas criadores podem criar cursos." } });
+                reject({ code: 403, error: { message: "Apenas criadores podem criar cursos." } });
             } else {
             
                 dbCurs.isNameTaken(body.name).then(value2 => {
@@ -399,7 +399,7 @@ async function updateStateCursoUser(tokens, id, body) {
                                     });
 
                             } else {
-                                reject({ code: 401, error: { message: "Current state invalid" } });
+                                reject({ code: 400, error: { message: "Current state invalid" } });
                             }
                         }
                     })
@@ -504,7 +504,7 @@ async function updateStateCursoAdm(tokens, id, body) {
                                 });
 
                         } else {
-                            reject({ code: 401, error: { message: "Current state invalid" } });
+                            reject({ code: 400, error: { message: "Current state invalid" } });
                         }
                     }
                 }

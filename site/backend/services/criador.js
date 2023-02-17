@@ -231,7 +231,7 @@ async function createCriador(tokens, criador) {
                 })
                     .catch(error => {
                         console.log(error);
-                        reject({ code: 401, error: { message: 'Erro na query.' } });
+                        reject({ code: 400, error: { message: 'Erro na query.' } });
                     });
 
             } else {

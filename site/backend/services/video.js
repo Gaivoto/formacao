@@ -92,7 +92,7 @@ async function createVideo(tokens, body) {
             let id
             let existe
             if(info.user.type != "creator") {
-                reject({ code: 401, error: { message: "Apenas criadores podem criar cursos." } });
+                reject({ code: 403, error: { message: "Apenas criadores podem criar cursos." } });
             } else {
                 dbUser.getAllUsers().then(value3 => {
                     do {
@@ -173,7 +173,7 @@ async function updateStateVideoUser(tokens, body) {
 
                                     } else {
 
-                                        reject({ code: 401, error: { message: "Current state invalid" } })
+                                        reject({ code: 400, error: { message: "Current state invalid" } })
 
                                     }
                                 }
@@ -322,7 +322,7 @@ async function updateStateVideoAdm(tokens, id, body) {
                                     });
 
                                 } else {
-                                    reject({ code: 401, error: { message: "Current state invalid" } })
+                                    reject({ code: 400, error: { message: "Current state invalid" } })
                                 }
                             }
                         }
@@ -388,7 +388,7 @@ async function updateVideo(tokens, body) {
                                         });
 
                                     } else {
-                                        reject({ code: 401, error: { message: "Query has empty fields" } })
+                                        reject({ code: 400, error: { message: "Query has empty fields" } });
                                     }
 
                                 }

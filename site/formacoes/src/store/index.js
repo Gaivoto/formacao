@@ -41,6 +41,11 @@ const store = new Vuex.Store({
         },
         setLocale(state, locale) {
             state.locale = locale;
+        },
+        resetUser(state) {
+            state.user = {};
+            state.tokens.refreshToken = "";
+            state.tokens.accessToken = "";
         }
     },
     plugins: [vuexLocal.plugin]

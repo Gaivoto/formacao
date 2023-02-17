@@ -270,30 +270,33 @@ export default {
         transition: 0.5s;
     }
 
-    @media (max-width: 1750px) {
-
-        .course-card {
-            padding-top: 24px;
-            padding-bottom: 24px;
-        }
-        .course-card-left > div {
-            display: block;
-        }
-
-        .course-card-left > div:last-child > div:first-child {
-            padding-top: 52px;
-        }
-
+    @media (max-width: 1950px) {
         .button-wrapper {
+            width: 120px;
+        }
+
+        .course-card-right {
             width: 120px;
         }
 
         .button-wrapper button:first-child {
             margin-bottom: 16px;
         }
+    }
 
-        .course-card-right {
-            width: 120px;
+    @media (max-width: 1750px) {
+
+        .course-card {
+            padding-top: 24px;
+            padding-bottom: 24px;
+        }
+
+        .course-card-left > div {
+            display: block;
+        }
+
+        .course-card-left > div:last-child > div:first-child {
+            padding-top: 52px;
         }
 
         .course-card-left {
