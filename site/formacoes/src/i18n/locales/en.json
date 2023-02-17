@@ -7,5 +7,21 @@
     "page": {
         "teste": "teste1",
         "bruh": "teste2"
+    },
+    "topbar": {
+        "search": "Search"
+    },
+    "home": {
+        "courses": "Courses",
+        "viewCourse": "View Course",
+        "viewCreator":"View",
+        "viewMore": "View More",
+        "viewLess": "View Less",
+        "recommended": "Recommended",
+        "trending": "Trending",
+        "recentlyAdded": "Recently Added",
+        "bestSellers": "Best Sellers",
+        "others": "Others",
+        "bestSellingCreators": "Best Selling Creators"
     }
 }

@@ -1,21 +1,20 @@
 <template>
     <div class="home-wrapper">
         <div class="home-left">
-            <p>{{ $t("page.teste") }}</p>
             <div class="home-scroller">
                 <HomeSlideshow v-bind:slides="this.slides" />
             </div>
             <div class="home-courses">
                 <div class="courses-header">
-                    <p>Cursos</p>
+                    <p>{{ $t("home.courses") }}</p>
                     <div class="custom-select">
                         <div class="selected" :class="{ open: typeOpen }" v-on:click="typeOpen=!typeOpen">{{ this.type }}</div>
                         <div class="items" :class="{ selectHide: !typeOpen }">
-                            <div v-on:click="changeDiv('Recomendados')">Recomendados</div>
-                            <div v-on:click="changeDiv('Destaques')">Destaques</div>
-                            <div v-on:click="changeDiv('Mais Vendidos')">Mais Vendidos</div>
-                            <div v-on:click="changeDiv('Novidades')">Novidades</div>
-                            <div v-on:click="changeDiv('Outros')">Outros</div>
+                            <div v-on:click="changeDiv($t('home.recommended'))">{{ $t("home.recommended") }}</div>
+                            <div v-on:click="changeDiv($t('home.trending'))">{{ $t("home.trending") }}</div>
+                            <div v-on:click="changeDiv($t('home.bestSellers'))">{{ $t("home.bestSellers") }}</div>
+                            <div v-on:click="changeDiv($t('home.recentlyAdded'))">{{ $t("home.recentlyAdded") }}</div>
+                            <div v-on:click="changeDiv($t('home.others'))">{{ $t("home.others") }}</div>
                         </div>
                     </div>   
                 </div>
@@ -52,9 +51,9 @@
             </div>
             <div class="home-creators" :class="{ 'right-expanded': this.rightOpen }">
                 <div>
-                    <p>Maiores Criadores</p>
-                    <p :class="{ 'd-none': this.rightOpen }" v-on:click="rightOpen=true">Ver Mais</p>
-                    <p :class="{ 'd-none': !this.rightOpen }" v-on:click="rightOpen=false">Ver Menos</p>
+                    <p>{{ $t("home.bestSellingCreators") }}</p>
+                    <p :class="{ 'd-none': this.rightOpen }" v-on:click="rightOpen=true">{{ $t("home.viewMore") }}</p>
+                    <p :class="{ 'd-none': !this.rightOpen }" v-on:click="rightOpen=false">{{ $t("home.viewLess") }}</p>
                 </div>
                 <div>
                     <HomeCreatorItem v-for="creator in this.creators" :key="creator" v-bind:creator="creator" />
@@ -69,6 +68,8 @@ import axios from "axios";
 import HomeCourseCard from "../components/home/HomeCourseCard.vue";
 import HomeCreatorItem from "../components/home/HomeCreatorItem.vue";
 import HomeSlideshow from "../components/home/HomeSlideshow.vue";
+import Tr from '@/i18n/translation.js'
+import { useI18n } from 'vue-i18n'
 
 export default {
     name: "Home",
@@ -93,11 +94,12 @@ export default {
             other: [],
             creators: [],
             typeOpen: false,
-            type: "Recomendados",
+            type: "",
             rightOpen: false
         }
     },
     created() {
+        this.type = this.t("home.recommended")
         axios({
             method: `get`,
             url: `${import.meta.env.VITE_HOST}/cursos/home`
@@ -140,6 +142,11 @@ export default {
             } else console.log(error);
         });
     },
+    setup() {
+        const { t } = useI18n()
+
+        return { Tr, t };
+    },
     methods: {
         changeDiv(div) {
             this.type = div;
@@ -152,19 +159,19 @@ export default {
             this.$refs.other.classList.add('d-none');
 
             switch(div) {
-                case 'Recomendados':
+                case this.$t("home.recommended"):
                     this.$refs.recommended.classList.remove("d-none");
                     break;
-                case 'Destaques':
+                case this.$t("home.trending"):
                     this.$refs.hottest.classList.remove("d-none");
                     break;
-                case 'Mais Vendidos':
+                case this.$t("home.bestSellers"):
                     this.$refs.sold.classList.remove("d-none");
                     break;
-                case 'Novidades':
+                case this.$t("home.recentlyAdded"):
                     this.$refs.recent.classList.remove("d-none");
                     break;
-                case 'Outros':
+                case this.$t("home.others"):
                     this.$refs.other.classList.remove("d-none");
                 default:
                     break;

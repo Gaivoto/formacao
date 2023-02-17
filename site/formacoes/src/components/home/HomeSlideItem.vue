@@ -8,7 +8,7 @@
         </div>
         <div>
             <router-link :to="Tr.i18nRoute({ name: 'Curso', params: { id: this.item.id.substring(0, this.item.id.length - 2), locale: Tr.guessDefaultLocale() } })">
-                <button>Ver Curso</button>
+                <button>{{ $t("home.viewCourse") }}</button>
             </router-link>
         </div>
     </div>

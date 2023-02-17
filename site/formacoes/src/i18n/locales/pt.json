@@ -6,5 +6,23 @@
     "page": {
         "teste": "sus",
         "bruh": "amongus"
+    },
+    "topbar": {
+        "search": "Pesquisar"
+    },
+    "home": {
+        "courses": "Cursos",
+        "viewCourse": "Ver Curso",
+        "viewCreator":"Ver",
+        "viewMore": "Ver Mais",
+        "viewLess": "Ver Menos",
+        "recommended": "Recomendado",
+        "trending": "Destaques",
+        "recentlyAdded": "Novidades",
+        "bestSellers": "Mais Vendidos",
+        "others": "Outros",
+        "bestSellingCreators": "Maiores Criadores"
     }
+    
+
 }
