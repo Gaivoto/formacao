@@ -32,5 +32,18 @@
         "purchase": "Purchase",
         "editCourse": "Edit Course",
         "description": "Description:"
+    },    
+    "content": {
+        "name": "Name",
+        "date": "Date",
+        "state": "State",
+        "nVids": "No of Videos",
+        "duration": "Duration"
+    },
+    "states": {
+        "active": "Active",
+        "inactive": "Inactive",
+        "pending": "Pending",
+        "rejected": "Denied"
     }
 }
