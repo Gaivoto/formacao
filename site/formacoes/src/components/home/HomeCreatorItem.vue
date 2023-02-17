@@ -7,11 +7,12 @@
                 <p>@{{ this.creator.username }}</p>
             </div>
         </div>
-        <router-link :to="{ name: 'Perfil do Utilizador', params: { id: this.creator.id } }"><button>Ver</button></router-link>
+        <router-link :to="Tr.i18nRoute({ name: 'Perfil do Utilizador', params: { id: this.creator.id, locale: Tr.guessDefaultLocale() } })"><button>Ver</button></router-link>
     </div>
 </template>
 
 <script>
+import Tr from '@/i18n/translation.js'
 export default {
     name: "HomeCreatorItem",
     props: {
@@ -24,6 +25,9 @@ export default {
         return {
             imageUrl: ""
         }
+    },
+    setup() {
+        return { Tr };
     },
     created(){
         this.imageUrl = new URL(`../../assets/${this.creator.image}.jpg`, import.meta.url).href;

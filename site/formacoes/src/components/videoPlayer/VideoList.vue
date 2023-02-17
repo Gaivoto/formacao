@@ -9,6 +9,7 @@
 </template>
 
 <script>
+import Tr from '@/i18n/translation.js'
 export default {
     name: "VideoList",
     data() {
@@ -30,9 +31,12 @@ export default {
     created() {
         this.imageUrl = new URL(`../../assets/${this.video.image}.jpg`,import.meta.url).href;
     },
+    setup() {
+        return { Tr };
+    },
     methods: {
         changeVideo() {
-          	this.$router.push({ name: "Vídeo", params: { id: this.courseID, idVid: this.video.id } });
+          	this.$router.push({ name: "Vídeo", params: { id: this.courseID, idVid: this.video.id, locale: Tr.guessDefaultLocale() } });
             this.$emit('changeVideo', this.video.id)
         }
     },

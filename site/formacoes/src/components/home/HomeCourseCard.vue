@@ -1,11 +1,11 @@
 <template>
     <div class="course-card-container col-12 col-sm-6" :class="{ shake: this.hoverImg, 'col-xl-4': !this.sidebar }">
         <div class="course-card">
-            <router-link :to="{ name: 'Curso', params: { id: this.course.id } }">
+            <router-link :to="Tr.i18nRoute({ name: 'Curso', params: { id: this.course.id, locale: Tr.guessDefaultLocale() } })">
                 <img :src="this.imageUrl">
             </router-link>
             <div class="card-info">
-                <router-link :to="{ name: 'Curso', params: { id: this.course.id } }"><p class="card-info-title">{{ this.course.name }}</p></router-link>
+                <router-link :to="Tr.i18nRoute({ name: 'Curso', params: { id: this.course.id, locale: Tr.guessDefaultLocale() } })"><p class="card-info-title">{{ this.course.name }}</p></router-link>
                 <p class="card-info-category">{{ this.course.category }}</p>
                 <p class="card-info-description">{{ this.course.description }}</p>
                 <div class="card-info-div">
@@ -16,7 +16,7 @@
                     </div>
                 </div>   
                 <hr>
-                <router-link class="card-creator-div" :to="{ name: 'Perfil do Utilizador', params: { id: this.course.idCr } }">
+                <router-link class="card-creator-div" :to="Tr.i18nRoute({ name: 'Perfil do Utilizador', params: { id: this.course.idCr, locale: Tr.guessDefaultLocale() } })">
                     <img :src="this.creatorImageUrl">
                     <p>{{ this.course.nameCr }}</p>
                 </router-link>
@@ -26,6 +26,8 @@
 </template>
 
 <script>
+import Tr from '@/i18n/translation.js'
+
 export default {
     name: 'HomeCourseCard',
     props: {
@@ -43,6 +45,9 @@ export default {
             imageUrl: "",
             creatorImageUrl: ""
         }
+    },
+    setup() {
+        return { Tr };
     },
     created(){
         this.imageUrl = new URL(`../../assets/${this.course.image}.jpg`, import.meta.url).href;
