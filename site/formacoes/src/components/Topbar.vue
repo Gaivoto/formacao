@@ -19,7 +19,7 @@
             </div>  
         </div>
         
-        <div class="topbar-right">
+        <div class="topbar-right" v-if="this.isUserLogged">
             <router-link class="user-wrapper" :to="Tr.i18nRoute({ name: 'Perfil do Utilizador', params: { id: this.getUserId } })" :key="this.getUserId">
                 <div class="topbar-text">
                     <p>{{ this.$store.getters.getUser.username }}</p>
@@ -31,6 +31,12 @@
             <div class="notif-container" v-on:click="toggleNotifs" v-on:click.stop>
                 <span class="material-icons notif-icon" :class="{ unread: showNotif }">notifications<div :class="{ notif: showNotif }"></div></span>
             </div>
+        </div>
+
+        <div>
+            <router-link class="topbar-btn" :to="Tr.i18nRoute({ name: 'Login', params: { locale: Tr.guessDefaultLocale() } })">
+                <p class="text">Login</p>
+            </router-link>
         </div>
 
         <div ref="notifList" class="notif-list" :class="{ 'd-none': !notifsOpen }">
@@ -173,6 +179,10 @@ export default {
         },
         hasNotifs() {
             return (this.notifications.length > 0);
+        },
+        isUserLogged() {
+            if(this.$store.getters.getUser.id) return true;
+            return false;
         }
     },
     methods: {
@@ -451,6 +461,11 @@ export default {
         width: 42px;
         border-radius: 50%;
         object-fit: cover;
+    }
+
+    .topbar-btn p {
+        font-size: 22px;
+        color: var(--primary);
     }
 
     @media (max-width: 1500px) {

@@ -10,7 +10,7 @@
         </button>
     </div>
 	
-    <h3>Menu</h3>
+    <h3 v-if="this.isUserLogged">Menu</h3>
     <div class="menu" v-if="this.isUserUser">
         <router-link class="button" :to="Tr.i18nRoute({ name: 'Cursos' })">
             <span class="material-icons">import_contacts</span>
@@ -111,7 +111,11 @@ export default {
 		isUserCreator() {
 			if(this.$store.getters.getUser.type && this.$store.getters.getUser.type == 'creator') return true;
 			return false;
-		}
+		},
+        isUserLogged() {
+            if(this.$store.getters.getUser.id) return true;
+            return false;
+        }
 	},
 	methods: {
 		toggleMenu() {
