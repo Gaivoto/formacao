@@ -15,7 +15,7 @@
             <p>{{ this.formatedDate }}</p>
         </td>
         <td class="column-right">
-            <p>{{ this.course.state }}</p>
+            <p>{{ this.translatedState }}</p>
         </td>
         <td class="column-right">
             <p>{{ this.course.numberOfVideos }}</p>
@@ -51,6 +51,20 @@ export default {
     computed: {
         formatedDate() {
             return this.course.date.substring(11, 19) + " " + this.course.date.substring(8, 10) + "/" + this.course.date.substring(5, 7) + "/" + this.course.date.substring(0, 4);
+        },
+        translatedState() {
+            switch(this.course.state) {
+                case "Ativo": 
+                    return this.$t('states.active');
+                case "Inativo": 
+                    return this.$t('states.inactive');
+                case "Rejeitado": 
+                    return this.$t('states.rejected');
+                case "Pendente": 
+                    return this.$t('states.pending');
+                default:
+                    return "Erro";
+            }
         }
     }
 }

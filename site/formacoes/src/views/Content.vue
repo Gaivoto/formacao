@@ -7,12 +7,12 @@
                         <th></th>
                         <th class="column-large">
                             <div>
-                                <p>Nome</p>
+                                <p>{{ $t('content.name') }}</p>
                             </div>
                         </th>
                         <th class="column-small">
                             <div>
-                                <p>Data</p>
+                                <p>{{ $t('content.date') }}</p>
                                 <div>
                                     <span class="material-icons" v-on:click="orderTable('date-asc')">expand_less</span>
                                     <span class="material-icons" v-on:click="orderTable('date-desc')">expand_more</span>
@@ -21,7 +21,7 @@
                         </th>
                         <th class="column-small column-right">
                             <div>
-                                <p>Estado</p>
+                                <p>{{ $t('content.state') }}</p>
                                 <div>
                                     <span class="material-icons" v-on:click="orderTable('state-asc')">expand_less</span>
                                     <span class="material-icons" v-on:click="orderTable('state-desc')">expand_more</span>
@@ -30,7 +30,7 @@
                         </th>
                         <th class="column-small column-right">
                             <div>
-                                <p>Nº Videos</p>
+                                <p>{{ $t('content.nVids') }}</p>
                                 <div>
                                     <span class="material-icons" v-on:click="orderTable('nvids-asc')">expand_less</span>
                                     <span class="material-icons" v-on:click="orderTable('nvids-desc')">expand_more</span>
@@ -39,7 +39,7 @@
                         </th>
                         <th class="column-small column-right">
                             <div>
-                                <p>Duração</p>
+                                <p>{{ $t('content.duration') }}</p>
                                 <div>
                                     <span class="material-icons" v-on:click="orderTable('duration-asc')">expand_less</span>
                                     <span class="material-icons" v-on:click="orderTable('duration-desc')">expand_more</span>

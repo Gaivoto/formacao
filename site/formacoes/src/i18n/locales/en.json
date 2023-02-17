@@ -23,5 +23,18 @@
         "bestSellers": "Best Sellers",
         "others": "Others",
         "bestSellingCreators": "Best Selling Creators"
+    },
+    "content": {
+        "name": "Name",
+        "date": "Date",
+        "state": "State",
+        "nVids": "No of Videos",
+        "duration": "Duration"
+    },
+    "states": {
+        "active": "Active",
+        "inactive": "Inactive",
+        "pending": "Pending",
+        "rejected": "Denied"
     }
 }
