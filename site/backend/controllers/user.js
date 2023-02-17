@@ -5,7 +5,6 @@ async function getUser(req, res){
         res.status(value.code).send(value.info);
     })
     .catch(error => {
-        console.log(req.headers['authorization'].split(' ')[1])
         res.status(error.code).send(error.error);
     });
 }
