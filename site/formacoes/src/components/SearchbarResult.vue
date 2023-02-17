@@ -1,5 +1,5 @@
 <template>
-    <router-link :to="{ name: this.route, params: { id: this.item.id } }" :key="this.item.id" class="result-wrapper" v-on:mouseenter="toggleBack" v-on:mouseleave="toggleBack" :class="{ resultBack: showBack }">
+    <router-link :to="Tr.i18nRoute({ name: this.route, params: { id: this.item.id, locale: Tr.guessDefaultLocale() } })" :key="this.item.id" class="result-wrapper" v-on:mouseenter="toggleBack" v-on:mouseleave="toggleBack" :class="{ resultBack: showBack }">
         <img :src="this.imageUrl">
         <div>
             <p>{{ this.item.name }}</p>
@@ -9,6 +9,7 @@
 </template>
 
 <script>
+import Tr from '@/i18n/translation.js'
 export default {
     name: 'SearchbarResult',
     props: {
@@ -25,6 +26,9 @@ export default {
     },
     created(){
         this.imageUrl = new URL(`../assets/${this.item.image}.jpg`, import.meta.url).href;
+    },
+    setup() {
+        return { Tr };
     },
     computed: {
         route() {

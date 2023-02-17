@@ -260,27 +260,27 @@ async function changeCriadorState(tokens, id, criador) {
                                 info.message = "Estado alterado com sucesso.";
                                 resolve({ code: 200, info: info });
                             })
-                                .catch(error => {
-                                    console.log(error);
-                                    reject({ code: 400, error: { message: "Algo correu mal com a query." } });
-                                });
+                            .catch(error => {
+                                console.log(error);
+                                reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                            });
                         } else {
                             reject({ code: 400, error: { message: "Estado inválido." } });
                         }
                     }
                 })
-                    .catch(error => {
-                        console.log(error);
-                        reject({ code: 400, error: { message: "Algo correu mal com a query." } });
-                    });
+                .catch(error => {
+                    console.log(error);
+                    reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                });
             } else {
                 reject({ code: 403, error: { message: "A operação não foi possível porquê o user não é um administrador." } });
             }
         })
-            .catch(error => {
-                console.log(error);
-                reject({ code: 401, error: { message: "Token inválido." } });
-            });
+        .catch(error => {
+            console.log(error);
+            reject({ code: 401, error: { message: "Token inválido." } });
+        });
     });
 }
 
@@ -326,50 +326,47 @@ async function updateCriador(tokens, id, criador) {
                                                 info.message = "Criador alterado com sucesso.";
                                                 resolve({ code: 200, info: info });
                                             })
-                                                .catch(error => {
-                                                    console.log(error);
-                                                    reject({ code: 400, error: { message: "Algo correu mal com a query de insert das notificações." } });
-                                                })
+                                            .catch(error => {
+                                                console.log(error);
+                                                reject({ code: 400, error: { message: "Algo correu mal com a query de insert das notificações." } });
+                                            })
                                         }
                                     }
                                 })
-                                    .catch(error => {
-                                        console.log(error);
-                                        reject({ code: 400, error: { message: "Algo correu mal com a query de busca de subscribers." } });
-                                    })
-
-                            })
                                 .catch(error => {
                                     console.log(error);
-                                    reject({ code: 400, error: { message: "Algo correu mal com a query." } });
-                                });
+                                    reject({ code: 400, error: { message: "Algo correu mal com a query de busca de subscribers." } });
+                                })
+
+                            })
+                            .catch(error => {
+                                console.log(error);
+                                reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                            });
                         } else {
                             dbCria.updateCriador(criador, id).then(value3 => {
                                 info.message = "Criador alterado com sucesso.";
                                 resolve({ code: 200, info: info });
                             })
-                                .catch(error => {
-                                    console.log(error);
-                                    reject({ code: 400, error: { message: "Algo correu mal com a query de insert das notificações." } });
-                                })
+                            .catch(error => {
+                                console.log(error);
+                                reject({ code: 400, error: { message: "Algo correu mal com a query de insert das notificações." } });
+                            })
                         }
                     })
-                        .catch(error => {
-                            console.log(error);
-                            reject({ code: 400, error: { message: "Algo correu mal com a query de busca de subscribers." } });
-                        })
-
-
-
+                    .catch(error => {
+                        console.log(error);
+                        reject({ code: 400, error: { message: "Algo correu mal com a query de busca de subscribers." } });
+                    })
                 }
             } else {
                 reject({ code: 403, error: { message: "A operação não foi possível porquê o user associado ao token não é o mesmo a qual estas a tentar fazer update." } });
             }
         })
-            .catch(error => {
-                console.log(error);
-                reject({ code: 401, error: { message: "Token inválido." } });
-            });
+        .catch(error => {
+            console.log(error);
+            reject({ code: 401, error: { message: "Token inválido." } });
+        });
     });
 }
 
@@ -399,7 +396,8 @@ async function getCriadoresHomepage() {
 
             resolve({ code: 200, info: {creators: creators} });
 
-        }).catch(error => {
+        })
+        .catch(error => {
             console.log(error);
             reject({ code: 400, error: { message: "Algo correu mal com a query." } });
         });

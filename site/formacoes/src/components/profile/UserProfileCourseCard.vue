@@ -1,5 +1,5 @@
 <template>
-    <router-link :to="{ name: 'Curso', params: { id: this.course.id_course } }" class="user-profile-course-card">
+    <router-link :to="Tr.i18nRoute({ name: 'Curso', params: { id: this.course.id_course,  locale: Tr.guessDefaultLocale() } })" class="user-profile-course-card">
         <img :src="this.imageUrl" />
         <p>{{ this.course.course }}</p>
         <div>
@@ -10,6 +10,7 @@
 </template>
 
 <script>
+import Tr from '@/i18n/translation.js'
 export default {
     name: "UserProfileCourseCard",
     props: {
@@ -23,9 +24,13 @@ export default {
             imageUrl: "",
         }
     },
+    setup() {
+        return { Tr };
+    },
     created() {
         this.imageUrl = new URL(`../../assets/${this.course.image}.jpg`, import.meta.url).href;
     }
+    
 };
 </script>
 

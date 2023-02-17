@@ -38,7 +38,7 @@ export default {
                 await this.$router.replace({ params: { locale: newLocale } })
             } catch(e) {
                 console.log(e);
-                this.$router.push("/");
+                this.$router.push({ name: "/", params: { locale: Tr.guessDefaultLocale() } });
             }
         },
         getCurrentLocale() {

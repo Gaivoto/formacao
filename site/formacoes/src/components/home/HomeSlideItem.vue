@@ -7,7 +7,7 @@
             <p>{{ this.item.nameCr }}</p>
         </div>
         <div>
-            <router-link :to="{ name: 'Curso', params: { id: this.item.id.substring(0, this.item.id.length - 2) } }">
+            <router-link :to="Tr.i18nRoute({ name: 'Curso', params: { id: this.item.id.substring(0, this.item.id.length - 2), locale: Tr.guessDefaultLocale() } })">
                 <button>Ver Curso</button>
             </router-link>
         </div>
@@ -15,6 +15,7 @@
 </template>
 
 <script>
+import Tr from '@/i18n/translation.js'
 export default {
     name: "HomeSlideItem",
     props: {
@@ -28,6 +29,9 @@ export default {
             imageUrl: "",
             creatorImageUrl: ""
         }
+    },
+    setup() {
+        return { Tr };
     },
     created() {
         this.imageUrl = new URL(`../../assets/${this.item.image}.jpg`, import.meta.url).href;

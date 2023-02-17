@@ -22,7 +22,6 @@ async function getCurso(id) {
             if (!err) {
                 resolve(res.recordset);
             } else {
-                console.log(err);
                 reject(err.message);
             }
         });
@@ -103,9 +102,7 @@ async function createCurso(id, body) {
 async function updateStateCurso(id, state) {
     const pool = new sql.Request();
     return new Promise((resolve, reject) => {
-
         let slct = `UPDATE Course SET [state] = @state WHERE [id] = @id`;
-
         pool.input('state', sql.VarChar(50), state).input('id', sql.VarChar(200), id).query(slct, (err, res) => {
             if (!err) {
                 resolve(res);

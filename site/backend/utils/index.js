@@ -7,7 +7,8 @@ async function validateToken(access_token, refresh_token){
     return new Promise((resolve, reject) => {
         jwt.verify(access_token, process.env.ACCESS_SECRET, (error, user) => {
             if(error){
-                reject();
+                console.log("HAHAHHAHAHAHAHHA")
+                reject(error);
             } else {
                 refreshToken({id: user.id, username: user.username, type: user.type, type: user.type}, refresh_token).then(value => resolve({user: {id: user.id, username: user.username, type: user.type, type: user.type}, access_token: value}))
                 .catch(error => {

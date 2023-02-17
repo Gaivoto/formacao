@@ -21,7 +21,6 @@ async function getAllUsers() {
             if (!err) {
                 resolve(res.recordset);
             } else {
-                console.log("bruh")
                 reject(err.message);
             }
         });

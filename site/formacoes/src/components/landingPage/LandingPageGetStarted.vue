@@ -8,7 +8,7 @@
                     <p>Crie uma conta ou faça login</p>
                 </div>
                 <p>Para começar a utilizar a nossa plataforma é necessário que tenha uma conta. Registe-se ou se já tem uma conta faça login.</p>
-                <router-link to="/login">
+                <router-link :to="Tr.i18nRoute({ name: 'Login', params: { locale: Tr.guessDefaultLocale() } })">
                     <button>Login</button>
                 </router-link>
             </div>
@@ -18,7 +18,7 @@
                     <p>Escolha um curso</p>
                 </div>
                 <p>Após ter feito login é lhe disponibilizada uma diversidade de cursos. Procure os que mais lhe interessam, escolha um e siga para o próximo passo.</p>
-                <router-link to="/courses">
+                <router-link :to="Tr.i18nRoute({ name: 'Cursos', params: { locale: Tr.guessDefaultLocale() } })">
                     <button>Cursos</button>
                 </router-link>
             </div>
@@ -28,7 +28,7 @@
                     <p>Compre o curso</p>
                 </div>
                 <p>Depois de escolher um curso ou criador para subscrever siga para o pagamento do mesmo de forma simples, rápida e segura, para obter acesso total ao conteúdo do curso.</p>
-                <router-link to="/courses">
+                <router-link :to="Tr.i18nRoute({ name: 'Cursos', params: { locale: Tr.guessDefaultLocale() } })">
                     <button>Cursos</button>
                 </router-link>
             </div>    
@@ -37,9 +37,14 @@
 </template>
 
 <script>
+import Tr from '@/i18n/translation.js'
 export default {
-    name: "LandingPageGetStarted"
+    name: "LandingPageGetStarted",
+    setup() {
+        return { Tr };
+    },
 }
+
 </script>
 
 <style>

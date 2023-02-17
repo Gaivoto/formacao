@@ -5,7 +5,6 @@ async function getAllCriadores(req, res) {
         res.status(value.code).send(value.info);
     })
     .catch(error => {
-        console.log(error)
         res.status(error.code).send(error.error);
     });
 }
