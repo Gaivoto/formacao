@@ -22,6 +22,15 @@
         "bestSellers": "Mais Vendidos",
         "others": "Outros",
         "bestSellingCreators": "Maiores Criadores"
+    },
+    "courseDetails": {
+        "content": "Conteúdo",
+        "creator": "Criador:",
+        "category": "Categoria:",
+        "price": "Preço: €",
+        "purchase": "Comprar",
+        "editCourse": "Editar Curso",
+        "description": "Descrição:"
     }
     
 

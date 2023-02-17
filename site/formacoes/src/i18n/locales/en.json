@@ -23,5 +23,14 @@
         "bestSellers": "Best Sellers",
         "others": "Others",
         "bestSellingCreators": "Best Selling Creators"
+    },
+    "courseDetails": {
+        "content": "Content",
+        "creator": "Creator:",
+        "category": "Category:",
+        "price": "Price: €",
+        "purchase": "Purchase",
+        "editCourse": "Edit Course",
+        "description": "Description:"
     }
 }
