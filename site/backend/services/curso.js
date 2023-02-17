@@ -259,7 +259,6 @@ async function getAllUserCursos(tokens, id) {
                 sixmonthsago.setMonth(sixmonthsago.getMonth() - 6);
 
                 dbComp.getAllComprasByUser(id).then(value2 => {
-                    console.log(value2)
                     let promises = [];
                     value2.forEach(cur => {
                         if((cur.id_subscription != null && cur.data_sub == null) || (cur.id_subscription == null && cur.dateBought >= sixmonthsago)) {

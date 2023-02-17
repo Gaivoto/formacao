@@ -44,7 +44,6 @@ async function login(username, password) {
 }
 
 async function logout(refresh_token) {
-    console.log(crypto.SHA256(refresh_token, process.env.CRYPTO_KEY).toString())
     return new Promise((resolve, reject) => {
         dbAuth.deleteToken(crypto.SHA256(refresh_token, process.env.CRYPTO_KEY).toString()).then(value => {
             if (value.rowsAffected[0] == 0) {
