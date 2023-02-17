@@ -56,6 +56,9 @@ async function getCurso(headers, id) {
                             }
                             info.course.duration = duration/3600;
                             info.course.videos = values[2];
+                            if(value1.user.type == "admin") {
+                                info.course.access = true;
+                            }
                             resolve({ code: 200, info: info });
 
                         }).catch(error => {
