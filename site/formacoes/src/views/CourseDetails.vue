@@ -2,7 +2,7 @@
     <div class="course-details-wrapper">
         <div class="course-details-content">
             <CourseDetHeader class="course-header" v-bind:course="this.course" v-bind:creator="this.creator" v-bind:compra="this.compra" />
-            <p>Conteúdo:</p>
+            <p>{{ $t("courseDetails.content") }}</p>
             <div class="vid-container">
                 <VidInfo v-for="vid in this.videos" :key="vid.id" v-bind:video="vid" v-bind:courseID="this.course.id" v-bind:clickable="this.creator || this.access"/>
             </div>

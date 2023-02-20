@@ -4,17 +4,17 @@
             <img :src="this.imageUrl" />
             <div class="text">
                 <p>{{ this.course.name }}</p>
-                <p>Criador: {{ this.course.creatorName }}</p>
-                <p>Categoria: {{ this.course.category }}</p>
-                <p>Preço: €{{ this.course.price }}</p>
-                <button v-if:="this.compra">COMPRAR</button>
+                <p>{{ $t("courseDetails.creator") }} {{ this.course.creatorName }}</p>
+                <p>{{ $t("courseDetails.category") }} {{ this.course.category }}</p>
+                <p>{{ $t("courseDetails.price") }}{{ this.course.price }}</p>
+                <button v-if:="this.compra">{{ $t("courseDetails.purchase") }}</button>
                 <router-link v-if:="this.creator" :to="Tr.i18nRoute({ name: 'Workshop', params: { id: this.getUserId, idCourse: this.course.id, locale: Tr.guessDefaultLocale() } })">
-                    <button>Editar Curso</button> 
+                    <button>{{ $t("courseDetails.editCourse") }}</button> 
                 </router-link>
             </div>
         </div>
         <div class="right-side">
-            <p>Descrição:</p>
+            <p>{{ $t("courseDetails.description") }}</p>
             <p>{{ this.course.description }}</p>
         </div>
     </div>

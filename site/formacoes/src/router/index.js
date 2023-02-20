@@ -1,5 +1,5 @@
-import { createRouter, createWebHistory, RouterView } from 'vue-router'
 import Tr from '@/i18n/translation.js'
+import { createRouter, createWebHistory, RouterView } from 'vue-router'
 
 import Analytics from '../views/Analytics.vue'
 import Content from '../views/Content.vue'
@@ -11,12 +11,12 @@ import Landing from '../views/Landing.vue'
 import Login from '../views/Login.vue'
 import MyCourses from '../views/MyCourses.vue'
 import MyDiplomas from '../views/MyDiplomas.vue'
+import NotFound from '../views/NotFound.vue'
 import Profile from '../views/Profile.vue'
 import Settings from '../views/Settings.vue'
 import UserListAdm from '../views/UserListAdm.vue'
 import VideoPlayer from '../views/VideoPlayer.vue'
 import Workshop from '../views/Workshop.vue'
-import NotFound from '../views/NotFound.vue'
 
 const router = createRouter({
     history: createWebHistory(),

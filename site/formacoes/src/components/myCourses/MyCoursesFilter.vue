@@ -3,11 +3,11 @@
         <div class="courses-filter-container">
             <div class="searchbar">
                 <span class="material-icons search-icon">search</span>
-                <input type="text" ref="search" v-on:input="filterSearchbar" v-on:keydown.enter="goToSearchItem" placeholder="Pesquisar...">
+                <input type="text" ref="search" v-on:input="filterSearchbar" v-on:keydown.enter="goToSearchItem" :placeholder="$t('myCourses.search')"> 
             </div>
             <div class="filter-div">
                 <div>
-                    <p>Categoria:</p>
+                    <p>{{ $t("myCourses.category") }}</p>
                     <div class="custom-select">
                         <div class="selected" :class="{ open: catOpen }" v-on:click="catOpen=!catOpen; orderOpen=false">{{ this.category }}</div>
                         <div class="items" :class="{ selectHide: !catOpen }">
@@ -17,31 +17,31 @@
                     </div>    
                 </div>
                 <div>
-                    <p>Ordernar por:</p>
+                    <p>{{ $t("myCourses.orderBy") }}</p>
                     <div class="custom-select">
                         <div class="selected" :class="{ open: orderOpen }" v-on:click="orderOpen=!orderOpen; catOpen=false">{{ this.order }}</div>
                         <div class="items" :class="{ selectHide: !orderOpen }">
-                            <div v-on:click="selectOrder('Mais recente')">Mais recente</div>
-                            <div v-on:click="selectOrder('Mais antigo')">Mais antigo</div>
-                            <div v-on:click="selectOrder('Progresso decrescente')">Progresso decrescente</div>
-                            <div v-on:click="selectOrder('Progresso crescente')">Progresso crescente</div>
+                            <div v-on:click="selectOrder($t('myCourses.recentlyAdded'))">{{ $t("myCourses.recentlyAdded")}}</div>
+                            <div v-on:click="selectOrder($t('myCourses.formerlyAdded'))">{{ $t("myCourses.formerlyAdded")}}</div>
+                            <div v-on:click="selectOrder($t('myCourses.descendingProgress'))">{{ $t("myCourses.descendingProgress")}}</div>
+                            <div v-on:click="selectOrder($t('myCourses.ascendingProgress'))">{{ $t("myCourses.ascendingProgress")}}</div>
                         </div>
                     </div>    
                 </div>
             </div>
             <div class="responsive-filter-btn">
-                <button v-on:click="toggleRespFilter"><p>FILTRAR</p><span class="material-icons">filter_alt</span></button>
+                <button v-on:click="toggleRespFilter"><p>{{ $t("myCourses.filter")}}</p><span class="material-icons">filter_alt</span></button>
             </div>
         </div>
         <div class="responsive-filter" :class="{ 'hidden': !this.responsiveFilter }">
             <div class="responsive-filter-header">
-                <p>Filtrar</p>
+                <p>{{ $t("myCourses.filter")}}</p>
                 <span v-on:click="toggleRespFilter" class="material-icons">close</span>
             </div>
             <hr>
             <div class="responsive-filter-filters">
                 <div>
-                    <p>Categoria:</p>
+                    <p>{{ $t("myCourses.category")}}</p>
                     <div class="custom-select">
                         <div class="selected" :class="{ open: catOpen }" v-on:click="catOpen=!catOpen; orderOpen=false">{{ this.category }}</div>
                         <div class="items" :class="{ selectHide: !catOpen }">
@@ -51,14 +51,14 @@
                     </div>   
                 </div>
                 <div>
-                    <p>Ordernar por:</p>
+                    <p>{{ $t("myCourses.orderBy")}}</p>
                     <div class="custom-select">
                         <div class="selected" :class="{ open: orderOpen }" v-on:click="orderOpen=!orderOpen; catOpen=false">{{ this.order }}</div>
                         <div class="items" :class="{ selectHide: !orderOpen }">
-                            <div v-on:click="selectOrder('Mais recente')">Mais recente</div>
-                            <div v-on:click="selectOrder('Mais antigo')">Mais antigo</div>
-                            <div v-on:click="selectOrder('Progresso decrescente')">Progresso decrescente</div>
-                            <div v-on:click="selectOrder('Progresso crescente')">Progresso crescente</div>
+                            <div v-on:click="selectOrder($t('myCourses.recentlyAdded'))">{{ $t("myCourses.recentlyAdded")}}</div>
+                            <div v-on:click="selectOrder($t('myCourses.formerlyAdded'))">{{ $t("myCourses.formerlyAdded")}}</div>
+                            <div v-on:click="selectOrder($t('myCourses.descendingProgress'))">{{ $t("myCourses.descendingProgress")}}</div>
+                            <div v-on:click="selectOrder($t('myCourses.ascendingProgress'))">{{ $t("myCourses.ascendingProgress")}}</div>
                         </div>
                     </div>      
                 </div>    
@@ -68,6 +68,9 @@
 </template>
 
 <script>
+import Tr from '@/i18n/translation.js'
+import { useI18n } from 'vue-i18n'
+
 export default {
     name: 'CoursesListFilter',
     props: {
@@ -81,9 +84,17 @@ export default {
             catOpen: false,
             orderOpen: false,
             category: "Todas",
-            order: "Mais recente",
+            order: "",
             responsiveFilter: false
         }
+    },
+    created () {
+        this.order = this.t("myCourses.recentlyAdded")
+    },
+    setup() {
+        const { t } = useI18n()
+
+        return { Tr, t };
     },
     mounted(){
         let filter = {
@@ -91,7 +102,6 @@ export default {
             category: this.category,
             order: this.order
         }
-
         this.$emit("filter", filter);
     },
     watch: {
@@ -99,9 +109,8 @@ export default {
             let filter = {
                 name: this.$refs.search.value.toLowerCase(),
                 category: this.category,
-                order: this.order
+                order: this.order,
             }
-
             this.$emit("filter", filter);
         },
         category: function() {

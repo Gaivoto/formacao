@@ -24,6 +24,15 @@
         "others": "Others",
         "bestSellingCreators": "Best Selling Creators"
     },
+    "courseDetails": {
+        "content": "Content",
+        "creator": "Creator:",
+        "category": "Category:",
+        "price": "Price: €",
+        "purchase": "Purchase",
+        "editCourse": "Edit Course",
+        "description": "Description:"
+    },    
     "content": {
         "name": "Name",
         "date": "Date",
@@ -36,6 +45,28 @@
         "inactive": "Inactive",
         "pending": "Pending",
         "rejected": "Denied"
+    },
+    "myCourses": {
+        "warning": "There are no Courses that match your search.",
+        "category": "Category:",
+        "orderBy": "Order By:",
+        "search": "Search...",
+        "recentlyAdded": "Recently Added",
+        "formerlyAdded": "Formerly Added",
+        "descendingProgress": "Descending Progress",
+        "ascendingProgress": "Ascending Progress",
+        "filter": "Filter"
+    },
+    "courses": {
+        "warning": "There are no Courses that match your search.",
+        "category": "Category:",
+        "orderBy": "Order By:",
+        "search": "Search...",
+        "recentlyAdded": "Recently Added",
+        "formerlyAdded": "Formerly Added",
+        "priceHighToLow": "Price High To Low",
+        "priceLowToHigh": "Price Low to High",
+        "filter": "Filter"
     },
     "order": {
         "newest": "Newest",

@@ -23,6 +23,15 @@
         "others": "Outros",
         "bestSellingCreators": "Maiores Criadores"
     },
+    "courseDetails": {
+        "content": "Conteúdo",
+        "creator": "Criador:",
+        "category": "Categoria:",
+        "price": "Preço: €",
+        "purchase": "Comprar",
+        "editCourse": "Editar Curso",
+        "description": "Descrição:"
+    },
     "content": {
         "name": "Nome",
         "date": "Data",
@@ -35,6 +44,28 @@
         "inactive": "Inativo",
         "pending": "Pendente",
         "rejected": "Rejeitado"
+    },
+    "myCourses": {
+        "warning": "Não existem resultados para a pesquisa.",
+        "category": "Categoria:",
+        "orderBy": "Ordenar por:",
+        "search": "Pesquisar...",
+        "recentlyAdded": "Mais Recente",
+        "formerlyAdded": "Mais Antigo",
+        "descendingProgress": "Progresso Decrescente",
+        "ascendingProgress": "Progresso Crescente",
+        "filter": "Filtrar"
+    },
+    "courses": {
+        "warning": "Não existem resultados para a pesquisa.",
+        "category": "Categoria:",
+        "orderBy": "Ordenar por:",
+        "search": "Pesquisar...",
+        "recentlyAdded": "Mais Recente",
+        "formerlyAdded": "Mais Antigo",
+        "priceHighToLow": "Mais caros",
+        "priceLowToHigh": "Mais baratos",
+        "filter": "Filtrar"
     },
     "order": {
         "newest": "Mais recente",
