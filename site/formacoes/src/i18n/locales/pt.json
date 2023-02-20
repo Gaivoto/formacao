@@ -43,7 +43,8 @@
         "active": "Ativo",
         "inactive": "Inativo",
         "pending": "Pendente",
-        "rejected": "Rejeitado"
+        "rejected": "Rejeitado",
+        "all": "all"
     },
     "myCourses": {
         "warning": "Não existem resultados para a pesquisa.",
@@ -66,5 +67,20 @@
         "priceHighToLow": "Mais caros",
         "priceLowToHigh": "Mais baratos",
         "filter": "Filtrar"
+    },
+    "userListAdm": {
+        "warning": "Não existem resultados para a pesquisa.",
+        "search": "Pesquisar...",
+        "userType": "Tipo de User:",
+        "all": "Todos",
+        "admin": "Admin",
+        "creator": "Criador",
+        "user": "Utilizador",
+        "name": "Nome:",
+        "type": "Tipo:",
+        "state": "Estado:",
+        "deactivate": "Desativar",
+        "activate": "Ativar"
     }
+
 }

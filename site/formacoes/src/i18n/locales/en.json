@@ -67,5 +67,19 @@
         "priceHighToLow": "Price High To Low",
         "priceLowToHigh": "Price Low to High",
         "filter": "Filter"
+    },
+    "userListAdm": {
+        "warning": "There are no Users that match your search.",
+        "search": "Search...",
+        "userType": "Type of User:",
+        "all": "All",
+        "admin": "Admin",
+        "creator": "Creator",
+        "user": "User",
+        "name": "Name:",
+        "type": "Type:",
+        "state": "State:",
+        "deactivate": "Deactivate",
+        "activate": "Activate"
     }
 }

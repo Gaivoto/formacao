@@ -3,29 +3,29 @@
         <div class="users-filter-container">
             <div class="searchbar">
                 <span class="material-icons search-icon">search</span>
-                <input type="text" ref="search" v-on:input="filterSearchbar" v-on:keydown.enter="goToSearchItem" placeholder="Pesquisar...">
+                <input type="text" ref="search" v-on:input="filterSearchbar" v-on:keydown.enter="goToSearchItem" :placeholder="$t('myCourses.search')">
             </div>
             <div class="filter-div">
                 <div>
-                    <p>Tipo de User:</p>
+                    <p>{{ $t("userListAdm.userType")}}</p>
                     <div class="custom-select">
                         <div class="selected" :class="{ open: typeOpen }" v-on:click="typeOpen=!typeOpen; stateOpen=false">{{ this.type }}</div>
                         <div class="items" :class="{ selectHide: !typeOpen }">
-                            <div v-on:click="selectType('Todos')">Todos</div>
-                            <div v-on:click="selectType('Admin')">Admin</div>
-                            <div v-on:click="selectType('Criador')">Criador</div>
-                            <div v-on:click="selectType('Utilizador')">Utilizador</div>
+                            <div v-on:click="selectType($t('userListAdm.all'))">{{ $t("userListAdm.all")}}</div>
+                            <div v-on:click="selectType($t('userListAdm.admin'))">{{ $t("userListAdm.admin")}}</div>
+                            <div v-on:click="selectType($t('userListAdm.creator'))">{{ $t("userListAdm.creator")}}</div>
+                            <div v-on:click="selectType($t('userListAdm.user'))">{{ $t("userListAdm.user")}}</div>
                         </div>
                     </div>    
                 </div>
                 <div>
-                    <p>Estado:</p>
+                    <p>{{ $t("userListAdm.state")}}</p>
                     <div class="custom-select">
                         <div class="selected" :class="{ open: stateOpen }" v-on:click="stateOpen=!stateOpen; typeOpen=false">{{ this.state }}</div>
                         <div class="items" :class="{ selectHide: !stateOpen }">
-                            <div v-on:click="selectState('Todos')">Todos</div>
-                            <div v-on:click="selectState('Ativo')">Ativo</div>
-                            <div v-on:click="selectState('Inativo')">Inativo</div>
+                            <div v-on:click="selectState($t('userListAdm.all'))">{{ $t("userListAdm.all")}}</div>
+                            <div v-on:click="selectState($t('states.active'))">{{ $t("states.active")}}</div>
+                            <div v-on:click="selectState($t('states.inactive'))">{{ $t("states.inactive")}}</div>
                         </div>
                     </div>    
                 </div>
@@ -42,25 +42,25 @@
             <hr>
             <div class="responsive-filter-filters">
                 <div>
-                    <p>Tipo de Utilizador:</p>
+                    <p>{{ $t("userListAdm.userType")}}</p>
                     <div class="custom-select">
                         <div class="selected" :class="{ open: typeOpen }" v-on:click="typeOpen=!typeOpen; stateOpen=false">{{ this.type }}</div>
                         <div class="items" :class="{ selectHide: !typeOpen }">
-                            <div v-on:click="selectType('Todos')">Todos</div>
-                            <div v-on:click="selectType('Admin')">Admin</div>
-                            <div v-on:click="selectType('Criador')">Criador</div>
-                            <div v-on:click="selectType('Utilizador')">Utilizador</div>
+                            <div v-on:click="selectType($t('userListAdm.all'))">{{ $t("userListAdm.all")}}</div>
+                            <div v-on:click="selectType($t('userListAdm.admin'))">{{ $t("userListAdm.admin")}}</div>
+                            <div v-on:click="selectType($t('userListAdm.creator'))">{{ $t("userListAdm.creator")}}</div>
+                            <div v-on:click="selectType($t('userListAdm.user'))">{{ $t("userListAdm.user")}}</div>
                         </div>
                     </div>   
                 </div>
                 <div>
-                    <p>Estado:</p>
+                    <p>{{ $t("userListAdm.state")}}</p>
                     <div class="custom-select">
                         <div class="selected" :class="{ open: stateOpen }" v-on:click="stateOpen=!stateOpen; typeOpen=false">{{ this.state }}</div>
                         <div class="items" :class="{ selectHide: !stateOpen }">
-                            <div v-on:click="selectState('Todos')">Todos</div>
-                            <div v-on:click="selectState('Ativo')">Ativo</div>
-                            <div v-on:click="selectState('Inativo')">Inativo</div>
+                            <div v-on:click="selectState($t('userListAdm.all'))">{{ $t("userListAdm.all")}}</div>
+                            <div v-on:click="selectState($t('states.active'))">{{ $t("states.active")}}</div>
+                            <div v-on:click="selectState($t('states.inactive'))">{{ $t("states.inactive")}}</div>
                         </div>
                     </div>      
                 </div>    
@@ -70,18 +70,28 @@
 </template>
 
 <script>
+import Tr from '@/i18n/translation.js'
+import { useI18n } from 'vue-i18n'
+
 export default {
     name: 'UserListAdmFilter',
     data() {
         return {
             stateOpen: false,
             typeOpen: false,
-            type: "Todos",
-            state: "Todos",
+            type: "",
+            state: "",
             responsiveFilter: false
         }
     },
+    setup() {
+        const { t } = useI18n()
+
+        return { Tr, t };
+    },
     mounted(){
+        this.type = this.t("userListAdm.all");
+        this.state = this.t("userListAdm.all");
         let filter = {
             name: null,
             type: this.type,

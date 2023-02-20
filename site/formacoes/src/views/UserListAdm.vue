@@ -5,7 +5,7 @@
             <UserListAdmUserCard v-for="user in this.usersDisplay" :key="user.id" v-bind:user="user" v-on:changeState="changeState"/>
             <div class="no-results" :class="{ 'd-none': !noResults }">
                 <span class="material-icons search-icon">warning</span>
-                <p>Não existem resultados para a pesquisa.</p>
+                <p>{{ $t("userListAdm.warning")}}</p>
             </div>
         </div>
         <Pagination2 v-bind:totalItems="this.usersFiltered.length" v-bind:currentPage="this.currentPage" v-bind:itemsPerPage="this.itemsPerPage" v-on:changePage="changePage"/>
@@ -17,7 +17,8 @@ import axios from "axios";
 import UserListAdmFilter from "../components/userListAdm/UserListAdmFilter.vue";
 import UserListAdmUserCard from "../components/userListAdm/UserListAdmUserCard.vue";
 import Pagination2 from "../components/paginations/Pagination2.vue";
-import Tr from '@/i18n/translation.js';
+import Tr from '@/i18n/translation.js'
+import { useI18n } from 'vue-i18n'
 
 export default {
     name: "UserListAdm",
@@ -37,7 +38,9 @@ export default {
         }
     },
     setup() {
-        return { Tr };
+        const { t } = useI18n()
+
+        return { Tr, t };
     },
     created() {
         if(!this.$store.getters.getUser.id) {
@@ -87,9 +90,11 @@ export default {
                 values[2].data.admins.forEach((a) => this.users.push(a));
 
                 this.users.forEach((u) => {
-                    if (u.type == "user") u.type = "Utilizador";
-                    else if (u.type == "admin") u.type = "Admin";
-                    else u.type = "Criador";
+                    if (u.type == "user") u.type = this.$t("userListAdm.user");
+                    else if (u.type == "admin") u.type = this.$t("userListAdm.admin");
+                    else u.type = this.$t("userListAdm.creator");
+                    if (u.state == "Ativo") u.state = this.$t("states.active");
+                    else u.state = this.$t("states.inactive");
                 });
 
                 this.usersFiltered = [...this.users];
@@ -121,15 +126,16 @@ export default {
             this.usersDisplay = [];
             this.usersFiltered = [...this.users];
 
+
             if (filter.name) {
                 this.usersFiltered = this.usersFiltered.filter((user) => user.name.toLowerCase().includes(filter.name) || user.username.toLowerCase().includes(filter.name));
             }
 
-            if (filter.type != "Todos") {
+            if (filter.type != this.$t("userListAdm.all")) {
                 this.usersFiltered = this.usersFiltered.filter((user) => user.type == filter.type);
             }
 
-            if (filter.state != "Todos") {
+            if (filter.state != this.$t("userListAdm.all")) {
                 this.usersFiltered = this.usersFiltered.filter((user) => user.state == filter.state);
             }
 
@@ -147,7 +153,7 @@ export default {
             });
 
             this.filter(this.filterInfo);
-
+    
             axios({
                 method: "put",
                 url: `${import.meta.env.VITE_HOST}/users/adm/${info.id}`,

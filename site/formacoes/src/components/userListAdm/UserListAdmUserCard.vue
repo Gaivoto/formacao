@@ -6,12 +6,12 @@
                 <div class="first-left-div">
                     <p>{{ this.user.username }}</p>
                     <div>
-                        <p>Nome: </p><p>{{ this.user.name }}</p>
+                        <p>{{ $t("userListAdm.name")}} </p><p>{{ this.user.name }}</p>
                     </div>
                 </div>
                 <div class="tipEst">
-                    <p>Tipo: {{ this.user.type }}</p>
-                    <p>Estado: {{ this.user.state }}</p>
+                    <p>{{ $t("userListAdm.type")}} {{ this.user.type }}</p>
+                    <p>{{ $t("userListAdm.state")}} {{ this.user.state }}</p>
                 </div>    
             </div>
             <button v-on:click="changeState">{{ this.buttonText }}</button>    
@@ -20,6 +20,9 @@
 </template>
 
 <script>
+import Tr from '@/i18n/translation.js'
+import { useI18n } from 'vue-i18n'
+
 export default {
     name: 'UserListAdmUserCard',
     props: {
@@ -33,13 +36,18 @@ export default {
             imageUrl: ""
         }
     },
+    setup() {
+        const { t } = useI18n()
+
+        return { Tr, t };
+    },
     created(){
         this.imageUrl = new URL(`../../assets/${this.user.image}.jpg`, import.meta.url).href;
     },
     computed: {
         buttonText() {
-            if(this.user.state == "Ativo") return "DESATIVAR";
-            else return "ATIVAR";
+            if(this.user.state == "Ativo") return  this.$t("userListAdm.deactivate");
+            else return this.$t("userListAdm.activate");
         }
     },
     methods: {
