@@ -6,18 +6,18 @@
                 <router-link :to="Tr.i18nRoute({ name: 'Vídeo', params: { id: this.courseId, idVid: this.video.id, locale: Tr.guessDefaultLocale() } })"><p>{{ this.video.title }}</p></router-link>
             </div>
             <div>
-                <p>Estado: {{ this.video.state }}</p>
-                <p>Data: {{ this.formatedDate }}</p>
+                <p>{{ $t("courseListAdm.state") }}: {{ this.translatedState }}</p>
+                <p>{{ $t("courseListAdm.date") }}: {{ this.formatedDate }}</p>
             </div>
         </div>
         <div class="video-card-right">
-            <button v-if="showButton1" v-on:click="changeState('Ativo')">ATIVAR</button>
-            <button v-if="showButton2" v-on:click="changeState('Inativo')">DESATIVAR</button>
+            <button v-if="showButton1" v-on:click="changeState('Ativo')">{{ $t("courseListAdm.activate") }}</button>
+            <button v-if="showButton2" v-on:click="changeState('Inativo')">{{ $t("courseListAdm.deactivate") }}</button>
             <div v-if="showButton3and4" class="button-wrapper">
-                <button v-on:click="changeState('Ativo')">APROVAR</button>
-                <button v-on:click="changeState('Rejeitado')">REJEITAR</button>
+                <button v-on:click="changeState('Ativo')">{{ $t("courseListAdm.approve") }}</button>
+                <button v-on:click="changeState('Rejeitado')">{{ $t("courseListAdm.reject") }}</button>
             </div>
-            <button v-if="showButton5" v-on:click="changeState('Pendente')">TORNAR PENDENTE</button>      
+            <button v-if="showButton5" v-on:click="changeState('Pendente')">{{ $t("courseListAdm.makePending") }}</button>      
         </div>
     </div>
 </template>
@@ -67,6 +67,20 @@ export default {
         },
         formatedDate() {
             return this.video.date.substring(8, 10) + "/" + this.video.date.substring(5, 7) + "/" + this.video.date.substring(0, 4) + " " + this.video.date.substring(11, 19);
+        },
+        translatedState() {
+            switch(this.video.state) {
+                case "Ativo": 
+                    return this.$t('states.active');
+                case "Inativo": 
+                    return this.$t('states.inactive');
+                case "Rejeitado": 
+                    return this.$t('states.rejected');
+                case "Pendente": 
+                    return this.$t('states.pending');
+                default:
+                    return "Erro";
+            }
         }
     },
     methods: {

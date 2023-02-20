@@ -3,58 +3,58 @@
         <div class="diplomas-filter-container">
             <div class="searchbar">
                 <span class="material-icons search-icon">search</span>
-                <input type="text" ref="search" v-on:input="filterSearchbar" v-on:keydown.enter="goToSearchItem" placeholder="Pesquisar...">
+                <input type="text" ref="search" v-on:input="filterSearchbar" v-on:keydown.enter="goToSearchItem" :placeholder='$t("myDiplomas.search")'>
             </div>
             <div class="filter-div">
                 <div>
-                    <p>Categoria:</p>
+                    <p>{{ $t("myDiplomas.category") }}:</p>
                     <div class="custom-select">
                         <div class="selected" :class="{ open: catOpen }" v-on:click="catOpen=!catOpen; orderOpen=false">{{ this.category }}</div>
                         <div class="items" :class="{ selectHide: !catOpen }">
-                            <div v-on:click="selectCat('Todas')">Todas</div>
+                            <div v-on:click="selectCat($t('myDiplomas.allF'))">{{ $t("myDiplomas.allF") }}</div>
                             <div v-for="category in this.categories" :key="category.id" v-on:click="selectCat(category.name)">{{ category.name }}</div>
                         </div>
                     </div>    
                 </div>
                 <div>
-                    <p>Ordernar por:</p>
+                    <p>{{ $t("myDiplomas.orderBy") }}:</p>
                     <div class="custom-select">
                         <div class="selected" :class="{ open: orderOpen }" v-on:click="orderOpen=!orderOpen; catOpen=false">{{ this.order }}</div>
                         <div class="items" :class="{ selectHide: !orderOpen }">
-                            <div v-on:click="selectOrder('Mais recente')">Mais recente</div>
-                            <div v-on:click="selectOrder('Mais antigo')">Mais antigo</div>
+                            <div v-on:click="selectOrder($t('order.newest'))">{{ $t("order.newest") }}</div>
+                            <div v-on:click="selectOrder($t('order.oldest'))">{{ $t("order.oldest") }}</div>
                         </div>
                     </div>    
                 </div>
             </div>
             <div class="responsive-filter-btn">
-                <button v-on:click="toggleRespFilter"><p>FILTRAR</p><span class="material-icons">filter_alt</span></button>
+                <button v-on:click="toggleRespFilter"><p>{{ $t("myDiplomas.FILTER") }}</p><span class="material-icons">filter_alt</span></button>
             </div>
         </div>
         <div class="responsive-filter" :class="{ 'hidden': !this.responsiveFilter }">
             <div class="responsive-filter-header">
-                <p>Filtrar</p>
+                <p>{{ $t("myDiplomas.filter") }}</p>
                 <span v-on:click="toggleRespFilter" class="material-icons">close</span>
             </div>
             <hr>
             <div class="responsive-filter-filters">
                 <div>
-                    <p>Categoria:</p>
+                    <p>{{ $t("myDiplomas.category") }}:</p>
                     <div class="custom-select">
                         <div class="selected" :class="{ open: catOpen }" v-on:click="catOpen=!catOpen; orderOpen=false">{{ this.category }}</div>
                         <div class="items" :class="{ selectHide: !catOpen }">
-                            <div v-on:click="selectCat('Todas')">Todas</div>
+                            <div v-on:click="selectCat($t('myDiplomas.allF'))">{{ $t("myDiplomas.allF") }}</div>
                             <div v-for="category in this.categories" :key="category.id" v-on:click="selectCat(category.name)">{{ category.name }}</div>
                         </div>
                     </div>    
                 </div>
                 <div>
-                    <p>Ordernar por:</p>
+                    <p>{{ $t("myDiplomas.orderBy") }}:</p>
                     <div class="custom-select">
                         <div class="selected" :class="{ open: orderOpen }" v-on:click="orderOpen=!orderOpen; catOpen=false">{{ this.order }}</div>
                         <div class="items" :class="{ selectHide: !orderOpen }">
-                            <div v-on:click="selectOrder('Mais recente')">Mais recente</div>
-                            <div v-on:click="selectOrder('Mais antigo')">Mais antigo</div>
+                            <div v-on:click="selectOrder($t('order.newest'))">{{ $t("order.newest") }}</div>
+                            <div v-on:click="selectOrder($t('order.oldest'))">{{ $t("order.oldest") }}</div>
                         </div>
                     </div>  
                 </div>    
@@ -64,6 +64,8 @@
 </template>
 
 <script>
+import { useI18n } from 'vue-i18n'
+
 export default {
     name: "MyDiplomasFilter",
     props: {
@@ -76,12 +78,20 @@ export default {
         return {
             catOpen: false,
             orderOpen: false,
-            category: "Todas",
-            order: "Mais recente",
+            category: "",
+            order: "",
             responsiveFilter: false
         }
     },
+    setup() {
+        const { t } = useI18n();
+
+        return { t };
+    },
     mounted(){
+        this.order = this.t("order.newest");
+        this.category = this.t("courseListAdm.allF");
+        
         let filter = {
             name: null,
             category: this.category,

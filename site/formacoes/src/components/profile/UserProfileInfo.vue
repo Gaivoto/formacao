@@ -7,26 +7,26 @@
                 <p>{{ this.user.name }}</p>
                 <p v-if:="ownProfile">{{ this.user.email }}</p>
                 <p>{{ this.user.description }}</p>
-                <button v-if:="!this.user.id_subscription && !ownProfile" v-on:click="createSubscription">Subscrever</button>
-                <button v-if:="this.user.id_subscription && !ownProfile" v-on:click="endSubscription">Terminar subscrição</button>
+                <button v-if:="!this.user.id_subscription && !ownProfile" v-on:click="createSubscription">{{ $t("profile.subscribe") }}</button>
+                <button v-if:="this.user.id_subscription && !ownProfile" v-on:click="endSubscription">{{ $t("profile.unsubscribe") }}</button>
             </div>
             <div ref="profileEditingArea" class="profile-edit-area" :class="{ 'd-none': !this.editMode }" v-if="this.ownProfile">
                 <div>
                     <div>
-                        <p>Nome</p>
+                        <p>{{ $t("profile.name") }}</p>
                         <input ref="nameInput" type="text" name="name" id="name" v-model="this.user.name" autocomplete="off"/>
                     </div>
                 </div>
                 <div>
                     <div>
-                        <p>Descrição</p>
+                        <p>{{ $t("profile.description") }}</p>
                         <textarea ref="descriptionInput" name="description" id="description" v-model="this.user.description"></textarea>
                     </div>
                 </div>
             </div>
         </div>
-        <button ref="editProfileButton" v-on:click="this.editMode = true" :class="{ 'd-none': this.editMode }" v-if="this.ownProfile">EDITAR</button>
-        <button ref="saveProfileButton" v-on:click="commitUserChanges" :class="{ 'd-none': !this.editMode }" v-if="this.ownProfile">GUARDAR</button>
+        <button ref="editProfileButton" v-on:click="this.editMode = true" :class="{ 'd-none': this.editMode }" v-if="this.ownProfile">{{ $t("profile.EDIT") }}</button>
+        <button ref="saveProfileButton" v-on:click="commitUserChanges" :class="{ 'd-none': !this.editMode }" v-if="this.ownProfile">{{ $t("profile.SAVE") }}</button>
     </div>
 </template>
 

@@ -3,7 +3,7 @@
         <div class="pagination">
             <span class="material-icons" v-on:click="firstPage">first_page</span>
             <span class="material-icons" v-on:click="decreasePage">chevron_left</span>
-            <p>{{ this.firstItem }} - {{ this.lastItem }} de {{ this.totalItems }}</p>
+            <p>{{ this.firstItem }} - {{ this.lastItem }} {{ $t("paginations.of") }} {{ this.totalItems }}</p>
             <span class="material-icons" v-on:click="increasePage">chevron_right</span> 
             <span class="material-icons" v-on:click="lastPage">last_page</span> 
         </div>

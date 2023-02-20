@@ -28,6 +28,7 @@ async function getVideo(id) {
 }
 
 async function getAllVideosFromCourse(id) {
+    //console.log('bruh', id)
     const pool = new sql.Request();
     return new Promise((resolve, reject) => {
         const slct = `SELECT * FROM [Video] WHERE [id_course] = @id ORDER BY [position] ASC`;

@@ -5,7 +5,7 @@
             <DiplomaCard v-for="diploma in this.diplomasDisplay" :key="diploma.id" v-bind:diploma="diploma" v-bind:user="this.user" v-bind:sidebar="this.sidebar"/>
             <div class="no-results" :class="{ 'd-none': !noResults }">
                 <span class="material-icons search-icon">warning</span>
-                <p>Não existem resultados para a pesquisa.</p>    
+                <p>{{ $t("myDiplomas.noResults") }}</p>    
             </div>
         </div>
         <Pagination v-on:change-page="changePage" v-bind:numberOfPages="numberOfPages" />
@@ -134,15 +134,15 @@ export default {
                 this.diplomasFiltered = this.diplomasFiltered.filter(d => d.course.toLowerCase().includes(filter.name) || d.creator.toLowerCase().includes(filter.name));
             }
 
-            if(filter.category != "Todas") {
+            if(filter.category != this.$t("myDiplomas.allF")) {
                 this.diplomasFiltered = this.diplomasFiltered.filter(d => d.category == filter.category);
             }
 
             switch (filter.order) {
-                case "Mais recente":
+                case this.$t("order.newest"):
                     this.diplomasFiltered.sort((a, b) => a.date < b.date ? 1 : b.date < a.date ? -1 : 0);
                     break;
-                case "Mais antigo":
+                case this.$t("order.oldest"):
                     this.diplomasFiltered.sort((a, b) => a.date > b.date ? 1 : b.date > a.date ? -1 : 0);
                     break;
                 default:

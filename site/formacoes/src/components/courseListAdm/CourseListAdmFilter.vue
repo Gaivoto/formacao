@@ -3,94 +3,88 @@
         <div class="courses-filter-container">
             <div class="searchbar">
                 <span class="material-icons search-icon">search</span>
-                <input type="text" ref="search" v-on:input="filterSearchbar" v-on:keydown.enter="goToSearchItem" placeholder="Pesquisar...">
+                <input type="text" ref="search" v-on:input="filterSearchbar" v-on:keydown.enter="goToSearchItem" :placeholder='$t("courseListAdm.search")'>
             </div>
             <div class="filter-div">
                 <div>
-                    <p>Categoria:</p>
+                    <p>{{ $t("courseListAdm.category") }}:</p>
                     <div class="custom-select">
                         <div class="selected" :class="{ open: catOpen }" v-on:click="catOpen=!catOpen; stateOpen=false; orderOpen=false">{{ this.category }}</div>
                         <div class="items" :class="{ selectHide: !catOpen }">
-                            <div v-on:click="selectCat('Todas')">Todas</div>
+                            <div v-on:click="selectCat($('courseListAdm.allF'))">{{ $t("courseListAdm.allF") }}</div>
                             <div v-for="category in this.categories" :key="category.id" v-on:click="selectCat(category.name)">{{ category.name }}</div>
                         </div>
                     </div>    
                 </div>
                 <div>
-                    <p>Estado:</p>
+                    <p>{{ $t("courseListAdm.state") }}:</p>
                     <div class="custom-select">
                         <div class="selected" :class="{ open: stateOpen }" v-on:click="stateOpen=!stateOpen; catOpen=false; orderOpen=false">{{ this.state }}</div>
                         <div class="items" :class="{ selectHide: !stateOpen }">
-                            <div v-on:click="selectState('Todos')">Todos</div>
-                            <div v-on:click="selectState('Ativo')">Ativo</div>
-                            <div v-on:click="selectState('Inativo')">Inativo</div>
-                            <div v-on:click="selectState('Pendente')">Pendente</div>
-                            <div v-on:click="selectState('Rejeitado')">Rejeitado</div>
+                            <div v-on:click="selectState($t('courseListAdm.allM'))">{{ $t("courseListAdm.allM") }}</div>
+                            <div v-on:click="selectState($t('states.active'))">{{ $t("states.active") }}</div>
+                            <div v-on:click="selectState($t('states.inactive'))">{{ $t("states.inactive") }}</div>
+                            <div v-on:click="selectState($t('states.pending'))">{{ $t("states.pending") }}</div>
+                            <div v-on:click="selectState($t('states.rejected'))">{{ $t("states.rejected") }}</div>
                         </div>
                     </div>    
                 </div>
                 <div>
-                    <p>Ordernar por:</p>
+                    <p>{{ $t("courseListAdm.orderBy") }}:</p>
                     <div class="custom-select">
                         <div class="selected" :class="{ open: orderOpen }" v-on:click="orderOpen=!orderOpen; catOpen=false; stateOpen=false">{{ this.order }}</div>
                         <div class="items" :class="{ selectHide: !orderOpen }">
-                            <div v-on:click="selectOrder('Mais recente')">Mais recente</div>
-                            <div v-on:click="selectOrder('Mais antigo')">Mais antigo</div>
-                            <div v-on:click="selectOrder('Preço decrescente')">Preço decrescente</div>
-                            <div v-on:click="selectOrder('Preço crescente')">Preço crescente</div>
+                            <div v-on:click="selectOrder($t('order.newest'))">{{ $t("order.newest") }}</div>
+                            <div v-on:click="selectOrder($t('order.oldest'))">{{ $t("order.oldest") }}</div>
+                            <div v-on:click="selectOrder($t('order.mostExpensive'))">{{ $t("order.mostExpensive") }}</div>
+                            <div v-on:click="selectOrder($t('order.cheapest'))">{{ $t("order.cheapest") }}</div>
                         </div>
                     </div>    
                 </div>
             </div>
             <div class="responsive-filter-btn">
-                <button v-on:click="toggleRespFilter"><p>FILTRAR</p><span class="material-icons">filter_alt</span></button>
+                <button v-on:click="toggleRespFilter"><p>{{ $t("courseListAdm.FILTER") }}</p><span class="material-icons">filter_alt</span></button>
             </div>
         </div>
         <div class="responsive-filter" :class="{ 'hidden': !this.responsiveFilter }">
             <div class="responsive-filter-header">
-                <p>Filtrar</p>
+                <p>{{ $t("courseListAdm.filter") }}</p>
                 <span v-on:click="toggleRespFilter" class="material-icons">close</span>
             </div>
             <hr>
             <div class="responsive-filter-filters">
                 <div>
-                    <p>Categoria:</p>
+                    <p>{{ $t("courseListAdm.category") }}:</p>
                     <div class="custom-select">
                         <div class="selected" :class="{ open: catOpen }" v-on:click="catOpen=!catOpen; stateOpen=false; orderOpen=false">{{ this.category }}</div>
                         <div class="items" :class="{ selectHide: !catOpen }">
-                            <div v-on:click="selectCat('Todas')">Todas</div>
-                            <div v-on:click="selectCat('cat1')">cat1</div>
-                            <div v-on:click="selectCat('cat10')">cat10</div>
-                            <div v-on:click="selectCat('cat11')">cat11</div>
-                            <div v-on:click="selectCat('cat12')">cat12</div>
-                            <div v-on:click="selectCat('cat13')">cat13</div>
+                            <div v-on:click="selectCat($('courseListAdm.allF'))">{{ $t("courseListAdm.allF") }}</div>
+                            <div v-for="category in this.categories" :key="category.id" v-on:click="selectCat(category.name)">{{ category.name }}</div>
                         </div>
                     </div>    
                 </div>
                 <div>
-                    <p>Estado:</p>
+                    <p>{{ $t("courseListAdm.state") }}:</p>
                     <div class="custom-select">
                         <div class="selected" :class="{ open: stateOpen }" v-on:click="stateOpen=!stateOpen; catOpen=false; orderOpen=false">{{ this.state }}</div>
                         <div class="items" :class="{ selectHide: !stateOpen }">
-                            <div v-on:click="selectState('Todos')">Todos</div>
-                            <div v-on:click="selectState('Ativo')">Ativo</div>
-                            <div v-on:click="selectState('Inativo')">Inativo</div>
-                            <div v-on:click="selectState('Pendente')">Pendente</div>
-                            <div v-on:click="selectState('Rejeitado')">Rejeitado</div>
+                            <div v-on:click="selectState($t('courseListAdm.allM'))">{{ $t("courseListAdm.allM") }}</div>
+                            <div v-on:click="selectState($t('states.active'))">{{ $t("states.active") }}</div>
+                            <div v-on:click="selectState($t('states.inactive'))">{{ $t("states.inactive") }}</div>
+                            <div v-on:click="selectState($t('states.pending'))">{{ $t("states.pending") }}</div>
+                            <div v-on:click="selectState($t('states.rejected'))">{{ $t("states.rejected") }}</div>
                         </div>
                     </div>    
                 </div>
                 <div>
-                    <p>Ordernar por:</p>
+                    <p>{{ $t("courseListAdm.orderBy") }}:</p>
                     <div class="custom-select">
                         <div class="selected" :class="{ open: orderOpen }" v-on:click="orderOpen=!orderOpen; catOpen=false; stateOpen=false">{{ this.order }}</div>
                         <div class="items" :class="{ selectHide: !orderOpen }">
-                            <div v-on:click="selectOrder('Mais recente')">Mais recente</div>
-                            <div v-on:click="selectOrder('Mais antigo')">Mais antigo</div>
-                            <div v-on:click="selectOrder('Inscs. decrescente')">Inscs. decrescente</div>
-                            <div v-on:click="selectOrder('Inscs. crescente')">Inscs. crescente</div>
-                            <div v-on:click="selectOrder('Preço decrescente')">Preço decrescente</div>
-                            <div v-on:click="selectOrder('Preço crescente')">Preço crescente</div>
+                            <div v-on:click="selectOrder($t('order.newest'))">{{ $t("order.newest") }}</div>
+                            <div v-on:click="selectOrder($t('order.oldest'))">{{ $t("order.oldest") }}</div>
+                            <div v-on:click="selectOrder($t('order.mostExpensive'))">{{ $t("order.mostExpensive") }}</div>
+                            <div v-on:click="selectOrder($t('order.cheapest'))">{{ $t("order.cheapest") }}</div>
                         </div>
                     </div>     
                 </div>
@@ -100,6 +94,8 @@
 </template>
 
 <script>
+import { useI18n } from 'vue-i18n'
+
 export default {
     name: 'CourseListAdmFilter',
     props: {
@@ -113,13 +109,22 @@ export default {
             catOpen: false,
             orderOpen: false,
             stateOpen: false,
-            category: "Todas",
-            state: "Todos",
-            order: "Mais recente",
+            category: "",
+            state: "",
+            order: "",
             responsiveFilter: false
         }
     },
+    setup() {
+        const { t } = useI18n();
+
+        return { t };
+    },
     mounted(){
+        this.order = this.t("order.newest");
+        this.category = this.t("courseListAdm.allF");
+        this.state = this.t("courseListAdm.allM");
+
         let filter = {
             name: null,
             category: this.category,

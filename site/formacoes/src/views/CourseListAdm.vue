@@ -5,7 +5,7 @@
             <CourseListAdmCourseCard v-for="course in this.coursesDisplay" :key="course.id" v-bind:course="course" v-on:changeStateCourse="changeStateCourse" v-on:changeStateVideo="changeStateVideo"/>
             <div class="no-results" :class="{ 'd-none': !noResults }">
                 <span class="material-icons search-icon">warning</span>
-                <p>Não existem resultados para a pesquisa.</p>    
+                <p>{{ $t("courseListAdm.noResults") }}</p>    
             </div>
         </div>
         <Pagination2 v-bind:totalItems="this.coursesFiltered.length" v-bind:itemsPerPage="this.itemsPerPage" v-on:changePage="changePage"/>
@@ -87,11 +87,11 @@ export default {
     methods: {
         filter(filter) {
             this.filterInfo = filter;
-            this.coursesDisplay = [];
+            this.coursesDisplay = [];   
             this.coursesFiltered = [...this.courses];
 
-            if(filter.state != 'Todos') {
-                if(filter.state == "Pendente") {
+            if(filter.state != this.$t("courseListAdm.allM")) {
+                if(filter.state == this.$t("states.pending")) {
                     this.coursesFiltered = [];
                     this.courses.forEach(course => {
                         if(course.state == "Pendente") this.coursesFiltered.push(course);
@@ -102,7 +102,7 @@ export default {
                         }
                     });
                 } else {
-                    this.coursesFiltered = this.courses.filter(course => course.state == filter.state);
+                    this.coursesFiltered = this.courses.filter(course => course.state == this.translateStatePt(filter.state));
                 }
             }
 
@@ -110,21 +110,21 @@ export default {
                 this.coursesFiltered = this.coursesFiltered.filter(course => course.name.toLowerCase().includes(filter.name) || course.nameCr.toLowerCase().includes(filter.name));
             }
 
-            if(filter.category != 'Todas') {
+            if(filter.category != this.$t("courseListAdm.allF")) {
                 this.coursesFiltered = this.coursesFiltered.filter(course => course.category == filter.category);
             }
 
             switch(filter.order) {
-                case "Preço decrescente":
+                case this.$t("order.mostExpensive"):
                     this.coursesFiltered.sort((a, b) => a.price < b.price ? 1 : (b.price < a.price ? -1 : 0));
                     break;
-                case "Preço crescente":
+                case this.$t("order.cheapest"):
                     this.coursesFiltered.sort((a, b) => (a.price > b.price ? 1 : (b.price > a.price) ? -1 : 0));
                     break;
-                case "Mais recente":
+                case this.$t("order.newest"):
                     this.coursesFiltered.sort((a, b) => new Date(a.date) < new Date(b.date) ? 1 : new Date(b.date) < new Date(a.date) ? -1 : 0);
                     break;
-                case "Mais antigo":
+                case this.$t("order.oldest"):
                     this.coursesFiltered.sort((a, b) => new Date(a.date) > new Date(b.date) ? 1 : new Date(b.date) > new Date(a.date) ? -1 : 0);
                     break;
                 default:
@@ -233,6 +233,18 @@ export default {
                     this.categories.push({id: this.categories.length, name: c.category});
                 }
             });
+        },
+        translateStatePt(state) {
+            switch(state) {
+                case "Inactive":
+                    return "Inativo";
+                case "Active":
+                    return "Ativo";
+                case "Pending":
+                    return "Pendente";
+                case "Denied":
+                    return "Rejeitado";
+            }
         }
     }
 }

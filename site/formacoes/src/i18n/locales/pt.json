@@ -35,5 +35,74 @@
         "inactive": "Inativo",
         "pending": "Pendente",
         "rejected": "Rejeitado"
+    },
+    "order": {
+        "newest": "Mais recente",
+        "oldest": "Mais antigo",
+        "cheapest": "Preço crescente",
+        "mostExpensive": "Preço decrescente"
+    },
+    "paginations": {
+        "of": "de"
+    },
+    "courseListAdm": {
+        "noResults": "Não existem resultados para a pesquisa.",
+        "creator": "Criador",
+        "price": "Preço",
+        "catAbr": "Cat",
+        "category": "Categoria",
+        "orderBy": "Ordenar por",
+        "state": "Estado",
+        "date": "Data",
+        "allF": "Todas",
+        "allM": "Todos",
+        "activate": "ATIVAR",
+        "deactivate": "DESATIVAR",
+        "makePending": "TORNAR PENDENTE",
+        "approve": "APROVAR",
+        "reject": "REJEITAR",
+        "FILTER": "FILTRAR",
+        "filter": "Filtrar",
+        "search": "Pesquisar..."
+    },
+    "login": {
+        "login": "Iniciar Sessão",
+        "register": "Criar Conta",
+        "hasAccount": "Já tem conta?",
+        "loginText": "Faça inicio de sessão com a sua conta existente e venha aprender.",
+        "new": "Novo aqui?",
+        "registerText": "Crie já uma conta e venha conhecer os nossos cursos.",
+        "username": "Nome de Utilizador",
+        "password": "Palavra-Passe",
+        "LOGIN": "INICIAR SESSÃO",
+        "REGISTER": "CRIAR CONTA",
+        "email": "E-mail"
+    },
+    "myDiplomas": {
+        "search": "Pesquisar...",
+        "allF": "Todas",
+        "FILTER": "FILTRAR",
+        "filter": "Filtrar",
+        "category": "Categoria",
+        "orderBy": "Ordenar por",
+        "noResults": "Não existem resultados para a pesquisa.",
+        "CERTIFICATE": "CERTIFICADO",
+        "OFTRAINING": "DE FORMAÇÃO",
+        "success": "Completou com sucesso a formação.",
+        "trainer": "Formador"
+    },
+    "profile": {
+        "myCourses": "Os meus cursos",
+        "myDiplomas": "Os meus diplomas",
+        "creatorCourses": "Cursos do criador",
+        "noCourses": "Ainda não comprou nenhum curso. Assim que comprar cursos, estes aparecerão aqui.",
+        "noDiplomas": "Ainda não completou nenhum curso. Assim que completar um curso, o diploma correspondente aparecerá aqui.",
+        "noCreator": "Este criador ainda está a trabalhar em cursos para publicar. No futuro, quando este criador criar um curso, este aparecerá aqui.",
+        "subscribe": "Subscrever",
+        "unsubscribe": "Terminar subscrição",
+        "description": "Descrição",
+        "name": "Nome",
+        "EDIT": "EDITAR",
+        "SAVE": "GUARDAR"
     }
 }

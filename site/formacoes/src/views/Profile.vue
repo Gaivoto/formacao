@@ -3,33 +3,33 @@
         <UserProfileInfo v-bind:user="this.user" v-on:alterar-dados="alterarDadosUser" v-on:createSubscription="createSubscriptionUser" v-on:endSubscription="endSubscription" />
         <div class="profile-bottom" v-if="!this.isUserAdm && this.ownProfile">
             <div>
-                <router-link :to="Tr.i18nRoute({ name: 'Meus Cursos', params: { id: this.getUserId } })" class="profile-bottom-title">Os meus cursos</router-link>
+                <router-link :to="Tr.i18nRoute({ name: 'Meus Cursos', params: { id: this.getUserId } })" class="profile-bottom-title">{{ $t("profile.myCourses") }}</router-link>
                 <div class="profile-list">
                     <UserProfileCourseCard v-for="course in this.courses" :key="course.id" v-bind:course="course" />
                     <div class="no-items" v-if="!this.userHasCourses">
                         <span class="material-icons">info</span>
-                        <p>Ainda não comprou nenhum curso. Assim que comprar cursos, estes aparecerão aqui.</p>
+                        <p>{{ $t("profile.noCourses") }}</p>
                     </div>
                 </div>
             </div>
             <div>
-                <router-link :to="Tr.i18nRoute({ name: 'Meus Diplomas', params: { id: this.getUserId } })" class="profile-bottom-title">Os meus diplomas</router-link>
+                <router-link :to="Tr.i18nRoute({ name: 'Meus Diplomas', params: { id: this.getUserId } })" class="profile-bottom-title">{{ $t("profile.myDiplomas") }}</router-link>
                 <div class="profile-list last-list">
                     <UserProfileDiplomaCard v-for="diploma in this.diplomas" :key="diploma.id" v-bind:diploma="diploma" />
                     <div class="no-items" v-if="!this.userHasDiplomas">
                         <span class="material-icons">info</span>
-                        <p>Ainda não completou nenhum curso. Assim que completar um curso, o diploma correspondente aparecerá aqui.</p>
+                        <p>{{ $t("profile.noDiplomas") }}</p>
                     </div>
                 </div>
             </div>
         </div>
         <div class="profile-bottom creator-courses" v-if="!this.ownProfile">
-            <p class="profile-bottom-title">Cursos do criador</p>
+            <p class="profile-bottom-title">{{ $t("profile.creatorCourses") }}</p>
             <div class="row creator-list">
                 <CreatorProfileCourseCard v-for="course in this.courses" :key="course.id" v-bind:course="course" class="col-2" />
                 <div class="no-items" v-if="!this.userHasCourses">
                     <span class="material-icons">construction</span>
-                    <p>Este criador ainda está a trabalhar em cursos para publicar. No futuro, quando este criador criar um curso, este aparecerá aqui.</p>
+                    <p>{{ $t("profile.noCreator") }}</p>
                 </div>
             </div>
         </div>

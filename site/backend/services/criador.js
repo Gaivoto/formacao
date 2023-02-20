@@ -82,7 +82,7 @@ async function getCriador(headers, id) {
                             promises.push(dbSubs.existsSubscricao(value.user.id, id));
 
                             value3.forEach(c => {
-                                promises.push(dbVide.getAllVideosFromCourse(c.id));
+                                promises.push(dbVide.getAllVideosFromCourse(c.id_course));
                             });
 
                             Promise.all(promises).then(values => {
