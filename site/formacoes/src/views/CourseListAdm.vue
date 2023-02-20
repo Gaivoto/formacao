@@ -236,13 +236,13 @@ export default {
         },
         translateStatePt(state) {
             switch(state) {
-                case "Inactive":
+                case this.$t("states.inactive"):
                     return "Inativo";
-                case "Active":
+                case this.$t("states.active"):
                     return "Ativo";
-                case "Pending":
+                case this.$t("states.pending"):
                     return "Pendente";
-                case "Denied":
+                case this.$t("states.denied"):
                     return "Rejeitado";
             }
         }

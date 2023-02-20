@@ -3,12 +3,23 @@
         "pt": "Português",
         "en": "Inglês"
     },
-    "page": {
-        "teste": "sus",
-        "bruh": "amongus"
-    },
-    "topbar": {
-        "search": "Pesquisar"
+    "pages": {
+        "landing": "Landing",
+        "notFound": "NotFound",
+        "course": "Curso",
+        "courseList": "Lista de Cursos",
+        "courses": "Cursos",
+        "content": "Conteúdo",
+        "workshop": "Workshop",
+        "analytics": "Estatísticas",
+        "login": "Login",
+        "profile": "Perfil do Utilizador",
+        "myCourses": "Meus Cursos",
+        "myDiplomas": "Meus Diplomas",
+        "settings": "Preferências",
+        "videoPlayer": "Vídeo",
+        "userList": "Lista de Users",
+        "home": "Home"
     },
     "home": {
         "courses": "Cursos",
@@ -135,5 +146,16 @@
         "name": "Nome",
         "EDIT": "EDITAR",
         "SAVE": "GUARDAR"
+    },
+    "videoPlayer": {
+        "description": "Descrição"
+    },
+    "topbar": {
+        "search": "Pesquisar...",
+        "creator": "Criador",
+        "course": "Curso",
+        "noResults": "Não existem resultados para a pesquisa.",
+        "courses": "Cursos",
+        "login": "Entrar"
     }
 }

@@ -1,15 +1,25 @@
 {
-    
     "locale": {
         "pt": "Portuguese",
         "en": "English"
     },
-    "page": {
-        "teste": "teste1",
-        "bruh": "teste2"
-    },
-    "topbar": {
-        "search": "Search"
+    "pages": {
+        "landing": "Landing",
+        "notFound": "NotFound",
+        "course": "Course",
+        "courseList": "Course List",
+        "courses": "Courses",
+        "content": "Content",
+        "workshop": "Workshop",
+        "analytics": "Analytics",
+        "login": "Login",
+        "profile": "User Profile",
+        "myCourses": "My Courses",
+        "myDiplomas": "My Diplomas",
+        "settings": "Settings",
+        "videoPlayer": "Video",
+        "userList": "User List",
+        "home": "Home"
     },
     "home": {
         "courses": "Courses",
@@ -136,5 +146,16 @@
         "name": "Name",
         "EDIT": "EDIT",
         "SAVE": "SAVE"
+    },
+    "videoPlayer": {
+        "description": "Description"
+    },
+    "topbar": {
+        "search": "Search...",
+        "creator": "Creator",
+        "course": "Course",
+        "noResults": "There are no matches for your search.",
+        "courses": "Courses",
+        "login": "Login"
     }
 }
