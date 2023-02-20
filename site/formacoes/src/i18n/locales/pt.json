@@ -44,5 +44,16 @@
         "inactive": "Inativo",
         "pending": "Pendente",
         "rejected": "Rejeitado"
+    },
+    "myCourses": {
+        "warning": "Não existem resultados para a pesquisa.",
+        "category": "Categoria:",
+        "orderBy": "Ordenar por:",
+        "search": "Pesquisar...",
+        "recentlyAdded": "Mais Recente",
+        "formerlyAdded": "Mais Antigo",
+        "descendingProgress": "Progresso Decrescente",
+        "ascendingProgress": "Progresso Crescente",
+        "filter": "Filtrar"
     }
 }

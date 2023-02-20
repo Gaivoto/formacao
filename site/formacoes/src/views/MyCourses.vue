@@ -5,7 +5,7 @@
             <MyCoursesCourseCard v-for="course in this.coursesDisplay" :key="course.id" v-bind:course="course" v-bind:sidebar="this.sidebar"/>
             <div class="no-results" :class="{ 'd-none': !noResults }">
                 <span class="material-icons search-icon">warning</span>
-                <p>Não existem resultados para a pesquisa.</p>    
+                <p>{{ $t("myCourses.warning") }}</p>    
             </div>
         </div>
         <Pagination v-on:change-page="changePage" v-bind:numberOfPages="numberOfPages"/>
@@ -18,6 +18,7 @@ import MyCoursesFilter from '../components/myCourses/MyCoursesFilter.vue'
 import MyCoursesCourseCard from '../components/myCourses/MyCoursesCourseCard.vue'
 import Pagination from '../components/paginations/Pagination.vue'
 import Tr from '@/i18n/translation.js'
+import { useI18n } from 'vue-i18n'
 
 export default {
     name: 'Courses',
@@ -44,7 +45,9 @@ export default {
         }
     },
     setup() {
-        return { Tr };
+        const { t } = useI18n()
+
+        return { Tr, t };
     },
     created(){
         if(!this.$store.getters.getUser.id) {
@@ -104,7 +107,6 @@ export default {
             this.filterInfo = filter;
             this.coursesDisplay = [];
             this.coursesFiltered = [...this.courses];
-
             if(filter.name) {
                 this.coursesFiltered = this.coursesFiltered.filter(c => c.name.toLowerCase().includes(filter.name) || c.nameCr.toLowerCase().includes(filter.name));
             }
@@ -113,16 +115,16 @@ export default {
                 this.coursesFiltered = this.coursesFiltered.filter(c => c.category == filter.category);
             }
             switch(filter.order) {
-                case "Mais recente":
+                case this.$t("myCourses.recentlyAdded"):
                     this.coursesFiltered.sort((a, b) => a.dateBought < b.dateBought ? 1 : b.dateBought < a.dateBought ? -1 : 0);
                     break;
-                case "Mais antigo":
+                case this.$t("myCourses.formerlyAdded"):
                     this.coursesFiltered.sort((a, b) => a.dateBought > b.dateBought ? 1 : b.dateBought > a.dateBought ? -1 : 0);
                     break;
-                case "Progresso decrescente":
+                case this.$t("myCourses.descendingProgress"):
                     this.coursesFiltered.sort((a, b) => a.progress < b.progress ? 1 : (b.progress < a.progress ? -1 : 0));
                     break;
-                case "Progresso crescente":
+                case this.$t("myCourses.ascendingProgress"):
                     this.coursesFiltered.sort((a, b) => a.progress > b.progress ? 1 : (b.progress > a.progress ? -1 : 0));
                     break;
                 default:
