@@ -56,5 +56,16 @@
         "descendingProgress": "Descending Progress",
         "ascendingProgress": "Ascending Progress",
         "filter": "Filter"
+    },
+    "courses": {
+        "warning": "There are no Courses that match your search.",
+        "category": "Category:",
+        "orderBy": "Order By:",
+        "search": "Search...",
+        "recentlyAdded": "Recently Added",
+        "formerlyAdded": "Formerly Added",
+        "priceHighToLow": "Price High To Low",
+        "priceLowToHigh": "Price Low to High",
+        "filter": "Filter"
     }
 }

@@ -5,7 +5,7 @@
             <CoursesListCourseCard v-for="course in this.coursesDisplay" :key="course.id" v-bind:course="course" v-bind:sidebar="this.sidebar"/>
             <div class="no-results" :class="{ 'd-none': !noResults }">
                 <span class="material-icons search-icon">warning</span>
-                <p>Não existem resultados para a pesquisa.</p>    
+                <p>{{ $t("courses.warning")}}</p>    
             </div>
         </div>
         <Pagination v-on:change-page="changePage" v-bind:numberOfPages="numberOfPages"/>
@@ -17,6 +17,8 @@ import axios from 'axios';
 import CoursesListFilter from "../components/courses/CoursesListFilter.vue";
 import CoursesListCourseCard from "../components/courses/CoursesListCourseCard.vue";
 import Pagination from "../components/paginations/Pagination.vue";
+import Tr from '@/i18n/translation.js'
+import { useI18n } from 'vue-i18n'
 
 export default {
     name: "Courses",
@@ -41,6 +43,11 @@ export default {
             coursesPerPage: 8,
             filterInfo: {}
         }
+    },
+    setup() {
+        const { t } = useI18n()
+
+        return { Tr, t };
     },
     created() {
         axios({
@@ -93,16 +100,16 @@ export default {
             }
 
             switch (filter.order) {
-                case "Mais recente":
+                case this.$t("courses.recentlyAdded"):
                     this.coursesFiltered.sort((a, b) => new Date(a.date) < new Date(b.date) ? 1 : new Date(b.date) < new Date(a.date) ? -1 : 0);
                     break;
-                case "Mais antigo":
+                case this.$t("courses.formerlyAdded"):
                     this.coursesFiltered.sort((a, b) => new Date(a.date) > new Date(b.date) ? 1 : new Date(b.date) > new Date(a.date) ? -1 : 0);
                     break;
-                case "Preço decrescente":
+                case this.$t("courses.priceHighToLow"):
                     this.coursesFiltered.sort((a, b) => a.price < b.price ? 1 : b.price < a.price ? -1 : 0);
                     break;
-                case "Preço crescente":
+                case this.$t("courses.priceLowToHigh"):
                     this.coursesFiltered.sort((a, b) => a.price > b.price ? 1 : b.price > a.price ? -1 : 0);
                     break;
                 default:
