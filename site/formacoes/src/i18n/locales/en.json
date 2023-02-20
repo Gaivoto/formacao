@@ -1,15 +1,25 @@
 {
-    
     "locale": {
         "pt": "Portuguese",
         "en": "English"
     },
-    "page": {
-        "teste": "teste1",
-        "bruh": "teste2"
-    },
-    "topbar": {
-        "search": "Search"
+    "pages": {
+        "landing": "Landing",
+        "notFound": "NotFound",
+        "course": "Course",
+        "courseList": "Course List",
+        "courses": "Courses",
+        "content": "Content",
+        "workshop": "Workshop",
+        "analytics": "Analytics",
+        "login": "Login",
+        "profile": "User Profile",
+        "myCourses": "My Courses",
+        "myDiplomas": "My Diplomas",
+        "settings": "Settings",
+        "videoPlayer": "Video",
+        "userList": "User List",
+        "home": "Home"
     },
     "home": {
         "courses": "Courses",
@@ -81,5 +91,85 @@
         "state": "State:",
         "deactivate": "Deactivate",
         "activate": "Activate"
+    },    
+    "order": {
+        "newest": "Newest",
+        "oldest": "Oldest",
+        "cheapest": "Price low to high",
+        "mostExpensive": "Price high to low"
+    },
+    "paginations": {
+        "of": "of"
+    },
+    "courseListAdm": {
+        "noResults": "There are no matches for your search.",
+        "creator": "Creator",
+        "price": "Price",
+        "catAbr": "Cat",
+        "category": "Category",
+        "orderBy": "Order by",
+        "state": "State",
+        "date": "Date",
+        "allF": "All",
+        "allM": "All",
+        "activate": "ACTIVATE",
+        "deactivate": "DEACTIVATE",
+        "makePending": "MAKE PENDING",
+        "approve": "APPROVE",
+        "reject": "DENY",
+        "FILTER": "FILTER",
+        "filter": "Filter",
+        "search": "Search..."
+    },
+    "login": {
+        "login": "Login",
+        "register": "Register",
+        "hasAccount": "Already have an account?",
+        "loginText": "Login with your account and come learn with us.",
+        "new": "Are you new here?",
+        "registerText": "Create a new account and find out more about our courses.",
+        "username": "Username",
+        "password": "Password",
+        "LOGIN": "LOGIN",
+        "REGISTER": "REGISTER",
+        "email": "E-mail"
+    },
+    "myDiplomas": {
+        "search": "Search...",
+        "allF": "All",
+        "FILTER": "FILTER",
+        "filter": "Filter",
+        "category": "Category",
+        "orderBy": "Order by",
+        "noResults": "There are no matches for your search.",
+        "CERTIFICATE": "CERTIFICATE",
+        "OFTRAINING": "OF TRAINING",
+        "success": "Successfully completed the course",
+        "trainer": "Trainer"
+    },
+    "profile": {
+        "myCourses": "My Courses",
+        "myDiplomas": "My Diplomas",
+        "creatorCourses": "Creator's Courses",
+        "noCourses": "You have not bought any course yet. Once you do, the courses will show up here.",
+        "noDiplomas": "You have not completed any course yet. Once you do, the completed courses will show up here.",
+        "noCreator": "This creator is still working on creating courses. Once the creator has published a course, it will show up here.",
+        "subscribe": "Subscribe",
+        "unsubscribe": "Unsubscribe",
+        "description": "Description",
+        "name": "Name",
+        "EDIT": "EDIT",
+        "SAVE": "SAVE"
+    },
+    "videoPlayer": {
+        "description": "Description"
+    },
+    "topbar": {
+        "search": "Search...",
+        "creator": "Creator",
+        "course": "Course",
+        "noResults": "There are no matches for your search.",
+        "courses": "Courses",
+        "login": "Login"
     }
 }

@@ -99,7 +99,8 @@ export default {
         }
     },
     created() {
-        this.type = this.t("home.recommended")
+        this.type = this.t("home.recommended");
+
         axios({
             method: `get`,
             url: `${import.meta.env.VITE_HOST}/cursos/home`
@@ -143,7 +144,7 @@ export default {
         });
     },
     setup() {
-        const { t } = useI18n()
+        const { t } = useI18n();
 
         return { Tr, t };
     },

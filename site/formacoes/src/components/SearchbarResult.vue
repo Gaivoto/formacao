@@ -3,7 +3,7 @@
         <img :src="this.imageUrl">
         <div>
             <p>{{ this.item.name }}</p>
-            <p>{{ this.item.resultType }}</p>
+            <p>{{ this.translatedResultType }}</p>
         </div>
     </router-link>
 </template>
@@ -34,6 +34,10 @@ export default {
         route() {
            if(this.item.resultType == "Curso") return "Curso";
            return "Perfil do Utilizador";
+        },
+        translatedResultType() {
+            if(this.item.resultType == "Curso") return this.$t("topbar.course");
+            return this.$t("topbar.creator");
         }
     },
     methods: {

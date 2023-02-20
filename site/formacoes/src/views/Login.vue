@@ -4,33 +4,33 @@
             <div class="signin-signup">
                 <!--Login Form-->
                 <div class="sign-in-form form">
-                    <h2 class="title">Iniciar Sessão</h2>
+                    <h2 class="title">{{ $t("login.login") }}</h2>
                     <div class="input-field">
                         <span class="material-icons">person</span>
-                        <input ref="loginUsername" type="text" placeholder="Nome de Utilizador" />
+                        <input ref="loginUsername" type="text" :placeholder='$t("login.username")' />
                     </div>
                     <div class="input-field">
                         <span class="material-icons">lock</span>
-                        <input ref="loginPassword" type="password" placeholder="Palavra-Passe" />
+                        <input ref="loginPassword" type="password" :placeholder='$t("login.password")' />
                     </div>
-                    <input v-on:click="login" type="submit" value="Entrar" class="btn solid" />
+                    <input v-on:click="login" type="submit" :value='$t("login.LOGIN")' class="btn solid" />
                 </div>
                 <!--Registo Form-->
                 <div class="sign-up-form form">
-                    <h2 class="title">Criar Conta</h2>
+                    <h2 class="title">{{ $t("login.register") }}</h2>
                     <div class="input-field">
                         <span class="material-icons">person</span>
-                        <input ref="registerUsername" type="text" placeholder="Nome de Utilizador" />
+                        <input ref="registerUsername" type="text" :placeholder='$t("login.username")' />
                     </div>
                     <div class="input-field">
                         <span class="material-icons">mail</span>
-                        <input ref="registerEmail" type="email" placeholder="E-mail" />
+                        <input ref="registerEmail" type="email" :placeholder='$t("login.email")' />
                     </div>
                     <div class="input-field">
                         <span class="material-icons">lock</span>
-                        <input ref="registerPassword" type="password" placeholder="Palavra-Passe" />
+                        <input ref="registerPassword" type="password" :placeholder='$t("login.password")' />
                     </div>
-                    <input v-on:click="register" type="submit" class="btn" value="Registar" />
+                    <input v-on:click="register" type="submit" class="btn" :value='$t("login.REGISTER")' />
                 </div>
             </div>
         </div>
@@ -38,12 +38,10 @@
         <div class="panels-container">
             <div class="panel left-panel">
                 <div class="content">
-                    <h3>Novo aqui ?</h3>
-                    <p>
-                    Crie já uma conta e venha conhecer os nossos cursos.
-                    </p>
+                    <h3>{{ $t("login.new") }}</h3>
+                    <p>{{ $t("login.registerText") }}</p>
                     <button v-on:click="signupbtn" ref="signupbtn" class="btn transparent bruv" id="sign-up-btn">
-                    Criar Conta
+                    {{ $t("login.register") }}
                     </button>
                 </div>
                 <img src="../assets/loginimg2.svg" class="image boneco-left" :class="{ 'hidden': !this.loginMode }" alt="" />
@@ -51,12 +49,10 @@
 
             <div class="panel right-panel">
                 <div class="content">
-                    <h3>Já tem conta ?</h3>
-                    <p>
-                    Faça inicio de sessão com a sua conta existente e venha aprender.
-                    </p>
+                    <h3>{{ $t("login.hasAccount") }}</h3>
+                    <p>{{ $t("login.loginText") }}</p>
                     <button v-on:click="signinbtn" ref="signinbtn" class="btn transparent bruv" id="sign-in-btn">
-                    Iniciar Sessão
+                        {{ $t("login.login") }}
                     </button>
                 </div>
                 <img src="../assets/loginimg3.svg" class="image boneco-right" :class="{ 'hidden': this.loginMode }" alt="" />
@@ -80,6 +76,8 @@ export default {
         return { Tr };
     },
     created() {
+        this.$emit('close-sidebar');
+
         if(this.$store.getters.getUser.id) {
             this.$router.push({ name: "Home", params: { locale: Tr.guessDefaultLocale() } });
         } else {
@@ -142,7 +140,7 @@ export default {
                         username: this.$refs.registerUsername.value,
                         password: this.$refs.registerPassword.value,
                         email: this.$refs.registerEmail,
-                        name: "User X",
+                        name: this.$refs.registerUsername.value,
                         description: "",
                         image: "image/default"
                     }

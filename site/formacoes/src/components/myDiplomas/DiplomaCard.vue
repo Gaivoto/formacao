@@ -9,14 +9,14 @@
                 <div class="top-right"></div>
                 <div class="bottom-left"></div>
                 <div class="diploma-text">
-                    <p class="certificado-text">CERTIFICADO</p>
-                    <p class="formacao-text">DE FORMAÇÃO</p>
+                    <p class="certificado-text">{{ $t("myDiplomas.CERTIFICATE") }}</p>
+                    <p class="formacao-text">{{ $t("myDiplomas.OFTRAINING") }}</p>
                     <p class="data">{{ this.formatedDate }}</p>
                     <p class="user">{{ this.user.name }}</p>
-                    <p class="curso-text">Completou com sucesso a formação</p>
+                    <p class="curso-text">{{ $t("myDiplomas.success") }}</p>
                     <p class="curso">{{ this.diploma.course }}</p>
                     <p class="formador">{{ this.diploma.creator }}</p>
-                    <p class="formador-text">Formador</p>
+                    <p class="formador-text">{{ $t("myDiplomas.trainer") }}</p>
                 </div>
             </div>
         </div>

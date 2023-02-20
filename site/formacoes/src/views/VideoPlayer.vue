@@ -3,7 +3,7 @@
         <div class="video-left">    
             <p class="video-title">{{ this.video.title }}</p>
             <VideoPlayerVideo class="video-player" v-bind:video="this.video.name" />
-            <p class="desc-text">Descrição:</p>
+            <p class="desc-text">{{ $t("videoPlayer.description") }}:</p>
             <span class="video-desc">{{ this.video.description }}</span>
         </div>
         <div class="list-container">

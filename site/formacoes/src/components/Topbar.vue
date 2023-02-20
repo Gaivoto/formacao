@@ -5,18 +5,18 @@
                 <p class="logo">Guide Line</p>
             </router-link>
             <p class="hifen"> - </p>
-            <p class="page-name"> {{ this.$route.name }}</p>
+            <p class="page-name"> {{ this.getTranslatedPageName }}</p>
         </div>
 
         <div class="searchbar-container" v-on:click.stop>
             <div class="searchbar">
-                <input type="text" ref="topSearchbar" v-on:input="filterSearchbar" v-on:keydown.enter="goToSearchItem" placeholder="Pesquisar...">
+                <input type="text" ref="topSearchbar" v-on:input="filterSearchbar" v-on:keydown.enter="goToSearchItem" :placeholder='$t("topbar.search")'>
                 <span class="material-icons search-icon">search</span>
             </div> 
             <div ref="topSearchbarResults" class="searchbar-results" :class="{ 'd-none': !searchOpen }">
                 <div class="no-results" v-if="this.noResults">
                     <span class="material-icons search-icon">warning</span>
-                    <p>Não existem resultados para a pesquisa.</p>    
+                    <p>{{ $t("topbar.noResults") }}</p>    
                 </div>
                 <SearchbarResult v-for="item in this.searchResults" :key="item.id + item.type" v-bind:item="item" v-on:click="toggleSearch"/>
             </div>  
@@ -38,10 +38,10 @@
 
         <div class="topbar-right" v-if="!this.isUserLogged">
             <router-link class="topbar-btn" :to="Tr.i18nRoute({ name: 'Cursos', params: { locale: Tr.guessDefaultLocale() } })">
-                <p class="text">Cursos</p>
+                <p class="text">{{ $t("topbar.courses") }}</p>
             </router-link>
             <router-link class="topbar-btn" :to="Tr.i18nRoute({ name: 'Login', params: { locale: Tr.guessDefaultLocale() } })">
-                <p class="text">Login</p>
+                <p class="text">{{ $t("topbar.login") }}</p>
             </router-link>
         </div>
 
@@ -189,6 +189,43 @@ export default {
         isUserLogged() {
             if(this.$store.getters.getUser.id) return true;
             return false;
+        },
+        getTranslatedPageName() {
+            console.log(this.$route.name)
+            switch(this.$route.name) {
+                case "Landing":
+                    return this.$t("pages.landing");
+                case "NotFound":
+                    return this.$t("pages.notFound");
+                case "Home":
+                    return this.$t("pages.home");
+                case "Curso":
+                    return this.$t("pages.course");
+                case "Cursos":
+                    return this.$t("pages.courses");
+                case "Conteúdo":
+                    return this.$t("pages.content");
+                case "Workshop":
+                    return this.$t("pages.workshop");
+                case "Estatísticas":
+                    return this.$t("pages.analytics");
+                case "Login":
+                    return this.$t("pages.login");
+                case "Perfil do Utilizador":
+                    return this.$t("pages.profile");
+                case "Meus Cursos":
+                    return this.$t("pages.myCourses");
+                case "Meus Diplomas":
+                    return this.$t("pages.myDiplomas");
+                case "Preferências":
+                    return this.$t("pages.settings");
+                case "Vídeo":
+                    return this.$t("pages.video");
+                case "Lista de Users":
+                    return this.$t("pages.userList");
+                case "Lista de Cursos":
+                    return this.$t("pages.courseList")
+            }
         }
     },
     methods: {
@@ -232,11 +269,11 @@ export default {
 
             if(filter != ""){
                 this.creators.forEach(cr => {
-                    if(cr.username.toLowerCase().includes(filter) || cr.name.toLowerCase().includes(filter) || "criador".includes(filter)) this.searchResults.push(cr);
+                    if(cr.username.toLowerCase().includes(filter) || cr.name.toLowerCase().includes(filter) || this.$t("topbar.creator").toLowerCase().includes(filter)) this.searchResults.push(cr);
                 });
 
                 this.courses.forEach(co => {
-                    if(co.name.toLowerCase().includes(filter) || co.category.toLowerCase().includes(filter) || "curso".includes(filter)) this.searchResults.push(co);
+                    if(co.name.toLowerCase().includes(filter) || co.category.toLowerCase().includes(filter) || this.$t("topbar.course").toLowerCase().includes(filter)) this.searchResults.push(co);
                 });
             }
         },

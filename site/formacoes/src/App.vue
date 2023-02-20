@@ -5,7 +5,7 @@
 		<div class="topbar-wrapper" v-if="this.displaySidebarTopbar" :class="{ topbarSpaceOpenSidebar: this.sidebarOpen, topbarSpaceNoSidebar: !this.isUserLogged }">
 			<Topbar v-if="this.displaySidebarTopbar" v-bind:notifsOpen="this.notifsOpen" v-bind:searchOpen="this.searchOpen" v-on:toggleNotifs="this.toggleNotifs" v-on:toggleSearch="this.toggleSearch" v-on:openSearch="this.openSearch"/>
 		</div>
-		<router-view class="active-page" :class="{ mainpageSpaceOpenSidebar: this.sidebarOpen, mainpageSpaceClosedSidebar: !this.isLanding && this.isUserLogged }" v-bind:sidebar="this.sidebarOpen" v-on:open-modal="this.openMessageModal"/>	
+		<router-view class="active-page" :class="{ mainpageSpaceOpenSidebar: this.sidebarOpen, mainpageSpaceClosedSidebar: !this.isLanding && this.isUserLogged }" v-bind:sidebar="this.sidebarOpen" v-on:open-modal="this.openMessageModal" v-on:close-sidebar="this.closeSidebar"/>	
 	</div>
 	<MessageModal v-if="this.messageModalOpen" v-bind:msg="this.modalMessage" v-on:close-modal="this.closeMessageModal" />
   </div>
@@ -48,6 +48,9 @@ export default {
 	methods: {
 		toggleSidebar() {
 			this.sidebarOpen = !this.sidebarOpen;
+		},
+		closeSidebar() {
+			this.sidebarOpen = false;
 		},
 		toggleNotifs() {
 			this.notifsOpen = !this.notifsOpen;

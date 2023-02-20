@@ -35,6 +35,7 @@ export default {
         text-align: center;
         margin-left: 28px;
         margin-bottom: 40px;
+        padding: auto;
     }
 
     img {
@@ -49,7 +50,7 @@ export default {
     p {
         color: var(--light);
         margin-bottom: 4px;
-        max-width: 160px;
+        max-width: 100%;
         display: -webkit-box;
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;

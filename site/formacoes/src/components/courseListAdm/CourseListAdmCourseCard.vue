@@ -8,28 +8,28 @@
                 <div>
                     <div class="first-left-div">
                         <router-link :to="Tr.i18nRoute({ name: 'Curso', params: { id: this.course.id, locale: Tr.guessDefaultLocale() } })"><p>{{ this.course.name }}</p></router-link>
-                        <p>Criador: {{ this.course.nameCr }}</p>
+                        <p>{{ $t("courseListAdm.creator") }}: {{ this.course.nameCr }}</p>
                     </div>
                     <div>
-                        <p>Preço: {{ this.course.price }} €</p>
-                        <p>Cat: {{ this.course.category }}</p>
+                        <p>{{ $t("courseListAdm.price") }}: {{ this.course.price }} €</p>
+                        <p>{{ $t("courseListAdm.catAbr") }}: {{ this.course.category }}</p>
                     </div> 
                 </div>
                 <div>
                     <div>
-                        <p>Estado: {{ this.course.state }}</p>
-                        <p>Data: {{ this.formatedDate }}</p>
+                        <p>{{ $t("courseListAdm.state") }}: {{ this.translatedState }}</p>
+                        <p>{{ $t("courseListAdm.date") }}: {{ this.formatedDate }}</p>
                     </div>
                 </div> 
             </div>
             <div class="course-card-right">
-                <button v-if="showButton1" v-on:click="changeStateCourse('Ativo')">ATIVAR</button>
-                <button v-if="showButton2" v-on:click="changeStateCourse('Inativo')">DESATIVAR</button>
+                <button v-if="showButton1" v-on:click="changeStateCourse('Ativo')">{{ $t("courseListAdm.activate") }}</button>
+                <button v-if="showButton2" v-on:click="changeStateCourse('Inativo')">{{ $t("courseListAdm.deactivate") }}</button>
                 <div v-if="showButton3and4" class="button-wrapper">
-                    <button v-on:click="changeStateCourse('Ativo')">APROVAR</button>
-                    <button v-on:click="changeStateCourse('Rejeitado')">REJEITAR</button>
+                    <button v-on:click="changeStateCourse('Ativo')">{{ $t("courseListAdm.approve") }}</button>
+                    <button v-on:click="changeStateCourse('Rejeitado')">{{ $t("courseListAdm.reject") }}</button>
                 </div>
-                <button v-if="showButton5" v-on:click="changeStateCourse('Pendente')">TORNAR PENDENTE</button>     
+                <button v-if="showButton5" v-on:click="changeStateCourse('Pendente')">{{ $t("courseListAdm.makePending") }}</button>     
             </div>
         </div>
         <div ref="pendingNotif" v-if="showNotif" class="pending-div">
@@ -99,6 +99,20 @@ export default {
         },
         formatedDate() {
             return this.course.date.substring(8, 10) + "/" + this.course.date.substring(5, 7) + "/" + this.course.date.substring(0, 4) + " " + this.course.date.substring(11, 19);
+        },
+        translatedState() {
+            switch(this.course.state) {
+                case "Ativo": 
+                    return this.$t('states.active');
+                case "Inativo": 
+                    return this.$t('states.inactive');
+                case "Rejeitado": 
+                    return this.$t('states.rejected');
+                case "Pendente": 
+                    return this.$t('states.pending');
+                default:
+                    return "Erro";
+            }
         }
     },
     methods: {
