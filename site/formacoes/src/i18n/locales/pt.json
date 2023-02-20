@@ -55,5 +55,16 @@
         "descendingProgress": "Progresso Decrescente",
         "ascendingProgress": "Progresso Crescente",
         "filter": "Filtrar"
+    },
+    "courses": {
+        "warning": "Não existem resultados para a pesquisa.",
+        "category": "Categoria:",
+        "orderBy": "Ordenar por:",
+        "search": "Pesquisar...",
+        "recentlyAdded": "Mais Recente",
+        "formerlyAdded": "Mais Antigo",
+        "priceHighToLow": "Mais caros",
+        "priceLowToHigh": "Mais baratos",
+        "filter": "Filtrar"
     }
 }
