@@ -90,8 +90,9 @@
         "name": "Nome:",
         "type": "Tipo:",
         "state": "Estado:",
-        "deactivate": "Desativar",
-        "activate": "Ativar"
+        "deactivate": "DESATIVAR",
+        "activate": "ATIVAR"
+    },
     "order": {
         "newest": "Mais recente",
         "oldest": "Mais antigo",
