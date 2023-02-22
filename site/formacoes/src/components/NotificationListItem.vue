@@ -48,7 +48,7 @@ export default {
                 }
             }
             else {
-                if(id_video == null) {
+                if(this.notification.id_video == null) {
                     return this.notification.message = this.$t("notifications.theCreator") + this.notification.creator_name + this.$t("notifications.postedC") + this.notification.course_name; + "."
                 } 
                 else {
