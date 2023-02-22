@@ -25,7 +25,7 @@
         <div class="topbar-right" v-if="this.isUserLogged">
             <router-link class="user-wrapper" :to="Tr.i18nRoute({ name: 'Perfil do Utilizador', params: { id: this.getUserId } })" :key="this.getUserId">
                 <div class="username">
-                    <p>{{ this.$store.getters.getUser.username }}</p>
+                    <p>{{ this.getUsername }}</p>
                 </div>
                 <div class="image-wrapper">
                     <img id="profile-image" :src="this.imageUrl" />    
@@ -74,10 +74,6 @@ export default {
         },
         searchOpen: {
             type: Boolean,
-            required: true
-        },
-        user: {
-            type: Object,
             required: true
         }
     },
@@ -182,12 +178,13 @@ export default {
                 return false;    
             }
         },
-        getUser() {
-            this.user = this.$store.getter.getUser;
-        },
         getUserId() {
             if(this.$store.getters.getUser.id) return this.$store.getters.getUser.id;
             return 0;
+        },
+        getUsername() {
+            if(this.$store.getters.getUser.username) return this.$store.getters.getUser.username;
+            return "";
         },
         hasNotifs() {
             return (this.notifications.length > 0);

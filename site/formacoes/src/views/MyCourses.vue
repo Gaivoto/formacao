@@ -109,7 +109,7 @@ export default {
                 this.coursesFiltered = this.coursesFiltered.filter(c => c.name.toLowerCase().includes(filter.name) || c.nameCr.toLowerCase().includes(filter.name));
             }
 
-            if(filter.category != this,$t("myCourses.allF")) {
+            if(filter.category != this.$t("myCourses.allF")) {
                 this.coursesFiltered = this.coursesFiltered.filter(c => c.category == filter.category);
             }
             switch(filter.order) {
