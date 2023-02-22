@@ -367,7 +367,7 @@ export default {
         display: none;
     }
 
-    @media (max-width: 1590px) {
+    @media (max-width: 1600px) {
         .searchbar input {
             width: 200px;
         }
@@ -376,27 +376,7 @@ export default {
             width: 180px;
         }
 	}
-
-    @media (max-width: 1370px) {
-        .searchbar input {
-            width: 150px;
-        }
-
-        .custom-select {
-            width: 130px;
-        }
-	}
-
-    @media (max-width: 1200px) {
-        .searchbar input {
-            width: 150px;
-        }
-
-        .custom-select {
-            width: 130px;
-        }
-	}
-
+    
     @media (max-width: 1450px) {
         .filter-div > div {
             display: block;

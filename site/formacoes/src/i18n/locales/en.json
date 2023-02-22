@@ -89,8 +89,8 @@
         "name": "Name:",
         "type": "Type:",
         "state": "State:",
-        "deactivate": "Deactivate",
-        "activate": "Activate"
+        "deactivate": "DEACTIVATE",
+        "activate": "ACTIVATE"
     },    
     "order": {
         "newest": "Newest",
