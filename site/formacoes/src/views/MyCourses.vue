@@ -67,6 +67,7 @@ export default {
                 if(value.data.access_token) this.$store.commit('setAccessToken', value.data.access_token);
 
                 value.data.courses.forEach(c => this.courses.push(c));
+                console.log(value.data.courses)
                 
                 this.coursesFiltered = [...this.courses];
 
@@ -109,7 +110,7 @@ export default {
                 this.coursesFiltered = this.coursesFiltered.filter(c => c.name.toLowerCase().includes(filter.name) || c.nameCr.toLowerCase().includes(filter.name));
             }
 
-            if(filter.category != "Todas") {
+            if(filter.category != this.$t("myCourses.allF")) {
                 this.coursesFiltered = this.coursesFiltered.filter(c => c.category == filter.category);
             }
             switch(filter.order) {
