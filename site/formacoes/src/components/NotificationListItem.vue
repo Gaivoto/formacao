@@ -39,7 +39,6 @@ export default {
             return this.notification.date.substring(11, 19) + " " + this.notification.date.substring(8, 10) + "/" + this.notification.date.substring(5, 7) + "/" + this.notification.date.substring(0, 4);
         },
         notificationMessage() {
-            console.log(this.notification.state)
             if(this.$store.getters.getUser.id == this.notification.id_creator) {
                 if(this.notification.id_video == null){
                     return this.notification.message = this.$t("notifications.theStateC") + this.notification.course_name + this.$t("notifications.wasChanged") + this.notification.change_state.toLowerCase(); + ".";
