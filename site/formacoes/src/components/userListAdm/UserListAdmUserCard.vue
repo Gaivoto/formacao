@@ -91,14 +91,10 @@ export default {
 
     .user-card-left p {
         color: var(--light);
-        text-overflow: ellipsis;
-        overflow: hidden;
     }
 
     .user-card-left p:first-child {
         margin-bottom: 28px;
-        text-overflow: ellipsis;
-        overflow: hidden;
     }
 
     .user-card-left > .first-left-div {
@@ -127,6 +123,9 @@ export default {
         color: var(--primary);
         font-size: 24px;
         margin-bottom: 20px;
+    }
+
+    .first-left-div > p, .first-left-div > div > p:last-child {
         text-overflow: ellipsis;
         overflow: hidden;
     }
@@ -141,87 +140,26 @@ export default {
         box-shadow: rgba(20, 14, 49, 0.6) 6px 6px 4px 4px;
     }
 
-    @media (max-width: 1300px) {
-        .user-card-left {
-            width: 600px;
-        }
-    }
-
-    @media (max-width: 1300px) {
-        .user-card-left {
-            width: 500px;
-        }
-    }
-
-    @media (max-width: 1160px) {
-        .user-card-left {
-            gap: 40px;
-        }
-    }
-
-    @media (max-width: 1300px) {
-        .user-card-left {
-            width: 600px;
-        }
-    }
-
-    @media (max-width: 1300px) {
-        .user-card-left {
-            width: 500px;
-        }
-    }
-
-    @media (max-width: 1100px) {
-        .user-card-left {
-            gap: 40px;
-        }
-    }
-
     @media (max-width: 1350px) {
         .user-card-left {
             gap: 40px;
         }
-	}
+    }
 
     @media (max-width: 1250px) {
-        .user-card-left > .first-left-div {
-            width: 200px;
-        }
-	}
-
-    @media (max-width: 1150px) {
-        .user-card-left > .first-left-div {
-            width: 200px;
-        }
-
-        .user-card-container {
-            padding-left: 0px;
-            padding-right: 0px;
-        }
-
-        .user-card {
-            padding: 16px 24px 16px 16px;
-        }
-
-        .user-card-left img {
-            width: 120px;
-            height: 120px;
-        }
-
-        .user-card-left > .first-left-div > div p:first-child {
-            display: none;
-        }
-	}
-
-    @media (max-width: 1100px) {
         .user-card-left {
             gap: 20px;
         }
-	}
 
-    @media (max-width: 1050px) {
-        .user-card-left > .first-left-div {
-            width: 140px;
+        .user-card-left > img {
+            width: 120px;
+            height: 120px;
         }
-	}
+    }
+
+    @media (max-width: 1150px) {
+        .user-card-left > .first-left-div {
+            width: 160px;
+        }
+    }
 </style>

@@ -191,7 +191,6 @@ export default {
             return false;
         },
         getTranslatedPageName() {
-            console.log(this.$route.name)
             switch(this.$route.name) {
                 case "Landing":
                     return this.$t("pages.landing");
