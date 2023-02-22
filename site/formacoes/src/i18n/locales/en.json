@@ -171,5 +171,15 @@
         "noResults": "There are no matches for your search.",
         "courses": "Courses",
         "login": "Login"
+    },
+    "notifications": {
+        "theStateC": "The state of the course: ",
+        "theStateV": "The state of the video: ",
+        "wasChanged": " was changed to ",
+        "theCreator": "The creator ",
+        "postedC": " posted a new course called ",
+        "postedV": " posted a new video called ",
+        "inTheCourse": " in the course "
     }
+
 }
