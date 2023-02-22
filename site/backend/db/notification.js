@@ -16,7 +16,7 @@ sql.connect(config, function (err) {
 async function getAllNotifFromUser(id) {
     const pool = new sql.Request();
     return new Promise((resolve, reject) => {
-        const slct = `SELECT * FROM [Notification] WHERE [id_user] = @id`;
+        const slct = `SELECT n.[id], n.[date], n.[id_user], n.[id_course], n.[id_video], n.[state], n.[change_state], c.[name] AS course_name FROM Notification n INNER JOIN [Course] c  ON n.[id_course] = c.[id] WHERE n.[id_user] = @id;`;
         pool.input('id', sql.VarChar(200), id).query(slct, (err, res) => {
             if (!err) {
                 resolve(res.recordset);
