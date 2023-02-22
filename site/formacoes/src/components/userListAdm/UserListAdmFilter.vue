@@ -92,6 +92,7 @@ export default {
     mounted(){
         this.type = this.t("userListAdm.all");
         this.state = this.t("userListAdm.all");
+
         let filter = {
             name: null,
             type: this.type,

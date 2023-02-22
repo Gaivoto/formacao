@@ -15,7 +15,7 @@ async function getUser(tokens, id) {
                 dbUser.getUser(id).then(value2 => {
                     
                     if (value2.length == 0) {
-                        reject({ code: 404, error: { message: "Este utilizador não existe." } });
+                        reject({ code: 404, error: { message: "noUser" } });
                     } else {
                         let profile = value2[0];
                         profile.access_token = info.access_token;
@@ -31,22 +31,22 @@ async function getUser(tokens, id) {
                         })
                             .catch(error => {
                                 console.log(error);
-                                reject({ code: 400, error: { message: "Algo correu mal com a query dos cursos." } });
+                                reject({ code: 400, error: { message: "backendQueryError" } });
                             });
                     }
                 })
                     .catch(error => {
                         console.log(error);
-                        reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                        reject({ code: 400, error: { message: "backendQueryError" } });
                     });
 
             } else {
-                reject({ code: 403, error: { message: "Um user só pode ver o seu próprio perfil." } });
+                reject({ code: 403, error: { message: "forbidden" } });
             }
         })
             .catch(error => {
                 console.log(error);
-                reject({ code: 401, error: { message: "Token inválido." } });
+                reject({ code: 401, error: { message: "invalidToken" } });
             });
     });
 }
@@ -62,15 +62,15 @@ async function getAllUsers(tokens) {
                 })
                     .catch(error => {
                         console.log(error);
-                        reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                        reject({ code: 400, error: { message: "backendQueryError" } });
                     })
             } else {
-                reject({ code: 403, error: { message: "O user que tentou completar essa ação não é administrador." } });
+                reject({ code: 403, error: { message: "forbidden" } });
             }
         })
             .catch(error => {
                 console.log(error);
-                reject({ code: 401, error: { message: "Token inválido." } });
+                reject({ code: 401, error: { message: "invalidToken" } });
             })
     })
 }
@@ -81,7 +81,7 @@ async function updateUser(tokens, id, user) {
             let info = value;
             if (info.user.id == id) {
                 if (user.name == "" || user.image == "" || user.name == null || user.image == null) {
-                    reject({ code: 400, error: { message: "A alteração não pode ser feita, porque há valores vazios." } });
+                    reject({ code: 400, error: { message: "emptyFields" } });
                 } else {
                     dbUser.updateUser(user, id).then(value => {
                         info.message = "User alterado com sucesso.";
@@ -89,16 +89,16 @@ async function updateUser(tokens, id, user) {
                     })
                         .catch(error => {
                             console.log(error);
-                            reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                            reject({ code: 400, error: { message: "backendQueryError" } });
                         });
                 }
             } else {
-                reject({ code: 403, error: { message: "A operação não foi possível porquê o user associado ao token não é o mesmo a qual estas a tentar fazer update." } });
+                reject({ code: 403, error: { message: "forbidden" } });
             }
         })
             .catch(error => {
                 console.log(error);
-                reject({ code: 401, error: { message: "Token inválido." } });
+                reject({ code: 401, error: { message: "invalidToken" } });
             });
     });
 }
@@ -111,7 +111,7 @@ async function changeUserState(tokens, id, user) {
 
                 dbUser.getUser(id).then(value2 => {
                     if (value2.length == 0) {
-                        reject({ code: 404, error: { message: "Este utilizador não existe." } });
+                        reject({ code: 404, error: { message: "noUser" } });
                     } else {
                         if (user.state == "Inativo" || user.state == "Ativo") {
                             dbUser.changeUserState(user.state, id).then(value => {
@@ -120,24 +120,24 @@ async function changeUserState(tokens, id, user) {
                             })
                                 .catch(error => {
                                     console.log(error);
-                                    reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                                    reject({ code: 400, error: { message: "backendQueryError" } });
                                 });
                         } else {
-                            reject({ code: 400, error: { message: "Estado inválido." } });
+                            reject({ code: 400, error: { message: "invalidState" } });
                         }
                     }
                 })
                     .catch(error => {
                         console.log(error);
-                        reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                        reject({ code: 400, error: { message: "backendQueryError" } });
                     });
             } else {
-                reject({ code: 403, error: { message: "A operação não foi possível porquê o user não é um administrador." } });
+                reject({ code: 403, error: { message: "forbidden" } });
             }
         })
             .catch(error => {
                 console.log(error);
-                reject({ code: 401, error: { message: "Token inválido." } });
+                reject({ code: 401, error: { message: "invalidToken" } });
             });
     });
 }
@@ -169,23 +169,23 @@ async function createUser(user) {
                         })
                             .catch(error => {
                                 console.log(error);
-                                reject({ code: 400, error: { message: "Algo correu mal com a query de insert." } });
+                                reject({ code: 400, error: { message: "backendQueryError" } });
                             });
                     })
                         .catch(error => {
                             console.log(error);
-                            reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                            reject({ code: 400, error: { message: "backendQueryError" } });
                         });
                 } else {
-                    reject({ code: 400, error: { message: 'Já tem um user com esse username.' } });
+                    reject({ code: 400, error: { message: 'usernameTaken' } });
                 }
             })
                 .catch(error => {
                     console.log(error);
-                    reject({ code: 400, error: { message: 'Erro na query.' } });
+                    reject({ code: 400, error: { message: 'backendQueryError' } });
                 });
         } else {
-            reject({ code: 400, error: { message: 'Campos obrigatórios estão vazios.' } });
+            reject({ code: 400, error: { message: 'emptyFields' } });
         }
     })
 }

@@ -55,7 +55,7 @@
         "inactive": "Inativo",
         "pending": "Pendente",
         "rejected": "Rejeitado",
-        "all": "all"
+        "all": "Todos"
     },
     "myCourses": {
         "warning": "Não existem resultados para a pesquisa.",
@@ -66,7 +66,8 @@
         "formerlyAdded": "Mais Antigo",
         "descendingProgress": "Progresso Decrescente",
         "ascendingProgress": "Progresso Crescente",
-        "filter": "Filtrar"
+        "filter": "Filtrar",
+        "allF": "Todas"
     },
     "courses": {
         "warning": "Não existem resultados para a pesquisa.",
@@ -77,7 +78,8 @@
         "formerlyAdded": "Mais Antigo",
         "priceHighToLow": "Mais caros",
         "priceLowToHigh": "Mais baratos",
-        "filter": "Filtrar"
+        "filter": "Filtrar",
+        "allF": "Todas"
     },
     "userListAdm": {
         "warning": "Não existem resultados para a pesquisa.",
@@ -172,6 +174,27 @@
         "noResults": "Não existem resultados para a pesquisa.",
         "courses": "Cursos",
         "login": "Entrar"
+    },
+    "errors": {
+        "close": "Fechar",
+        "backendQueryError": "Algo correu mal. Tente novamente em breve.",
+        "forbidden": "O utilizador com sessão iniciada não pode completar esta ação.",
+        "invalidToken": "O token da sessão expirou.",
+        "usernamePasswordEmpty": "Username/password vazios.",
+        "emptyFields": "Preencha todos os campos.",
+        "invalidEmail": "Email inválido.",
+        "usernamePasswordInvalid": "Username/passowrd inválidos.",
+        "inactiveUser": "Este utilizador está inativo.",
+        "noTransaction": "Compra não encontrada.",
+        "userHasCourse": "O utilizador já possui este curso.",
+        "noCreator": "Criador não encontrado.",
+        "usernameTaken": "Já existe um utilizador com este nome de utilizador.",
+        "invalidState": "Estado inválido.",
+        "noUser": "Utilizador não encontrado.",
+        "noSubscription": "Subscrição não encontrada.",
+        "userNotCreator": "Utilizador não é um criador.",
+        "noVideo": "Vídeo não encontrado.",
+        "noCourse": "Curso não encontrado.",
+        "courseNameTaken": "Já existe um curso com este nome."
     }
-
 }

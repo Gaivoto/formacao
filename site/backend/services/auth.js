@@ -7,14 +7,14 @@ const dbAuth = require('../db/auth.js');
 async function login(username, password) {
     return new Promise((resolve, reject) => {
         if (username == "" || password == "") {
-            reject({ code: 400, error: { message: 'Username ou password vazios.' }});
+            reject({ code: 400, error: { message: 'usernamePasswordEmpty' }});
         } else {
             dbAuth.authenticateUser(username).then(async value => {
                 try {
                     if (value.length == 0) {
-                        reject({ code: 401, error: { message: 'Utilizador/password inválido.' } });
+                        reject({ code: 401, error: { message: 'usernamePasswordInvalid' } });
                     } else if (value[0].state == "Inativo") {
-                        reject({ code: 401, error: { message: 'Utilizador está inativo.' } });
+                        reject({ code: 401, error: { message: 'inactiveUser' } });
                     } else {
                         if (await bcrypt.compare(password, value[0].password)) {
                             let user = { id: value[0].id, username: value[0].username, type: value[0].type, type: value[0].type };
@@ -25,19 +25,19 @@ async function login(username, password) {
                             })
                             .catch(error => {
                                 console.log(error);
-                                reject({ code: 400, error: { message: 'Algo correu mal com a query.' } });
+                                reject({ code: 400, error: { message: 'backendQueryError' } });
                             });
                         } else {
-                            reject({ code: 400, error: { message: 'Username ou password inválido.' } });
+                            reject({ code: 400, error: { message: 'usernamePasswordInvalid' } });
                         }
                     }
                 } catch {
-                    reject({ code: 400, error: { message: 'Algo correu mal com a query.' } });
+                    reject({ code: 400, error: { message: 'backendQueryError' } });
                 }
             })
             .catch(error => {
                 console.log(error);
-                reject({ code: 400, error: { message: 'Algo correu mal com a query.' } });
+                reject({ code: 400, error: { message: 'backendQueryError' } });
             });
         }
     });
@@ -47,13 +47,13 @@ async function logout(refresh_token) {
     return new Promise((resolve, reject) => {
         dbAuth.deleteToken(crypto.SHA256(refresh_token, process.env.CRYPTO_KEY).toString()).then(value => {
             if (value.rowsAffected[0] == 0) {
-                reject({ code: 401, error: { message: 'Token inválido.' } });
+                reject({ code: 401, error: { message: 'invalidToken' } });
             } else {
                 resolve({ code: 200 });
             }
         })
         .catch(error => {
-            reject({ code: 400, error: { message: 'Algo correu mal com a query.' } });
+            reject({ code: 400, error: { message: 'backendQueryError' } });
             console.log(error);
         });
     });

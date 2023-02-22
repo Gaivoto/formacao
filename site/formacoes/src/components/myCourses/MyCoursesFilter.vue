@@ -83,13 +83,10 @@ export default {
         return {
             catOpen: false,
             orderOpen: false,
-            category: "Todas",
+            category: "",
             order: "",
             responsiveFilter: false
         }
-    },
-    created () {
-        this.order = this.t("myCourses.recentlyAdded")
     },
     setup() {
         const { t } = useI18n()
@@ -97,11 +94,15 @@ export default {
         return { Tr, t };
     },
     mounted(){
+        this.order = this.t("myCourses.allF");
+        this.category = this.t("myCourses.allF");
+
         let filter = {
             name: null,
             category: this.category,
             order: this.order
         }
+
         this.$emit("filter", filter);
     },
     watch: {
@@ -111,6 +112,7 @@ export default {
                 category: this.category,
                 order: this.order,
             }
+
             this.$emit("filter", filter);
         },
         category: function() {

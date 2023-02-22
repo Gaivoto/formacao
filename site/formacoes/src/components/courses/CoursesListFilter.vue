@@ -91,15 +91,15 @@ export default {
             responsiveFilter: false
         }
     },
-    created () {
-        this.order = this.t("courses.recentlyAdded")
-    },
     setup() {
         const { t } = useI18n()
 
         return { Tr, t };
     },
     mounted(){
+        this.order = this.t("courses.allF");
+        this.category = this.t("courses.allF");
+
         let filter = {
             name: null,
             category: this.category,
@@ -126,9 +126,6 @@ export default {
             }
 
             this.$emit("filter", filter);
-        },
-        courses: function() {
-            console.log("???")
         }
     },
     methods: {

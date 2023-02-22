@@ -25,7 +25,7 @@ async function getSubscricao(headers, id) {
                 dbSubs.getSubscricao(id).then(value2 => {
     
                     if(value2.length <= 0) {
-                        reject({ code: 404, error: {message: "Subscrição não existe." }});
+                        reject({ code: 404, error: {message: "noSubscription" }});
                     } else {
                         let resp = {
                             subs: value2,
@@ -36,12 +36,12 @@ async function getSubscricao(headers, id) {
                 })
                 .catch(error => {
                     console.log(error);
-                    reject({ code: 400, error: {message: "Algo correu mal com a query."}});
+                    reject({ code: 400, error: {message: "backendQueryError"}});
                 });
             })
             .catch(error => {
                 console.log(error);
-                reject({ code: 401, error: {message: "Token inválido."}})
+                reject({ code: 401, error: {message: "invalidToken"}})
             });
 
         } 
@@ -73,12 +73,12 @@ async function getAllSubscricoes(headers) {
                 })
                 .catch(error => {
                     console.log(error);
-                    reject({ code: 400, error: {message: "Algo correu mal com a query."}});
+                    reject({ code: 400, error: {message: "backendQueryError"}});
                 });
             })
             .catch(error => {
                 console.log(error);
-                reject({ code: 401, error: {message: "Token inválido."}})
+                reject({ code: 401, error: {message: "invalidToken"}})
             });
 
         } else {
@@ -92,7 +92,7 @@ async function getAllSubscricoes(headers) {
             })
             .catch(error => {
                 console.log(error);
-                reject({ code: 400, error: {message: "Algo correu mal com a query."}});
+                reject({ code: 400, error: {message: "backendQueryError"}});
             });
         }
 
@@ -107,17 +107,17 @@ async function createSubscricao(tokens, body) {
             let existe
 
             if(body.id_subscriber !== info.user.id) {
-                reject({ code: 400, error: {message: "Não pode subscrever outros utilizadores." }});
+                reject({ code: 403, error: {message: "forbidden" }});
             } else {
 
                 dbUser.getUser(body.id_subscribed).then(value3 => {
 
                     if(value3.length <= 0) {
-                        reject({ code: 400, error: {message: "Criador não encontrado." }});
+                        reject({ code: 400, error: {message: "noCreator." }});
                     } else {
 
                         if(value3[0].type !== "creator") {
-                            reject({ code: 400, error: {message: "Utilizador não é criador." }});
+                            reject({ code: 400, error: {message: "userNotCreator" }});
                         } else {
 
                             dbSubs.getAllSubscricoes().then(value4 => {
@@ -157,36 +157,36 @@ async function createSubscricao(tokens, body) {
                                         })
                                         .catch(error => {
                                             console.log(error);
-                                            reject({ code: 400, error: {message: "Algo correu mal com as promises das compras após subscription." }});
+                                            reject({ code: 400, error: {message: "backendQueryError" }});
                                         })
                                     })
                                     .catch(error => {
                                         console.log(error);
-                                        reject({ code: 400, error: {message: "Algo correu mal com a query de buscar cursos do criador." }});
+                                        reject({ code: 400, error: {message: "backendQueryError" }});
                                     })
                                 })
                                 .catch(error => {
                                     console.log(error);
-                                    reject({ code: 400, error: {message: "Algo correu mal com a query." }});
+                                    reject({ code: 400, error: {message: "backendQueryError" }});
                                 });
                             })
                             .catch(error => {
                                 console.log(error);
-                                reject({ code: 400, error: { message: "Algo correu mal com a query." }});
+                                reject({ code: 400, error: { message: "backendQueryError" }});
                             });
                         } 
                     }
                 })
                 .catch(error => {
                     console.log(error);
-                    reject({ code: 400, error: { message: "Algo correu mal com a query." }});
+                    reject({ code: 400, error: { message: "backendQueryError" }});
                 });
             }
             
         })
         .catch(error => {
             console.log(error);
-            reject({ code: 401, error: {message: "Token inválido." }})
+            reject({ code: 401, error: {message: "invalidToken" }})
         });
     });
 }
@@ -200,12 +200,12 @@ async function endSubscricao(tokens, id) {
             dbSubs.getSubscricao(id).then(value1 => {
                 
                 if(value1.length <= 0) {
-                    reject({ code: 404, error: {message: "Subscrição não existe." }});
+                    reject({ code: 404, error: { message: "noSubscription" }});
                 } else {
 
                     if(value1[0].id_subscriber !== info.user.id) {
                         
-                        reject({ code: 403, error: {message: "Curso não pertence a este user." }});
+                        reject({ code: 403, error: { message: "forbidden" }});
                     } else {
 
                         let data = new Date().toLocaleDateString();
@@ -225,12 +225,12 @@ async function endSubscricao(tokens, id) {
                             })
                             .catch(error => {
                                 console.log(error);
-                                reject({ code: 400, error: {message: "Algo correu mal com a query." }});
+                                reject({ code: 400, error: {message: "backendQueryError" }});
                             })
                         })
                         .catch(error => {
                             console.log(error);
-                            reject({ code: 400, error: {message: "Algo correu mal com a query." }});
+                            reject({ code: 400, error: {message: "backendQueryError" }});
                         });
                 } 
 
@@ -238,12 +238,12 @@ async function endSubscricao(tokens, id) {
             })
             .catch(error => {
                 console.log(error);
-                reject({ code: 400, error: {message: "Algo correu mal com a query." }});
+                reject({ code: 400, error: {message: "backendQueryError" }});
             });
         })
         .catch(error => {
             console.log(error);
-            reject({ code: 401, error: {message: "Token inválido." }})
+            reject({ code: 401, error: {message: "invalidToken" }})
         });
     });
 }

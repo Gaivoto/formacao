@@ -12,15 +12,15 @@ async function getAllAdmins(tokens) {
                 })
                 .catch(error => {
                     console.log(error);
-                    reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                    reject({ code: 400, error: { message: "backendQueryError" } });
                 })
             } else {
-                reject({ code: 403, error: { message: "O user que tentou completar essa ação não é administrador." } });
+                reject({ code: 403, error: { message: "forbidden" } });
             }
         })
         .catch(error => {
             console.log(error);
-            reject({ code: 401, error: { message: "Token inválido." } });
+            reject({ code: 401, error: { message: "invalidToken" } });
         })
     })
 }

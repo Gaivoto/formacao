@@ -1,8 +1,8 @@
 <template>
-    <div @click="close" class="modal-wrapper" id="modalWrapper">
+    <div v-on:click="close" class="modal-wrapper" id="modalWrapper">
         <div>
-            <p>{{ this.msg }}</p>
-            <button id="closeWrapper" @mousedown="startBtnClick" @mouseup="finishBtnClick" @mouseleave="finishBtnClick">Fechar</button>
+            <p>{{ $t(`errors.${this.msg}`) }}</p>
+            <button id="closeWrapper">{{ $t("errors.close") }}</button>
         </div>
     </div>
 </template>
@@ -14,6 +14,13 @@ export default {
         msg: {
             type: String,
             required: true
+        }
+    },
+    computed: {
+        getTranslatedMessage() {
+            switch(this.msg) {
+
+            }
         }
     },
     methods: {

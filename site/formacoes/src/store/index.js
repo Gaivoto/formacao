@@ -34,7 +34,7 @@ const store = new Vuex.Store({
             state.user = user;
         },
         setAccessToken(state, token){
-            state.tokens.accessToken = token;
+            state.tokens.accessToken = token
         },
         setRefreshToken(state, token){
             state.tokens.refreshToken = token;
