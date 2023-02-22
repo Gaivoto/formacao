@@ -46,13 +46,13 @@ export default {
     },
     computed: {
         buttonText() {
-            if(this.user.state == "Ativo") return  this.$t("userListAdm.deactivate");
+            if(this.user.state == this.$t("states.active")) return  this.$t("userListAdm.deactivate");
             else return this.$t("userListAdm.activate");
         }
     },
     methods: {
         changeState() {
-            if(this.user.state == "Ativo") this.$emit("changeState", {id: this.user.id, state: "Inativo"});
+            if(this.user.state == this.$t("states.active")) this.$emit("changeState", {id: this.user.id, state: "Inativo"});
             else this.$emit("changeState", {id: this.user.id, state: "Ativo"});
         }
     }
