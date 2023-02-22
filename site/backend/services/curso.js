@@ -448,7 +448,7 @@ async function updateStateCursoAdm(tokens, id, body) {
                                 let promises = [];
                                 let notif = {}
                                 notif.id = uuid.v4();
-                                notif.message = 'O estado do curso ' + value1[0].name + ' foi alterado para ' + body.state + '.';
+                                notif.change_state = body.state;
 
                                 let data = new Date().toLocaleDateString();
                                 let dias = data.split('/')[0];
@@ -471,13 +471,12 @@ async function updateStateCursoAdm(tokens, id, body) {
                                         for (let i = 0; i < value5.length; i++) {
                                             let notifUser = {}
                                             notifUser.id = uuid.v4();
-                                            notifUser.message = 'O criador X(botar aqui nome do criador) que você esta inscrito acabou de postar um novo curso!';
-
+                                            notifUser.change_state = body.state;
                                             notifUser.date = notif.date;
-
                                             notifUser.id_user = value5[i].id_subscriber;
                                             notifUser.id_course = id;
                                             notifUser.id_video = null;
+
                                             promises.push(dbNotif.createNotification(notifUser));
 
                                         }

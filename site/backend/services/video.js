@@ -230,7 +230,7 @@ async function updateStateVideoAdm(tokens, id, body) {
                                             let promises = [];
                                             let notif = {}
                                             notif.id = uuid.v4();
-                                            notif.message = 'O estado do video ' + value1[0].title + ' que pertence ao curso ' + value4[0].name + ' foi alterado para ' + body.state + '.';
+                                            notif.change_state = body.state;
 
                                             data = new Date().toLocaleDateString();
                                             dias = data.split('/')[0];
@@ -259,7 +259,7 @@ async function updateStateVideoAdm(tokens, id, body) {
                                                     for (let i = 0; i < values[0].length; i++) {
                                                         let notifUser = {}
                                                         notifUser.id = uuid.v4();
-                                                        notifUser.message = 'O criador X(botar aqui nome do criador) que você esta inscrito acabou de postar um novo video no curso ' + value4[0].name + ', chamado ' + value1[0].title + '.';
+                                                        notifUser.change_state = body.state;
 
                                                         notifUser.date = notif.date
 
@@ -273,7 +273,7 @@ async function updateStateVideoAdm(tokens, id, body) {
                                                     for (let j = 0; j < values[1].length; j++) {
                                                         let notifUser = {}
                                                         notifUser.id = uuid.v4();
-                                                        notifUser.message = 'Foi postado um vídeo novo no curso ' + value4[0].name + ', chamado ' + value1[0].title + '.';
+                                                        notifUser.change_state = body.state;
 
                                                         data = new Date().toLocaleDateString();
                                                         dias = data.split('/')[0];
