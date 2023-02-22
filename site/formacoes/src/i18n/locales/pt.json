@@ -175,6 +175,15 @@
         "courses": "Cursos",
         "login": "Entrar"
     },
+    "notifications": {
+        "theStateC": "O estado do curso: ",
+        "theStateV": "O estado do video: ",
+        "wasChanged": " foi alterado para ",
+        "theCreator": "O criador ",
+        "postedC": " postou um novo curso chamado ",
+        "postedV": " postou um novo vídeo chamado ",
+        "inTheCourse": " no curso "
+    },
     "errors": {
         "close": "Fechar",
         "backendQueryError": "Algo correu mal. Tente novamente em breve.",

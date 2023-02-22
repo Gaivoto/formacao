@@ -16,7 +16,7 @@ sql.connect(config, function (err) {
 async function getAllNotifFromUser(id) {
     const pool = new sql.Request();
     return new Promise((resolve, reject) => {
-        const slct = `SELECT * FROM [Notification] WHERE [id_user] = @id`;
+        const slct = `SELECT n.[id], n.[date], n.[id_user], n.[id_course], n.[id_video], n.[state], n.[change_state], c.[name] AS course_name,  c.[id_creator] AS id_creator, u.[name] AS creator_name, (SELECT title FROM video WHERE [id] = n.id_video) AS video_title FROM Notification n INNER JOIN [Course] c ON n.[id_course] = c.[id] INNER JOIN [Users] u ON c.[id_creator] = u.[id] WHERE n.[id_user] = @id;`;
         pool.input('id', sql.VarChar(200), id).query(slct, (err, res) => {
             if (!err) {
                 resolve(res.recordset);
@@ -46,12 +46,12 @@ async function createNotification(notif) {
     return new Promise((resolve, reject) => {
         let insrt = "";
         if (notif.id_video == null) {
-            insrt = `INSERT INTO [Notification] ([id] ,[message] ,[date] ,[id_user] ,[id_course] ,[id_video] ,[state]) VALUES (@id, @message, @date, @idU, @idC, null, 'false')`;
+            insrt = `INSERT INTO [Notification] ([id],[date] ,[id_user] ,[id_course] ,[id_video] ,[state], [change_state]) VALUES (@id, @date, @idU, @idC, null, 'false', @change_state)`;
         }
         else {
-            insrt = `INSERT INTO [Notification] ([id] ,[message] ,[date] ,[id_user] ,[id_course] ,[id_video] ,[state]) VALUES (@id, @message, @date, @idU, @idC, @idV, 'false')`;
+            insrt = `INSERT INTO [Notification] ([id],[date] ,[id_user] ,[id_course] ,[id_video] ,[state], [change_state]) VALUES (@id, @date, @idU, @idC, @idV, 'false', @change_state)`;
         }
-        pool.input('id', sql.VarChar(200), notif.id).input('message', sql.VarChar(200), notif.message).input('date', sql.DateTime, notif.date).input('idU', sql.VarChar(100), notif.id_user).input('idC', sql.VarChar(100), notif.id_course).input('idV', sql.VarChar(100), notif.id_video).query(insrt, (err, res) => {
+        pool.input('id', sql.VarChar(200), notif.id).input('date', sql.DateTime, notif.date).input('idU', sql.VarChar(100), notif.id_user).input('idC', sql.VarChar(100), notif.id_course).input('idV', sql.VarChar(100), notif.id_video).input('change_state', sql.VarChar(50), notif.change_state).query(insrt, (err, res) => {
             if (!err) {
                 resolve(res);
             } else {

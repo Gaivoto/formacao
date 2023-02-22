@@ -156,7 +156,6 @@ export default {
                 }
             })
             .then(value => {
-                console.log(value)
                 if(value.data.access_token) this.$store.commit('setAccessToken', value.data.access_token);
 
                 this.filter(this.filterInfo);
@@ -197,7 +196,6 @@ export default {
                 }
             })
             .then(value => {
-                console.log(value)
                 if(value.data.access_token) this.$store.commit('setAccessToken', value.data.access_token);
 
                 this.filter(this.filterInfo);
