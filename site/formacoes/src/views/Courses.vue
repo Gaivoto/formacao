@@ -56,7 +56,6 @@ export default {
         })
         .then(value => {
             value.data.courses.forEach(c => this.courses.push(c));
-            console.log(value.data.courses)
 
             this.coursesFiltered = [...this.courses];
 
