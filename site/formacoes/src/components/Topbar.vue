@@ -109,6 +109,7 @@ export default {
                 }
             })
             .then(value => {
+                console.log(value.data)
                 if(value.data.access_token) this.$store.commit('setAccessToken', value.data.access_token);
                 value.data.notifications.forEach(n => this.notifications.push(n));
             })

@@ -245,7 +245,7 @@ async function updateStateVideoAdm(tokens, id, body) {
 
                                             notif.id_user = value4[0].id_creator;
                                             notif.id_course = body.id_course;
-                                            notif.id_video = null;
+                                            notif.id_video = id;
                                             promisesNotif.push(dbNotif.createNotification(notif));
 
                                             if (body.state === "Ativo") {
@@ -265,7 +265,7 @@ async function updateStateVideoAdm(tokens, id, body) {
 
                                                         notifUser.id_user = values[0][i].id_subscriber;
                                                         notifUser.id_course = body.id_course;
-                                                        notifUser.id_video = null;
+                                                        notifUser.id_video = id;
                                                         promisesNotif.push(dbNotif.createNotification(notifUser));
 
                                                     }
