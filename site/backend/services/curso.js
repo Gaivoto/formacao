@@ -37,6 +37,7 @@ async function getCurso(headers, id) {
                         promises.push(dbSubs.existsSubscricao(info.user.id, value2[0].id_creator))
                         promises.push(dbComp.existsCompra(info.user.id, id))
                         promises.push(dbVide.getAllVideosFromCourse(id))
+                        promises.push(dbCurs.getUserRatingOfCourse(info.user.id, id))
                         Promise.all(promises).then(values => {
                             let duration = 0;
                             let durationInt = 0;
@@ -44,16 +45,24 @@ async function getCurso(headers, id) {
                                 durationInt = parseInt(values[2][i].duration)
                                 duration = duration + durationInt;
                             }
+                            info.course.userRating = null;
+                            if(values[3].length > 0) {
+                                info.course.userRating = values[3][0].rating
+                            }
                             if (values[0].length > 0 && values[0][0].final_date == null) {
                                 if(values[1].length > 0 && values[1][0].data_sub == null) {
                                     info.course.access = true;
                                 }
                             }
                             else {
-                                if(values[1].length > 0 && values[1][0].data_sub == null) {
-                                    info.course.access = true;
-                                }
+                                if(values[1].length > 0) {
+
+                                    if(values[1].length > 0 && values[1][0].data_sub == null) {
+                                        info.course.access = true;
+                                    }   
+                                }                         
                             }
+                            
                             info.course.duration = duration/3600;
                             info.course.videos = values[2];
                             if(value1.user.type == "admin") {
@@ -667,6 +676,10 @@ async function getCursosHomePage() {
     });
 }
 
+async function rateCourse() {
+
+}
+
 module.exports = {
     getCurso: getCurso,
     getAllCursos: getAllCursos,
@@ -676,4 +689,5 @@ module.exports = {
     updateStateCursoAdm: updateStateCursoAdm,
     updateCurso: updateCurso,
     getCursosHomePage: getCursosHomePage,
+    rateCourse: rateCourse
 }
