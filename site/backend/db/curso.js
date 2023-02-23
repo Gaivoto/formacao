@@ -274,7 +274,7 @@ async function getUserRatingOfCourse(id_user, id_course) {
     const pool = new sql.Request();
     return new Promise((resolve, reject) => {
         const slct = `SELECT [id], [rating] FROM User_Course WHERE [id_user] = @id_user AND [id_course] = @id_course`;
-        pool.input('id_user', sql.VarChar(200), id_user).input('id_course', sql.VarChar(200), id_course).query(updt, (err,res) => {
+        pool.input('id_user', sql.VarChar(200), id_user).input('id_course', sql.VarChar(200), id_course).query(slct, (err,res) => {
             if (!err) {
                 resolve(res.recordset);
             } else {

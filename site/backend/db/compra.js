@@ -44,7 +44,7 @@ async function getAllCompras() {
 async function getAllComprasByUser(id) {
     const pool = new sql.Request();
     return new Promise((resolve, reject) => {
-        const slct = `SELECT c.id as id, c.name as name, c.category as category, c.description as description, c.image as image, uc.progress as progress, u.id as idCr, u.name as nameCr, u.image as imageCr, uc.data_sub, uc.id_subscription, uc.date_bought as dateBought FROM [User_Course] uc LEFT JOIN [Course] c ON uc.id_course = c.id LEFT JOIN [Users] u ON c.id_creator = u.id WHERE uc.id_user = @id AND c.state = 'Ativo'`;
+        const slct = `SELECT c.id as id, c.name as name, c.category as category, c.description as description, c.image as image, c.rating as rating, uc.progress as progress, u.id as idCr, u.name as nameCr, u.image as imageCr, uc.data_sub, uc.id_subscription, uc.date_bought as dateBought FROM [User_Course] uc LEFT JOIN [Course] c ON uc.id_course = c.id LEFT JOIN [Users] u ON c.id_creator = u.id WHERE uc.id_user = @id AND c.state = 'Ativo'`;
         pool.input('id', sql.VarChar(200), id).query(slct, (err, res) => {
             if (!err) {
                 resolve(res.recordset);
