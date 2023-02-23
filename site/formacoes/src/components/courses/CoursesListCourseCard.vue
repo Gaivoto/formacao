@@ -6,7 +6,13 @@
             </router-link>
             <div class="card-info">
                 <router-link :to="{ name: 'Curso', params: { id: this.course.id } }"><p class="card-info-title">{{ this.course.name }}</p></router-link>
-                <p class="card-info-category">{{ this.course.category }}</p>
+                <div class="card-info-div">
+                    <p class="card-info-category">{{ this.course.category }}</p>
+                    <div class="card-score-div">
+                        <p>{{ this.course.rating }}</p>
+                        <span class="material-icons duration-icon">star</span>
+                    </div>
+                </div>
                 <p class="card-info-description">{{ this.course.description }}</p>
                 <div class="card-info-div">
                     <p>{{ this.course.price }} €</p>
@@ -125,6 +131,7 @@ export default {
         display: flex;
         align-items: center;
         justify-content: space-between;
+        margin-bottom: 12px;
     }
 
     .card-info-div > div {
@@ -145,6 +152,21 @@ export default {
 
     .card-info-div p:first-child {
         color: var(--light);
+    }
+
+    .card-info-div .card-score-div {
+        gap: 4px;
+    }
+
+    .card-info-div .card-score-div span {
+        color: var(--primary);
+        font-size: 28px;
+    }
+
+    .card-info-div .card-score-div p {
+        color: var(--primary);
+        font-size: 18px;
+        margin-bottom: 0px;
     }
 
     .card-info .card-creator-div {

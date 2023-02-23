@@ -30,6 +30,15 @@
                         </th>
                         <th class="column-small column-right">
                             <div>
+                                <p>{{ $t('content.rating') }}</p>
+                                <div>
+                                    <span class="material-icons" v-on:click="orderTable('rating-asc')">expand_less</span>
+                                    <span class="material-icons" v-on:click="orderTable('rating-desc')">expand_more</span>
+                                </div>
+                            </div>
+                        </th>
+                        <th class="column-small column-right">
+                            <div>
                                 <p>{{ $t('content.nVids') }}</p>
                                 <div>
                                     <span class="material-icons" v-on:click="orderTable('nvids-asc')">expand_less</span>

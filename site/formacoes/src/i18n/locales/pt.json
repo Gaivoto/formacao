@@ -48,7 +48,8 @@
         "date": "Data",
         "state": "Estado",
         "nVids": "Nº de Vídeos",
-        "duration": "Duração"
+        "duration": "Duração",
+        "rating": "Classificação"
     },
     "states": {
         "active": "Ativo",
@@ -107,7 +108,7 @@
     "courseListAdm": {
         "noResults": "Não existem resultados para a pesquisa.",
         "creator": "Criador",
-        "price": "Preço",
+        "rating": "Classificação",
         "catAbr": "Cat",
         "category": "Categoria",
         "orderBy": "Ordenar por",

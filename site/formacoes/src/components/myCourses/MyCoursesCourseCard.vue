@@ -6,7 +6,13 @@
             </router-link>
             <div class="card-info">
                 <router-link :to="Tr.i18nRoute({ name: 'Curso', params: { id: this.course.id, locale: Tr.guessDefaultLocale() } })"><p class="card-info-title">{{ this.course.name }}</p></router-link>
-                <p class="card-info-category">{{ this.course.category }}</p>
+                <div class="card-info-div">
+                    <p class="card-info-category">{{ this.course.category }}</p>
+                    <div class="card-score-div">
+                        <p>{{ this.course.rating }}</p>
+                        <span class="material-icons duration-icon">star</span>
+                    </div>
+                </div>
                 <p class="card-info-description">{{ this.course.description }}</p>
                 <div class="card-info-div">
                     <div>
@@ -139,9 +145,10 @@ export default {
         display: flex;
         align-items: center;
         justify-content: space-between;
+        margin-bottom: 12px;
     }
 
-    .card-info-div > div:first-child {
+    .card-info-div > div {
         display: flex;
         gap: 8px;
     }
@@ -162,6 +169,21 @@ export default {
 
     .card-info-div p:first-child {
         color: var(--light-alt);
+    }
+
+    .card-info-div .card-score-div {
+        gap: 4px;
+    }
+
+    .card-info-div .card-score-div span {
+        color: var(--primary);
+        font-size: 28px;
+    }
+
+    .card-info-div .card-score-div p {
+        color: var(--primary);
+        font-size: 18px;
+        margin-bottom: 0px;
     }
 
     .card-info .card-creator-div {

@@ -18,6 +18,9 @@
             <p>{{ this.translatedState }}</p>
         </td>
         <td class="column-right">
+            <p>{{ this.rating }}</p>
+        </td>
+        <td class="column-right">
             <p>{{ this.course.numberOfVideos }}</p>
         </td>
         <td class="column-right">

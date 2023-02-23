@@ -48,7 +48,8 @@
         "date": "Date",
         "state": "State",
         "nVids": "No of Videos",
-        "duration": "Duration"
+        "duration": "Duration",
+        "rating": "Rating"
     },
     "states": {
         "active": "Active",
@@ -107,7 +108,7 @@
     "courseListAdm": {
         "noResults": "There are no matches for your search.",
         "creator": "Creator",
-        "price": "Price",
+        "rating": "Rating",
         "catAbr": "Cat",
         "category": "Category",
         "orderBy": "Order by",

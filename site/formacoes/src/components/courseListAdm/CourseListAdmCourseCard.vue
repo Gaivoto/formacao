@@ -11,7 +11,7 @@
                         <p>{{ $t("courseListAdm.creator") }}: {{ this.course.nameCr }}</p>
                     </div>
                     <div>
-                        <p>{{ $t("courseListAdm.price") }}: {{ this.course.price }} €</p>
+                        <p>{{ $t("courseListAdm.rating") }}: {{ this.course.rating }} €</p>
                         <p>{{ $t("courseListAdm.catAbr") }}: {{ this.course.category }}</p>
                     </div> 
                 </div>
