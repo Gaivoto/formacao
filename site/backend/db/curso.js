@@ -284,6 +284,20 @@ async function getUserRatingOfCourse(id_user, id_course) {
     })
 }
 
+async function updateRating(id) {
+    const pool = new sql.Request();
+    return new Promise((resolve, reject) => {
+        const slct = `UPDATE [Course] SET [rating] = (SELECT AVG(rating) FROM [User_Course] WHERE  [id_course] = @id ) WHERE [id] = @id`;
+        pool.input('id', sql.VarChar(200), id).query(slct, (err,res) => {
+            if (!err) {
+                resolve(res.recordset);
+            } else {
+                reject(err.message);
+            }
+        });
+    })
+}
+
 module.exports = {
     getCurso: getCurso,
     getAllCursos: getAllCursos,
@@ -302,6 +316,7 @@ module.exports = {
     getRecomendedCursos: getRecomendedCursos,
     getOtherCursos: getOtherCursos,
     rateCourse: rateCourse,
-    getUserRatingOfCourse: getUserRatingOfCourse
+    getUserRatingOfCourse: getUserRatingOfCourse,
+    updateRating: updateRating
 
 }

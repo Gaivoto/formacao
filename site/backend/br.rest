@@ -40,7 +40,7 @@ POST {{hostname}}api/auth/login
 content-type: application/json  
 
 {     
-    "username": "br",     
+    "username": "lex",     
     "password": "123" 
 }
 ###
@@ -73,8 +73,8 @@ content-type: application/json
 
 ###
 GET {{hostname}}api/cursos/2
-authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk4NDEwMzEyLWE0YjQtNGE2YS1iMDQ4LTI3NTJiODIxMGUyMyIsInVzZXJuYW1lIjoiYWRtIiwidHlwZSI6ImFkbWluIiwiaWF0IjoxNjc1MzU3NDc0LCJleHAiOjE2NzUzNzE4NzR9.kjq7NbHtuLpcyOFH7bl4M4ibbX5JGHw9dDELuEzoq3E
-refreshtoken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk4NDEwMzEyLWE0YjQtNGE2YS1iMDQ4LTI3NTJiODIxMGUyMyIsInVzZXJuYW1lIjoiYWRtIiwidHlwZSI6ImFkbWluIiwiaWF0IjoxNjc1MzU3NDc0fQ.FC6YRfM6SuXdepGKh_XDzoZNkX5ZHozLUinri8Md9RY
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjExIiwidXNlcm5hbWUiOiJsZXgiLCJ0eXBlIjoidXNlciIsImlhdCI6MTY3NzE1ODYxOCwiZXhwIjoxNjc3MTczMDE4fQ.8F6ECUAGD2XrleZbspt6XgLd1fYrB9jBqFNLJggOvBQ
+refreshtoken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjExIiwidXNlcm5hbWUiOiJsZXgiLCJ0eXBlIjoidXNlciIsImlhdCI6MTY3NzE1ODYxOH0._AlwvEhNONIibLMVK2qtmTwHGNF7U5V7Mb4OJhD_hDo
 
 ###
 
