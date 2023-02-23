@@ -106,6 +106,7 @@ export default {
             url: `${import.meta.env.VITE_HOST}/cursos/home`
         })
         .then(value => {
+            console.log(value.data)
             value.data.recomendados.forEach(c => this.recommended.push(c));
             this.slides.push({...value.data.recomendados[0]});
             value.data.destaques.forEach(c => this.hottest.push(c));
