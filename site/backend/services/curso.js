@@ -676,16 +676,15 @@ async function getCursosHomePage() {
 
     });
 }
-
-async function rateCourse(rating, idComp, idCourse) {
+//verificar se existe curso
+async function rateCourse(tokens, idCourse, body) {
     return new Promise((resolve, reject) => {
         utils.validateToken(tokens.access_token, tokens.refresh_token).then(value => {
             let info = value;
-
             dbComp.existsCompra(info.user.id, idCourse).then(value1 => {
-                if(value1 > 0) {
+                if(value1.length > 0) {
                     let promises = [];
-                    promises.push(dbCurs.rateCourse(rating, idComp));
+                    promises.push(dbCurs.rateCourse(body.rating, body.idComp));
                     promises.push(dbCurs.updateRating(idCourse));
                     
                     Promise.all(promises).then(values => {
@@ -698,7 +697,7 @@ async function rateCourse(rating, idComp, idCourse) {
                     });
                 }
                 else {
-                    console.log(error);
+                    console.log(value1)
                     reject({ code: 401, error: { message: "invalidPurchase" } })
                 }
             })

@@ -20,6 +20,6 @@ router.put("/adm/:id", cntrCurs.updateStateCursoAdm);
 
 router.put("/:id", cntrCurs.updateCurso);
 
-router.put("/rating", cntrCurs.rateCourse);
+router.put("/rating/:id", cntrCurs.rateCourse);
 
 module.exports = router

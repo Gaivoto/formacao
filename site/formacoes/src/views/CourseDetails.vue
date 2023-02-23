@@ -122,9 +122,31 @@ export default {
     },
     methods: {
         rateCourse(rating) {
-
+                axios({
+                    method: 'put',
+                    url: `${import.meta.env.VITE_HOST}/cursos/rating/${this.$route.params.id}`,
+                    data: {
+                        idComp: this.course.idCompra,
+                        rating: rating
+                    },
+                    headers: {
+                    Authorization: `Bearer ${this.$store.getters.getAccessToken}`,
+                    refreshtoken: this.$store.getters.getRefreshToken,
+                    }
+                })
+                .then(value => {
+                    console.log("deuCerto")
+                })
+                .catch(error => {
+                    console.log(error)
+                    if(error.code) {
+                        console.log(error.response.data);
+                        this.$emit("open-modal", error.response.data.message);
+                    } else console.log(error);
+                });
+                } 
         }
-    }
+    
 };
 </script>
 

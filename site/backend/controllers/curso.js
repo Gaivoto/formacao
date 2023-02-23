@@ -73,7 +73,7 @@ async function getCursosHomePage(req, res) {
 }
 
 async function rateCourse(req, res) {
-    serCurs.rateCourse({ access_token: req.headers['authorization'].split(' ')[1], refresh_token: req.headers.refreshtoken }, req.body).then(value => {
+    serCurs.rateCourse({ access_token: req.headers['authorization'].split(' ')[1], refresh_token: req.headers.refreshtoken }, req.params.id, req.body).then(value => {
         res.status(value.code).send(value.info);
     })
         .catch(error => {
