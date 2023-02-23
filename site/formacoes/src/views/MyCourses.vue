@@ -67,7 +67,6 @@ export default {
                 if(value.data.access_token) this.$store.commit('setAccessToken', value.data.access_token);
 
                 value.data.courses.forEach(c => this.courses.push(c));
-                console.log(this.courses)
                 
                 this.coursesFiltered = [...this.courses];
 

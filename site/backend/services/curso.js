@@ -47,7 +47,6 @@ async function getCurso(headers, id) {
                             }
                             info.course.userRating = null;
                             if(values[3].length > 0) {
-                                info.course.idCompra = values[3][0].id
                                 info.course.userRating = values[3][0].rating
                             }
                             if (values[0].length > 0 && values[0][0].final_date == null) {
@@ -678,12 +677,14 @@ async function getCursosHomePage() {
 }
 //verificar se existe curso
 async function rateCourse(tokens, idCourse, body) {
+    console.log(idCourse, body)
     return new Promise((resolve, reject) => {
         utils.validateToken(tokens.access_token, tokens.refresh_token).then(value => {
             let info = value;
             dbComp.existsCompra(info.user.id, idCourse).then(value1 => {
                 if(value1.length > 0) {
                     let promises = [];
+                    console.log(value1)
                     promises.push(dbCurs.rateCourse(body.rating, body.idComp));
                     promises.push(dbCurs.updateRating(idCourse));
                     

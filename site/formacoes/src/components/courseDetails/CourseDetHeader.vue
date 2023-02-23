@@ -8,8 +8,10 @@
                 <p>{{ $t("courseDetails.category") }} {{ this.course.category }}</p>
                 <p>{{ $t("courseDetails.price") }}{{ this.course.price }}</p>
                 <button v-if:="this.compra">{{ $t("courseDetails.purchase") }}</button>
-                <div v-if="this.canRate" ref="rating" class="rating">
-                    <span v-for="n in 5" :key="n" class="material-icons" v-on:click="this.rateCourse(n)" v-on:mouseenter="this.hoverRating(n)" v-on:mouseleave="this.defaultRating">star</span>
+                <div ref="rating">
+                    <div v-if="this.rate" class="rating">
+                        <span v-for="n in 5" :key="n" class="material-icons" v-on:click="this.rateCourse(n)" v-on:mouseenter="this.hoverRating(n)" v-on:mouseleave="this.defaultRating">star</span>
+                    </div>
                 </div>
                 <router-link v-if:="this.creator" :to="Tr.i18nRoute({ name: 'Workshop', params: { id: this.getUserId, idCourse: this.course.id, locale: Tr.guessDefaultLocale() } })">
                     <button>{{ $t("courseDetails.editCourse") }}</button> 
@@ -40,7 +42,7 @@ export default {
             type: Boolean,
             required: true
         },
-        access: {
+        rate: {
             type: Boolean,
             required: true
         }
@@ -56,20 +58,21 @@ export default {
     created() {
         this.imageUrl = new URL(`../../assets/${this.course.image}.jpg`, import.meta.url).href;
     },
-    mounted() {
+    updated() {
         if(this.course.userRating) {
+            for(let i = 0; i < 5; i++) {
+                this.$refs.rating.children[0].children[i].classList.remove("hovered");
+            }  
+            
             for(let i = 0; i < this.course.userRating; i++) {
-                this.$refs.rating.children[i].classList.add("hovered");
-            }
-        }
+                this.$refs.rating.children[0].children[i].classList.add("hovered");
+            }    
+        }        
     },
     computed: {
         getUserId() {
             if(this.$store.getters.getUser.id) return this.$store.getters.getUser.id;
             return 0;
-        },
-        canRate() {
-            return (this.$store.getters.getUser.type && this.$store.getters.getUser.type != 'admin' && !this.creator && this.access);
         }
     },
     methods: {
@@ -79,21 +82,21 @@ export default {
         },
         hoverRating(rating) {
             for(let i = 0; i < 5; i++) {
-                this.$refs.rating.children[i].classList.remove("hovered");
+                this.$refs.rating.children[0].children[i].classList.remove("hovered");
             }
 
             for(let i = 0; i < rating; i++) {
-                this.$refs.rating.children[i].classList.add("hovered");
+                this.$refs.rating.children[0].children[i].classList.add("hovered");
             }
         },
         defaultRating() {
             for(let i = 0; i < 5; i++) {
-                this.$refs.rating.children[i].classList.remove("hovered");
+                this.$refs.rating.children[0].children[i].classList.remove("hovered");
             }  
 
             if(this.course.userRating) {                
                 for(let i = 0; i < this.course.userRating; i++) {
-                    this.$refs.rating.children[i].classList.add("hovered");
+                    this.$refs.rating.children[0].children[i].classList.add("hovered");
                 }
             }
         }
