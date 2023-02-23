@@ -1,11 +1,8 @@
 <template>
   <div class="diploma-card-container col-12 col-md-6 col-xl-3">
-    <div class="diploma-wrapper">
+    <div id="diploma" ref="content" class="diploma-wrapper">
       <div class="diploma-card">
         <img class="logo" src="../../assets/logo3.png" />
-        <div class="download">
-          <span class="material-icons">download</span>
-        </div>
         <div class="top-right"></div>
         <div class="bottom-left"></div>
         <div class="diploma-text">
@@ -20,10 +17,15 @@
         </div>
       </div>
     </div>
+    <div class="download">
+      <span @click="download" class="material-icons">download</span>
+    </div>
   </div>
 </template>
 
 <script>
+import { jsPDF } from "jspdf";
+
 export default {
   props: {
     diploma: {
