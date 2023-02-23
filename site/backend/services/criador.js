@@ -27,12 +27,12 @@ async function getAllCriadores(headers) {
                     })
                     .catch(error => {
                         console.log(error);
-                        reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                        reject({ code: 400, error: { message: "backendQueryError" } });
                     });
             })
             .catch(error => {
                 console.log(error);
-                reject({ code: 401, error: { message: "Token inválido." } });
+                reject({ code: 401, error: { message: "invalidToken" } });
             });
         } else {
             dbCria.getAllCriadores().then(value2 => {
@@ -44,7 +44,7 @@ async function getAllCriadores(headers) {
             })
             .catch(error => {
                 console.log(error);
-                reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                reject({ code: 400, error: { message: "backendQueryError" } });
             });
         }
     })
@@ -68,7 +68,7 @@ async function getCriador(headers, id) {
                 dbCria.getCriador(id).then(value2 => {
 
                     if (value2.length == 0) {
-                        reject({ code: 404, error: { message: "Este criador não existe." } });
+                        reject({ code: 404, error: { message: "noCreator" } });
                     } else {
                         dbCour.getCursosByCriador(id).then(value3 => {
                             let resp = {
@@ -117,29 +117,29 @@ async function getCriador(headers, id) {
                             })
                             .catch(error => {
                                 console.log(error);
-                                reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                                reject({ code: 400, error: { message: "backendQueryError" } });
                             });
                         })
                         .catch(error => {
                             console.log(error);
-                            reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                            reject({ code: 400, error: { message: "backendQueryError" } });
                         });
                     }
                 })
                 .catch(error => {
                     console.log(error);
-                    reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                    reject({ code: 400, error: { message: "backendQueryError" } });
                 });
             })
             .catch(error => {
                 console.log(error);
-                reject({ code: 401, error: { message: "Token inválido." } })
+                reject({ code: 401, error: { message: "invalidToken" } })
             });
 
         } else {
             dbCria.getCriador(id).then(value => {
                 if (value.length == 0) {
-                    reject({ code: 404, error: { message: "Este criador não existe." } });
+                    reject({ code: 404, error: { message: "noCreator" } });
                 } else {
                     dbCour.getCursosByCriador(id).then(value2 => {
                         let criador = value[0];
@@ -173,18 +173,18 @@ async function getCriador(headers, id) {
                         })
                         .catch(error => {
                             console.log(error);
-                            reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                            reject({ code: 400, error: { message: "backendQueryError" } });
                         });
                     })
                     .catch(error => {
                         console.log(error);
-                        reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                        reject({ code: 400, error: { message: "backendQueryError" } });
                     });
                 }
             })
             .catch(error => {
                 console.log(error);
-                reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                reject({ code: 400, error: { message: "backendQueryError" } });
             });
         }
     });
@@ -218,29 +218,29 @@ async function createCriador(tokens, criador) {
                             })
                                 .catch(error => {
                                     console.log(error);
-                                    reject({ code: 400, error: { message: "Algo correu mal com a query de insert." } });
+                                    reject({ code: 400, error: { message: "backendQueryError" } });
                                 });
                         })
                             .catch(error => {
                                 console.log(error);
-                                reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                                reject({ code: 400, error: { message: "backendQueryError" } });
                             });
                     } else {
-                        reject({ code: 400, error: { message: 'Já tem um user com esse username.' } });
+                        reject({ code: 400, error: { message: 'usernameTaken' } });
                     }
                 })
                     .catch(error => {
                         console.log(error);
-                        reject({ code: 400, error: { message: 'Erro na query.' } });
+                        reject({ code: 400, error: { message: 'backendQueryError' } });
                     });
 
             } else {
-                reject({ code: 403, error: { message: "O user que tentou completar essa ação não é administrador." } });
+                reject({ code: 403, error: { message: "forbidden" } });
             }
         })
             .catch(error => {
                 console.log(error);
-                reject({ code: 401, error: { message: "Token inválido." } });
+                reject({ code: 401, error: { message: "invalidToken" } });
             })
     });
 }
@@ -253,7 +253,7 @@ async function changeCriadorState(tokens, id, criador) {
 
                 dbCria.getCriador(id).then(value2 => {
                     if (value2.length == 0) {
-                        reject({ code: 404, error: { message: "Este utilizador não existe." } });
+                        reject({ code: 404, error: { message: "noCreator" } });
                     } else {
                         if (criador.state == "Inativo" || criador.state == "Ativo") {
                             dbCria.changeCriadorState(criador.state, id).then(value => {
@@ -262,24 +262,24 @@ async function changeCriadorState(tokens, id, criador) {
                             })
                             .catch(error => {
                                 console.log(error);
-                                reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                                reject({ code: 400, error: { message: "backendQueryError" } });
                             });
                         } else {
-                            reject({ code: 400, error: { message: "Estado inválido." } });
+                            reject({ code: 400, error: { message: "invalidState" } });
                         }
                     }
                 })
                 .catch(error => {
                     console.log(error);
-                    reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                    reject({ code: 400, error: { message: "backendQueryError" } });
                 });
             } else {
-                reject({ code: 403, error: { message: "A operação não foi possível porquê o user não é um administrador." } });
+                reject({ code: 403, error: { message: "forbidden" } });
             }
         })
         .catch(error => {
             console.log(error);
-            reject({ code: 401, error: { message: "Token inválido." } });
+            reject({ code: 401, error: { message: "invalidToken" } });
         });
     });
 }
@@ -291,7 +291,7 @@ async function updateCriador(tokens, id, criador) {
             let info = value;
             if (info.user.id == id) {
                 if (criador.name == "" || criador.image == "" || criador.price == "" || criador.name == null || criador.image == null || criador.price == null || criador.description == null || criador.price < 0) {
-                    reject({ code: 400, error: { message: "A alteração não pode ser feita, porque há valores vazios/inválidos." } });
+                    reject({ code: 400, error: { message: "emptyFields" } });
                 } else {
                     dbCria.getCriador(id).then(value1 => {
                         if (value1[0].price != criador.price) {
@@ -328,20 +328,20 @@ async function updateCriador(tokens, id, criador) {
                                             })
                                             .catch(error => {
                                                 console.log(error);
-                                                reject({ code: 400, error: { message: "Algo correu mal com a query de insert das notificações." } });
+                                                reject({ code: 400, error: { message: "backendQueryError" } });
                                             })
                                         }
                                     }
                                 })
                                 .catch(error => {
                                     console.log(error);
-                                    reject({ code: 400, error: { message: "Algo correu mal com a query de busca de subscribers." } });
+                                    reject({ code: 400, error: { message: "backendQueryError" } });
                                 })
 
                             })
                             .catch(error => {
                                 console.log(error);
-                                reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                                reject({ code: 400, error: { message: "backendQueryError" } });
                             });
                         } else {
                             dbCria.updateCriador(criador, id).then(value3 => {
@@ -350,22 +350,22 @@ async function updateCriador(tokens, id, criador) {
                             })
                             .catch(error => {
                                 console.log(error);
-                                reject({ code: 400, error: { message: "Algo correu mal com a query de insert das notificações." } });
+                                reject({ code: 400, error: { message: "backendQueryError" } });
                             })
                         }
                     })
                     .catch(error => {
                         console.log(error);
-                        reject({ code: 400, error: { message: "Algo correu mal com a query de busca de subscribers." } });
+                        reject({ code: 400, error: { message: "backendQueryError" } });
                     })
                 }
             } else {
-                reject({ code: 403, error: { message: "A operação não foi possível porquê o user associado ao token não é o mesmo a qual estas a tentar fazer update." } });
+                reject({ code: 403, error: { message: "forbidden" } });
             }
         })
         .catch(error => {
             console.log(error);
-            reject({ code: 401, error: { message: "Token inválido." } });
+            reject({ code: 401, error: { message: "invalidToken" } });
         });
     });
 }
@@ -399,7 +399,7 @@ async function getCriadoresHomepage() {
         })
         .catch(error => {
             console.log(error);
-            reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+            reject({ code: 400, error: { message: "backendQueryError" } });
         });
     });
 }

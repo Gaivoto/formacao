@@ -23,7 +23,7 @@ async function getVideo(headers, id) {
             let info = value1;
             dbVideo.getVideo(id).then(value2 => {
                 if (value2.length <= 0) {
-                    reject({ code: 404, error: { message: "Video não existe." } });
+                    reject({ code: 404, error: { message: "noVideo" } });
                 } else {
                     info.video = value2;
                     resolve({ code: 200, info: info });
@@ -31,12 +31,12 @@ async function getVideo(headers, id) {
             })
                 .catch(error => {
                     console.log(error);
-                    reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                    reject({ code: 400, error: { message: "backendQueryError" } });
                 });
         })
             .catch(error => {
                 console.log(error);
-                reject({ code: 401, error: { message: "Token inválido." } })
+                reject({ code: 401, error: { message: "invalidToken" } })
             });
     });
 }
@@ -61,12 +61,12 @@ async function getAllVideos(headers, id) {
                 })
                     .catch(error => {
                         console.log(error);
-                        reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                        reject({ code: 400, error: { message: "backendQueryError" } });
                     });
             })
                 .catch(error => {
                     console.log(error);
-                    reject({ code: 401, error: { message: "Token inválido." } })
+                    reject({ code: 401, error: { message: "invalidToken" } })
                 });
 
         } else {
@@ -78,7 +78,7 @@ async function getAllVideos(headers, id) {
             })
                 .catch(error => {
                     console.log(error);
-                    reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                    reject({ code: 400, error: { message: "backendQueryError" } });
                 });
         }
 
@@ -92,7 +92,7 @@ async function createVideo(tokens, body) {
             let id
             let existe
             if(info.user.type != "creator") {
-                reject({ code: 403, error: { message: "Apenas criadores podem criar cursos." } });
+                reject({ code: 403, error: { message: "forbidden" } });
             } else {
                 dbUser.getAllUsers().then(value3 => {
                     do {
@@ -120,19 +120,19 @@ async function createVideo(tokens, body) {
                     })
                     .catch(error => {
                         console.log(error);
-                        reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                        reject({ code: 400, error: { message: "backendQueryError" } });
                     });
                 })
                 .catch(error => {
                     console.log(error);
-                    reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                    reject({ code: 400, error: { message: "backendQueryError" } });
                 });
             }
 
         })
         .catch(error => {
             console.log(error);
-            reject({ code: 401, error: { message: "Token inválido." } })
+            reject({ code: 401, error: { message: "invalidToken" } })
         });
     });
 }
@@ -145,19 +145,19 @@ async function updateStateVideoUser(tokens, body) {
             dbVideo.getVideo(body.id).then(value1 => {
 
                 if (value1.length <= 0) {
-                    reject({ code: 404, error: { message: "Video não existe." } });
+                    reject({ code: 404, error: { message: "noVideo" } });
                 } else {
 
                     dbVideo.isVideoFromCourse(body.id, body.id_course).then(value2 => {
 
                         if (value2.length <= 0) {
-                            reject({ code: 403, error: { message: "Video não pertence a este user." } });
+                            reject({ code: 400, error: { message: "backendQueryError" } });
                         } else {
 
                             dbVideo.isCourseFromUser(body.id_course, info.user.id).then(value3 => {
 
                                 if (value3.length <= 0) {
-                                    reject({ code: 403, error: { message: "Video não pertence a este user." } });
+                                    reject({ code: 403, error: { message: "forbidden" } });
                                 } else {
 
                                     if (body.state === "Ativo" || body.state === "Inativo") {
@@ -168,36 +168,36 @@ async function updateStateVideoUser(tokens, body) {
                                         })
                                         .catch(error => {
                                             console.log(error);
-                                            reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                                            reject({ code: 400, error: { message: "backendQueryError" } });
                                         });
 
                                     } else {
 
-                                        reject({ code: 400, error: { message: "Current state invalid" } })
+                                        reject({ code: 400, error: { message: "invalidState" } })
 
                                     }
                                 }
                             })
                             .catch(error => {
                                 console.log(error);
-                                reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                                reject({ code: 400, error: { message: "backendQueryError" } });
                             });
                         }
                     })
                     .catch(error => {
                         console.log(error);
-                        reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                        reject({ code: 400, error: { message: "backendQueryError" } });
                     });
                 }
             })
             .catch(error => {
                 console.log(error);
-                reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                reject({ code: 400, error: { message: "backendQueryError" } });
             });
         })
         .catch(error => {
             console.log(error);
-            reject({ code: 401, error: { message: "Token inválido." } })
+            reject({ code: 401, error: { message: "invalidToken" } })
         });
     });
 }
@@ -209,17 +209,17 @@ async function updateStateVideoAdm(tokens, id, body) {
             dbVideo.getVideo(id).then(value1 => {
 
                 if (value1.length <= 0) {
-                    reject({ code: 404, error: { message: "Video não existe." } });
+                    reject({ code: 404, error: { message: "noVideo" } });
                 } else {
 
                     dbVideo.isVideoFromCourse(id, body.id_course).then(value2 => {
 
                         if (value2.length <= 0) {
-                            reject({ code: 403, error: { message: "Video não pertence a este curso." } });
+                            reject({ code: 400, error: { message: "backendQueryError" } });
                         } else {
 
                             if (info.user.type !== "admin") {
-                                reject({ code: 403, error: { message: "Não possui permissão para esta operação." } });
+                                reject({ code: 403, error: { message: "forbidden" } });
                             } else {
 
                                 if (body.state === "Ativo" || body.state === "Inativo" || body.state === "Pendente" || body.state === "Rejeitado") {
@@ -297,12 +297,12 @@ async function updateStateVideoAdm(tokens, id, body) {
                                                     })
                                                     .catch(error => {
                                                         console.log(error);
-                                                        reject({ code: 400, error: { message: "Erro ao executar a query da notificação." } })
+                                                        reject({ code: 400, error: { message: "backendQueryError" } })
                                                     })
                                                 })
                                                 .catch(error => {
                                                     console.log(error);
-                                                    reject({ code: 400, error: { message: "Erro ao executar a query da notificação." } })
+                                                    reject({ code: 400, error: { message: "backendQueryError" } })
                                                 })
                                             } else {
                                                 info.message = "Estado alterado com sucesso.";
@@ -312,35 +312,35 @@ async function updateStateVideoAdm(tokens, id, body) {
                                         })
                                         .catch(error => {
                                             console.log(error);
-                                            reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                                            reject({ code: 400, error: { message: "backendQueryError" } });
                                         })
 
                                     })
                                     .catch(error => {
                                         console.log(error);
-                                        reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                                        reject({ code: 400, error: { message: "backendQueryError" } });
                                     });
 
                                 } else {
-                                    reject({ code: 400, error: { message: "Current state invalid" } })
+                                    reject({ code: 400, error: { message: "invalidState" } })
                                 }
                             }
                         }
                     })
                     .catch(error => {
                         console.log(error);
-                        reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                        reject({ code: 400, error: { message: "backendQueryError" } });
                     });
                 }
             })
             .catch(error => {
                 console.log(error);
-                reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                reject({ code: 400, error: { message: "backendQueryError" } });
             });
         })
         .catch(error => {
             console.log(error);
-            reject({ code: 401, error: { message: "Token inválido." } })
+            reject({ code: 401, error: { message: "invalidToken" } })
         });
     });
 }
@@ -353,19 +353,19 @@ async function updateVideo(tokens, body) {
             dbVideo.getVideo(body.id).then(value1 => {
 
                 if (value1.length <= 0) {
-                    reject({ code: 404, error: { message: "Video não existe." } });
+                    reject({ code: 404, error: { message: "noVideo" } });
                 } else {
 
                     dbVideo.isVideoFromCourse(body.id, body.id_course).then(value2 => {
 
                         if (value2.length <= 0) {
-                            reject({ code: 403, error: { message: "Video não pertence a este user." } });
+                            reject({ code: 400, error: { message: "backendQueryError" } });
                         } else {
 
                             dbVideo.isCourseFromUser(body.id_course, info.user.id).then(value3 => {
 
                                 if (value3.length <= 0) {
-                                    reject({ code: 403, error: { message: "Video não pertence a este user." } });
+                                    reject({ code: 403, error: { message: "forbidden" } });
                                 } else {
 
                                     let id = body.id;
@@ -384,37 +384,37 @@ async function updateVideo(tokens, body) {
                                         })
                                         .catch(error => {
                                             console.log(error);
-                                            reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                                            reject({ code: 400, error: { message: "backendQueryError" } });
                                         });
 
                                     } else {
-                                        reject({ code: 400, error: { message: "Query has empty fields" } });
+                                        reject({ code: 400, error: { message: "emptyFields" } });
                                     }
 
                                 }
                             })
                             .catch(error => {
                                 console.log(error);
-                                reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                                reject({ code: 400, error: { message: "backendQueryError" } });
                             });
 
                         }
                     })
                     .catch(error => {
                         console.log(error);
-                        reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                        reject({ code: 400, error: { message: "backendQueryError" } });
                     });
                 }
             })
             .catch(error => {
                 console.log(error);
-                reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                reject({ code: 400, error: { message: "backendQueryError" } });
             });
 
         })
         .catch(error => {
             console.log(error);
-            reject({ code: 401, error: { message: "Token inválido." } })
+            reject({ code: 401, error: { message: "invalidToken" } })
         });
     });
 }

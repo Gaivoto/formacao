@@ -54,7 +54,8 @@
         "active": "Active",
         "inactive": "Inactive",
         "pending": "Pending",
-        "rejected": "Denied"
+        "rejected": "Denied",
+        "all": "All"
     },
     "myCourses": {
         "warning": "There are no Courses that match your search.",
@@ -65,7 +66,8 @@
         "formerlyAdded": "Formerly Added",
         "descendingProgress": "Descending Progress",
         "ascendingProgress": "Ascending Progress",
-        "filter": "Filter"
+        "filter": "Filter",
+        "allF": "All"
     },
     "courses": {
         "warning": "There are no Courses that match your search.",
@@ -76,7 +78,8 @@
         "formerlyAdded": "Formerly Added",
         "priceHighToLow": "Price High To Low",
         "priceLowToHigh": "Price Low to High",
-        "filter": "Filter"
+        "filter": "Filter",
+        "allF": "All"
     },
     "userListAdm": {
         "warning": "There are no Users that match your search.",
@@ -171,5 +174,37 @@
         "noResults": "There are no matches for your search.",
         "courses": "Courses",
         "login": "Login"
+    },
+    "notifications": {
+        "theStateC": "The state of the course: ",
+        "theStateV": "The state of the video: ",
+        "wasChanged": " was changed to ",
+        "theCreator": "The creator ",
+        "postedC": " posted a new course called ",
+        "postedV": " posted a new video called ",
+        "inTheCourse": " in the course "
+    },
+    "errors": {
+        "close": "Close",
+        "backendQueryError": "Something went wrong. Try again soon.",
+        "forbidden": "The user that is logged cannot complete this action.",
+        "invalidToken": "Session token expired.",
+        "usernamePasswordEmpty": "Username/password are empty.",
+        "emptyFields": "There are empty fields.",
+        "invalidEmail": "Invalid email.",
+        "usernamePasswordInvalid": "Username/passowrd are invalid.",
+        "inactiveUser": "This account has been deactivated.",
+        "noTransaction": "Transaction not found.",
+        "userHasCourse": "This user already has this course.",
+        "noCreator": "Creator not found.",
+        "usernameTaken": "This username is already in use.",
+        "invalidState": "Invalid state.",
+        "noUser": "User not found.",
+        "noSubscription": "Subscription not found",
+        "userNotCreator": "This user is not a creator.",
+        "noVideo": "Video not found.",
+        "noCourse": "Course not found.",
+        "courseNameTaken": "A course with this name already exists."
     }
+
 }

@@ -68,16 +68,12 @@ export default {
             .catch((error) => {
                 if (error.code) {
                     console.log(error.response.data);
+                    this.$emit("open-modal", error.response.data.message);
                     if(error.response.data.message == "Curso não existe.") {
                         this.$router.push({ name: "Home", params: { locale: Tr.guessDefaultLocale() } });
-                    } else {
-                        if(error.response.status == 401) {
-			                this.$store.commit('resetUser');
-                            this.$emit("open-modal", "Sessão expirou. Faça login novamente.");
-                            this.$router.push({ name: "Login", params: { locale: Tr.guessDefaultLocale() } });
-                        } else {
-                            this.$emit("open-modal", error.response.data.message);
-                        }
+                    } else if(error.response.status == 401) {
+                        this.$store.commit('resetUser');
+                        this.$router.push({ name: "Login", params: { locale: Tr.guessDefaultLocale() } });
                     }
                 } else console.log(error);
             });

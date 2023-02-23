@@ -25,7 +25,7 @@
         <div class="topbar-right" v-if="this.isUserLogged">
             <router-link class="user-wrapper" :to="Tr.i18nRoute({ name: 'Perfil do Utilizador', params: { id: this.getUserId } })" :key="this.getUserId">
                 <div class="username">
-                    <p>{{ this.$store.getters.getUser.username }}</p>
+                    <p>{{ this.getUsername }}</p>
                 </div>
                 <div class="image-wrapper">
                     <img id="profile-image" :src="this.imageUrl" />    
@@ -75,10 +75,6 @@ export default {
         searchOpen: {
             type: Boolean,
             required: true
-        },
-        user: {
-            type: Object,
-            required: true
         }
     },
     data() {
@@ -109,9 +105,14 @@ export default {
                 }
             })
             .then(value => {
-                console.log(value.data)
                 if(value.data.access_token) this.$store.commit('setAccessToken', value.data.access_token);
                 value.data.notifications.forEach(n => this.notifications.push(n));
+                this.notifications.forEach((u) => {
+                    if (u.change_state == "Ativo") u.change_state = this.$t("states.active");
+                    else if(u.change_state == "Inativo") u.change_state = this.$t("states.inactive");
+                    else if(u.change_state == "Pendente") u.change_state = this.$t("states.pending");
+                    else u.change_state = this.$t("states.rejected");
+                });
             })
             .catch(error => {
                 if (error.code) {
@@ -177,12 +178,13 @@ export default {
                 return false;    
             }
         },
-        getUser() {
-            this.user = this.$store.getter.getUser;
-        },
         getUserId() {
             if(this.$store.getters.getUser.id) return this.$store.getters.getUser.id;
             return 0;
+        },
+        getUsername() {
+            if(this.$store.getters.getUser.username) return this.$store.getters.getUser.username;
+            return "";
         },
         hasNotifs() {
             return (this.notifications.length > 0);

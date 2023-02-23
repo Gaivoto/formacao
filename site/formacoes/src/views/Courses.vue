@@ -95,7 +95,7 @@ export default {
                 this.coursesFiltered = this.coursesFiltered.filter(c => c.name.toLowerCase().includes(filter.name) || c.nameCr.toLowerCase().includes(filter.name));
             }
 
-            if(filter.category != "Todas") {
+            if(filter.category != this.$t("myCourses.allF")) {
                 this.coursesFiltered = this.coursesFiltered.filter(c => c.category == filter.category);
             }
 

@@ -11,7 +11,7 @@
                     <div class="custom-select">
                         <div class="selected" :class="{ open: catOpen }" v-on:click="catOpen=!catOpen; orderOpen=false">{{ this.category }}</div>
                         <div class="items" :class="{ selectHide: !catOpen }">
-                            <div v-on:click="selectCat('Todas')">Todas</div>
+                            <div v-on:click="selectCat($t('myCourses.allF'))">{{ $t("myCourses.allF") }}</div>
                             <div v-for="category in this.categories" :key="category.id" v-on:click="selectCat(category.name)">{{ category.name }}</div>
                         </div>
                     </div>    
@@ -45,7 +45,7 @@
                     <div class="custom-select">
                         <div class="selected" :class="{ open: catOpen }" v-on:click="catOpen=!catOpen; orderOpen=false">{{ this.category }}</div>
                         <div class="items" :class="{ selectHide: !catOpen }">
-                            <div v-on:click="selectCat('Todas')">Todas</div>
+                            <div v-on:click="selectCat($t('myCourses.allF'))">{{ $t("myCourses.allF") }}</div>
                             <div v-for="category in this.categories" :key="category.id" v-on:click="selectCat(category.name)">{{ category.name }}</div>
                         </div>
                     </div>   
@@ -83,13 +83,10 @@ export default {
         return {
             catOpen: false,
             orderOpen: false,
-            category: "Todas",
+            category: "",
             order: "",
             responsiveFilter: false
         }
-    },
-    created () {
-        this.order = this.t("myCourses.recentlyAdded")
     },
     setup() {
         const { t } = useI18n()
@@ -97,11 +94,15 @@ export default {
         return { Tr, t };
     },
     mounted(){
+        this.order = this.t("myCourses.allF");
+        this.category = this.t("myCourses.allF");
+
         let filter = {
             name: null,
             category: this.category,
             order: this.order
         }
+
         this.$emit("filter", filter);
     },
     watch: {
@@ -111,6 +112,7 @@ export default {
                 category: this.category,
                 order: this.order,
             }
+
             this.$emit("filter", filter);
         },
         category: function() {

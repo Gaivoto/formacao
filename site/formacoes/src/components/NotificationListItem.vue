@@ -9,6 +9,9 @@
 </template>
 
 <script>
+import Tr from '@/i18n/translation.js'
+import { useI18n } from 'vue-i18n'
+
 export default {
     name: 'NotificationListItem',
     props: {
@@ -26,6 +29,11 @@ export default {
     created(){
         this.imageUrl = new URL(`../assets/${this.notification.image}.jpg`, import.meta.url).href;
     },
+    setup() {
+        const { t } = useI18n();
+
+        return { Tr, t };
+    },
     computed: {
         formatedDate() {
             return this.notification.date.substring(11, 19) + " " + this.notification.date.substring(8, 10) + "/" + this.notification.date.substring(5, 7) + "/" + this.notification.date.substring(0, 4);
@@ -33,18 +41,18 @@ export default {
         notificationMessage() {
             if(this.$store.getters.getUser.id == this.notification.id_creator) {
                 if(this.notification.id_video == null){
-                    return this.notification.message = "O estado do Curso: " + this.notification.course_name + " foi alterado para " + this.notification.change_state.toLowerCase(); + ".";
+                    return this.notification.message = this.$t("notifications.theStateC") + this.notification.course_name + this.$t("notifications.wasChanged") + this.notification.change_state.toLowerCase(); + ".";
                 } 
                 else {
-                    return this.notification.message = "O estado do vídeo " + this.notification.video_title + " foi alterado para " + this.notification.change_state.toLowerCase(); + ".";
+                    return this.notification.message = this.$t("notifications.theStateV") + this.notification.video_title + this.$t("notifications.wasChanged") + this.notification.change_state.toLowerCase(); + ".";
                 }
             }
             else {
-                if(id_video == null) {
-                    return this.notification.message = "O criador " + this.notification.creator_name + " postou um novo curso chamado " + this.notification.course_name; + "."
+                if(this.notification.id_video == null) {
+                    return this.notification.message = this.$t("notifications.theCreator") + this.notification.creator_name + this.$t("notifications.postedC") + this.notification.course_name; + "."
                 } 
                 else {
-                    return this.notification.message = "O criador " + this.notification.creator_name + " postou um novo vídeo chamado" + this.notification.video_title + " no curso " + this.notification.course_name + "."
+                    return this.notification.message = this.$t("notifications.theCreator") + this.notification.creator_name + this.$t("notifications.postedV") + this.notification.video_title + this.$t("notifications.inTheCourse") + this.notification.course_name + "."
                 }
             }
         }

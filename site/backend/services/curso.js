@@ -27,7 +27,7 @@ async function getCurso(headers, id) {
                 dbCurs.getCurso(id).then(value2 => {
 
                     if (value2.length == 0) {
-                        reject({ code: 404, error: { message: "Curso não existe." } });
+                        reject({ code: 404, error: { message: "noCourse" } });
                     } else {
 
                         info.course = value2[0];
@@ -63,25 +63,25 @@ async function getCurso(headers, id) {
 
                         }).catch(error => {
                             console.log(error);
-                            reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                            reject({ code: 400, error: { message: "backendQueryError" } });
                         });
                     }
                 })
                 .catch(error => {
                     console.log(error);
-                    reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                    reject({ code: 400, error: { message: "backendQueryError" } });
                 });
             })
             .catch(error => {
                 console.log(error);
-                reject({ code: 401, error: { message: "Token inválido." } })
+                reject({ code: 401, error: { message: "invalidToken" } })
             });
 
         } else {
 
             dbCurs.getCurso(id).then(value => {
                 if (value.length == 0) {
-                    reject({ code: 404, error: { message: "Curso não existe." } });
+                    reject({ code: 404, error: { message: "noCourse" } });
                 } else {
                     let resp = {
                         course: value[0]
@@ -100,13 +100,13 @@ async function getCurso(headers, id) {
                     })
                     .catch(error => {
                         console.log(error);
-                        reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                        reject({ code: 400, error: { message: "backendQueryError" } });
                     });
                 }
             })
             .catch(error => {
                 console.log(error);
-                reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                reject({ code: 400, error: { message: "backendQueryError" } });
             });
         }
     });
@@ -157,12 +157,12 @@ async function getAllCursos(headers) {
                         })
                         .catch(error => {
                             console.log(error);
-                            reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                            reject({ code: 400, error: { message: "backendQueryError" } });
                         });
                     })
                     .catch(error => {
                         console.log(error);
-                        reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                        reject({ code: 400, error: { message: "backendQueryError" } });
                     });
                 } else {
                     dbCurs.getAllCursos().then(value2 => {
@@ -192,18 +192,18 @@ async function getAllCursos(headers) {
                         })
                         .catch(error => {
                             console.log(error);
-                            reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                            reject({ code: 400, error: { message: "backendQueryError" } });
                         });
                     })
                     .catch(error => {
                         console.log(error);
-                        reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                        reject({ code: 400, error: { message: "backendQueryError" } });
                     });
                 }
             })
             .catch(error => {
                 console.log(error);
-                reject({ code: 401, error: { message: "Token inválido." } });
+                reject({ code: 401, error: { message: "invalidToken" } });
             });
 
         } else {
@@ -233,12 +233,12 @@ async function getAllCursos(headers) {
                 })
                 .catch(error => {
                     console.log(error);
-                    reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                    reject({ code: 400, error: { message: "backendQueryError" } });
                 });
             })
             .catch(error => {
                 console.log(error);
-                reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                reject({ code: 400, error: { message: "backendQueryError" } });
             });
         }
 
@@ -285,21 +285,21 @@ async function getAllUserCursos(tokens, id) {
                     })
                     .catch(error => {
                         console.log(error);
-                        reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                        reject({ code: 400, error: { message: "backendQueryError" } });
                     })
                 })
                 .catch(error => {
                     console.log(error);
-                    reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                    reject({ code: 400, error: { message: "backendQueryError" } });
                 })
 
             } else {
-                reject({ code: 403, error: { message: "Um user pode apenas ver os seus cursos comprados e não os de outros users." } });
+                reject({ code: 403, error: { message: "forbidden" } });
             }
         })
         .catch(error => {
             console.log(error);
-            reject({ code: 401, error: { message: "Token inválido." } });
+            reject({ code: 401, error: { message: "invalidToken" } });
         })
     });
 }
@@ -312,13 +312,13 @@ async function createCurso(tokens, body) {
             let existe
 
             if(info.user.type != "creator") {
-                reject({ code: 403, error: { message: "Apenas criadores podem criar cursos." } });
+                reject({ code: 403, error: { message: "forbidden" } });
             } else {
             
                 dbCurs.isNameTaken(body.name).then(value2 => {
 
                     if (value2.length > 0) {
-                        reject({ code: 400, error: { message: "Já existe um curso com este nome." } });
+                        reject({ code: 400, error: { message: "courseNameTaken" } });
                     } else {
 
                         dbCurs.getAllCursos().then(value3 => {
@@ -348,25 +348,25 @@ async function createCurso(tokens, body) {
                             })
                             .catch(error => {
                                 console.log(error);
-                                reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                                reject({ code: 400, error: { message: "backendQueryError" } });
                             });
                         })
                         .catch(error => {
                             console.log(error);
-                            reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                            reject({ code: 400, error: { message: "backendQueryError" } });
                         });
 
                     }
                 })
                 .catch(error => {
                     console.log(error);
-                    reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                    reject({ code: 400, error: { message: "backendQueryError" } });
                 });
             }
         })
         .catch(error => {
             console.log(error);
-            reject({ code: 401, error: { message: "Token inválido." } })
+            reject({ code: 401, error: { message: "invalidToken" } })
         });
     });
 }
@@ -380,13 +380,13 @@ async function updateStateCursoUser(tokens, id, body) {
             dbCurs.getCurso(id).then(value1 => {
 
                 if (value1.length <= 0) {
-                    reject({ code: 404, error: { message: "Curso não existe." } });
+                    reject({ code: 404, error: { message: "noCourse" } });
                 } else {
 
                     dbCurs.isCourseFromUser(id, info.user.id).then(value2 => {
 
                         if (value2.length <= 0) {
-                            reject({ code: 403, error: { message: "Curso não pertence a este user." } });
+                            reject({ code: 403, error: { message: "forbidden" } });
                         } else {
 
                             if (body.state === "Ativo" || body.state === "Inativo") {
@@ -397,28 +397,28 @@ async function updateStateCursoUser(tokens, id, body) {
                                 })
                                 .catch(error => {
                                     console.log(error);
-                                    reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                                    reject({ code: 400, error: { message: "backendQueryError" } });
                                 });
 
                             } else {
-                                reject({ code: 400, error: { message: "Current state invalid" } });
+                                reject({ code: 400, error: { message: "invalidState" } });
                             }
                         }
                     })
                     .catch(error => {
                         console.log(error);
-                        reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                        reject({ code: 400, error: { message: "backendQueryError" } });
                     });
                 }
             })
             .catch(error => {
                 console.log(error);
-                reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                reject({ code: 400, error: { message: "backendQueryError" } });
             });
         })
         .catch(error => {
             console.log(error);
-            reject({ code: 401, error: { message: "Token inválido." } })
+            reject({ code: 401, error: { message: "invalidToken" } })
         });
     });
 }
@@ -432,11 +432,11 @@ async function updateStateCursoAdm(tokens, id, body) {
             dbCurs.getCurso(id).then(value1 => {
 
                 if (value1.length <= 0) {
-                    reject({ code: 404, error: { message: "Curso não existe." } });
+                    reject({ code: 404, error: { message: "noCourse" } });
                 } else {
 
                     if (info.user.type !== "admin") {
-                        reject({ code: 403, error: { message: "Não possui permissão para esta operação." } });
+                        reject({ code: 403, error: { message: "forbidden" } });
                     } else {
 
                         if (body.state === "Ativo" || body.state === "Inativo" || body.state === "Pendente" || body.state === "Rejeitado") {
@@ -486,12 +486,12 @@ async function updateStateCursoAdm(tokens, id, body) {
                                         })
                                         .catch(error => {
                                             console.log(error);
-                                            reject({ code: 400, error: { message: "Erro ao executar a criação das notificações." } })
+                                            reject({ code: 400, error: { message: "backendQueryError" } })
                                         })
                                     })
                                     .catch(error => {
                                         console.log(error);
-                                        reject({ code: 400, error: { message: "Erro ao executar a query da notificação." } })
+                                        reject({ code: 400, error: { message: "backendQueryError" } })
                                     });
                                 } else {
                                     info.message = "Estado alterado com sucesso.";
@@ -501,23 +501,23 @@ async function updateStateCursoAdm(tokens, id, body) {
                             })
                             .catch(error => {
                                 console.log(error);
-                                reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                                reject({ code: 400, error: { message: "backendQueryError" } });
                             });
 
                         } else {
-                            reject({ code: 400, error: { message: "Current state invalid" } });
+                            reject({ code: 400, error: { message: "invalidState" } });
                         }
                     }
                 }
             })
             .catch(error => {
                 console.log(error);
-                reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                reject({ code: 400, error: { message: "backendQueryError" } });
             });
         })
         .catch(error => {
             console.log(error);
-            reject({ code: 401, error: { message: "Token inválido." } })
+            reject({ code: 401, error: { message: "invalidToken" } })
         });
     });
 }
@@ -530,13 +530,13 @@ async function updateCurso(tokens, id, body) {
             dbCurs.getCurso(id).then(value1 => {
 
                 if (value1.length <= 0) {
-                    reject({ code: 404, error: { message: "Curso não existe." } });
+                    reject({ code: 404, error: { message: "noCourse" } });
                 } else {
 
                     dbCurs.isCourseFromUser(id, info.user.id).then(value2 => {
 
                         if (value2.length <= 0) {
-                            reject({ code: 403, error: { message: "Curso não pertence a este user." } });
+                            reject({ code: 403, error: { message: "forbidden" } });
                         } else {
 
                             let name = body.name;
@@ -553,28 +553,28 @@ async function updateCurso(tokens, id, body) {
                                 })
                                 .catch(error => {
                                     console.log(error);
-                                    reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                                    reject({ code: 400, error: { message: "backendQueryError" } });
                                 });
                             } else {
-                                reject({ code: 400, error: { message: "Query has empty fields." } });
+                                reject({ code: 400, error: { message: "emptyFields" } });
                             }
                         }
                     })
                     .catch(error => {
                         console.log(error);
-                        reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                        reject({ code: 400, error: { message: "backendQueryError" } });
                     });
                 }
             })
             .catch(error => {
                 console.log(error);
-                reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                reject({ code: 400, error: { message: "backendQueryError" } });
             });
 
         })
         .catch(error => {
             console.log(error);
-            reject({ code: 401, error: { message: "Token inválido." } })
+            reject({ code: 401, error: { message: "invalidToken" } })
         });
     });
 }
@@ -653,14 +653,14 @@ async function getCursosHomePage() {
             })
             .catch(error => {
                 console.log(error);
-                reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                reject({ code: 400, error: { message: "backendQueryError" } });
             });
 
 
         })
         .catch(error => {
             console.log(error);
-            reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+            reject({ code: 400, error: { message: "backendQueryError" } });
         });
 
 

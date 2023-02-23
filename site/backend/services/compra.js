@@ -25,7 +25,7 @@ async function getCompra(headers, id) {
                 dbComp.getCompra(id).then(value2 => {
 
                     if (value2.length <= 0) {
-                        reject({ code: 404, error: { message: "Compra não existe." } });
+                        reject({ code: 404, error: { message: "noTransaction" } });
                     } else {
                         let resp = {
                             comp: value2,
@@ -36,12 +36,12 @@ async function getCompra(headers, id) {
                 })
                 .catch(error => {
                     console.log(error);
-                    reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                    reject({ code: 400, error: { message: "backendQueryError" } });
                 });
             })
             .catch(error => {
                 console.log(error);
-                reject({ code: 401, error: { message: "Token inválido." } })
+                reject({ code: 401, error: { message: "invalidToken" } })
             });
 
         }
@@ -73,12 +73,12 @@ async function getAllCompras(headers) {
                 })
                 .catch(error => {
                     console.log(error);
-                    reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                    reject({ code: 400, error: { message: "backendQueryError" } });
                 });
             })
             .catch(error => {
                 console.log(error);
-                reject({ code: 401, error: { message: "Token inválido." } })
+                reject({ code: 401, error: { message: "invalidToken" } })
             });
 
         } else {
@@ -92,7 +92,7 @@ async function getAllCompras(headers) {
             })
             .catch(error => {
                 console.log(error);
-                reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                reject({ code: 400, error: { message: "backendQueryError" } });
             });
         }
 
@@ -117,10 +117,10 @@ async function createCompra(tokens, body) {
             horario = horas + ':' + minutos + ':' + segundos;
             let currentDate = mes + '-' + dias + '-' + ano + ' ' + horario;
             if (body.id_user !== info.user.id) {
-                reject({ code: 400, error: { message: "Não pode comprar subscrições a outros utilizadores." } });
+                reject({ code: 403, error: { message: "forbidden" } });
             } else {
                 if (info.user.type !== "user" && info.user.type !== "creator") {
-                    reject({ code: 400, error: { message: "Admins não fazem compras." } });
+                    reject({ code: 403, error: { message: "forbidden" } });
                 } else {
                     dbCurs.getCurso(body.id_course).then(value2 => {
                         let id_creator = value2[0].id_creator;
@@ -134,7 +134,7 @@ async function createCompra(tokens, body) {
                                     }
                                 }
                                 if (existeCompra) {
-                                    reject({ code: 400, error: { message: "User já possui este curso." } });
+                                    reject({ code: 400, error: { message: "userHasCourse" } });
                                 } else {
                                     dbSubs.existsSubscricao(body.id_user, id_creator).then(value4 => {
                                         if (value4.length > 0) {
@@ -144,7 +144,7 @@ async function createCompra(tokens, body) {
                                                 }
                                             }
                                             if (existeSubs) {
-                                                reject({ code: 400, error: { message: "User encontra-se subscrito." } });
+                                                reject({ code: 400, error: { message: "userHasCourse" } });
                                             } else {
                                                 dbComp.getAllCompras().then(value5 => {
                                                     do {
@@ -159,12 +159,12 @@ async function createCompra(tokens, body) {
                                                     })
                                                     .catch(error => {
                                                         console.log(error);
-                                                        reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                                                        reject({ code: 400, error: { message: "backendQueryError" } });
                                                     });
                                                 })
                                                 .catch(error => {
                                                     console.log(error);
-                                                    reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                                                    reject({ code: 400, error: { message: "backendQueryError" } });
                                                 });
                                             }
                                         } else {
@@ -182,18 +182,18 @@ async function createCompra(tokens, body) {
                                                 })
                                                 .catch(error => {
                                                     console.log(error);
-                                                    reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                                                    reject({ code: 400, error: { message: "backendQueryError" } });
                                                 });
                                             })
                                             .catch(error => {
                                                 console.log(error);
-                                                reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                                                reject({ code: 400, error: { message: "backendQueryError" } });
                                             });
                                         }
                                     })
                                     .catch(error => {
                                         console.log(error);
-                                        reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                                        reject({ code: 400, error: { message: "backendQueryError" } });
                                     });
                                 }
                             } else {
@@ -205,7 +205,7 @@ async function createCompra(tokens, body) {
                                             }
                                         }
                                         if (existeSubs) {
-                                            reject({ code: 400, error: { message: "User encontra-se subscrito." } });
+                                            reject({ code: 400, error: { message: "userHasCourse" } });
                                         } else {
                                             dbComp.getAllCompras().then(value5 => {
                                                 do {
@@ -221,12 +221,12 @@ async function createCompra(tokens, body) {
                                                 })
                                                 .catch(error => {
                                                     console.log(error);
-                                                    reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                                                    reject({ code: 400, error: { message: "backendQueryError" } });
                                                 });
                                             })
                                             .catch(error => {
                                                 console.log(error);
-                                                reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                                                reject({ code: 400, error: { message: "backendQueryError" } });
                                             });
                                         }
                                     } else {
@@ -243,36 +243,36 @@ async function createCompra(tokens, body) {
                                             })
                                             .catch(error => {
                                                 console.log(error);
-                                                reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                                                reject({ code: 400, error: { message: "backendQueryError" } });
                                             });
                                         })
                                         .catch(error => {
                                             console.log(error);
-                                            reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                                            reject({ code: 400, error: { message: "backendQueryError" } });
                                         });
                                     }
                                 })
                                 .catch(error => {
                                     console.log(error);
-                                    reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                                    reject({ code: 400, error: { message: "backendQueryError" } });
                                 });
                             }
                         })
                         .catch(error => {
                             console.log(error);
-                            reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                            reject({ code: 400, error: { message: "backendQueryError" } });
                         });
                     })
                     .catch(error => {
                         console.log(error);
-                        reject({ code: 400, error: { message: "Algo correu mal com a query." } });
+                        reject({ code: 400, error: { message: "backendQueryError" } });
                     });
                 }
             }
         })
         .catch(error => {
             console.log(error);
-            reject({ code: 401, error: { message: "Token inválido." } })
+            reject({ code: 401, error: { message: "invalidToken" } })
         });
     });
 }

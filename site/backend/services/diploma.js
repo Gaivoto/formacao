@@ -13,15 +13,15 @@ async function getUserDiplomas(tokens, id){
                 })
                 .catch(error => {
                     console.log(error);
-                    reject({code: 400, error: { message: "Algo correu mal com a query."}});
+                    reject({code: 400, error: { message: "backendQueryError"}});
                 })
             } else {
-                reject({code: 403, error: { message: "Um utilizador pode apenas ver os seus diplomas."}});
+                reject({code: 403, error: { message: "forbidden"}});
             }
         })
         .catch(error => {
             console.log(error);
-            reject({code: 401, error: { message: "Token inválido."}});
+            reject({code: 401, error: { message: "invalidToken"}});
         });
     });
 }

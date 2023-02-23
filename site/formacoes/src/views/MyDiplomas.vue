@@ -80,12 +80,10 @@ export default {
             .catch((error) => {
                 if (error.code) {
                     console.log(error.response.data);
+                    this.$emit("open-modal", error.response.data.message);
                     if(error.code == 401) {
 			            this.$store.commit('resetUser');
-                        this.$emit("open-modal", "Sessão expirou. Faça login novamente.");
                         this.$router.push({ name: "Login", params: { locale: Tr.guessDefaultLocale() } });
-                    } else {
-                        this.$emit("open-modal", error.response.data.message);
                     }
                 } else console.log(error);
             });
@@ -104,12 +102,10 @@ export default {
             .catch((error) => {
                 if (error.code) {
                     console.log(error.response.data);
+                    this.$emit("open-modal", error.response.data.message);
                     if(error.code == 401) {
 			            this.$store.commit('resetUser');
-                        this.$emit("open-modal", "Sessão expirou. Faça login novamente.");
                         this.$router.push({ name: "Login", params: { locale: Tr.guessDefaultLocale() } });
-                    } else {
-                        this.$emit("open-modal", error.response.data.message);
                     }
                 } else console.log(error);
             });
