@@ -72,6 +72,16 @@ async function getCursosHomePage(req, res) {
         });
 }
 
+async function rateCourse(req, res) {
+    serCurs.rateCourse({ access_token: req.headers['authorization'].split(' ')[1], refresh_token: req.headers.refreshtoken }, req.body).then(value => {
+        res.status(value.code).send(value.info);
+    })
+        .catch(error => {
+            res.status(error.code).send(error.error);
+        });
+}
+
+
 module.exports = {
     getCurso: getCurso,
     getAllCursos: getAllCursos,
@@ -81,4 +91,5 @@ module.exports = {
     updateCurso: updateCurso,
     getAllUserCursos: getAllUserCursos,
     getCursosHomePage: getCursosHomePage,
+    rateCourse: rateCourse
 }

@@ -273,8 +273,22 @@ async function rateCourse(rating, id) {
 async function getUserRatingOfCourse(id_user, id_course) {
     const pool = new sql.Request();
     return new Promise((resolve, reject) => {
-        const slct = `SELECT [id], [rating] FROM User_Course WHERE [id_user] = @id_user AND [id_course] = @id_course`;
+        const slct = `SELECT TOP 1 [id], [rating] FROM User_Course WHERE [id_user] = @id_user AND [id_course] = @id_course AND [rating] IS NOT NULL ORDER BY [date_bought] DESC`;
         pool.input('id_user', sql.VarChar(200), id_user).input('id_course', sql.VarChar(200), id_course).query(slct, (err,res) => {
+            if (!err) {
+                resolve(res.recordset);
+            } else {
+                reject(err.message);
+            }
+        });
+    })
+}
+
+async function updateRating(id) {
+    const pool = new sql.Request();
+    return new Promise((resolve, reject) => {
+        const slct = `UPDATE [Course] SET [rating] = (SELECT AVG(rating) FROM [User_Course] WHERE  [id_course] = @id ) WHERE [id] = @id`;
+        pool.input('id', sql.VarChar(200), id).query(slct, (err,res) => {
             if (!err) {
                 resolve(res.recordset);
             } else {
@@ -302,6 +316,7 @@ module.exports = {
     getRecomendedCursos: getRecomendedCursos,
     getOtherCursos: getOtherCursos,
     rateCourse: rateCourse,
-    getUserRatingOfCourse: getUserRatingOfCourse
+    getUserRatingOfCourse: getUserRatingOfCourse,
+    updateRating: updateRating
 
 }
