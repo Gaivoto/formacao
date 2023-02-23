@@ -9,7 +9,7 @@
                 <div class="card-info-div">
                     <p class="card-info-category">{{ this.course.category }}</p>
                     <div class="card-score-div">
-                        <p>{{ this.course.rating }}</p>
+                        <p>{{ this.roundedRating }}</p>
                         <span class="material-icons duration-icon">star</span>
                     </div>
                 </div>
@@ -57,6 +57,9 @@ export default {
     computed: {
         calculatedDuration() {
             return Math.floor(this.course.duration) + "h " + Math.round((this.course.duration - Math.floor(this.course.duration)) * 60) + "min";
+        },
+        roundedRating() {
+            return parseFloat(this.course.rating.toString()).toFixed(2);
         }
     }
 }

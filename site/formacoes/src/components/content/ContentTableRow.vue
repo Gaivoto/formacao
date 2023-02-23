@@ -18,7 +18,7 @@
             <p>{{ this.translatedState }}</p>
         </td>
         <td class="column-right">
-            <p>{{ this.rating }}</p>
+            <p>{{ this.roundedRating }}</p>
         </td>
         <td class="column-right">
             <p>{{ this.course.numberOfVideos }}</p>
@@ -68,6 +68,9 @@ export default {
                 default:
                     return "Erro";
             }
+        },
+        roundedRating() {
+            return parseFloat(this.course.rating.toString()).toFixed(2);
         }
     }
 }

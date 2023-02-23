@@ -1,7 +1,7 @@
 <template>
     <div class="course-details-wrapper">
         <div class="course-details-content">
-            <CourseDetHeader class="course-header" v-bind:course="this.course" v-bind:creator="this.creator" v-bind:compra="this.compra" />
+            <CourseDetHeader class="course-header" v-bind:course="this.course" v-bind:creator="this.creator" v-bind:compra="this.compra" v-bind:access="this.access" v-on:rate-course="this.rateCourse" />
             <p>{{ $t("courseDetails.content") }}</p>
             <div class="vid-container">
                 <VidInfo v-for="vid in this.videos" :key="vid.id" v-bind:video="vid" v-bind:courseID="this.course.id" v-bind:clickable="this.creator || this.access"/>
@@ -118,6 +118,11 @@ export default {
         userHasAccess() {
             if(this.access || this.creator || (this.$store.getters.getUser.type && this.$store.getters.getUser.type == 'admin')) return true;
             return false;
+        }
+    },
+    methods: {
+        rateCourse(rating) {
+
         }
     }
 };

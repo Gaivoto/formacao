@@ -11,7 +11,7 @@
                         <p>{{ $t("courseListAdm.creator") }}: {{ this.course.nameCr }}</p>
                     </div>
                     <div>
-                        <p>{{ $t("courseListAdm.rating") }}: {{ this.course.rating }} €</p>
+                        <p>{{ $t("courseListAdm.rating") }}: {{ this.roundedRating }}</p>
                         <p>{{ $t("courseListAdm.catAbr") }}: {{ this.course.category }}</p>
                     </div> 
                 </div>
@@ -113,6 +113,9 @@ export default {
                 default:
                     return "Erro";
             }
+        },
+        roundedRating() {
+            return parseFloat(this.course.rating.toString()).toFixed(2);
         }
     },
     methods: {

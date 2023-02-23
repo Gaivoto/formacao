@@ -8,6 +8,9 @@
                 <p>{{ $t("courseDetails.category") }} {{ this.course.category }}</p>
                 <p>{{ $t("courseDetails.price") }}{{ this.course.price }}</p>
                 <button v-if:="this.compra">{{ $t("courseDetails.purchase") }}</button>
+                <div v-if="this.canRate" ref="rating" class="rating">
+                    <span v-for="n in 5" :key="n" class="material-icons" v-on:click="this.rateCourse(n)" v-on:mouseenter="this.hoverRating(n)" v-on:mouseleave="this.defaultRating">star</span>
+                </div>
                 <router-link v-if:="this.creator" :to="Tr.i18nRoute({ name: 'Workshop', params: { id: this.getUserId, idCourse: this.course.id, locale: Tr.guessDefaultLocale() } })">
                     <button>{{ $t("courseDetails.editCourse") }}</button> 
                 </router-link>
@@ -36,6 +39,10 @@ export default {
         compra: {
             type: Boolean,
             required: true
+        },
+        access: {
+            type: Boolean,
+            required: true
         }
     },
     data() {
@@ -49,10 +56,46 @@ export default {
     created() {
         this.imageUrl = new URL(`../../assets/${this.course.image}.jpg`, import.meta.url).href;
     },
+    mounted() {
+        if(this.course.userRating) {
+            for(let i = 0; i < this.course.userRating; i++) {
+                this.$refs.rating.children[i].classList.add("hovered");
+            }
+        }
+    },
     computed: {
         getUserId() {
             if(this.$store.getters.getUser.id) return this.$store.getters.getUser.id;
             return 0;
+        },
+        canRate() {
+            return (this.$store.getters.getUser.type && this.$store.getters.getUser.type != 'admin' && !this.creator && this.access);
+        }
+    },
+    methods: {
+        rateCourse(rating) {
+            this.course.userRating = rating;
+            this.$emit("rate-course", rating);
+        },
+        hoverRating(rating) {
+            for(let i = 0; i < 5; i++) {
+                this.$refs.rating.children[i].classList.remove("hovered");
+            }
+
+            for(let i = 0; i < rating; i++) {
+                this.$refs.rating.children[i].classList.add("hovered");
+            }
+        },
+        defaultRating() {
+            for(let i = 0; i < 5; i++) {
+                this.$refs.rating.children[i].classList.remove("hovered");
+            }  
+
+            if(this.course.userRating) {                
+                for(let i = 0; i < this.course.userRating; i++) {
+                    this.$refs.rating.children[i].classList.add("hovered");
+                }
+            }
         }
     }
 }
@@ -119,6 +162,16 @@ export default {
 
     .right-side p:nth-child(2) {
         white-space: pre-wrap;
+    }
+
+    .rating span {
+        font-size: 36px;
+        color: var(--light);
+        cursor: pointer;
+    }
+
+    .rating .hovered {
+        color: var(--primary);
     }
 
     @media (max-width: 1400px) {
