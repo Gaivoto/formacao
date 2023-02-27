@@ -123,15 +123,15 @@ export default {
                         this.$emit("open-modal", error.response.data.message);
                     } else console.log(error);
                 });
-                } else {
-                    this.$emit("open-modal", "Password/username vazios.");
-                }
+            } else {
+                this.$emit("open-modal", "usernamePasswordEmpty");
+            }
         },
         register() {
             if(this.$refs.registerUsername.value == "" || this.$refs.registerPassword.value == "" || this.$refs.registerEmail.value == "") {
-                this.$emit("open-modal", "Preencha todos os campos para efetuar registo.");
+                this.$emit("open-modal", "emptyFields");
             } else if(!this.$refs.registerEmail.value.includes('@')) {
-                this.$emit("open-modal", "O email deve ser válido.");
+                this.$emit("open-modal", "invalidEmail");
             } else {
                 axios({
                     method: 'post',
