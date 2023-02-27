@@ -1,7 +1,7 @@
 <template>
     <div class="course-details-wrapper">
         <div class="course-details-content">
-            <CourseDetHeader class="course-header" v-bind:course="this.course" v-bind:creator="this.creator" v-bind:compra="this.compra" v-bind:access="this.access" v-on:rate-course="this.rateCourse" />
+            <CourseDetHeader class="course-header" v-bind:course="this.course" v-bind:creator="this.creator" v-bind:compra="this.compra" v-bind:rate="this.rate" v-on:rate-course="this.rateCourse" />
             <p>{{ $t("courseDetails.content") }}</p>
             <div class="vid-container">
                 <VidInfo v-for="vid in this.videos" :key="vid.id" v-bind:video="vid" v-bind:courseID="this.course.id" v-bind:clickable="this.creator || this.access"/>
@@ -28,7 +28,8 @@ export default {
             videos: [],
             creator: false,
             access: false,
-            compra: false
+            compra: false,
+            rate: false
         }
     },
     setup() {
@@ -57,6 +58,7 @@ export default {
             this.access = value.data.course.access;
 
             if(this.$store.getters.getUser.type && this.$store.getters.getUser.type != 'admin' && !this.creator && !this.access) this.compra = true;
+            if(this.$store.getters.getUser.type && this.$store.getters.getUser.type != 'admin' && !this.creator && this.access) this.rate = true;
         })
         .catch(error => {
             if (error.code) {
@@ -91,7 +93,7 @@ export default {
         .then(value => {
             if (value.data.access_token) this.$store.commit('setAccessToken', value.data.access_token);
             if (value.data.course.id_creator == this.$store.getters.getUser.id) this.creator = true;
-
+            
             this.course = value.data.course;
             this.videos = value.data.course.videos;
             this.access = value.data.course.access;
@@ -122,31 +124,30 @@ export default {
     },
     methods: {
         rateCourse(rating) {
-                axios({
-                    method: 'put',
-                    url: `${import.meta.env.VITE_HOST}/cursos/rating/${this.$route.params.id}`,
-                    data: {
-                        idComp: this.course.idCompra,
-                        rating: rating
-                    },
-                    headers: {
+            axios({
+                method: 'put',
+                url: `${import.meta.env.VITE_HOST}/cursos/rating/${this.$route.params.id}`,
+                data: {
+                    idComp: this.course.idCompra,
+                    rating: rating
+                },
+                headers: {
                     Authorization: `Bearer ${this.$store.getters.getAccessToken}`,
                     refreshtoken: this.$store.getters.getRefreshToken,
-                    }
-                })
-                .then(value => {
-                    console.log("deuCerto")
-                })
-                .catch(error => {
-                    console.log(error)
-                    if(error.code) {
-                        console.log(error.response.data);
-                        this.$emit("open-modal", error.response.data.message);
-                    } else console.log(error);
-                });
-                } 
-        }
-    
+                }
+            })
+            .then(value => {
+                if (value.data.access_token) this.$store.commit('setAccessToken', value.data.access_token);
+            })
+            .catch(error => {
+                console.log(error)
+                if(error.code) {
+                    console.log(error.response.data);
+                    this.$emit("open-modal", error.response.data.message);
+                } else console.log(error);
+            });
+        } 
+    }
 };
 </script>
 

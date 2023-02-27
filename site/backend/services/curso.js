@@ -679,6 +679,7 @@ async function getCursosHomePage() {
 }
 
 async function rateCourse(tokens, idCourse, body) {
+    console.log(idCourse, body)
     return new Promise((resolve, reject) => {
         utils.validateToken(tokens.access_token, tokens.refresh_token).then(value => {
             let info = value;

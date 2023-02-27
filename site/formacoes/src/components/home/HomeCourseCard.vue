@@ -64,7 +64,10 @@ export default {
             return Math.floor(this.course.duration) + "h " + Math.round((this.course.duration - Math.floor(this.course.duration)) * 60) + "min";
         },
         roundedRating() {
-            return parseFloat(this.course.rating.toString()).toFixed(2);
+            let score = parseFloat(this.course.rating.toString()).toFixed(2);
+
+            if (score == 0.00) return '-.--';
+            else return parseFloat(this.course.rating.toString()).toFixed(2);
         }
     }
 }

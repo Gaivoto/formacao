@@ -115,7 +115,10 @@ export default {
             }
         },
         roundedRating() {
-            return parseFloat(this.course.rating.toString()).toFixed(2);
+            let score = parseFloat(this.course.rating.toString()).toFixed(2);
+
+            if (score == 0.00) return '-.--';
+            else return parseFloat(this.course.rating.toString()).toFixed(2);
         }
     },
     methods: {
