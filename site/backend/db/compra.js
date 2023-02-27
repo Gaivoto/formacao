@@ -111,6 +111,20 @@ async function endCompraAfterSubscriptionEnded(idSubs, data) {
     })
 }
 
+async function existsCompraRating(idU, idC) {
+    const pool = new sql.Request();
+    return new Promise((resolve, reject) => {
+        const slct = `SELECT * FROM [User_Course] WHERE [id_user] = @idU AND [id_course] = @idC AND [data_sub] IS NULL ORDER BY [date_bought] DESC`;
+        pool.input('idU', sql.VarChar(200), idU).input('idC', sql.VarChar(200), idC).query(slct, (err, res) => {
+            if (!err) {
+                resolve(res.recordset);
+            } else {
+                reject(err.message);
+            }
+        });
+    });
+}
+
 module.exports = {
     getCompra: getCompra,
     getAllCompras: getAllCompras,
@@ -118,5 +132,6 @@ module.exports = {
     existsCompra: existsCompra,
     createCompra: createCompra,
     getUsersThatBoughtThisCourse: getUsersThatBoughtThisCourse,
-    endCompraAfterSubscriptionEnded: endCompraAfterSubscriptionEnded
+    endCompraAfterSubscriptionEnded: endCompraAfterSubscriptionEnded,
+    existsCompraRating: existsCompraRating
 }
