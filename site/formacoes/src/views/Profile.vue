@@ -249,7 +249,7 @@ export default {
                     } else console.log(error);
                 });
             } else {
-                this.$emit("open-modal", "Introduza um nome válido.");
+                this.$emit("open-modal", "invalidName");
             }
         },
         createSubscriptionUser(info) {
@@ -267,7 +267,7 @@ export default {
             })
             .then((value) => {
                 if (value.data.access_token) this.$store.commit("setAccessToken", value.data.access_token);
-                this.$emit("open-modal", "Subscrição criada");
+                this.$emit("open-modal", "subscriptionCreated");
             })
             .catch((error) => {
                 if (error.code) {
@@ -291,7 +291,7 @@ export default {
             })
             .then((value) => {
                 if(value.data.access_token) this.$store.commit('setAccessToken', value.data.access_token);
-                this.$emit("open-modal", "Subscrição cancelada");
+                this.$emit("open-modal", "subscriptionCanceled");
             })
             .catch((error) => {
                 if (error.code) {

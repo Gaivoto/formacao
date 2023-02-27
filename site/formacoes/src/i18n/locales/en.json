@@ -193,6 +193,7 @@
         "usernamePasswordEmpty": "Username/password are empty.",
         "emptyFields": "There are empty fields.",
         "invalidEmail": "Invalid email.",
+        "invalidName": "Invalid name.",
         "usernamePasswordInvalid": "Username/passowrd are invalid.",
         "inactiveUser": "This account has been deactivated.",
         "noTransaction": "Transaction not found.",
@@ -205,7 +206,8 @@
         "userNotCreator": "This user is not a creator.",
         "noVideo": "Video not found.",
         "noCourse": "Course not found.",
-        "courseNameTaken": "A course with this name already exists."
+        "courseNameTaken": "A course with this name already exists.",
+        "subscriptionCreated": "Subscription created successfully.",
+        "subscriptionCanceled": "This subscription was canceled with success."
     }
-
 }

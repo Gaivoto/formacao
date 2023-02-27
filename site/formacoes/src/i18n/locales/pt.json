@@ -193,6 +193,7 @@
         "usernamePasswordEmpty": "Username/password vazios.",
         "emptyFields": "Preencha todos os campos.",
         "invalidEmail": "Email inválido.",
+        "invalidName": "Nome inválido.",
         "usernamePasswordInvalid": "Username/passowrd inválidos.",
         "inactiveUser": "Este utilizador está inativo.",
         "noTransaction": "Compra não encontrada.",
@@ -205,6 +206,8 @@
         "userNotCreator": "Utilizador não é um criador.",
         "noVideo": "Vídeo não encontrado.",
         "noCourse": "Curso não encontrado.",
-        "courseNameTaken": "Já existe um curso com este nome."
+        "courseNameTaken": "Já existe um curso com este nome.",
+        "subscriptionCreated": "Subscrição criada com sucesso.",
+        "subscriptionCanceled": "Esta subscrição foi cancelada com sucesso."
     }
 }
