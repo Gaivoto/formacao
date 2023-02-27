@@ -34,38 +34,39 @@ async function getCurso(headers, id) {
                         info.course.access = false;
                         let promises = [];
 
-                        promises.push(dbSubs.existsSubscricao(info.user.id, value2[0].id_creator))
+
                         promises.push(dbComp.existsCompra(info.user.id, id))
                         promises.push(dbVide.getAllVideosFromCourse(id))
                         promises.push(dbCurs.getUserRatingOfCourse(info.user.id, id))
                         Promise.all(promises).then(values => {
                             let duration = 0;
                             let durationInt = 0;
-                            for (let i = 0; i < values[2].length; i++) {
-                                durationInt = parseInt(values[2][i].duration)
+                            for (let i = 0; i < values[1].length; i++) {
+                                durationInt = parseInt(values[1][i].duration)
                                 duration = duration + durationInt;
                             }
                             info.course.userRating = null;
-                            if(values[3].length > 0) {
-                                info.course.idCompra = values[3][0].id
-                                info.course.userRating = values[3][0].rating
+                            if(values[2].length > 0) {
+                                info.course.userRating = values[2][0].rating
                             }
-                            if (values[0].length > 0 && values[0][0].final_date == null) {
-                                if(values[1].length > 0 && values[1][0].data_sub == null) {
-                                    info.course.access = true;
-                                }
-                            }
-                            else {
-                                if(values[1].length > 0) {
-
-                                    if(values[1].length > 0 && values[1][0].data_sub == null) {
-                                        info.course.access = true;
-                                    }   
-                                }                         
+                            if(values[0].length > 0) {
+                                let sixmonthsago = new Date();
+                                sixmonthsago.setMonth(sixmonthsago.getMonth() - 6);
+                                values[0].forEach(sub => {
+                                    if(sub.id_subscription == null) {
+                                        if(sub.date_bought >= sixmonthsago) {
+                                            info.course.access = true;
+                                        }
+                                    } else {
+                                        if(sub.data_sub == null) {
+                                            info.course.access = true;
+                                        }
+                                    }
+                                })
                             }
                             
                             info.course.duration = duration/3600;
-                            info.course.videos = values[2];
+                            info.course.videos = values[1];
                             if(value1.user.type == "admin") {
                                 info.course.access = true;
                             }
@@ -676,29 +677,64 @@ async function getCursosHomePage() {
 
     });
 }
-//verificar se existe curso
+
 async function rateCourse(tokens, idCourse, body) {
     return new Promise((resolve, reject) => {
         utils.validateToken(tokens.access_token, tokens.refresh_token).then(value => {
             let info = value;
-            dbComp.existsCompra(info.user.id, idCourse).then(value1 => {
+            dbCurs.getCurso(idCourse).then(value1 => {
                 if(value1.length > 0) {
-                    let promises = [];
-                    promises.push(dbCurs.rateCourse(body.rating, body.idComp));
-                    promises.push(dbCurs.updateRating(idCourse));
-                    
-                    Promise.all(promises).then(values => {
-                        info.message = "Rating alterado com sucesso.";
-                        resolve({ code: 200, info: info });
-                    })
-                    .catch(error => {
-                        console.log(error);
-                        reject({ code: 401, error: { message: "backendQueryError" } })
-                    });
+                    if(info.user.id == value1[0].id_creator || info.user.type == "admin") {
+                        reject({ code: 403, error: { message: "forbidden" } })
+                    }
+                    else {
+                        dbComp.existsCompra(info.user.id, idCourse).then(value2 => {
+                            if(value2.length > 0) {
+                                let sixmonthsago = new Date();
+                                sixmonthsago.setMonth(sixmonthsago.getMonth() - 6);
+                                let id = 0;
+                                let mostRecent = new Date();
+                                mostRecent.setMonth(mostRecent.getMonth() - 6);
+                                
+                                for(let i = 0; i < value2.length; i++) {
+                                    if((value2[i].id_subscription != null && value2[i].data_sub == null) || (value2[i].id_subscription == null && value2[i].date_bought >= sixmonthsago)) {
+                                        if(value2[i].date_bought > mostRecent) {
+                                            mostRecent = value2[i].dateBought;
+                                            id = value2[i].id;
+                                        } 
+                                    }
+                                }
+                                if(id != 0) {
+                                    let promises = [];
+                                    promises.push(dbCurs.rateCourse(body.rating, id));
+                                    promises.push(dbCurs.updateRating(idCourse));
+                                        
+                                    Promise.all(promises).then(values => {
+                                        info.message = "Rating alterado com sucesso.";
+                                        resolve({ code: 200, info: info });
+                                    })
+                                    .catch(error => {
+                                        console.log(error);
+                                        reject({ code: 401, error: { message: "backendQueryError" } })
+                                    });
+                                }
+                                else {
+                                    reject({ code: 404, error: { message: "noTransaction" } });
+                                }
+                            }
+                            else {
+                                reject({ code: 404, error: { message: "noTransaction" } });
+                            }
+                        })
+                        .catch(error => {
+                            console.log(error);
+                            reject({ code: 400, error: { message: "backendQueryError" } });
+                        });
+                    }
+
                 }
                 else {
-                    console.log(value1)
-                    reject({ code: 401, error: { message: "invalidPurchase" } })
+                    reject({ code: 404, error: { message: "noCourse" } });
                 }
             })
             .catch(error => {
@@ -712,7 +748,6 @@ async function rateCourse(tokens, idCourse, body) {
             reject({ code: 401, error: { message: "invalidToken" } })
         });
     })
-
 }
 
 module.exports = {
