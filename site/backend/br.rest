@@ -40,7 +40,7 @@ POST {{hostname}}api/auth/login
 content-type: application/json  
 
 {     
-    "username": "lex",     
+    "username": "vasco",     
     "password": "123" 
 }
 ###
@@ -106,3 +106,30 @@ refreshtoken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk4NDEwMzEyLWE0YjQtN
 GET {{hostname}}api/cursos/11
 authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk4NDEwMzEyLWE0YjQtNGE2YS1iMDQ4LTI3NTJiODIxMGUyMyIsInVzZXJuYW1lIjoiYWRtIiwidHlwZSI6ImFkbWluIiwiaWF0IjoxNjc1ODYwMzM5LCJleHAiOjE2NzU4NzQ3Mzl9.TKnQzO-yRkiGaNxv8MmljCy2ldWZUw6-G2d3GpRKmaE
 refreshtoken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk4NDEwMzEyLWE0YjQtNGE2YS1iMDQ4LTI3NTJiODIxMGUyMyIsInVzZXJuYW1lIjoiYWRtIiwidHlwZSI6ImFkbWluIiwiaWF0IjoxNjc1ODYwMzM5fQ.97gRvqQ98grXS5_TBw-WJUFEriWMFsaqxksUuQehxlI
+###
+
+PUT {{hostname}}api/cursos/rating/13
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjExIiwidXNlcm5hbWUiOiJsZXgiLCJ0eXBlIjoidXNlciIsImlhdCI6MTY3NzE2NTg2NywiZXhwIjoxNjc3MTgwMjY3fQ._BxNeGzhkPHAc1jBhIPJFQfoO3mvpBxJK0XuoQy9aBU
+refreshtoken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjExIiwidXNlcm5hbWUiOiJsZXgiLCJ0eXBlIjoidXNlciIsImlhdCI6MTY3NzE2NTg2N30.5QG59NPOfYvsYes4GnjeJIWBUCVyRt6SH2YxTmoe8jM
+content-type: application/json 
+
+{
+    "rating": "3",
+    "idComp": "62"
+}
+
+###
+
+POST {{hostname}}api/cursos/
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjE4IiwidXNlcm5hbWUiOiJ2YXNjbyIsInR5cGUiOiJjcmVhdG9yIiwiaWF0IjoxNjc3NTExMzAyLCJleHAiOjE2Nzc1MjU3MDJ9.Gs4Rkz4hDscmLk4WITknxjLwxATqAIfqMKiYeRsfmHI
+refreshtoken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjE4IiwidXNlcm5hbWUiOiJ2YXNjbyIsInR5cGUiOiJjcmVhdG9yIiwiaWF0IjoxNjc3NTExMzAyfQ.0EBr8jNJtbEHMcCu64ogK8aGZKj-22exLqjP4yxH-Os
+content-type: application/json 
+
+{
+    "name": "Curso very expertou", 
+    "category": "Gaming", 
+    "description": "curso mt mt experto com imensa sabedoria",  
+    "price": 15, 
+    "image": "./assets/fortnite", 
+    "id_creator": "343970c2-2705-403f-93b8-b68167b059e8"
+}

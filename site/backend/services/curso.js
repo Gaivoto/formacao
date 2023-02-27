@@ -333,7 +333,6 @@ async function createCurso(tokens, body) {
                     } else {
 
                         dbCurs.getAllCursos().then(value3 => {
-
                             do {
                                 id = uuid.v4();
                                 existe = false;
@@ -352,10 +351,38 @@ async function createCurso(tokens, body) {
                             segundos = new Date().getSeconds();
                             horario = horas + ':' + minutos + ':' + segundos;
                             body.date = mes + '-' + dias + '-' + ano + ' ' + horario;
+                            currentDate = body.date
 
                             dbCurs.createCurso(id, body).then(value => {
-                                info.message = "Curso criado com sucesso.";
-                                resolve({ code: 201, info: info });
+                                dbSubs.getSubscribersFromCreator(info.user.id).then(value4 => {
+                                    let promisesComp = [];
+                                    if(value4.length > 0) {
+                                        let bodyComp = {}
+                                        bodyComp.id_course = id;
+                                        for(let i = 0; i < value4.length; i++) {
+                                            let idComp = uuid.v4();
+                                            bodyComp.id_user = value4[i].id_subscriber;
+                                            bodyComp.id_subscription = value4[i].id;
+                                            promisesComp.push(dbComp.createCompra(idComp, bodyComp, currentDate))
+                                        }
+                                        Promise.all(promisesComp).then(values => {
+                                            info.message = "Curso criado com sucesso.";
+                                            resolve({ code: 201, info: info });
+                                        })
+                                        .catch(error => {
+                                            console.log(error);
+                                            reject({ code: 400, error: { message: "backendQueryError" } });
+                                        });
+                                    } 
+                                    else {
+                                        info.message = "Curso criado com sucesso.";
+                                        resolve({ code: 201, info: info });
+                                    }
+                                })
+                                .catch(error => {
+                                    console.log(error);
+                                    reject({ code: 400, error: { message: "backendQueryError" } });
+                                });
                             })
                             .catch(error => {
                                 console.log(error);
@@ -489,6 +516,7 @@ async function updateStateCursoAdm(tokens, id, body) {
                                             notifUser.id_video = null;
 
                                             promises.push(dbNotif.createNotification(notifUser));
+
 
                                         }
                                         Promise.all(promises).then(values => {
@@ -679,7 +707,6 @@ async function getCursosHomePage() {
 }
 
 async function rateCourse(tokens, idCourse, body) {
-    console.log(idCourse, body)
     return new Promise((resolve, reject) => {
         utils.validateToken(tokens.access_token, tokens.refresh_token).then(value => {
             let info = value;
