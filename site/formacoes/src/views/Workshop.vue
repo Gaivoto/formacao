@@ -1,13 +1,4 @@
 <template>
-<<<<<<< HEAD
-</template>
-
-<script>
-</script>
-
-<style scoped>
-</style>
-=======
     <div class="workshop-wrapper">
         <div class="form-wrapper">
             <div class="form">
@@ -195,4 +186,3 @@ color: var(--light);
     margin-bottom: 20px;
  }
 </style>
->>>>>>> origin/development

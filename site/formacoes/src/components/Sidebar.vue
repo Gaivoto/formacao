@@ -1,10 +1,6 @@
 <template>
   <aside :class="{ isExpanded: is_expanded }" >
-<<<<<<< HEAD
-    <router-link class="logo" to="/home">
-=======
     <router-link class="logo" :to="Tr.i18nRoute({ name: 'Home' })">
->>>>>>> origin/development
         <img src="../assets/vue.svg" alt="Vue">
 	</router-link>
 
@@ -13,26 +9,6 @@
             <span class="material-icons">clear_all</span>
         </button>
     </div>
-<<<<<<< HEAD
-
-    <h3>Menu</h3>
-    <div class="menu">
-        <router-link class="button" to="/courses">
-            <span class="material-icons">library_books</span>
-            <span class="text">Cursos</span>
-        </router-link>
-        <router-link class="button" :to="{ name: 'Conteúdo', params: { id: 1 } }">
-            <span class="material-icons">home</span>
-            <span class="text">Home</span>
-        </router-link>
-        <router-link class="button" :to="{ name: 'Perfil do Utilizador', params: { id: 1 } }">
-            <span class="material-icons">group</span>
-            <span class="text">Team</span>
-        </router-link>
-        <router-link class="button" to="/courselist">
-            <span class="material-icons">email</span>
-            <span class="text">Contact Us</span>
-=======
 	
     <h3 v-if="this.isUserLogged">Menu</h3>
     <div class="menu" v-if="this.isUserUser">
@@ -89,7 +65,6 @@
         <router-link class="button" :to="Tr.i18nRoute({ name: 'Lista de Users'})">
             <span class="material-icons">group</span>
             <span class="text">Lista de Utilizadores</span>
->>>>>>> origin/development
         </router-link>
         <router-link class="button" to="/users">
             <span class="material-icons">email</span>
@@ -113,19 +88,14 @@
 </template>
 
 <script>
-<<<<<<< HEAD
-=======
 import Tr from '@/i18n/translation.js';
 
->>>>>>> origin/development
 export default {
 	data() {
 		return {
 			is_expanded: false
 		}
 	},
-<<<<<<< HEAD
-=======
 	setup() {
 		return { Tr };
 	},
@@ -151,18 +121,14 @@ export default {
             return false;
         }
 	},
->>>>>>> origin/development
 	methods: {
 		toggleMenu() {
 			this.is_expanded = !this.is_expanded;
 			this.$emit("toggleSidebar");
-<<<<<<< HEAD
-=======
 		},
 		logout() {
             this.$router.push({ name: "Login", params: { locale: Tr.guessDefaultLocale() } });
 			this.$store.commit('resetUser');
->>>>>>> origin/development
 		}
 	}
 }
@@ -229,13 +195,10 @@ aside {
 		background: none;
 	}
 
-<<<<<<< HEAD
-=======
 	.button {
 		cursor: pointer;
 	}
 
->>>>>>> origin/development
 	h3, .button .text {
 		opacity: 0;
 		transition: opacity 0.3s ease-in-out;

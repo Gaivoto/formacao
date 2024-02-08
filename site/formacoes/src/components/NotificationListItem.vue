@@ -2,25 +2,16 @@
     <div class="notification-wrapper" v-on:mouseenter="toggleBack" v-on:mouseleave="toggleBack" :class="{ notifBack: showBack }">
         <div>
             <img :src="this.imageUrl">
-<<<<<<< HEAD
-            <p>{{ this.notification.message }}</p>    
-        </div>
-        <p>{{  this.notification.date }}</p>
-=======
             <p>{{ this.notificationMessage }}</p>    
         </div>
         <p>{{ this.formatedDate }}</p>
->>>>>>> origin/development
     </div>
 </template>
 
 <script>
-<<<<<<< HEAD
-=======
 import Tr from '@/i18n/translation.js'
 import { useI18n } from 'vue-i18n'
 
->>>>>>> origin/development
 export default {
     name: 'NotificationListItem',
     props: {
@@ -38,8 +29,6 @@ export default {
     created(){
         this.imageUrl = new URL(`../assets/${this.notification.image}.jpg`, import.meta.url).href;
     },
-<<<<<<< HEAD
-=======
     setup() {
         const { t } = useI18n();
 
@@ -68,7 +57,6 @@ export default {
             }
         }
     },
->>>>>>> origin/development
     methods: {
         toggleBack() {
             this.showBack = !this.showBack;

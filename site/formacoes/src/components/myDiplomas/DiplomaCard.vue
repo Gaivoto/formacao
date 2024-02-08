@@ -1,14 +1,4 @@
 <template>
-<<<<<<< HEAD
-    <div class="diploma-card">
-        <div class="picture-wrapper">
-            <img :src="this.imageUrl" />
-        </div>
-        <div class="text-wrapper">
-            <p>{{ diploma.name }}</p>
-            <p>{{ diploma.desc }} </p>
-            <p>{{ diploma.date }} </p>
-=======
     <div class="diploma-card-container col-12 col-md-6" :class="{ 'col-xl-3': !this.sidebar, 'col-xl-4': this.sidebar }">
         <div class="diploma-wrapper">
             <div class="diploma-card">
@@ -29,29 +19,12 @@
                     <p class="formador-text">{{ $t("myDiplomas.trainer") }}</p>
                 </div>
             </div>
->>>>>>> origin/development
         </div>
     </div>
 </template>
 
 <script>
 export default {
-<<<<<<< HEAD
-  props: {
-    diploma: {
-        type: Object,
-        required: true
-    }
-  },
-  data() {
-    return {
-        imageUrl: ""
-    }
-  },
-  created() {
-    this.imageUrl = new URL(`../../assets/${this.diploma.image}.jpg`, import.meta.url).href;
-  }
-=======
     props: {
         diploma: {
             type: Object,
@@ -79,44 +52,10 @@ export default {
             return this.diploma.date.substring(8, 10) + "/" + this.diploma.date.substring(5, 7) + "/" + this.diploma.date.substring(0, 4);
         }
     }
->>>>>>> origin/development
 };
 </script>
 
 <style scoped>
-<<<<<<< HEAD
-.diploma-card {
-    display: flex;
-    justify-content: start;
-    background-color: black;
-    padding: 15px;
-    border-radius: 10px;
-}
-
-.picture-wrapper {
-    height: 20%;
-    width: 20%;
-}
-
-img {
-    max-width: 100%;
-    height: auto;
-}
-
-.text-wrapper {
-    width: 90%;
-    padding: 10px;
-    color: white;
-}
-
-.text-wrapper p {
-    width: 100%;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-}
-=======
     .diploma-wrapper {
         padding: 12px;
         border-radius: 8px;
@@ -240,5 +179,4 @@ img {
             font-size: 26px;
         }
     }
->>>>>>> origin/development
 </style>

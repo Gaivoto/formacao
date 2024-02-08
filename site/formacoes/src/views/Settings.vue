@@ -1,9 +1,4 @@
 <template>
-<<<<<<< HEAD
-</template>
-
-<script>
-=======
     <div>
         <LanguageSwitcher />
     </div>
@@ -18,7 +13,6 @@ export default {
         LanguageSwitcher
     }
 }
->>>>>>> origin/development
 </script>
 
 <style scoped>

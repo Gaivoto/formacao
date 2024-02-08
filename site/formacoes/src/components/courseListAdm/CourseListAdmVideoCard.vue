@@ -1,21 +1,4 @@
 <template>
-<<<<<<< HEAD
-    <div class="video-card-container">
-        <div class="video-card-left">
-            <img :src="this.imageUrl">
-            <div>
-                <router-link :to="{ name: 'Vídeo', params: { id: this.courseId } }"><p>Nome: {{ this.video.name }}</p></router-link>
-                <p>Estado: {{ this.video.state }}</p>
-            </div>
-        </div>
-        <button v-if="showButton1" v-on:click="changeState('Ativo')">ATIVAR</button>
-        <button v-if="showButton2" v-on:click="changeState('Inativo')">DESATIVAR</button>
-        <div v-if="showButton3and4" class="button-wrapper">
-            <button v-on:click="changeState('Ativo')">APROVAR</button>
-            <button v-on:click="changeState('Rejeitado')">REJEITAR</button>
-        </div>
-        <button v-if="showButton5" v-on:click="changeState('Pendente')">TORNAR PENDENTE</button>
-=======
     <div class="video-card">
         <div class="video-card-left">
             <img :src="this.imageUrl">
@@ -36,16 +19,12 @@
             </div>
             <button v-if="showButton5" v-on:click="changeState('Pendente')">{{ $t("courseListAdm.makePending") }}</button>      
         </div>
->>>>>>> origin/development
     </div>
 </template>
 
 <script>
-<<<<<<< HEAD
-=======
 import Tr from '@/i18n/translation.js'
 
->>>>>>> origin/development
 export default {
     name: 'CourseListAdmVideoCard',
     props: {
@@ -63,12 +42,9 @@ export default {
             imageUrl: ""
         }
     },
-<<<<<<< HEAD
-=======
     setup() {
         return { Tr };
     },
->>>>>>> origin/development
     created(){
         this.imageUrl = new URL(`../../assets/${this.video.image}.jpg`, import.meta.url).href;
     },
@@ -88,8 +64,6 @@ export default {
         showButton5() {
             if(this.video.state == "Rejeitado") return true;
             return false;
-<<<<<<< HEAD
-=======
         },
         formatedDate() {
             return this.video.date.substring(8, 10) + "/" + this.video.date.substring(5, 7) + "/" + this.video.date.substring(0, 4) + " " + this.video.date.substring(11, 19);
@@ -107,7 +81,6 @@ export default {
                 default:
                     return "Erro";
             }
->>>>>>> origin/development
         }
     },
     methods: {
@@ -119,14 +92,6 @@ export default {
 </script>
 
 <style scoped>
-<<<<<<< HEAD
-    .video-card-container {
-        margin-left: 30px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 16px;
-=======
     .video-card {
         display: flex;
         justify-content: space-between;
@@ -134,7 +99,6 @@ export default {
         
         padding: 16px 40px 16px 16px;
         background: var(--mobalytics-card);
->>>>>>> origin/development
     }
 
     .video-card-left {
@@ -144,15 +108,6 @@ export default {
     }
 
     .video-card-left img {
-<<<<<<< HEAD
-        height: 80px;
-    }
-
-    button {
-        background: grey;
-        height: 50px;
-        width: 120px;
-=======
         height: 110px;
         width: 110px;
         border-radius: 8px;
@@ -183,15 +138,12 @@ export default {
         border: none;
         border-radius: 8px;
         box-shadow: rgba(20, 14, 49, 0.6) 6px 6px 4px 4px;
->>>>>>> origin/development
     }
 
     .button-wrapper {
         display: flex;
         gap: 16px;
     }
-<<<<<<< HEAD
-=======
 
     @media (max-width: 1650px) {
 
@@ -262,5 +214,4 @@ export default {
             width: 90px;
         }
     }
->>>>>>> origin/development
 </style>

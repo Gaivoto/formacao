@@ -1,24 +1,5 @@
 <template>
     <div class="users-filter-wrapper">
-<<<<<<< HEAD
-        <div>
-            <input v-on:input="filter" type="text" placeholder="Pesquisar" ref="search">
-        </div>
-        <div>
-            <p>Tipo de Utilizador:</p>
-            <select v-on:change="filter" name="type" ref="type">
-                <option value="all">Todos</option>
-                <option value="Admin">Administrador</option>
-                <option value="Criador">Criador</option>
-                <option value="Utilizador">Utilizador</option>
-            </select>
-            <p>Estado:</p>
-            <select v-on:change="filter" name="state" ref="state">
-                <option value="all">Todos</option>
-                <option value="Ativo">Ativo</option>
-                <option value="Inativo">Inativo</option>
-            </select>
-=======
         <div class="users-filter-container">
             <div class="searchbar">
                 <span class="material-icons search-icon">search</span>
@@ -84,21 +65,11 @@
                     </div>      
                 </div>    
             </div>
->>>>>>> origin/development
         </div>
     </div>
 </template>
 
 <script>
-<<<<<<< HEAD
-export default {
-    name: 'UserListAdmFilter',
-    mounted(){
-        let filter = {
-            name: null,
-            type: this.$refs.type.value,
-            state: this.$refs.state.value
-=======
 import Tr from '@/i18n/translation.js'
 import { useI18n } from 'vue-i18n'
 
@@ -126,22 +97,10 @@ export default {
             name: null,
             type: this.type,
             state: this.state
->>>>>>> origin/development
         }
 
         this.$emit("filter", filter);
     },
-<<<<<<< HEAD
-    methods: {
-        filter() {
-            let filter = {
-                name: this.$refs.search.value,
-                type: this.$refs.type.value,
-                state: this.$refs.state.value
-            }
-            
-            this.$emit("filter", filter);
-=======
     watch: {
         state: function() {
             let filter = {
@@ -182,16 +141,11 @@ export default {
         },
         toggleRespFilter() {
             this.responsiveFilter = !this.responsiveFilter;
->>>>>>> origin/development
         }
     }
 }
 </script>
 
-<<<<<<< HEAD
-<style lang="scss" scoped>
-    .users-filter-wrapper {
-=======
 <style scoped>
     .users-filter-wrapper {
         padding: 0px 48px;
@@ -199,31 +153,10 @@ export default {
     }
 
     .users-filter-container {
->>>>>>> origin/development
         width: 100%;
 
         display: flex;
         justify-content: space-between;
-<<<<<<< HEAD
-        text-align: center;
-
-        padding: 16px;
-
-        background-color: grey;
-    }
-
-    .users-filter-wrapper > div {
-        display: flex;
-    }
-
-    .users-filter-wrapper p {
-        margin: 0px 16px 0px 32px;
-    }
-
-    .users-filter-wrapper select {
-        width: 160px;
-    }
-=======
         align-items: center;
 
         padding: 16px;
@@ -507,5 +440,4 @@ export default {
             width: 100%;
         }
 	}
->>>>>>> origin/development
 </style>

@@ -1,26 +1,15 @@
 <template>
-<<<<<<< HEAD
-    <router-link :to="{ name: this.route, params: { id: this.item.id } }" class="result-wrapper" v-on:mouseenter="toggleBack" v-on:mouseleave="toggleBack" :class="{ resultBack: showBack }">
-        <img :src="this.imageUrl">
-        <div>
-            <p>{{ this.item.name }}</p>
-            <p>{{ this.item.type }}</p>
-=======
     <router-link :to="Tr.i18nRoute({ name: this.route, params: { id: this.item.id, locale: Tr.guessDefaultLocale() } })" :key="this.item.id" class="result-wrapper" v-on:mouseenter="toggleBack" v-on:mouseleave="toggleBack" :class="{ resultBack: showBack }">
         <img :src="this.imageUrl">
         <div>
             <p>{{ this.item.name }}</p>
             <p>{{ this.translatedResultType }}</p>
->>>>>>> origin/development
         </div>
     </router-link>
 </template>
 
 <script>
-<<<<<<< HEAD
-=======
 import Tr from '@/i18n/translation.js'
->>>>>>> origin/development
 export default {
     name: 'SearchbarResult',
     props: {
@@ -38,12 +27,6 @@ export default {
     created(){
         this.imageUrl = new URL(`../assets/${this.item.image}.jpg`, import.meta.url).href;
     },
-<<<<<<< HEAD
-    computed: {
-        route() {
-           if(this.item.type == "Curso") return "Curso";
-           return "Perfil do Utilizador";
-=======
     setup() {
         return { Tr };
     },
@@ -55,7 +38,6 @@ export default {
         translatedResultType() {
             if(this.item.resultType == "Curso") return this.$t("topbar.course");
             return this.$t("topbar.creator");
->>>>>>> origin/development
         }
     },
     methods: {

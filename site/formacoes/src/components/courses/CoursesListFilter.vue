@@ -3,32 +3,6 @@
         <div class="courses-filter-container">
             <div class="searchbar">
                 <span class="material-icons search-icon">search</span>
-<<<<<<< HEAD
-                <input type="text" ref="search" v-on:input="filterSearchbar" v-on:keydown.enter="goToSearchItem" placeholder="Pesquisar...">
-            </div>
-            <div class="filter-div">
-                <p>Categoria:</p>
-                <div class="custom-select">
-                    <div class="selected" :class="{ open: catOpen }" v-on:click="catOpen=!catOpen">{{ this.category }}</div>
-                    <div class="items" :class="{ selectHide: !catOpen }">
-                        <div v-on:click="selectCat('cat1')">cat1</div>
-                        <div v-on:click="selectCat('cat2')">cat2</div>
-                        <div v-on:click="selectCat('cat3')">cat3</div>
-                        <div v-on:click="selectCat('cat4')">cat4</div>
-                    </div>
-                </div>
-                <p>Ordernar por:</p>
-                <div class="custom-select">
-                    <div class="selected" :class="{ open: orderOpen }" v-on:click="orderOpen=!orderOpen">{{ this.order }}</div>
-                    <div class="items" :class="{ selectHide: !orderOpen }">
-                        <div v-on:click="selectOrder('Mais recente')">Mais recente</div>
-                        <div v-on:click="selectOrder('Mais antigo')">Mais antigo</div>
-                        <div v-on:click="selectOrder('Preço decrescente')">Preço decrescente</div>
-                        <div v-on:click="selectOrder('Preço crescente')">Preço crescente</div>
-                    </div>
-                </div>
-            </div>
-=======
                 <input type="text" ref="search" v-on:input="filterSearchbar" v-on:keydown.enter="goToSearchItem" :placeholder="$t('courses.search')">
             </div>
             <div class="filter-div">
@@ -89,16 +63,11 @@
                     </div>    
                 </div>    
             </div>
->>>>>>> origin/development
         </div>
     </div>
 </template>
 
 <script>
-<<<<<<< HEAD
-export default {
-    name: 'CoursesListFilter',
-=======
 import Tr from '@/i18n/translation.js'
 import { useI18n } from 'vue-i18n'
 
@@ -110,18 +79,11 @@ export default {
             required: true
         }
     },
->>>>>>> origin/development
     data() {
         return {
             catOpen: false,
             orderOpen: false,
             category: "Todas",
-<<<<<<< HEAD
-            order: "Mais recente"
-        }
-    },
-    mounted(){
-=======
             order: "",
             responsiveFilter: false
         }
@@ -135,7 +97,6 @@ export default {
         this.order = this.t("courses.allF");
         this.category = this.t("courses.allF");
 
->>>>>>> origin/development
         let filter = {
             name: null,
             category: this.category,
@@ -181,12 +142,9 @@ export default {
         selectCat(cat) {
             this.category = cat;
             this.catOpen = false;
-<<<<<<< HEAD
-=======
         },
         toggleRespFilter() {
             this.responsiveFilter = !this.responsiveFilter;
->>>>>>> origin/development
         }
     }
 }
@@ -203,11 +161,7 @@ export default {
 
         display: flex;
         justify-content: space-between;
-<<<<<<< HEAD
-        text-align: center;
-=======
         align-items: center;
->>>>>>> origin/development
 
         padding: 16px;
 
@@ -223,14 +177,11 @@ export default {
         gap: 8px;
     }
 
-<<<<<<< HEAD
-=======
     .filter-div > div {
         display: flex;
         align-items: center;
     }
 
->>>>>>> origin/development
     .searchbar {
         background-color: var(--mobalytics-card);
         padding: 6px 16px 6px 20px;
@@ -247,11 +198,7 @@ export default {
         border: none;
         color: var(--light) !important;
         font-family: "Poppins";
-<<<<<<< HEAD
-        min-width: 300px;
-=======
         width: 300px;
->>>>>>> origin/development
     }
 
     .searchbar input::placeholder {
@@ -276,8 +223,6 @@ export default {
         width: 160px;
     }
 
-<<<<<<< HEAD
-=======
     .responsive-filter-btn {
         display: none;
     }
@@ -354,7 +299,6 @@ export default {
         width: 400px;
     }
 
->>>>>>> origin/development
     /* 
 
         SELECT
@@ -426,8 +370,6 @@ export default {
     .selectHide {
         display: none;
     }
-<<<<<<< HEAD
-=======
 
     @media (max-width: 1650px) {
         .searchbar input {
@@ -498,5 +440,4 @@ export default {
             width: 100%;
         }
 	}
->>>>>>> origin/development
 </style>

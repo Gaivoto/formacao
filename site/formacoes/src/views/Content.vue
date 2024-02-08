@@ -1,61 +1,4 @@
 <template>
-<<<<<<< HEAD
-    <div class="table-wrapper">
-        <table>
-            <tr>
-                <th></th>
-                <th class="column-large">
-                    <div>
-                    <p>Nome</p>
-                        <div>
-                            <img src="../assets/chevron_up.png" />
-                            <img src="../assets/chevron_down.png" />
-                        </div>
-                    </div>
-                </th>
-                <th class="column-small">
-                    <div>
-                    <p>Data</p>
-                        <div>
-                            <img src="../assets/chevron_up.png" v-on:click="orderTable('date-asc')"/>
-                            <img src="../assets/chevron_down.png" v-on:click="orderTable('date-desc')"/>
-                        </div>
-                    </div>
-                </th>
-                <th class="column-small">
-                    <div>
-                    <p>Inscrições</p>
-                        <div>
-                            <img src="../assets/chevron_up.png" v-on:click="orderTable('subs-asc')"/>
-                            <img src="../assets/chevron_down.png" v-on:click="orderTable('subs-desc')"/>
-                        </div>
-                    </div>
-                </th>
-                <th class="column-small">
-                    <div>
-                    <p>Nº Videos</p>
-                        <div>
-                            <img src="../assets/chevron_up.png" v-on:click="orderTable('nvids-asc')"/>
-                            <img src="../assets/chevron_down.png" v-on:click="orderTable('nvids-desc')"/>
-                        </div>
-                    </div>
-                </th>
-                <th class="column-small">
-                    <div>
-                    <p>Duração</p>
-                        <div>
-                            <img src="../assets/chevron_up.png" v-on:click="orderTable('duration-asc')"/>
-                            <img src="../assets/chevron_down.png" v-on:click="orderTable('duration-desc')"/>
-                        </div>
-                    </div>
-                </th>
-            </tr>
-            <tbody>
-                <ContentTableRow v-for="course in this.displayCourses" :key="course.id" v-bind:course="course" class="table-row-component"/>
-            </tbody>
-        </table>
-    <Pagination2 v-bind:totalItems="this.courses.length" v-bind:currentPage="this.currentPage" v-bind:itemsPerPage="this.itemsPerPage" v-on:changePage="changePage"/>
-=======
     <div class="content-wrapper">
         <div class="table-wrapper">
             <div class="table-content" :class="{ 'invert-colors': this.isTableLengthEven }">
@@ -120,20 +63,14 @@
             </div>
         </div>
         <Pagination2 v-bind:totalItems="this.courses.length" v-bind:currentPage="this.currentPage" v-bind:itemsPerPage="this.itemsPerPage" v-on:changePage="changePage"/>
->>>>>>> origin/development
     </div>
 </template>
 
 <script>
-<<<<<<< HEAD
-import ContentTableRow from "../components/content/ContentTableRow.vue";
-import Pagination2 from "../components/paginations/Pagination2.vue";
-=======
 import axios from 'axios';
 import ContentTableRow from "../components/content/ContentTableRow.vue";
 import Pagination2 from "../components/paginations/Pagination2.vue";
 import Tr from '@/i18n/translation.js';
->>>>>>> origin/development
 
 export default {
     name: "Content",
@@ -149,63 +86,6 @@ export default {
             displayCourses: [],
         }
     },
-<<<<<<< HEAD
-    created() {
-        this.courses = [
-            {
-                id: 1,
-                name: "Bingus Amogus",
-                description: "monkey",
-                subscriptions: 8123,
-                numberOfVideos: 5,
-                image: "bingus",
-                date: "01/10/2022",
-                duration: "1:21:10",
-            },
-            {
-                id: 2,
-                name: "Bingus Amogus",
-                description: "monkey",
-                subscriptions: 123,
-                numberOfVideos: 2,
-                image: "bingus",
-                date: "01/11/2022",
-                duration: "40:23",
-            },
-            {
-                id: 3,
-                name: "Bingus Amogus",
-                description: "monkey",
-                subscriptions: 412,
-                numberOfVideos: 4,
-                image: "bingus",
-                date: "01/12/2022",
-                duration: "50:33",
-            },
-            {
-                id: 4,
-                name: "Bingus Amogus",
-                description: "monkey",
-                subscriptions: 1234,
-                numberOfVideos: 14,
-                image: "bingus",
-                date: "02/12/2022",
-                duration: "5:32:58",
-            },
-            {
-                id: 5,
-                name: "Bingus Amogus",
-                description: "monkey",
-                subscriptions: 0,
-                numberOfVideos: 1,
-                image: "bingus",
-                date: "03/12/2022",
-                duration: "10:31",
-            }
-        ];
-
-        this.displayCourses = this.courses.slice(0, this.itemsPerPage);
-=======
     setup() {
         return { Tr };
     },
@@ -245,35 +125,17 @@ export default {
             if(this.displayCourses.length % 2 == 0) return true;
             return false;
         }
->>>>>>> origin/development
     },
     methods: {
         orderTable(order) {
             switch (order) {
                 case "date-asc":
                     this.courses.sort((a, b) =>
-<<<<<<< HEAD
-                        new Date(a.date.substring(6) + "-" + a.date.substring(3, 5) + "-" + a.date.substring(0, 2)) < new Date(b.date.substring(6) + "-" + b.date.substring(3, 5) + "-" + b.date.substring(0, 2) ) ? 1 : new Date(b.date.substring(6) + "-" + b.date.substring(3, 5) + "-" + b.date.substring(0, 2)) < new Date( a.date.substring(6) + "-" + a.date.substring(3, 5) + "-" + a.date.substring(0, 2)) ? -1 : 0
-=======
                         a.date.replace("Z", "").replace("T", "").replaceAll(":", "").replaceAll(".", "").replaceAll("-", "") > b.date.replace("Z", "").replace("T", "").replaceAll(":", "").replaceAll(".", "").replaceAll("-", "") ? 1 : b.date.replace("Z", "").replace("T", "").replaceAll(":", "").replaceAll(".", "").replaceAll("-", "") > a.date.replace("Z", "").replace("T", "").replaceAll(":", "").replaceAll(".", "").replaceAll("-", "") ? -1 : 0
->>>>>>> origin/development
                     );
                     break;
                 case "date-desc":
                     this.courses.sort((a, b) =>
-<<<<<<< HEAD
-                        new Date(a.date.substring(6) + "-" + a.date.substring(3, 5) + "-" + a.date.substring(0, 2)) > new Date(b.date.substring(6) + "-" + b.date.substring(3, 5) + "-" + b.date.substring(0, 2)) ? 1 : new Date(b.date.substring(6) + "-" + b.date.substring(3, 5) + "-" + b.date.substring(0, 2)) > new Date( a.date.substring(6) + "-" + a.date.substring(3, 5) + "-" + a.date.substring(0, 2)) ? -1 : 0
-                    );
-                    break;
-                case "subs-asc":
-                    this.courses.sort((a, b) =>
-                        a.subscriptions > b.subscriptions ? 1 : b.subscriptions > a.subscriptions ? -1 : 0
-                    );
-                    break;
-                case "subs-desc":
-                    this.courses.sort((a, b) =>
-                        a.subscriptions < b.subscriptions ? 1 : b.subscriptions < a.subscriptions ? -1 : 0
-=======
                         a.date.replace("Z", "").replace("T", "").replaceAll(":", "").replaceAll(".", "").replaceAll("-", "") < b.date.replace("Z", "").replace("T", "").replaceAll(":", "").replaceAll(".", "").replaceAll("-", "") ? 1 : b.date.replace("Z", "").replace("T", "").replaceAll(":", "").replaceAll(".", "").replaceAll("-", "") < a.date.replace("Z", "").replace("T", "").replaceAll(":", "").replaceAll(".", "").replaceAll("-", "") ? -1 : 0
                     );
                     break;
@@ -285,7 +147,6 @@ export default {
                 case "state-desc":
                     this.courses.sort((a, b) =>
                         a.state < b.state ? 1 : b.state < a.state ? -1 : 0
->>>>>>> origin/development
                     );
                     break;
                 case "nvids-asc":
@@ -300,20 +161,12 @@ export default {
                     break;
                 case "duration-asc":
                     this.courses.sort((a, b) =>
-<<<<<<< HEAD
-                        parseInt(a.duration.replaceAll(":", "")) > parseInt(b.duration.replaceAll(":", "")) ? 1 : parseInt(b.duration.replaceAll(":", "")) > parseInt(a.duration.replaceAll(":", "")) ? -1 : 0
-=======
                         a.duration > b.duration ? 1 : b.duration > a.duration ? -1 : 0
->>>>>>> origin/development
                     );
                     break;
                 case "duration-desc":
                     this.courses.sort((a, b) =>
-<<<<<<< HEAD
-                        parseInt(a.duration.replaceAll(":", "")) < parseInt(b.duration.replaceAll(":", "")) ? 1 : parseInt(b.duration.replaceAll(":", "")) < parseInt(a.duration.replaceAll(":", "")) ? -1 : 0
-=======
                         a.duration < b.duration ? 1 : b.duration < a.duration ? -1 : 0
->>>>>>> origin/development
                     );
                     break;
                 default:
@@ -331,65 +184,6 @@ export default {
 }
 </script>
 
-<<<<<<< HEAD
-<style lang="scss" scoped>
-    .table-wrapper {
-        padding: 32px 5%;
-    }
-
-    .table-wrapper table {
-        width: 100%;
-    }
-
-    table th > div {
-        padding: 8px 16px;
-
-        display: flex;
-        gap: 12px;
-        text-align: center;
-    }
-
-    table th > div > div {
-        width: 12px;
-        height: 26px;
-    }
-
-    table th p {
-        margin: 0px;
-    }
-
-    table th img {
-        height: 12px;
-        width: 12px;
-
-        cursor: pointer;
-    }
-
-    table th img:first-child {
-        margin-top: -12px;
-    }
-
-    table th img:last-child {
-        margin-top: -36px;
-    }
-
-    table tbody .table-row-component:nth-child(2n) {
-        background-color: grey;
-    }
-
-    table tbody .table-row-component:nth-child(2n + 1) {
-        background-color: goldenrod;
-    }
-
-    .column-large {
-        width: 30%;
-        background-color: red;
-    }
-
-    .column-small {
-        width: 15%;
-        background-color: blue;
-=======
 <style scoped>
     .content-wrapper {
         padding: 24px 48px 0px 48px;
@@ -510,6 +304,5 @@ export default {
         .content-wrapper {
             padding: 24px 16px 0px 16px;
         }
->>>>>>> origin/development
     }
 </style>

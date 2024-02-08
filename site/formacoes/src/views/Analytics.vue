@@ -2,8 +2,6 @@
 </template>
 
 <script>
-<<<<<<< HEAD
-=======
 import Tr from '@/i18n/translation.js'
 
 export default {
@@ -26,7 +24,6 @@ export default {
         }
     }
 }
->>>>>>> origin/development
 </script>
 
 <style scoped>

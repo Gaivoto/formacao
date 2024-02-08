@@ -1,30 +1,4 @@
 <template>
-<<<<<<< HEAD
-    <div class="vid" :class="{'vidOpen': open}">
-        <div class="left-side">
-            <img :src="this.imageUrl"/>
-            <div class="text">
-                <p>{{ video.name }}</p>
-                <p>{{ video.duration }}</p>
-                <p v-show="open">{{ video.description }}</p>
-            </div>
-        </div>
-        <div class="right-side">
-            <button @click="open = !open">abre de sesamo</button>
-        </div>
-    </div>
-</template>
-
-<script>
-
-export default {
-    data: () => {
-        return {
-            open: false,
-            imageUrl: ""
-        }
-    },
-=======
     <router-link class="vid" :class="{ 'clickable': this.clickable }" :to="Tr.i18nRoute({ name: 'Vídeo', params: { id: this.courseID, idVid: this.video.id, locale: Tr.guessDefaultLocale() } })">    
         <img :src="this.imageUrl">
         <div class="text">
@@ -48,13 +22,10 @@ export default {
     setup() {
         return { Tr };
     },
->>>>>>> origin/development
     props: {
         video: {
             type: Object,
             required: true
-<<<<<<< HEAD
-=======
         },
         courseID: {
             type: Number,
@@ -63,50 +34,21 @@ export default {
         clickable: {
             type: Boolean,
             required: true
->>>>>>> origin/development
         }
     },
     created() {
         this.imageUrl = new URL(`../../assets/${this.video.image}.jpg`, import.meta.url).href;
-<<<<<<< HEAD
-=======
     },
     computed: {
         calculatedDuration() {
             return Math.floor(this.video.duration / 60)+':'+Math.floor(this.video.duration % 60);
         }
->>>>>>> origin/development
     }
 }
 </script>
 
 <style scoped>
     .vid {
-<<<<<<< HEAD
-        padding: 10px;
-        display: flex;
-        justify-content: space-between;
-        background-color: rgb(15, 108, 151);
-        height: 140px;
-    }
-    .vidOpen {
-        padding: 10px;
-        display: flex;
-        justify-content: space-between;
-        background-color: rgb(228, 5, 5);
-        height: 200px;
-    }
-    .left-side {
-        display: flex;
-        justify-content: start;
-        height: 100%;
-    }
-
-    .img {
-        height: 120px;
-        width: 120px;
-        object-fit: cover;
-=======
         padding: 16px 32px 8px 16px;
         display: flex;
         gap: 24px;
@@ -207,6 +149,5 @@ export default {
             -webkit-line-clamp: 4;
             max-height: 96px;
         }
->>>>>>> origin/development
     }
 </style>

@@ -1,15 +1,4 @@
 <template>
-<<<<<<< HEAD
-    <div class="courses-filter-wrapper">
-        <input v-on:input="filter" type="text" placeholder="Pesquisar..." ref="search"/>
-        <select v-on:change="filter" name="category" ref="category">
-            <option v-for="(cat, i) in getUnique" :key="i" :value=cat>{{ cat }}</option>
-        </select>
-        <select v-on:change="filter" name="orderby" ref="order">
-            <option value="date-new">Mais Recente</option>
-            <option value="date-old">Mais Antigo</option>
-        </select>
-=======
     <div class="diplomas-filter-wrapper">
         <div class="diplomas-filter-container">
             <div class="searchbar">
@@ -71,34 +60,20 @@
                 </div>    
             </div>
         </div>
->>>>>>> origin/development
     </div>
 </template>
 
 <script>
-<<<<<<< HEAD
-export default {
-    props: {
-        diplomas: {
-=======
 import { useI18n } from 'vue-i18n'
 
 export default {
     name: "MyDiplomasFilter",
     props: {
         categories: {
->>>>>>> origin/development
             type: Object,
             required: true
         }
     },
-<<<<<<< HEAD
-    mounted(){
-        let filter = {
-            name: null,
-            category: this.$refs.category.value,
-            order: "date-new"
-=======
     data() {
         return {
             catOpen: false,
@@ -121,13 +96,10 @@ export default {
             name: null,
             category: this.category,
             order: this.order
->>>>>>> origin/development
         }
 
         this.$emit("filter", filter);
     },
-<<<<<<< HEAD
-=======
     watch: {
         order: function() {
             let filter = {
@@ -148,7 +120,6 @@ export default {
             this.$emit("filter", filter);
         }
     },
->>>>>>> origin/development
     computed: {
         getUnique() {
             let catArray = [];
@@ -167,15 +138,6 @@ export default {
         }
     },
     methods: {
-<<<<<<< HEAD
-        filter() {
-            let filter = {
-                name: this.$refs.search.value,
-                category: this.$refs.category.value,
-                order: this.$refs.order.value
-            }
-            this.$emit("filter", filter);
-=======
         filterSearchbar() {
             let filter = {
                 name: this.$refs.search.value,
@@ -194,16 +156,11 @@ export default {
         },
         toggleRespFilter() {
             this.responsiveFilter = !this.responsiveFilter;
->>>>>>> origin/development
         }
     }
 }
 </script>
 
-<<<<<<< HEAD
-<style lang="scss" scoped>
-.courses-filter-wrapper {
-=======
 <style scoped>
     .diplomas-filter-wrapper {
         padding: 0px 48px;
@@ -211,31 +168,10 @@ export default {
     }
 
     .diplomas-filter-container {
->>>>>>> origin/development
         width: 100%;
 
         display: flex;
         justify-content: space-between;
-<<<<<<< HEAD
-        text-align: center;
-
-        padding: 16px;
-
-        background-color: grey;
-    }
-
-    .courses-filter-wrapper > div {
-        display: flex;
-    }
-
-    .courses-filter-wrapper p {
-        margin: 0px 16px 0px 32px;
-    }
-
-    .courses-filter-wrapper select {
-        width: 160px;
-    }
-=======
         align-items: center;
 
         padding: 16px;
@@ -515,5 +451,4 @@ export default {
             width: 100%;
         }
 	}
->>>>>>> origin/development
 </style>

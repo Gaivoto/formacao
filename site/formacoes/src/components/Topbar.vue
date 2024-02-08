@@ -1,29 +1,15 @@
 <template>
     <div class="wrapper">
-<<<<<<< HEAD
-        <div class="topbar-text">
-            <p class="page-name">Formações Johnson - {{ this.$route.name }}</p>
-=======
         <div class="topbar-text" :class="{ 'topbar-text-logged': this.isUserLogged, 'topbar-text-not-logged': !this.isUserLogged }">
             <router-link :to="Tr.i18nRoute({ name: 'Home' })">
                 <p class="logo">Guide Line</p>
             </router-link>
             <p class="hifen"> - </p>
             <p class="page-name"> {{ this.getTranslatedPageName }}</p>
->>>>>>> origin/development
         </div>
 
         <div class="searchbar-container" v-on:click.stop>
             <div class="searchbar">
-<<<<<<< HEAD
-                <input type="text" ref="topSearchbar" v-on:input="filterSearchbar" v-on:keydown.enter="goToSearchItem" placeholder="Pesquisar...">
-                <span class="material-icons search-icon">search</span>
-            </div> 
-            <div ref="topSearchbarResults" class="searchbar-results" :class="{ 'd-none': !searchOpen }">
-                <div class="no-results" :class="{ 'd-none': !noResults }">
-                    <span class="material-icons search-icon">warning</span>
-                    <p>Não existem resultados para a pesquisa.</p>    
-=======
                 <input type="text" ref="topSearchbar" v-on:input="filterSearchbar" v-on:keydown.enter="goToSearchItem" :placeholder='$t("topbar.search")'>
                 <span class="material-icons search-icon">search</span>
             </div> 
@@ -31,24 +17,15 @@
                 <div class="no-results" v-if="this.noResults">
                     <span class="material-icons search-icon">warning</span>
                     <p>{{ $t("topbar.noResults") }}</p>    
->>>>>>> origin/development
                 </div>
                 <SearchbarResult v-for="item in this.searchResults" :key="item.id + item.type" v-bind:item="item" v-on:click="toggleSearch"/>
             </div>  
         </div>
-<<<<<<< HEAD
-
-        <div class="topbar-right">
-            <router-link class="user-wrapper" :to="{ name: 'Perfil do Utilizador', params: { id: 1 } }">
-                <div class="topbar-text">
-                    <p>{{ this.user.username }}</p>
-=======
         
         <div class="topbar-right" v-if="this.isUserLogged">
             <router-link class="user-wrapper" :to="Tr.i18nRoute({ name: 'Perfil do Utilizador', params: { id: this.getUserId } })" :key="this.getUserId">
                 <div class="username">
                     <p>{{ this.getUsername }}</p>
->>>>>>> origin/development
                 </div>
                 <div class="image-wrapper">
                     <img id="profile-image" :src="this.imageUrl" />    
@@ -59,9 +36,6 @@
             </div>
         </div>
 
-<<<<<<< HEAD
-        <div ref="notifList" class="notif-list" :class="{ 'd-none': !notifsOpen }">
-=======
         <div class="topbar-right" v-if="!this.isUserLogged">
             <router-link class="topbar-btn" :to="Tr.i18nRoute({ name: 'Cursos', params: { locale: Tr.guessDefaultLocale() } })">
                 <p class="text">{{ $t("topbar.courses") }}</p>
@@ -76,22 +50,16 @@
                 <span class="material-icons search-icon">notifications_off</span>
                 <p>Não existem notificações.</p>    
             </div>
->>>>>>> origin/development
             <NotificationListItem v-for="notif in this.notifications" :key="notif.id" v-bind:notification="notif"/>
         </div>
     </div>
 </template>
 
 <script>
-<<<<<<< HEAD
-import NotificationListItem from './NotificationListItem.vue'
-import SearchbarResult from './SearchbarResult.vue'
-=======
 import axios from 'axios';
 import NotificationListItem from './NotificationListItem.vue';
 import SearchbarResult from './SearchbarResult.vue';
 import Tr from '@/i18n/translation.js';
->>>>>>> origin/development
 
 export default {
     name: "Topbar",
@@ -112,15 +80,6 @@ export default {
     data() {
         return {
             isMounted: false,
-<<<<<<< HEAD
-            user: {},
-            imageUrl: "",
-            notifications: [],
-            searchResults: [],
-            usersCourses: []
-        }
-    },
-=======
             user: this.$store.getters.getUser,
             imageUrl: "",
             notifications: [],
@@ -132,110 +91,10 @@ export default {
     setup() {
         return { Tr };
     },
->>>>>>> origin/development
     mounted() {
         this.isMounted = true;
     }, 
     created() {
-<<<<<<< HEAD
-        this.user.username = "Amogus Sus";
-        this.user.image = "bingus";
-
-        this.notifications = [
-            {
-                id: 1,
-                image: "bingus",
-                message: "notificação 1",
-                read: true,
-                date: "12/12/2022 13:45"
-            },
-            {
-                id: 2,
-                image: "bingus",
-                message: "notificação 2",
-                read: false,
-                date: "12/12/2022 13:45"
-            },
-            {
-                id: 3,
-                image: "bingus",
-                message: "notificação 3",
-                read: false,
-                date: "12/12/2022 13:45"
-            },
-            {
-                id: 4,
-                image: "bingus",
-                message: "asdf asdfiojo is sdfiojo is qwie dqwd diassdfiojo is qwie dqwd diasqwie dqwd dias iuhdf iqwe ask",
-                read: true,
-                date: "12/12/2022 13:45"
-            },
-            {
-                id: 5,
-                image: "bingus",
-                message: "notificação 3",
-                read: false,
-                date: "12/12/2022 13:45"
-            },
-            {
-                id: 6,
-                image: "bingus",
-                message: "asdf asdfiojo is sdfiojo is qwie dqwd diassdfiojo is qwie dqwd diasqwie dqwd dias iuhdf iqwe ask",
-                read: true,
-                date: "12/12/2022 13:45"
-            }
-        ];
-
-        this.usersCourses = [
-            {
-                id: 1,
-                type: 'Curso',
-                name: "Course Course Course v v Course Course 1",
-                image: "bingus",
-                category: "Agricultura"
-            },
-            {
-                id: 2,
-                type: 'Curso',
-                name: "Course 2",
-                image: "bingus",
-                category: "Agricultura"
-            },
-            {
-                id: 3,
-                type: 'Curso',
-                name: "Course 3",
-                image: "bingus",
-                category: "Beleza"
-            },
-            {
-                id: 4,
-                type: 'Curso',
-                name: "Course 4",
-                image: "bingus",
-                category: "Beleza"
-            },
-            {
-                id: 5,
-                type: 'Curso',
-                name: "Course 5",
-                image: "bingus",
-                category: "Sopa"
-            },
-            {
-                id: 1,
-                type: 'Criador',
-                name: "Creator 1",
-                image: "bingus"
-            },
-            {
-                id: 2,
-                type: 'Criador',
-                name: "Creator 2",
-                image: "bingus"
-            }
-        ];
-=======
         if(this.$store.getters.getUser.id) {
             axios({
                 method: `get`,
@@ -296,7 +155,6 @@ export default {
                 this.$emit("open-modal", error.response.data.message);
             } else console.log(error);
         });
->>>>>>> origin/development
         
         this.imageUrl = new URL(`../assets/${this.user.image}.jpg`, import.meta.url).href;
     },
@@ -305,11 +163,7 @@ export default {
 			let unread = false;
 
 			this.notifications.forEach(notif => {
-<<<<<<< HEAD
-				if(!notif.read) unread = true;
-=======
 				if(notif.state == "false") unread = true;
->>>>>>> origin/development
 			});
 
 			return unread;
@@ -321,8 +175,6 @@ export default {
                 if(this.searchResults.length == 0 && filter != "") return true;
                 return false;    
             }
-<<<<<<< HEAD
-=======
         },
         getUserId() {
             if(this.$store.getters.getUser.id) return this.$store.getters.getUser.id;
@@ -374,19 +226,12 @@ export default {
                 case "Lista de Cursos":
                     return this.$t("pages.courseList")
             }
->>>>>>> origin/development
         }
     },
     methods: {
         toggleNotifs() {
             this.$emit("toggleNotifs");
 
-<<<<<<< HEAD
-            this.notifications.forEach(n => n.read = true);
-        },
-        toggleSearch() {
-            console.log("?")
-=======
             this.notifications.forEach(n => n.state = true);
 
             axios({
@@ -412,7 +257,6 @@ export default {
             });
         },
         toggleSearch() {
->>>>>>> origin/development
             this.$emit("toggleSearch");
         },
         filterSearchbar(){
@@ -422,11 +266,6 @@ export default {
             this.searchResults = [];
 
             if(filter != ""){
-<<<<<<< HEAD
-                this.usersCourses.forEach(i => {
-                    if(i.name.toLowerCase().includes(filter) || i.type.toLowerCase().includes(filter) || (i.category != null && i.category.toLowerCase().startsWith(filter))) this.searchResults.push(i);
-                });    
-=======
                 this.creators.forEach(cr => {
                     if(cr.username.toLowerCase().includes(filter) || cr.name.toLowerCase().includes(filter) || this.$t("topbar.creator").toLowerCase().includes(filter)) this.searchResults.push(cr);
                 });
@@ -434,23 +273,11 @@ export default {
                 this.courses.forEach(co => {
                     if(co.name.toLowerCase().includes(filter) || co.category.toLowerCase().includes(filter) || this.$t("topbar.course").toLowerCase().includes(filter)) this.searchResults.push(co);
                 });
->>>>>>> origin/development
             }
         },
         goToSearchItem() {
             let filter = this.$refs.topSearchbar.value.toLowerCase();
 
-<<<<<<< HEAD
-            this.usersCourses.forEach(i => {
-                if(i.name.toLowerCase() == filter){
-                    if(i.type == "Curso") {
-                        this.$router.push({ name: 'Curso', params: { id: i.id } });
-                    } else {
-                        this.$router.push({ name: 'Perfil do Utilizador', params: { id: i.id } });
-                    }
-                };
-                this.$emit("toggleSearch");
-=======
             this.creators.forEach(c => {
                 if(c.name.toLowerCase() == filter || c.username.toLowerCase() == filter) {
                     this.$router.push({ name: 'Perfil do Utilizador', params: { id: c.id, locale: Tr.guessDefaultLocale() } });
@@ -461,7 +288,6 @@ export default {
                 if(c.name.toLowerCase() == filter) {
                     this.$router.push({ name: 'Curso', params: { id: c.id, locale: "?" } });
                 }
->>>>>>> origin/development
             });
         }
     }
@@ -469,18 +295,6 @@ export default {
 </script>
  
 <style scoped>
-<<<<<<< HEAD
-    .page-name {
-        color: var(--primary) !important;
-        font-size: 24px;
-        font-weight: 500;
-    }
-
-    .searchbar-container {
-        position: relative;
-    }
-
-=======
     .topbar-text {
         display: flex;
         gap: 6px;
@@ -496,7 +310,6 @@ export default {
         position: relative;
     }
 
->>>>>>> origin/development
     .searchbar {
         background-color: var(--mobalytics-card);
         padding: 6px 16px 6px 20px;
@@ -513,11 +326,7 @@ export default {
         border: none;
         color: var(--light) !important;
         font-family: "Poppins";
-<<<<<<< HEAD
-        min-width: 400px;
-=======
         width: 400px;
->>>>>>> origin/development
     }
 
     .searchbar input::placeholder {
@@ -563,10 +372,7 @@ export default {
         align-items: center;
         justify-content: space-evenly;
         padding: 16px;
-<<<<<<< HEAD
-=======
         gap: 16px;
->>>>>>> origin/development
     }
 
     .searchbar-results .no-results p {
@@ -626,10 +432,6 @@ export default {
         overflow-x: hidden;
     }
     
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/development
     .notif-list::-webkit-scrollbar {
         width: 10px;
         background: var(--mobalytics-back);
@@ -641,8 +443,6 @@ export default {
         border-radius: 8px;
     }
 
-<<<<<<< HEAD
-=======
     .notif-list .no-notifications {
         padding: 24px 16px;
         display: flex;
@@ -651,7 +451,6 @@ export default {
         gap: 16px;
     }
 
->>>>>>> origin/development
     .wrapper {
         width: 100%;
         display: flex;
@@ -703,8 +502,6 @@ export default {
         border-radius: 50%;
         object-fit: cover;
     }
-<<<<<<< HEAD
-=======
 
     .topbar-btn p {
         font-size: 22px;
@@ -794,5 +591,4 @@ export default {
 			width: 300px;
 		}	
 	}
->>>>>>> origin/development
 </style>

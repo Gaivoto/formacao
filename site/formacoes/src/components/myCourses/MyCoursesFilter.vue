@@ -3,31 +3,6 @@
         <div class="courses-filter-container">
             <div class="searchbar">
                 <span class="material-icons search-icon">search</span>
-<<<<<<< HEAD
-                <input type="text" ref="search" v-on:input="filterSearchbar" v-on:keydown.enter="goToSearchItem" placeholder="Pesquisar...">
-            </div>
-            <div class="filter-div">
-                <p>Categoria:</p>
-                <div class="custom-select">
-                    <div class="selected" :class="{ open: catOpen }" v-on:click="catOpen=!catOpen">{{ this.category }}</div>
-                    <div class="items" :class="{ selectHide: !catOpen }">
-                        <div v-for="category in this.categories" :key="category.id" v-on:click="selectCat(category.name)">{{ category.name }}</div>
-                    </div>
-                </div>
-                <p>Ordernar por:</p>
-                <div class="custom-select">
-                    <div class="selected" :class="{ open: orderOpen }" v-on:click="orderOpen=!orderOpen">{{ this.order }}</div>
-                    <div class="items" :class="{ selectHide: !orderOpen }">
-                        <div v-on:click="selectOrder('Mais recente')">Mais recente</div>
-                        <div v-on:click="selectOrder('Mais antigo')">Mais antigo</div>
-                        <div v-on:click="selectOrder('Preço decrescente')">Preço decrescente</div>
-                        <div v-on:click="selectOrder('Preço crescente')">Preço crescente</div>
-                        <div v-on:click="selectOrder('Progresso decrescente')">Progresso decrescente</div>
-                        <div v-on:click="selectOrder('Progresso crescente')">Progresso crescente</div>
-                    </div>
-                </div>
-            </div>
-=======
                 <input type="text" ref="search" v-on:input="filterSearchbar" v-on:keydown.enter="goToSearchItem" :placeholder="$t('myCourses.search')"> 
             </div>
             <div class="filter-div">
@@ -88,18 +63,11 @@
                     </div>      
                 </div>    
             </div>
->>>>>>> origin/development
         </div>
     </div>
 </template>
 
 <script>
-<<<<<<< HEAD
-export default {
-    name: 'CoursesListFilter',
-    props: {
-        courses: {
-=======
 import Tr from '@/i18n/translation.js'
 import { useI18n } from 'vue-i18n'
 
@@ -107,38 +75,12 @@ export default {
     name: 'CoursesListFilter',
     props: {
         categories: {
->>>>>>> origin/development
             type: Array,
             required: true
         }
     },
     data() {
         return {
-<<<<<<< HEAD
-            categories: [],
-            catOpen: false,
-            orderOpen: false,
-            category: "Todas",
-            order: "Mais recente"
-        }
-    },
-    created() {
-        this.courses.forEach(c => {
-            let exists = false;
-
-            this.categories.forEach(cat => {
-                if (c.category == cat.name) {
-                    exists = true;
-                }
-            });
-
-            if (!exists) {
-                this.categories.push({id: this.categories.length, name: c.category});
-            }
-        });
-    },
-    mounted(){
-=======
             catOpen: false,
             orderOpen: false,
             category: "",
@@ -155,7 +97,6 @@ export default {
         this.order = this.t("myCourses.allF");
         this.category = this.t("myCourses.allF");
 
->>>>>>> origin/development
         let filter = {
             name: null,
             category: this.category,
@@ -169,11 +110,7 @@ export default {
             let filter = {
                 name: this.$refs.search.value.toLowerCase(),
                 category: this.category,
-<<<<<<< HEAD
-                order: this.order
-=======
                 order: this.order,
->>>>>>> origin/development
             }
 
             this.$emit("filter", filter);
@@ -205,12 +142,9 @@ export default {
         selectCat(cat) {
             this.category = cat;
             this.catOpen = false;
-<<<<<<< HEAD
-=======
         },
         toggleRespFilter() {
             this.responsiveFilter = !this.responsiveFilter;
->>>>>>> origin/development
         }
     }
 }
@@ -227,11 +161,7 @@ export default {
 
         display: flex;
         justify-content: space-between;
-<<<<<<< HEAD
-        text-align: center;
-=======
         align-items: center;
->>>>>>> origin/development
 
         padding: 16px;
 
@@ -247,14 +177,11 @@ export default {
         gap: 8px;
     }
 
-<<<<<<< HEAD
-=======
     .filter-div > div {
         display: flex;
         align-items: center;
     }
 
->>>>>>> origin/development
     .searchbar {
         background-color: var(--mobalytics-card);
         padding: 6px 16px 6px 20px;
@@ -271,11 +198,7 @@ export default {
         border: none;
         color: var(--light) !important;
         font-family: "Poppins";
-<<<<<<< HEAD
-        min-width: 300px;
-=======
         width: 300px;
->>>>>>> origin/development
     }
 
     .searchbar input::placeholder {
@@ -300,8 +223,6 @@ export default {
         width: 160px;
     }
 
-<<<<<<< HEAD
-=======
     .responsive-filter-btn {
         display: none;
     }
@@ -378,7 +299,6 @@ export default {
         width: 400px;
     }
 
->>>>>>> origin/development
     /* 
 
         SELECT
@@ -450,8 +370,6 @@ export default {
     .selectHide {
         display: none;
     }
-<<<<<<< HEAD
-=======
 
     @media (max-width: 1650px) {
         .searchbar input {
@@ -521,5 +439,4 @@ export default {
             width: 100%;
         }
     }
->>>>>>> origin/development
 </style>

@@ -1,38 +1,17 @@
 <template>
     <tr class="table-row">
         <td class="image-cell">
-<<<<<<< HEAD
-            <router-link :to="{ name: 'Curso', params: { id: this.course.id } }">
-=======
             <router-link :to="Tr.i18nRoute({ name: 'Curso', params: { id: this.course.id_course, locale: Tr.guessDefaultLocale() } })">
->>>>>>> origin/development
                 <img :src="this.imageUrl">
             </router-link>
         </td>
         <td>
-<<<<<<< HEAD
-            <router-link :to="{ name: 'Curso', params: { id: this.course.id } }">
-                <p>{{ this.course.name }}</p>
-=======
             <router-link :to="Tr.i18nRoute({ name: 'Curso', params: { id: this.course.id_course, locale: Tr.guessDefaultLocale() } })">
                 <p class="course-name">{{ this.course.course }}</p>
->>>>>>> origin/development
                 <p>{{ this.course.description }}</p>
             </router-link>
         </td>
         <td>
-<<<<<<< HEAD
-            <p>{{ this.course.date }}</p>
-        </td>
-        <td>
-            <p>{{ this.course.subscriptions }}</p>
-        </td>
-        <td>
-            <p>{{ this.course.numberOfVideos }}</p>
-        </td>
-        <td>
-            <p>{{ this.course.duration }}</p>
-=======
             <p>{{ this.formatedDate }}</p>
         </td>
         <td class="column-right">
@@ -46,17 +25,13 @@
         </td>
         <td class="column-right">
             <p>{{ Math.floor(this.course.duration) }}h {{ Math.round((this.course.duration - Math.floor(this.course.duration)) * 60) }}min</p>
->>>>>>> origin/development
         </td>
     </tr>
 </template>
 
 <script>
-<<<<<<< HEAD
-=======
 import Tr from '@/i18n/translation.js'
 
->>>>>>> origin/development
 export default {
     name: 'ContentTableRow',
     props: {
@@ -70,10 +45,6 @@ export default {
             imageUrl: ""
         }
     },
-<<<<<<< HEAD
-    created(){
-        this.imageUrl = new URL(`../../assets/${this.course.image}.jpg`, import.meta.url).href;
-=======
     setup() {
         return { Tr };
     },
@@ -104,22 +75,10 @@ export default {
             if (score == 0.00) return '-.--';
             else return parseFloat(this.course.rating.toString()).toFixed(2);
         }
->>>>>>> origin/development
     }
 }
 </script>
 
-<<<<<<< HEAD
-<style lang="scss" scoped>
-    .table-row td {
-        padding: 16px;
-    }
-
-    .table-row img {
-        width: 120px;
-        height: 120px;
-        object-fit: cover;
-=======
 <style scoped>
     .table-row td {
         padding: 16px;
@@ -158,6 +117,5 @@ export default {
             height: 90px;
             width: 90px;
         }
->>>>>>> origin/development
     }
 </style>

@@ -1,19 +1,5 @@
 <template>
     <div class="user-card-container">
-<<<<<<< HEAD
-        <div class="user-card-left">
-            <img :src="this.imageUrl">
-            <div>
-                <p>Nome: {{ this.user.name }}</p>
-                <p>Username: {{ this.user.username }}</p>
-            </div>
-            <div>
-                <p>Tipo: {{ this.user.type }}</p>
-                <p>Estado: {{ this.user.state }}</p>
-            </div>    
-        </div>
-        <button v-on:click="changeState">{{ this.buttonText }}</button>
-=======
         <div class="user-card">
             <div class="user-card-left">
                 <img :src="this.imageUrl">
@@ -30,17 +16,13 @@
             </div>
             <button v-on:click="changeState">{{ this.buttonText }}</button>    
         </div>
->>>>>>> origin/development
     </div>
 </template>
 
 <script>
-<<<<<<< HEAD
-=======
 import Tr from '@/i18n/translation.js'
 import { useI18n } from 'vue-i18n'
 
->>>>>>> origin/development
 export default {
     name: 'UserListAdmUserCard',
     props: {
@@ -54,35 +36,23 @@ export default {
             imageUrl: ""
         }
     },
-<<<<<<< HEAD
-=======
     setup() {
         const { t } = useI18n()
 
         return { Tr, t };
     },
->>>>>>> origin/development
     created(){
         this.imageUrl = new URL(`../../assets/${this.user.image}.jpg`, import.meta.url).href;
     },
     computed: {
         buttonText() {
-<<<<<<< HEAD
-            if(this.user.state == "Ativo") return "DESATIVAR";
-            else return "ATIVAR";
-=======
             if(this.user.state == this.$t("states.active")) return  this.$t("userListAdm.deactivate");
             else return this.$t("userListAdm.activate");
->>>>>>> origin/development
         }
     },
     methods: {
         changeState() {
-<<<<<<< HEAD
-            if(this.user.state == "Ativo") this.$emit("changeState", {id: this.user.id, state: "Inativo"});
-=======
             if(this.user.state == this.$t("states.active")) this.$emit("changeState", {id: this.user.id, state: "Inativo"});
->>>>>>> origin/development
             else this.$emit("changeState", {id: this.user.id, state: "Ativo"});
         }
     }
@@ -91,12 +61,6 @@ export default {
 
 <style scoped>
     .user-card-container {
-<<<<<<< HEAD
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 16px;
-=======
         position: relative;
         padding: 16px 16px 32px 16px;
     }
@@ -110,7 +74,6 @@ export default {
         border-radius: 8px;
         background: var(--mobalytics-card);
         box-shadow: rgba(20, 14, 49, 0.6) 0px 2px 10px 4px;
->>>>>>> origin/development
     }
 
     .user-card-left {
@@ -119,12 +82,6 @@ export default {
         gap: 80px;
     }
 
-<<<<<<< HEAD
-    button {
-        background: grey;
-        height: 40px;
-        width: 120px;
-=======
     .user-card-left img {
         height: 140px;
         width: 140px;
@@ -204,6 +161,5 @@ export default {
         .user-card-left > .first-left-div {
             width: 160px;
         }
->>>>>>> origin/development
     }
 </style>

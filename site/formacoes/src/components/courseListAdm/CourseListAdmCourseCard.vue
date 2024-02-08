@@ -1,36 +1,5 @@
 <template>
     <div class="course-card-container">
-<<<<<<< HEAD
-        <div class="course-card">
-            <div class="course-card-left">
-                <img :src="this.imageUrl">
-                <div>
-                    <router-link :to="{ name: 'Curso', params: { id: this.course.id } }"><p>Nome: {{ this.course.name }}</p></router-link>
-                    <p>Criador: {{ this.course.creator.name }}</p>
-                </div>
-                <div>
-                    <p>Preço: {{ this.course.price }}</p>
-                    <p>Inscrições: {{ this.course.subscriptions }}</p>
-                </div>    
-                <div>
-                    <p>Categoria: {{ this.course.category }}</p>
-                    <p>Estado: {{ this.course.state }}</p>
-                </div>    
-            </div>
-            <div class="course-card-right">
-                <img src="../../assets/chevron_down.png" v-on:click="toggleVideos">
-                <button v-if="showButton1" v-on:click="changeStateCourse('Ativo')">ATIVAR</button>
-                <button v-if="showButton2" v-on:click="changeStateCourse('Inativo')">DESATIVAR</button>
-                <div v-if="showButton3and4" class="button-wrapper">
-                    <button v-on:click="changeStateCourse('Ativo')">APROVAR</button>
-                    <button v-on:click="changeStateCourse('Rejeitado')">REJEITAR</button>
-                </div>
-                <button v-if="showButton5" v-on:click="changeStateCourse('Pendente')">TORNAR PENDENTE</button>     
-            </div>
-        </div>
-        <div ref="pendingNotif" :class="{ notif: showNotif }"></div>
-        <div ref="videoList" class="d-none">
-=======
         <div class="course-card" :class="{ 'videos-open': this.videosOpen }">
             <div class="course-card-left">
                 <router-link :to="Tr.i18nRoute({ name: 'Curso', params: { id: this.course.id, locale: Tr.guessDefaultLocale() } })">
@@ -70,7 +39,6 @@
             <span class="material-icons open-videos-icon" v-on:click="toggleVideos" :class="{ mirrored: this.videosOpen}">expand_more</span>
         </div>
         <div ref="videoList" class="video-list" :class="{ closed: !this.videosOpen }">
->>>>>>> origin/development
             <CourseListAdmVideoCard v-for="video in this.course.videos" :key="video.id" v-bind:video="video" v-bind:courseId="this.course.id" v-on:changeStateVideo="changeStateVideo"/>
         </div>
     </div>
@@ -78,10 +46,7 @@
 
 <script>
 import CourseListAdmVideoCard from './CourseListAdmVideoCard.vue'
-<<<<<<< HEAD
-=======
 import Tr from '@/i18n/translation.js'
->>>>>>> origin/development
 
 export default {
     name: 'CourseListAdmCourseCard',
@@ -96,11 +61,6 @@ export default {
     },
     data(){
         return {
-<<<<<<< HEAD
-            imageUrl: ""
-        }
-    },
-=======
             imageUrl: "",
             videosOpen: false
         }
@@ -108,7 +68,6 @@ export default {
     setup() {
         return { Tr };
     },
->>>>>>> origin/development
     created(){
         this.imageUrl = new URL(`../../assets/${this.course.image}.jpg`, import.meta.url).href;
     },
@@ -137,8 +96,6 @@ export default {
             });
 
             return pending;
-<<<<<<< HEAD
-=======
         },
         formatedDate() {
             return this.course.date.substring(8, 10) + "/" + this.course.date.substring(5, 7) + "/" + this.course.date.substring(0, 4) + " " + this.course.date.substring(11, 19);
@@ -162,7 +119,6 @@ export default {
 
             if (score == 0.00) return '-.--';
             else return parseFloat(this.course.rating.toString()).toFixed(2);
->>>>>>> origin/development
         }
     },
     methods: {
@@ -173,11 +129,7 @@ export default {
             this.$emit("changeStateVideo", info);
         },
         toggleVideos() {
-<<<<<<< HEAD
-            this.$refs.videoList.classList.toggle("d-none");
-=======
             this.videosOpen = !this.videosOpen;
->>>>>>> origin/development
         }
     }
 }
@@ -186,20 +138,14 @@ export default {
 <style scoped>
     .course-card-container {
         position: relative;
-<<<<<<< HEAD
-=======
         padding: 16px 16px 32px 16px;
         height: auto;
->>>>>>> origin/development
     }
 
     .course-card {
         display: flex;
         justify-content: space-between;
         align-items: center;
-<<<<<<< HEAD
-        padding: 16px;
-=======
         
         padding: 16px 40px 16px 16px;
         border-radius: 8px;
@@ -209,7 +155,6 @@ export default {
 
     .course-card.videos-open {
         border-radius: 8px 8px 0px 8px;
->>>>>>> origin/development
     }
 
     .course-card-left {
@@ -218,11 +163,6 @@ export default {
         gap: 80px;
     }
 
-<<<<<<< HEAD
-    .course-card-right {
-        display: flex;
-        align-items: center;
-=======
     .course-card-left > div {
         display: flex;
         align-items: center;
@@ -265,32 +205,10 @@ export default {
 
     .course-card-right {
         align-items: center;
->>>>>>> origin/development
         gap: 40px;
     }
 
     button {
-<<<<<<< HEAD
-        background: grey;
-        height: 50px;
-        width: 120px;
-    }
-
-    .button-wrapper {
-        display: flex;
-        gap: 16px;
-    }
-
-    .notif {
-        width: 12px;
-        height: 12px;
-        border-radius: 50%;
-        background-color: red;
-
-        position: absolute;
-        top: 16px;
-        right: 16px;
-=======
         background: var(--mobalytics-back);
         color: var(--light);
         height: 50px;
@@ -488,6 +406,5 @@ export default {
         button {
             width: 90px;
         }
->>>>>>> origin/development
     }
 </style>
