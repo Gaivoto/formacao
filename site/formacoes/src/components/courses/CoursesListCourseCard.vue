@@ -1,17 +1,32 @@
 <template>
+<<<<<<< HEAD
     <div class="course-card-container col-6 col-xl-3" :class="{ shake: this.hoverImg }">
+=======
+    <div class="course-card-container col-12 col-md-6" :class="{ shake: this.hoverImg, 'col-xl-4': this.sidebar, 'col-xl-3': !this.sidebar }">
+>>>>>>> origin/development
         <div class="course-card">
             <router-link :to="{ name: 'Curso', params: { id: this.course.id } }">
                 <img :src="this.imageUrl">
             </router-link>
             <div class="card-info">
                 <router-link :to="{ name: 'Curso', params: { id: this.course.id } }"><p class="card-info-title">{{ this.course.name }}</p></router-link>
+<<<<<<< HEAD
                 <p class="card-info-category">{{ this.course.category }}</p>
+=======
+                <div class="card-info-div">
+                    <p class="card-info-category">{{ this.course.category }}</p>
+                    <div class="card-score-div">
+                        <p>{{ this.roundedRating }}</p>
+                        <span class="material-icons duration-icon">star</span>
+                    </div>
+                </div>
+>>>>>>> origin/development
                 <p class="card-info-description">{{ this.course.description }}</p>
                 <div class="card-info-div">
                     <p>{{ this.course.price }} €</p>
                     <div>
                         <span class="material-icons duration-icon">schedule</span>
+<<<<<<< HEAD
                         <p>{{ this.course.duration }}</p>
                     </div>
                 </div>   
@@ -19,6 +34,15 @@
                 <router-link class="card-creator-div" :to="{ name: 'Perfil do Utilizador', params: { id: 1 } }">
                     <img :src="this.creatorImageUrl">
                     <p>{{ this.course.creator.name }}</p>
+=======
+                        <p>{{ this.calculatedDuration }}</p>
+                    </div>
+                </div>   
+                <hr>
+                <router-link class="card-creator-div" :to="{ name: 'Perfil do Utilizador', params: { id: this.course.idCr } }">
+                    <img :src="this.creatorImageUrl">
+                    <p>{{ this.course.nameCr }}</p>
+>>>>>>> origin/development
                 </router-link>
             </div>
         </div>
@@ -32,6 +56,13 @@ export default {
         course: {
             type: Object,
             required: true
+<<<<<<< HEAD
+=======
+        },
+        sidebar: {
+            type: Boolean,
+            required: true
+>>>>>>> origin/development
         }
     },
     data(){
@@ -42,7 +73,22 @@ export default {
     },
     created(){
         this.imageUrl = new URL(`../../assets/${this.course.image}.jpg`, import.meta.url).href;
+<<<<<<< HEAD
         this.creatorImageUrl = new URL(`../../assets/${this.course.creator.image}.jpg`, import.meta.url).href;
+=======
+        this.creatorImageUrl = new URL(`../../assets/${this.course.imageCr}.jpg`, import.meta.url).href;
+    },
+    computed: {
+        calculatedDuration() {
+            return Math.floor(this.course.duration) + "h " + Math.round((this.course.duration - Math.floor(this.course.duration)) * 60) + "min";
+        },
+        roundedRating() {
+            let score = parseFloat(this.course.rating.toString()).toFixed(2);
+
+            if (score == 0.00) return '-.--';
+            else return parseFloat(this.course.rating.toString()).toFixed(2);
+        }
+>>>>>>> origin/development
     }
 }
 </script>
@@ -77,11 +123,23 @@ export default {
 
     .card-info p.card-info-title {
         color: var(--light);
+<<<<<<< HEAD
         font-size: 24px;
         font-weight: 650;
         font-family: "Poppins", sans-serif;
         margin-bottom: 16px;
         width: fit-content;
+=======
+        font-size: 22px;
+        font-weight: 600;
+        font-family: "Poppins", sans-serif;
+        margin-bottom: 16px;
+        width: fit-content;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+>>>>>>> origin/development
     }
 
     .card-info p.card-info-title:hover {
@@ -112,6 +170,10 @@ export default {
         display: flex;
         align-items: center;
         justify-content: space-between;
+<<<<<<< HEAD
+=======
+        margin-bottom: 12px;
+>>>>>>> origin/development
     }
 
     .card-info-div > div {
@@ -134,6 +196,24 @@ export default {
         color: var(--light);
     }
 
+<<<<<<< HEAD
+=======
+    .card-info-div .card-score-div {
+        gap: 4px;
+    }
+
+    .card-info-div .card-score-div span {
+        color: var(--primary);
+        font-size: 28px;
+    }
+
+    .card-info-div .card-score-div p {
+        color: var(--primary);
+        font-size: 18px;
+        margin-bottom: 0px;
+    }
+
+>>>>>>> origin/development
     .card-info .card-creator-div {
         display: flex;
         align-items: center;
@@ -161,4 +241,48 @@ export default {
         height: 2px;
         color: var(--light);
     }
+<<<<<<< HEAD
+=======
+
+    @media (max-width: 600px) {
+        .course-card-container {
+            padding: 0px;
+        }
+    }
+
+    @media (max-width: 500px) {
+        .course-card {
+            padding: 12px 8px;
+        }
+        .course-card > a > img {
+            height: 160px;
+            margin: 16px;
+            width: 90%;
+        }
+
+        .card-info p.card-info-title {
+            margin-bottom: 2px;
+        }
+
+        .card-info p.card-info-category {
+            margin-bottom: 4px;
+        }
+
+        .card-info-div p {
+            margin-bottom: 6px !important;
+        }
+
+        .course-card hr {
+            margin: 6px 0px;
+        }
+    }
+
+    @media (max-width: 400px) {
+        .course-card > a > img {
+            margin: 0px;
+            margin-bottom: 12px;
+            width: 100%;
+        }
+    }
+>>>>>>> origin/development
 </style>

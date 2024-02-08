@@ -1,5 +1,6 @@
 <template>
     <div class="courses-wrapper">
+<<<<<<< HEAD
         <CoursesListFilter v-on:filter="filter" />
         <div class="row">
             <CoursesListCourseCard v-for="course in this.coursesDisplay" :key="course.id" v-bind:course="course"/>
@@ -9,13 +10,33 @@
             </div>
         </div>
         <Pagination v-on:change-page="changePage" v-bind:page="this.page" v-bind:numberOfPages="numberOfPages"/>
+=======
+        <CoursesListFilter v-on:filter="filter" v-bind:categories="this.categories" />
+        <div class="row">
+            <CoursesListCourseCard v-for="course in this.coursesDisplay" :key="course.id" v-bind:course="course" v-bind:sidebar="this.sidebar"/>
+            <div class="no-results" :class="{ 'd-none': !noResults }">
+                <span class="material-icons search-icon">warning</span>
+                <p>{{ $t("courses.warning")}}</p>    
+            </div>
+        </div>
+        <Pagination v-on:change-page="changePage" v-bind:numberOfPages="numberOfPages"/>
+>>>>>>> origin/development
     </div>
 </template>
 
 <script>
+<<<<<<< HEAD
 import CoursesListFilter from "../components/courses/CoursesListFilter.vue";
 import CoursesListCourseCard from "../components/courses/CoursesListCourseCard.vue";
 import Pagination from "../components/paginations/Pagination.vue";
+=======
+import axios from 'axios';
+import CoursesListFilter from "../components/courses/CoursesListFilter.vue";
+import CoursesListCourseCard from "../components/courses/CoursesListCourseCard.vue";
+import Pagination from "../components/paginations/Pagination.vue";
+import Tr from '@/i18n/translation.js'
+import { useI18n } from 'vue-i18n'
+>>>>>>> origin/development
 
 export default {
     name: "Courses",
@@ -24,6 +45,7 @@ export default {
         CoursesListCourseCard,
         Pagination
     },
+<<<<<<< HEAD
     data() {
         return {
             courses: [],
@@ -204,6 +226,56 @@ export default {
                 }
             }
         ];
+=======
+    props: {
+        sidebar: {
+            type: Boolean,
+            required: true
+        }
+    },
+    data() {
+        return {
+            courses: [],
+            categories: [],
+            coursesFiltered: [],
+            coursesDisplay: [],
+            page: 1,
+            coursesPerPage: 8,
+            filterInfo: {}
+        }
+    },
+    setup() {
+        const { t } = useI18n()
+
+        return { Tr, t };
+    },
+    created() {
+        axios({
+            method: 'get',
+            url: `${import.meta.env.VITE_HOST}/cursos`
+        })
+        .then(value => {
+            value.data.courses.forEach(c => this.courses.push(c));
+
+            this.coursesFiltered = [...this.courses];
+
+            for (var i = (this.page - 1) * this.coursesPerPage; i < this.page * this.coursesPerPage; i++) {
+                if (this.coursesFiltered[i]) {
+                    this.coursesDisplay.push(this.coursesFiltered[i]);
+                }
+            }
+
+            this.getCategories();
+
+            this.filter(this.filterInfo);
+        })
+        .catch(error => {
+            if(error.code) {
+                this.$emit("open-modal", error.response.data.message);
+                console.log(error.response.data);
+            } else console.log(error);
+        });
+>>>>>>> origin/development
     },
     computed: {
         numberOfPages() {
@@ -216,18 +288,30 @@ export default {
     },
     methods: {
         filter(filter) {
+<<<<<<< HEAD
+=======
+            this.filterInfo = filter;
+>>>>>>> origin/development
             this.coursesDisplay = [];
             this.coursesFiltered = [...this.courses];
 
             if(filter.name) {
+<<<<<<< HEAD
                 this.coursesFiltered = this.coursesFiltered.filter(c => c.name.toLowerCase().includes(filter.name) || c.creator.name.toLowerCase().includes(filter.name));
             }
 
             if(filter.category != "Todas") {
+=======
+                this.coursesFiltered = this.coursesFiltered.filter(c => c.name.toLowerCase().includes(filter.name) || c.nameCr.toLowerCase().includes(filter.name));
+            }
+
+            if(filter.category != this.$t("myCourses.allF")) {
+>>>>>>> origin/development
                 this.coursesFiltered = this.coursesFiltered.filter(c => c.category == filter.category);
             }
 
             switch (filter.order) {
+<<<<<<< HEAD
                 case "Mais recente":
                     this.coursesFiltered.sort((a, b) =>
                         new Date(a.date.substring(6) + "-" + a.date.substring(3, 5) + "-" + a.date.substring(0, 2)) < new Date(b.date.substring(6) + "-" + b.date.substring(3, 5) + "-" + b.date.substring(0, 2)) ? 1 : new Date(b.date.substring(6) + "-" + b.date.substring(3, 5) + "-" + b.date.substring(0, 2)) < new Date(a.date.substring(6) + "-" + a.date.substring(3, 5) + "-" + a.date.substring(0, 2)) ? -1 : 0
@@ -247,6 +331,19 @@ export default {
                     this.coursesFiltered.sort((a, b) =>
                         a.price > b.price ? 1 : b.price > a.price ? -1 : 0
                     );
+=======
+                case this.$t("courses.recentlyAdded"):
+                    this.coursesFiltered.sort((a, b) => new Date(a.date) < new Date(b.date) ? 1 : new Date(b.date) < new Date(a.date) ? -1 : 0);
+                    break;
+                case this.$t("courses.formerlyAdded"):
+                    this.coursesFiltered.sort((a, b) => new Date(a.date) > new Date(b.date) ? 1 : new Date(b.date) > new Date(a.date) ? -1 : 0);
+                    break;
+                case this.$t("courses.priceHighToLow"):
+                    this.coursesFiltered.sort((a, b) => a.price < b.price ? 1 : b.price < a.price ? -1 : 0);
+                    break;
+                case this.$t("courses.priceLowToHigh"):
+                    this.coursesFiltered.sort((a, b) => a.price > b.price ? 1 : b.price > a.price ? -1 : 0);
+>>>>>>> origin/development
                     break;
                 default:
                     break;
@@ -268,6 +365,24 @@ export default {
                     this.coursesDisplay.push(this.coursesFiltered[i]);
                 }
             }
+<<<<<<< HEAD
+=======
+        },
+        getCategories() {
+            this.courses.forEach(c => {
+                let exists = false;
+
+                this.categories.forEach(cat => {
+                    if (c.category == cat.name) {
+                        exists = true;
+                    }
+                });
+
+                if (!exists) {
+                    this.categories.push({id: this.categories.length, name: c.category});
+                }
+            });
+>>>>>>> origin/development
         }
     }
 };
@@ -275,7 +390,11 @@ export default {
 
 <style scoped>
     .courses-wrapper {
+<<<<<<< HEAD
         padding: 24px 24px 0px 24px;
+=======
+        padding: 24px 32px 0px 32px;
+>>>>>>> origin/development
     }
 
     .row {
@@ -299,4 +418,19 @@ export default {
         color: var(--light);
         font-size: 40px;
     }
+<<<<<<< HEAD
+=======
+
+    @media (max-width: 900px) {
+        .row {
+            padding: 0px;
+        }
+    }
+
+    @media (max-width: 800px) {
+        .courses-wrapper {
+            padding: 24px 16px 0px 16px;
+        }
+	}
+>>>>>>> origin/development
 </style>

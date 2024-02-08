@@ -1,4 +1,5 @@
 <template>
+<<<<<<< HEAD
     <div class="course-card-container col-6 col-xl-3" :class="{ shake: this.hoverImg }">
         <div class="course-card">
             <router-link :to="{ name: 'Curso', params: { id: this.course.id } }">
@@ -15,6 +16,27 @@
                             <p>{{ this.course.duration }}</p>
                             <span class="material-icons">schedule</span>
                         </div>
+=======
+    <div class="course-card-container col-12 col-md-6" :class="{ shake: this.hoverImg, 'col-xl-3': !this.sidebar, 'col-xl-4': this.sidebar }">
+        <div class="course-card">
+            <router-link :to="Tr.i18nRoute({ name: 'Curso', params: { id: this.course.id, locale: Tr.guessDefaultLocale() } })">
+                <img :src="this.imageUrl">
+            </router-link>
+            <div class="card-info">
+                <router-link :to="Tr.i18nRoute({ name: 'Curso', params: { id: this.course.id, locale: Tr.guessDefaultLocale() } })"><p class="card-info-title">{{ this.course.name }}</p></router-link>
+                <div class="card-info-div">
+                    <p class="card-info-category">{{ this.course.category }}</p>
+                    <div class="card-score-div">
+                        <p>{{ this.roundedRating }}</p>
+                        <span class="material-icons duration-icon">star</span>
+                    </div>
+                </div>
+                <p class="card-info-description">{{ this.course.description }}</p>
+                <div class="card-info-div">
+                    <div>
+                        <span class="material-icons">schedule</span>
+                        <p>{{ this.calculatedDuration }}</p>
+>>>>>>> origin/development
                     </div>
                     <div class="circle-wrap">
                         <div class="circle">
@@ -29,9 +51,15 @@
                     </div>
                 </div> 
                 <hr>
+<<<<<<< HEAD
                 <router-link class="card-creator-div" :to="{ name: 'Perfil do Utilizador', params: { id: 1 } }">
                     <img :src="this.creatorImageUrl">
                     <p>{{ this.course.creator.name }}</p>
+=======
+                <router-link class="card-creator-div" :to="Tr.i18nRoute({ name: 'Perfil do Utilizador', params: { id: this.course.idCr, locale: Tr.guessDefaultLocale() } })">
+                    <img :src="this.creatorImageUrl">
+                    <p>{{ this.course.nameCr }}</p>
+>>>>>>> origin/development
                 </router-link>
             </div>
         </div>
@@ -39,12 +67,23 @@
 </template>
 
 <script>
+<<<<<<< HEAD
+=======
+import Tr from '@/i18n/translation.js'
+>>>>>>> origin/development
 export default {
     name: 'MyCoursesCourseCard',
     props: {
         course: {
             type: Object,
             required: true
+<<<<<<< HEAD
+=======
+        },
+        sidebar: {
+            type: Boolean,
+            required: true
+>>>>>>> origin/development
         }
     },
     data(){
@@ -53,9 +92,29 @@ export default {
             creatorImageUrl: ""
         }
     },
+<<<<<<< HEAD
     created(){
         this.imageUrl = new URL(`../../assets/${this.course.image}.jpg`, import.meta.url).href;
         this.creatorImageUrl = new URL(`../../assets/${this.course.creator.image}.jpg`, import.meta.url).href;
+=======
+    setup() {
+        return { Tr };
+    },
+    created(){
+        this.imageUrl = new URL(`../../assets/${this.course.image}.jpg`, import.meta.url).href;
+        this.creatorImageUrl = new URL(`../../assets/${this.course.imageCr}.jpg`, import.meta.url).href;
+    },
+    computed: {
+        calculatedDuration() {
+            return Math.floor(this.course.duration) + "h " + Math.round((this.course.duration - Math.floor(this.course.duration)) * 60) + "min";
+        },
+        roundedRating() {
+            let score = parseFloat(this.course.rating.toString()).toFixed(2);
+
+            if (score == 0.00) return '-.--';
+            else return parseFloat(this.course.rating.toString()).toFixed(2);
+        }
+>>>>>>> origin/development
     }
 }
 </script>
@@ -90,11 +149,23 @@ export default {
 
     .card-info p.card-info-title {
         color: var(--light);
+<<<<<<< HEAD
         font-size: 24px;
         font-weight: 650;
         font-family: "Poppins", sans-serif;
         margin-bottom: 16px;
         width: fit-content;
+=======
+        font-size: 22px;
+        font-weight: 600;
+        font-family: "Poppins", sans-serif;
+        margin-bottom: 16px;
+        width: fit-content;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+>>>>>>> origin/development
     }
 
     .card-info p.card-info-title:hover {
@@ -125,9 +196,16 @@ export default {
         display: flex;
         align-items: center;
         justify-content: space-between;
+<<<<<<< HEAD
     }
 
     .card-info-div > div:first-child > div {
+=======
+        margin-bottom: 12px;
+    }
+
+    .card-info-div > div {
+>>>>>>> origin/development
         display: flex;
         gap: 8px;
     }
@@ -150,6 +228,24 @@ export default {
         color: var(--light-alt);
     }
 
+<<<<<<< HEAD
+=======
+    .card-info-div .card-score-div {
+        gap: 4px;
+    }
+
+    .card-info-div .card-score-div span {
+        color: var(--primary);
+        font-size: 28px;
+    }
+
+    .card-info-div .card-score-div p {
+        color: var(--primary);
+        font-size: 18px;
+        margin-bottom: 0px;
+    }
+
+>>>>>>> origin/development
     .card-info .card-creator-div {
         display: flex;
         align-items: center;
@@ -212,7 +308,10 @@ export default {
         margin-left: 7px;
         color: var(--light);
         position: absolute;
+<<<<<<< HEAD
         z-index: 100;
+=======
+>>>>>>> origin/development
         font-weight: 700;
         font-size: 20px;
     }
@@ -221,4 +320,86 @@ export default {
         clip: rect(0px, 37px, 75px, 0px);
         background-color: var(--primary);
     }
+<<<<<<< HEAD
+=======
+
+    @media (max-width: 600px) {
+        .course-card-container {
+            padding: 0px;
+        }
+    }
+
+    @media (max-width: 500px) {
+        .course-card {
+            padding: 12px 8px;
+        }
+        .course-card > a > img {
+            height: 160px;
+            margin: 16px;
+            width: 90%;
+        }
+
+        .card-info p.card-info-title {
+            margin-bottom: 2px;
+        }
+
+        .card-info p.card-info-category {
+            margin-bottom: 4px;
+        }
+
+        .card-info-div p {
+            margin-bottom: 6px !important;
+        }
+
+        .course-card hr {
+            margin: 6px 0px;
+        }
+
+        .circle-wrap {
+            width: 50px;
+            height: 50px;
+            background: var(--mobalytics-card);
+            border-radius: 50%;
+        }
+
+        .circle-wrap .circle .mask, .circle-wrap .circle .fill {
+            width: 50px;
+            height: 50px;
+            position: absolute;
+            border-radius: 50%;
+        }
+
+        .circle-wrap .circle .mask {
+            clip: rect(0px, 50px, 50px, 25px);
+        }
+
+        .circle-wrap .inside-circle {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: var(--mobalytics-card);
+            line-height: 40px;
+            text-align: center;
+            margin-top: 6px;
+            margin-left: 6px;
+            color: var(--light);
+            position: absolute;
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        .mask .fill {
+            clip: rect(0px, 25px, 50px, 0px);
+            background-color: var(--primary);
+        }
+    }
+
+    @media (max-width: 400px) {
+        .course-card > a > img {
+            margin: 0px;
+            margin-bottom: 12px;
+            width: 100%;
+        }
+    }
+>>>>>>> origin/development
 </style>

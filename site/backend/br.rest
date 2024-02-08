@@ -1,0 +1,135 @@
+GET http://localhost:3000/api/users/profile/17 
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjIiLCJ1c2VybmFtZSI6ImJyIiwidHlwZSI6ImFkbWluIiwiaWF0IjoxNjczOTY5MTEwLCJleHAiOjE2NzM5ODM1MTB9.a0j8jST1PhLGTO9OG9uKbB7W12r_YZdArIxyuyxktAc
+refreshtoken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjIiLCJ1c2VybmFtZSI6ImJyIiwidHlwZSI6ImFkbWluIiwiaWF0IjoxNjczOTY5MTEwfQ.W42wL1Z-XYRRh0AcOERQv19oGgU-S0aCts6p1icfibM
+###
+
+GET {{hostname}}api/notification/98410312-a4b4-4a6a-b048-2752b8210e23
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk4NDEwMzEyLWE0YjQtNGE2YS1iMDQ4LTI3NTJiODIxMGUyMyIsInVzZXJuYW1lIjoiYWRtIiwidHlwZSI6ImFkbWluIiwiaWF0IjoxNjc0NjUwNzY5LCJleHAiOjE2NzQ2NjUxNjl9.kdBaYDPSJWxQJmd4ctG0k_EfClRoJ11Wi5-Mxw_A0bQ
+refreshtoken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk4NDEwMzEyLWE0YjQtNGE2YS1iMDQ4LTI3NTJiODIxMGUyMyIsInVzZXJuYW1lIjoiYWRtIiwidHlwZSI6ImFkbWluIiwiaWF0IjoxNjc0NjUwNzY5fQ.YetuQ0ih6VBp7ph4EXJBb29J-KrzXaln83JdyfNgTZQ
+
+###
+PUT {{hostname}}api/notification/98410312-a4b4-4a6a-b048-2752b8210e23
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk4NDEwMzEyLWE0YjQtNGE2YS1iMDQ4LTI3NTJiODIxMGUyMyIsInVzZXJuYW1lIjoiYWRtIiwidHlwZSI6ImFkbWluIiwiaWF0IjoxNjc0NjUwNzY5LCJleHAiOjE2NzQ2NjUxNjl9.kdBaYDPSJWxQJmd4ctG0k_EfClRoJ11Wi5-Mxw_A0bQ
+refreshtoken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk4NDEwMzEyLWE0YjQtNGE2YS1iMDQ4LTI3NTJiODIxMGUyMyIsInVzZXJuYW1lIjoiYWRtIiwidHlwZSI6ImFkbWluIiwiaWF0IjoxNjc0NjUwNzY5fQ.YetuQ0ih6VBp7ph4EXJBb29J-KrzXaln83JdyfNgTZQ
+
+###
+PUT {{hostname}}api/cursos/adm/20
+authorization:  Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk4NDEwMzEyLWE0YjQtNGE2YS1iMDQ4LTI3NTJiODIxMGUyMyIsInVzZXJuYW1lIjoiYWRtIiwidHlwZSI6ImFkbWluIiwiaWF0IjoxNjc1MTgzMzYzLCJleHAiOjE2NzUxOTc3NjN9.gkWxMXV2fAN0VuBqZjYK3cVZjLKlXmoAYmCd2MsuqhU
+refreshtoken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk4NDEwMzEyLWE0YjQtNGE2YS1iMDQ4LTI3NTJiODIxMGUyMyIsInVzZXJuYW1lIjoiYWRtIiwidHlwZSI6ImFkbWluIiwiaWF0IjoxNjc1MTgzMzYzfQ.G6yedFHFSM1F6zMv1Zs0xUCNetjTuAN8jmn797XWR-k
+content-type: application/json
+
+{
+    "id": "98410312-a4b4-4a6a-b048-2752b8210e23", 
+    "state": "Ativo"
+}
+
+###
+PUT {{hostname}}api/videos/adm/98410312-a4b4-4a6a-b048-2752b8210e23
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk4NDEwMzEyLWE0YjQtNGE2YS1iMDQ4LTI3NTJiODIxMGUyMyIsInVzZXJuYW1lIjoiYWRtIiwidHlwZSI6ImFkbWluIiwiaWF0IjoxNjc1MzQyNjg5LCJleHAiOjE2NzUzNTcwODl9.C1gnPy44adYH-ULQ6UnonOcA9zXOZ9HmEJQ1W5dlOe4
+refreshtoken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk4NDEwMzEyLWE0YjQtNGE2YS1iMDQ4LTI3NTJiODIxMGUyMyIsInVzZXJuYW1lIjoiYWRtIiwidHlwZSI6ImFkbWluIiwiaWF0IjoxNjc1MzQyNjg5fQ.OAAB4V8bA7j1Eb0npZJGnCR8T-Vt878xR3uuFdzQKL8
+content-type: application/json
+
+{
+    "id": "65", 
+    "id_course": "16",
+    "state": "Ativo"
+}
+
+###
+POST {{hostname}}api/auth/login
+content-type: application/json  
+
+{     
+    "username": "vasco",     
+    "password": "123" 
+}
+###
+POST {{hostname}}api/users/
+content-type: application/json  
+
+{     
+    "username": "locriador",     
+    "password": "123" ,
+    "name": "julio",
+    "email": "julio@gmail.com",
+    "description": "eu sou o julio",
+    "image": "imagem do julio"
+
+}
+
+###
+
+PUT {{hostname}}api/criadores/15
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjE1IiwidXNlcm5hbWUiOiJtaWdvcm5hNyIsInR5cGUiOiJjcmVhdG9yIiwiaWF0IjoxNjc1MDk0Mjc3LCJleHAiOjE2NzUxMDg2Nzd9.BRA4IiATsSw-dU4JJjs3gbbUeVvCQV1JsXYXbahrp-Q
+refreshtoken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjE1IiwidXNlcm5hbWUiOiJtaWdvcm5hNyIsInR5cGUiOiJjcmVhdG9yIiwiaWF0IjoxNjc1MDk0Mjc3fQ.SUHRKtejQ-Da6lyhkDzeMlfh6KX7perAa5v7OFM3_BE
+content-type: application/json  
+
+{
+    "price": 40,
+    "image": "testeupdate",
+    "name": "hahateste",
+    "description": "descripteste"
+}
+
+###
+GET {{hostname}}api/cursos/2
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjExIiwidXNlcm5hbWUiOiJsZXgiLCJ0eXBlIjoidXNlciIsImlhdCI6MTY3NzE1ODYxOCwiZXhwIjoxNjc3MTczMDE4fQ.8F6ECUAGD2XrleZbspt6XgLd1fYrB9jBqFNLJggOvBQ
+refreshtoken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjExIiwidXNlcm5hbWUiOiJsZXgiLCJ0eXBlIjoidXNlciIsImlhdCI6MTY3NzE1ODYxOH0._AlwvEhNONIibLMVK2qtmTwHGNF7U5V7Mb4OJhD_hDo
+
+###
+
+GET {{hostname}}api/cursos/home
+
+###
+
+POST {{hostname}}api/subscricoes/
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjExIiwidXNlcm5hbWUiOiJsZXgiLCJ0eXBlIjoidXNlciIsImlhdCI6MTY3NjI5NzQ4NywiZXhwIjoxNjc2MzExODg3fQ.iHIWckYQm4pxOXbhBGz_QaZ6AtowxrY7q3lvm9g4LA0
+refreshtoken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjExIiwidXNlcm5hbWUiOiJsZXgiLCJ0eXBlIjoidXNlciIsImlhdCI6MTY3NjI5NzQ4N30.heaKTezi8PIrDy0T-AebkTIdU3tEcdC8ZcK4SjNcPTg
+content-type: application/json  
+
+{
+    "id_subscriber": "11", 
+    "id_subscribed": "16"
+}
+
+
+###
+DELETE {{hostname}}api/subscricoes/2e9aa9d0-2e58-4a1a-8545-1a941ebcd109
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjIiLCJ1c2VybmFtZSI6ImJyIiwidHlwZSI6ImFkbWluIiwiaWF0IjoxNjc2Mjk5MjQ2LCJleHAiOjE2NzYzMTM2NDZ9.JNOImqRqpx4xcZd6ZrKtNem9dXPRmREHcP1_N2A5Gv0
+refreshtoken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjIiLCJ1c2VybmFtZSI6ImJyIiwidHlwZSI6ImFkbWluIiwiaWF0IjoxNjc2Mjk5MjQ2fQ.ADlUejbdx5P1g8D3xm-PgQEJ4erB8smFiCNyk47HBTs
+###
+GET {{hostname}}api/cursos/user/98410312-a4b4-4a6a-b048-2752b8210e23
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk4NDEwMzEyLWE0YjQtNGE2YS1iMDQ4LTI3NTJiODIxMGUyMyIsInVzZXJuYW1lIjoiYWRtIiwidHlwZSI6ImFkbWluIiwiaWF0IjoxNjc1ODYwMzM5LCJleHAiOjE2NzU4NzQ3Mzl9.TKnQzO-yRkiGaNxv8MmljCy2ldWZUw6-G2d3GpRKmaE
+refreshtoken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk4NDEwMzEyLWE0YjQtNGE2YS1iMDQ4LTI3NTJiODIxMGUyMyIsInVzZXJuYW1lIjoiYWRtIiwidHlwZSI6ImFkbWluIiwiaWF0IjoxNjc1ODYwMzM5fQ.97gRvqQ98grXS5_TBw-WJUFEriWMFsaqxksUuQehxlI
+
+###
+GET {{hostname}}api/cursos/11
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk4NDEwMzEyLWE0YjQtNGE2YS1iMDQ4LTI3NTJiODIxMGUyMyIsInVzZXJuYW1lIjoiYWRtIiwidHlwZSI6ImFkbWluIiwiaWF0IjoxNjc1ODYwMzM5LCJleHAiOjE2NzU4NzQ3Mzl9.TKnQzO-yRkiGaNxv8MmljCy2ldWZUw6-G2d3GpRKmaE
+refreshtoken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk4NDEwMzEyLWE0YjQtNGE2YS1iMDQ4LTI3NTJiODIxMGUyMyIsInVzZXJuYW1lIjoiYWRtIiwidHlwZSI6ImFkbWluIiwiaWF0IjoxNjc1ODYwMzM5fQ.97gRvqQ98grXS5_TBw-WJUFEriWMFsaqxksUuQehxlI
+###
+
+PUT {{hostname}}api/cursos/rating/13
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjExIiwidXNlcm5hbWUiOiJsZXgiLCJ0eXBlIjoidXNlciIsImlhdCI6MTY3NzE2NTg2NywiZXhwIjoxNjc3MTgwMjY3fQ._BxNeGzhkPHAc1jBhIPJFQfoO3mvpBxJK0XuoQy9aBU
+refreshtoken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjExIiwidXNlcm5hbWUiOiJsZXgiLCJ0eXBlIjoidXNlciIsImlhdCI6MTY3NzE2NTg2N30.5QG59NPOfYvsYes4GnjeJIWBUCVyRt6SH2YxTmoe8jM
+content-type: application/json 
+
+{
+    "rating": "3",
+    "idComp": "62"
+}
+
+###
+
+POST {{hostname}}api/cursos/
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjE4IiwidXNlcm5hbWUiOiJ2YXNjbyIsInR5cGUiOiJjcmVhdG9yIiwiaWF0IjoxNjc3NTExMzAyLCJleHAiOjE2Nzc1MjU3MDJ9.Gs4Rkz4hDscmLk4WITknxjLwxATqAIfqMKiYeRsfmHI
+refreshtoken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjE4IiwidXNlcm5hbWUiOiJ2YXNjbyIsInR5cGUiOiJjcmVhdG9yIiwiaWF0IjoxNjc3NTExMzAyfQ.0EBr8jNJtbEHMcCu64ogK8aGZKj-22exLqjP4yxH-Os
+content-type: application/json 
+
+{
+    "name": "Curso very expertou", 
+    "category": "Gaming", 
+    "description": "curso mt mt experto com imensa sabedoria",  
+    "price": 15, 
+    "image": "./assets/fortnite", 
+    "id_creator": "343970c2-2705-403f-93b8-b68167b059e8"
+}

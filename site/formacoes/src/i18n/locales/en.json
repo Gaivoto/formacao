@@ -1,0 +1,213 @@
+{
+    "locale": {
+        "pt": "Portuguese",
+        "en": "English"
+    },
+    "pages": {
+        "landing": "Landing",
+        "notFound": "NotFound",
+        "course": "Course",
+        "courseList": "Course List",
+        "courses": "Courses",
+        "content": "Content",
+        "workshop": "Workshop",
+        "analytics": "Analytics",
+        "login": "Login",
+        "profile": "User Profile",
+        "myCourses": "My Courses",
+        "myDiplomas": "My Diplomas",
+        "settings": "Settings",
+        "videoPlayer": "Video",
+        "userList": "User List",
+        "home": "Home"
+    },
+    "home": {
+        "courses": "Courses",
+        "viewCourse": "View Course",
+        "viewCreator":"View",
+        "viewMore": "View More",
+        "viewLess": "View Less",
+        "recommended": "Recommended",
+        "trending": "Trending",
+        "recentlyAdded": "Recently Added",
+        "bestSellers": "Best Sellers",
+        "others": "Others",
+        "bestSellingCreators": "Best Selling Creators"
+    },
+    "courseDetails": {
+        "content": "Content",
+        "creator": "Creator:",
+        "category": "Category:",
+        "price": "Price: €",
+        "purchase": "Purchase",
+        "editCourse": "Edit Course",
+        "description": "Description:"
+    },    
+    "content": {
+        "name": "Name",
+        "date": "Date",
+        "state": "State",
+        "nVids": "No of Videos",
+        "duration": "Duration",
+        "rating": "Rating"
+    },
+    "states": {
+        "active": "Active",
+        "inactive": "Inactive",
+        "pending": "Pending",
+        "rejected": "Denied",
+        "all": "All"
+    },
+    "myCourses": {
+        "warning": "There are no Courses that match your search.",
+        "category": "Category:",
+        "orderBy": "Order By:",
+        "search": "Search...",
+        "recentlyAdded": "Recently Added",
+        "formerlyAdded": "Formerly Added",
+        "descendingProgress": "Descending Progress",
+        "ascendingProgress": "Ascending Progress",
+        "filter": "Filter",
+        "allF": "All"
+    },
+    "courses": {
+        "warning": "There are no Courses that match your search.",
+        "category": "Category:",
+        "orderBy": "Order By:",
+        "search": "Search...",
+        "recentlyAdded": "Recently Added",
+        "formerlyAdded": "Formerly Added",
+        "priceHighToLow": "Price High To Low",
+        "priceLowToHigh": "Price Low to High",
+        "filter": "Filter",
+        "allF": "All"
+    },
+    "userListAdm": {
+        "warning": "There are no Users that match your search.",
+        "search": "Search...",
+        "userType": "Type of User:",
+        "all": "All",
+        "admin": "Admin",
+        "creator": "Creator",
+        "user": "User",
+        "name": "Name:",
+        "type": "Type:",
+        "state": "State:",
+        "deactivate": "DEACTIVATE",
+        "activate": "ACTIVATE"
+    },    
+    "order": {
+        "newest": "Newest",
+        "oldest": "Oldest",
+        "cheapest": "Price low to high",
+        "mostExpensive": "Price high to low"
+    },
+    "paginations": {
+        "of": "of"
+    },
+    "courseListAdm": {
+        "noResults": "There are no matches for your search.",
+        "creator": "Creator",
+        "rating": "Rating",
+        "catAbr": "Cat",
+        "category": "Category",
+        "orderBy": "Order by",
+        "state": "State",
+        "date": "Date",
+        "allF": "All",
+        "allM": "All",
+        "activate": "ACTIVATE",
+        "deactivate": "DEACTIVATE",
+        "makePending": "MAKE PENDING",
+        "approve": "APPROVE",
+        "reject": "DENY",
+        "FILTER": "FILTER",
+        "filter": "Filter",
+        "search": "Search..."
+    },
+    "login": {
+        "login": "Login",
+        "register": "Register",
+        "hasAccount": "Already have an account?",
+        "loginText": "Login with your account and come learn with us.",
+        "new": "Are you new here?",
+        "registerText": "Create a new account and find out more about our courses.",
+        "username": "Username",
+        "password": "Password",
+        "LOGIN": "LOGIN",
+        "REGISTER": "REGISTER",
+        "email": "E-mail"
+    },
+    "myDiplomas": {
+        "search": "Search...",
+        "allF": "All",
+        "FILTER": "FILTER",
+        "filter": "Filter",
+        "category": "Category",
+        "orderBy": "Order by",
+        "noResults": "There are no matches for your search.",
+        "CERTIFICATE": "CERTIFICATE",
+        "OFTRAINING": "OF TRAINING",
+        "success": "Successfully completed the course",
+        "trainer": "Trainer"
+    },
+    "profile": {
+        "myCourses": "My Courses",
+        "myDiplomas": "My Diplomas",
+        "creatorCourses": "Creator's Courses",
+        "noCourses": "You have not bought any course yet. Once you do, the courses will show up here.",
+        "noDiplomas": "You have not completed any course yet. Once you do, the completed courses will show up here.",
+        "noCreator": "This creator is still working on creating courses. Once the creator has published a course, it will show up here.",
+        "subscribe": "Subscribe",
+        "unsubscribe": "Unsubscribe",
+        "description": "Description",
+        "name": "Name",
+        "EDIT": "EDIT",
+        "SAVE": "SAVE"
+    },
+    "videoPlayer": {
+        "description": "Description"
+    },
+    "topbar": {
+        "search": "Search...",
+        "creator": "Creator",
+        "course": "Course",
+        "noResults": "There are no matches for your search.",
+        "courses": "Courses",
+        "login": "Login"
+    },
+    "notifications": {
+        "theStateC": "The state of the course: ",
+        "theStateV": "The state of the video: ",
+        "wasChanged": " was changed to ",
+        "theCreator": "The creator ",
+        "postedC": " posted a new course called ",
+        "postedV": " posted a new video called ",
+        "inTheCourse": " in the course "
+    },
+    "errors": {
+        "close": "Close",
+        "backendQueryError": "Something went wrong. Try again soon.",
+        "forbidden": "The user that is logged cannot complete this action.",
+        "invalidToken": "Session token expired.",
+        "usernamePasswordEmpty": "Username/password are empty.",
+        "emptyFields": "There are empty fields.",
+        "invalidEmail": "Invalid email.",
+        "invalidName": "Invalid name.",
+        "usernamePasswordInvalid": "Username/passowrd are invalid.",
+        "inactiveUser": "This account has been deactivated.",
+        "noTransaction": "Transaction not found.",
+        "userHasCourse": "This user already has this course.",
+        "noCreator": "Creator not found.",
+        "usernameTaken": "This username is already in use.",
+        "invalidState": "Invalid state.",
+        "noUser": "User not found.",
+        "noSubscription": "Subscription not found",
+        "userNotCreator": "This user is not a creator.",
+        "noVideo": "Video not found.",
+        "noCourse": "Course not found.",
+        "courseNameTaken": "A course with this name already exists.",
+        "subscriptionCreated": "Subscription created successfully.",
+        "subscriptionCanceled": "This subscription was canceled with success."
+    }
+}

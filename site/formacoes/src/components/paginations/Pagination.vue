@@ -1,5 +1,9 @@
 <template>
+<<<<<<< HEAD
     <div class="pagination-wrapper">
+=======
+    <div class="pagination-wrapper" v-if="this.hasPages">
+>>>>>>> origin/development
         <div class="pagination">
             <span class="material-icons" v-on:click="firstPage">first_page</span>
             <span class="material-icons" v-on:click="decreasePage">chevron_left</span>
@@ -51,6 +55,13 @@ export default {
             }
 
             return range;
+<<<<<<< HEAD
+=======
+        },
+        hasPages() {
+            if(this.numberOfPages > 0) return true;
+            return false;
+>>>>>>> origin/development
         }
     },
     methods: {
@@ -84,7 +95,11 @@ export default {
 }
 </script>
 
+<<<<<<< HEAD
 <style lang="scss" scoped>
+=======
+<style scoped>
+>>>>>>> origin/development
     .pagination-wrapper {
         display: flex;
         justify-content: space-around;
@@ -132,4 +147,27 @@ export default {
         color: var(--primary);
         cursor: pointer;
     }
+<<<<<<< HEAD
+=======
+
+    @media (max-width: 550px) {
+        .pagination {
+            gap: 4px;
+        }
+
+        .pagination > div {
+            gap: 4px;
+        }
+    }
+
+    @media (max-width: 450px) {
+        .pagination {
+            gap: 0px;
+        }
+
+        .pagination > div {
+            gap: 2px;
+        }
+    }
+>>>>>>> origin/development
 </style>

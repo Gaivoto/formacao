@@ -1,17 +1,27 @@
 <template>
     <tr class="table-row">
         <td class="image-cell">
+<<<<<<< HEAD
             <router-link :to="{ name: 'Curso', params: { id: this.course.id } }">
+=======
+            <router-link :to="Tr.i18nRoute({ name: 'Curso', params: { id: this.course.id_course, locale: Tr.guessDefaultLocale() } })">
+>>>>>>> origin/development
                 <img :src="this.imageUrl">
             </router-link>
         </td>
         <td>
+<<<<<<< HEAD
             <router-link :to="{ name: 'Curso', params: { id: this.course.id } }">
                 <p>{{ this.course.name }}</p>
+=======
+            <router-link :to="Tr.i18nRoute({ name: 'Curso', params: { id: this.course.id_course, locale: Tr.guessDefaultLocale() } })">
+                <p class="course-name">{{ this.course.course }}</p>
+>>>>>>> origin/development
                 <p>{{ this.course.description }}</p>
             </router-link>
         </td>
         <td>
+<<<<<<< HEAD
             <p>{{ this.course.date }}</p>
         </td>
         <td>
@@ -22,11 +32,31 @@
         </td>
         <td>
             <p>{{ this.course.duration }}</p>
+=======
+            <p>{{ this.formatedDate }}</p>
+        </td>
+        <td class="column-right">
+            <p>{{ this.translatedState }}</p>
+        </td>
+        <td class="column-right">
+            <p>{{ this.roundedRating }}</p>
+        </td>
+        <td class="column-right">
+            <p>{{ this.course.numberOfVideos }}</p>
+        </td>
+        <td class="column-right">
+            <p>{{ Math.floor(this.course.duration) }}h {{ Math.round((this.course.duration - Math.floor(this.course.duration)) * 60) }}min</p>
+>>>>>>> origin/development
         </td>
     </tr>
 </template>
 
 <script>
+<<<<<<< HEAD
+=======
+import Tr from '@/i18n/translation.js'
+
+>>>>>>> origin/development
 export default {
     name: 'ContentTableRow',
     props: {
@@ -40,12 +70,46 @@ export default {
             imageUrl: ""
         }
     },
+<<<<<<< HEAD
     created(){
         this.imageUrl = new URL(`../../assets/${this.course.image}.jpg`, import.meta.url).href;
+=======
+    setup() {
+        return { Tr };
+    },
+    created(){
+        this.imageUrl = new URL(`../../assets/${this.course.image}.jpg`, import.meta.url).href;
+    },
+    computed: {
+        formatedDate() {
+            return this.course.date.substring(11, 19) + " " + this.course.date.substring(8, 10) + "/" + this.course.date.substring(5, 7) + "/" + this.course.date.substring(0, 4);
+        },
+        translatedState() {
+            switch(this.course.state) {
+                case "Ativo": 
+                    return this.$t('states.active');
+                case "Inativo": 
+                    return this.$t('states.inactive');
+                case "Rejeitado": 
+                    return this.$t('states.rejected');
+                case "Pendente": 
+                    return this.$t('states.pending');
+                default:
+                    return "Erro";
+            }
+        },
+        roundedRating() {
+            let score = parseFloat(this.course.rating.toString()).toFixed(2);
+
+            if (score == 0.00) return '-.--';
+            else return parseFloat(this.course.rating.toString()).toFixed(2);
+        }
+>>>>>>> origin/development
     }
 }
 </script>
 
+<<<<<<< HEAD
 <style lang="scss" scoped>
     .table-row td {
         padding: 16px;
@@ -55,5 +119,45 @@ export default {
         width: 120px;
         height: 120px;
         object-fit: cover;
+=======
+<style scoped>
+    .table-row td {
+        padding: 16px;
+        vertical-align: middle;
+        border: none;
+    }
+
+    .table-row img {
+        width: 110px;
+        height: 110px;
+        object-fit: cover;
+        border-radius: 8px;
+    }
+
+    .table td p {
+        color: var(--light);
+        margin-bottom: 0px;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .table .course-name {
+        color: var(--primary);
+        margin-bottom: 12px;
+    }
+
+    .table .column-right {
+        text-align: right;
+        padding-right: 32px;
+    }
+
+    @media (max-width: 1500px) {  
+        .table-row img {
+            height: 90px;
+            width: 90px;
+        }
+>>>>>>> origin/development
     }
 </style>
